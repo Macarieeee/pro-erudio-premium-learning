@@ -276,54 +276,62 @@ const AboutPage = () => {
       {/* Contact Section */}
       <section className="py-20">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-                Întrebări despre Tabere?
-              </h2>
-              <p className="text-muted-foreground mb-8 leading-relaxed">
-                Vrei să afli mai multe despre taberele noastre? Suntem aici să răspundem la toate 
-                întrebările tale despre program, locații, prețuri și înscrieri.
-              </p>
-              <div className="space-y-6">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                    <Phone className="h-6 w-6 text-primary" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">Telefon</p>
-                    <p className="font-semibold text-foreground">+40 722 123 456</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                    <Mail className="h-6 w-6 text-primary" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">Email</p>
-                    <p className="font-semibold text-foreground">contact@proerudio.ro</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                    <MapPin className="h-6 w-6 text-primary" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">Adresă</p>
-                    <p className="font-semibold text-foreground">București, Sector 1</p>
-                  </div>
-                </div>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
+            Întrebări despre Tabere?
+          </h2>
+          <p className="text-muted-foreground mb-8 leading-relaxed max-w-2xl">
+            Vrei să afli mai multe despre taberele noastre? Suntem aici să răspundem la toate 
+            întrebările tale despre program, locații, prețuri și înscrieri.
+          </p>
+          <div className="flex flex-wrap gap-8">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                <Phone className="h-6 w-6 text-primary" />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Telefon</p>
+                <p className="font-semibold text-foreground">+40 722 123 456</p>
               </div>
             </div>
-            <div className="bg-primary rounded-2xl p-8">
-              <h3 className="text-2xl font-bold text-primary-foreground mb-4 text-center">
-                Rezervă un Loc la Tabără!
-              </h3>
-              <p className="text-primary-foreground/80 mb-6 text-center">
-                Înscrierile pentru taberele 2025 sunt deschise. Locurile sunt limitate!
-              </p>
-              <RegistrationForm variant="dark" />
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                <Mail className="h-6 w-6 text-primary" />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Email</p>
+                <p className="font-semibold text-foreground">contact@proerudio.ro</p>
+              </div>
             </div>
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                <MapPin className="h-6 w-6 text-primary" />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Adresă</p>
+                <p className="font-semibold text-foreground">București, Sector 1</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Registration Form Section */}
+      <section className="py-20 bg-primary">
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4">
+              Rezervă un Loc la Tabără!
+            </h2>
+            <p className="text-primary-foreground/80 max-w-2xl mx-auto">
+              Înscrierile pentru taberele 2025 sunt deschise. Locurile sunt limitate!
+            </p>
+          </div>
+          <div className="max-w-3xl mx-auto">
+            <Card className="bg-card border-0 shadow-2xl">
+              <CardContent className="p-8">
+                <RegistrationForm />
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
