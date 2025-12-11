@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Menu, X, ChevronDown, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -8,7 +9,6 @@ const Navigation = () => {
   const menuItems = [
     { label: "Acasă", href: "/" },
     { label: "Despre Noi", href: "#despre" },
-    { label: "Jurnale de Tabără", href: "#testimoniale" },
   ];
 
   const campYears = ["2023", "2024", "2025", "2026"];
@@ -21,22 +21,33 @@ const Navigation = () => {
             <div className="w-8 h-8 rounded-lg bg-primary-foreground flex items-center justify-center">
               <span className="text-primary font-bold text-lg">L</span>
             </div>
-            <a href="/" className="text-xl font-bold text-primary-foreground">
+            <Link to="/" className="text-xl font-bold text-primary-foreground">
               Language School
-            </a>
+            </Link>
           </div>
 
           <div className="hidden lg:flex items-center space-x-8">
             {menuItems.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                className="text-primary-foreground/90 hover:text-primary-foreground transition-colors font-medium"
-              >
-                {item.label}
-              </a>
+              item.href.startsWith("/") ? (
+                <Link
+                  key={item.href}
+                  to={item.href}
+                  className="text-primary-foreground/90 hover:text-primary-foreground transition-colors font-medium"
+                >
+                  {item.label}
+                </Link>
+              ) : (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className="text-primary-foreground/90 hover:text-primary-foreground transition-colors font-medium"
+                >
+                  {item.label}
+                </a>
+              )
             ))}
             
+            {/* Tabere Dropdown */}
             <div className="relative group">
               <button className="flex items-center gap-1 text-primary-foreground/90 hover:text-primary-foreground transition-colors font-medium">
                 Tabere
@@ -52,12 +63,42 @@ const Navigation = () => {
                       </button>
                       <div className="absolute right-full top-0 pr-2 opacity-0 invisible group-hover/year:opacity-100 group-hover/year:visible transition-all duration-200">
                         <div className="bg-background border border-border rounded-lg shadow-lg py-2 min-w-[220px]">
-                          <a
-                            href={`/tabara-poiana-marului-${year}`}
+                          <Link
+                            to={`/tabara-poiana-marului-${year}`}
                             className="block px-4 py-2 text-foreground hover:bg-accent transition-colors whitespace-nowrap"
                           >
                             Tabăra Poiana Mărului {year}
-                          </a>
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Jurnale de Tabără Dropdown */}
+            <div className="relative group">
+              <button className="flex items-center gap-1 text-primary-foreground/90 hover:text-primary-foreground transition-colors font-medium">
+                Jurnale de Tabără
+                <ChevronDown className="h-4 w-4 transition-transform group-hover:rotate-180" />
+              </button>
+              <div className="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                <div className="bg-background border border-border rounded-lg shadow-lg py-2 min-w-[100px]">
+                  {campYears.map((year) => (
+                    <div key={year} className="relative group/year">
+                      <button className="w-full flex items-center justify-center gap-2 px-4 py-2 text-foreground hover:bg-accent transition-colors">
+                        <span>{year}</span>
+                        <ChevronRight className="h-4 w-4" />
+                      </button>
+                      <div className="absolute right-full top-0 pr-2 opacity-0 invisible group-hover/year:opacity-100 group-hover/year:visible transition-all duration-200">
+                        <div className="bg-background border border-border rounded-lg shadow-lg py-2 min-w-[220px]">
+                          <Link
+                            to={`/jurnal-poiana-marului-${year}`}
+                            className="block px-4 py-2 text-foreground hover:bg-accent transition-colors whitespace-nowrap"
+                          >
+                            Jurnal Poiana Mărului {year}
+                          </Link>
                         </div>
                       </div>
                     </div>
@@ -85,28 +126,55 @@ const Navigation = () => {
         <div className="lg:hidden bg-primary border-t border-primary-foreground/20">
           <div className="container mx-auto px-4 py-4 space-y-4">
             {menuItems.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                className="block text-primary-foreground/90 hover:text-primary-foreground transition-colors font-medium py-2"
-                onClick={() => setIsOpen(false)}
-              >
-                {item.label}
-              </a>
+              item.href.startsWith("/") ? (
+                <Link
+                  key={item.href}
+                  to={item.href}
+                  className="block text-primary-foreground/90 hover:text-primary-foreground transition-colors font-medium py-2"
+                  onClick={() => setIsOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              ) : (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className="block text-primary-foreground/90 hover:text-primary-foreground transition-colors font-medium py-2"
+                  onClick={() => setIsOpen(false)}
+                >
+                  {item.label}
+                </a>
+              )
             ))}
             
             <div className="py-2">
               <p className="text-primary-foreground font-medium mb-2">Tabere</p>
               <div className="pl-4 space-y-2">
                 {campYears.map((year) => (
-                  <a
+                  <Link
                     key={year}
-                    href={`#tabere-${year}`}
+                    to={`/tabara-poiana-marului-${year}`}
                     className="block text-primary-foreground/80 hover:text-primary-foreground transition-colors"
                     onClick={() => setIsOpen(false)}
                   >
-                    {year}
-                  </a>
+                    Poiana Mărului {year}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            <div className="py-2">
+              <p className="text-primary-foreground font-medium mb-2">Jurnale de Tabără</p>
+              <div className="pl-4 space-y-2">
+                {campYears.map((year) => (
+                  <Link
+                    key={year}
+                    to={`/jurnal-poiana-marului-${year}`}
+                    className="block text-primary-foreground/80 hover:text-primary-foreground transition-colors"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Jurnal Poiana Mărului {year}
+                  </Link>
                 ))}
               </div>
             </div>
