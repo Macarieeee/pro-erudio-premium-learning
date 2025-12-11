@@ -5,6 +5,7 @@ import CoursesSection from "@/components/CoursesSection";
 import SummerCamps from "@/components/SummerCamps";
 import WhyChooseUs from "@/components/WhyChooseUs";
 import Testimonials from "@/components/Testimonials";
+import EnglishTestSection from "@/components/EnglishTestSection";
 import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
 
@@ -19,6 +20,7 @@ const Index = () => {
         <SummerCamps />
         <WhyChooseUs />
         <Testimonials />
+        <EnglishTestSection />
         <CTASection />
       </main>
       <Footer />

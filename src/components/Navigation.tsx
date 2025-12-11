@@ -6,7 +6,7 @@ const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const menuItems = [
-    { label: "Acasă", href: "#" },
+    { label: "Acasă", href: "/" },
     { label: "Despre Noi", href: "#despre" },
     { label: "Jurnale de Tabără", href: "#testimoniale" },
   ];
