@@ -1,8 +1,15 @@
+import { useState } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Calendar, MapPin, Users, Clock, CheckCircle, Mountain, XCircle, Percent, FileText, Clipboard, Compass, Building, Wifi, Car, UtensilsCrossed, TreePine } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Calendar, MapPin, Users, Clock, CheckCircle, Mountain, XCircle, Percent, FileText, Clipboard, Compass, Building, Wifi, Car, UtensilsCrossed, TreePine, Send } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 import summerCampImage from "@/assets/summer-camp.jpg";
 
 interface CampPageProps {
@@ -11,6 +18,54 @@ interface CampPageProps {
 }
 
 const CampPage = ({ year, campName }: CampPageProps) => {
+  const { toast } = useToast();
+  
+  const [formData, setFormData] = useState({
+    selectedCamp: `poiana-marului-${year}`,
+    childName: "",
+    childCity: "",
+    childBirthDate: "",
+    transport: "",
+    parentName: "",
+    parentPhone: "",
+    parentEmail: "",
+    source: "",
+    gdprConsent: false,
+    termsConsent: false,
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!formData.gdprConsent || !formData.termsConsent) {
+      toast({
+        title: "Eroare",
+        description: "Trebuie să accepți termenii și condițiile pentru a continua.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    toast({
+      title: "Formular trimis cu succes!",
+      description: "Te vom contacta în curând pentru confirmarea înscrierii.",
+    });
+    
+    // Reset form
+    setFormData({
+      selectedCamp: `poiana-marului-${year}`,
+      childName: "",
+      childCity: "",
+      childBirthDate: "",
+      transport: "",
+      parentName: "",
+      parentPhone: "",
+      parentEmail: "",
+      source: "",
+      gdprConsent: false,
+      termsConsent: false,
+    });
+  };
   const campDetails = {
     location: "Poiana Mărului, Brașov",
     duration: "7 zile / 6 nopți",
@@ -472,29 +527,199 @@ const CampPage = ({ year, campName }: CampPageProps) => {
         </div>
       </section>
 
-      {/* CTA */}
+      {/* Registration Form */}
       <section className="py-20 bg-primary">
-        <div className="container mx-auto px-4 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4">
-            Rezervă Locul Acum
-          </h2>
-          <p className="text-primary-foreground/80 mb-8 max-w-xl mx-auto">
-            Locurile sunt limitate! Asigură-ți loc pentru o experiență de neuitat.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button 
-              size="lg" 
-              className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold rounded-full px-8"
-            >
-              Înscrie-te Acum
-            </Button>
-            <Button 
-              size="lg" 
-              variant="outline"
-              className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary rounded-full px-8"
-            >
-              Contactează-ne
-            </Button>
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className="max-w-3xl mx-auto">
+            <div className="text-center mb-10">
+              <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4">
+                Formular de Înscriere
+              </h2>
+              <p className="text-primary-foreground/80">
+                Completează formularul pentru a rezerva un loc la {campName} {year}
+              </p>
+            </div>
+            
+            <Card className="bg-card border-0 shadow-2xl">
+              <CardContent className="p-8">
+                <form onSubmit={handleSubmit} className="space-y-8">
+                  {/* Camp Selection */}
+                  <div className="space-y-2">
+                    <Label htmlFor="camp" className="text-foreground font-medium">Tabăra selectată</Label>
+                    <Select value={formData.selectedCamp} onValueChange={(value) => setFormData({...formData, selectedCamp: value})}>
+                      <SelectTrigger className="bg-background">
+                        <SelectValue placeholder="Selectează tabăra" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="poiana-marului-2023">Tabăra Poiana Mărului 2023</SelectItem>
+                        <SelectItem value="poiana-marului-2024">Tabăra Poiana Mărului 2024</SelectItem>
+                        <SelectItem value="poiana-marului-2025">Tabăra Poiana Mărului 2025</SelectItem>
+                        <SelectItem value="poiana-marului-2026">Tabăra Poiana Mărului 2026</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  {/* Child Info */}
+                  <div className="space-y-4">
+                    <h3 className="text-lg font-semibold text-foreground border-b border-border pb-2">
+                      Date despre cursant
+                    </h3>
+                    <div className="grid sm:grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="childName" className="text-foreground">Numele și prenumele *</Label>
+                        <Input 
+                          id="childName"
+                          placeholder="Numele complet al copilului"
+                          value={formData.childName}
+                          onChange={(e) => setFormData({...formData, childName: e.target.value})}
+                          required
+                          className="bg-background"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="childCity" className="text-foreground">Localitatea de domiciliu *</Label>
+                        <Input 
+                          id="childCity"
+                          placeholder="Orașul/Comuna"
+                          value={formData.childCity}
+                          onChange={(e) => setFormData({...formData, childCity: e.target.value})}
+                          required
+                          className="bg-background"
+                        />
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="childBirthDate" className="text-foreground">Data nașterii *</Label>
+                      <Input 
+                        id="childBirthDate"
+                        type="date"
+                        value={formData.childBirthDate}
+                        onChange={(e) => setFormData({...formData, childBirthDate: e.target.value})}
+                        required
+                        className="bg-background"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Transport Option */}
+                  <div className="space-y-3">
+                    <Label className="text-foreground font-medium">Doriți opțiunea de transport până în locație?</Label>
+                    <RadioGroup 
+                      value={formData.transport} 
+                      onValueChange={(value) => setFormData({...formData, transport: value})}
+                      className="flex gap-6"
+                    >
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="da" id="transport-da" />
+                        <Label htmlFor="transport-da" className="text-foreground cursor-pointer">Da</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="nu" id="transport-nu" />
+                        <Label htmlFor="transport-nu" className="text-foreground cursor-pointer">Nu</Label>
+                      </div>
+                    </RadioGroup>
+                  </div>
+
+                  {/* Parent Info */}
+                  <div className="space-y-4">
+                    <h3 className="text-lg font-semibold text-foreground border-b border-border pb-2">
+                      Date despre părinte/tutore
+                    </h3>
+                    <div className="space-y-2">
+                      <Label htmlFor="parentName" className="text-foreground">Numele și prenumele *</Label>
+                      <Input 
+                        id="parentName"
+                        placeholder="Numele complet al părintelui"
+                        value={formData.parentName}
+                        onChange={(e) => setFormData({...formData, parentName: e.target.value})}
+                        required
+                        className="bg-background"
+                      />
+                    </div>
+                    <div className="grid sm:grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="parentPhone" className="text-foreground">Telefon *</Label>
+                        <Input 
+                          id="parentPhone"
+                          type="tel"
+                          placeholder="07XX XXX XXX"
+                          value={formData.parentPhone}
+                          onChange={(e) => setFormData({...formData, parentPhone: e.target.value})}
+                          required
+                          className="bg-background"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="parentEmail" className="text-foreground">Email *</Label>
+                        <Input 
+                          id="parentEmail"
+                          type="email"
+                          placeholder="email@exemplu.ro"
+                          value={formData.parentEmail}
+                          onChange={(e) => setFormData({...formData, parentEmail: e.target.value})}
+                          required
+                          className="bg-background"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* How did you hear */}
+                  <div className="space-y-2">
+                    <Label htmlFor="source" className="text-foreground font-medium">Cum ați aflat de taberele noastre?</Label>
+                    <Select value={formData.source} onValueChange={(value) => setFormData({...formData, source: value})}>
+                      <SelectTrigger className="bg-background">
+                        <SelectValue placeholder="Selectează o opțiune" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="facebook">Facebook</SelectItem>
+                        <SelectItem value="instagram">Instagram</SelectItem>
+                        <SelectItem value="google">Căutare Google</SelectItem>
+                        <SelectItem value="recomandare">Recomandare prieten</SelectItem>
+                        <SelectItem value="participant-anterior">Am participat anterior</SelectItem>
+                        <SelectItem value="altele">Altele</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  {/* Consent Checkboxes */}
+                  <div className="space-y-4 pt-4 border-t border-border">
+                    <div className="flex items-start space-x-3">
+                      <Checkbox 
+                        id="gdpr"
+                        checked={formData.gdprConsent}
+                        onCheckedChange={(checked) => setFormData({...formData, gdprConsent: checked as boolean})}
+                        required
+                      />
+                      <Label htmlFor="gdpr" className="text-sm text-muted-foreground leading-relaxed cursor-pointer">
+                        Am înțeles și sunt de acord cu <span className="text-primary font-medium">declarația de consimțământ</span> privind procesarea datelor personale în scopurile descrise. *
+                      </Label>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <Checkbox 
+                        id="terms"
+                        checked={formData.termsConsent}
+                        onCheckedChange={(checked) => setFormData({...formData, termsConsent: checked as boolean})}
+                        required
+                      />
+                      <Label htmlFor="terms" className="text-sm text-muted-foreground leading-relaxed cursor-pointer">
+                        Am citit și sunt de acord cu <span className="text-primary font-medium">regulamentul de funcționare</span> al taberei. *
+                      </Label>
+                    </div>
+                  </div>
+
+                  {/* Submit Button */}
+                  <Button 
+                    type="submit"
+                    size="lg"
+                    className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-semibold rounded-full"
+                  >
+                    <Send className="w-5 h-5 mr-2" />
+                    Trimite Formularul de Înscriere
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
