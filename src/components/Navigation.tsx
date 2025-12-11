@@ -51,12 +51,12 @@ const Navigation = () => {
                         <ChevronRight className="h-4 w-4" />
                       </button>
                       <div className="absolute right-full top-0 pr-2 opacity-0 invisible group-hover/year:opacity-100 group-hover/year:visible transition-all duration-200">
-                        <div className="bg-background border border-border rounded-lg shadow-lg py-2 min-w-[200px]">
+                        <div className="bg-background border border-border rounded-lg shadow-lg py-2 min-w-[220px]">
                           <a
-                            href={`#tabara-poiana-marului-${year}`}
+                            href={`/tabara-poiana-marului-${year}`}
                             className="block px-4 py-2 text-foreground hover:bg-accent transition-colors whitespace-nowrap"
                           >
-                            Tabara Poiana Marului {year}
+                            Tabăra Poiana Mărului {year}
                           </a>
                         </div>
                       </div>
