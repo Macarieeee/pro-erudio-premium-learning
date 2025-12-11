@@ -9,7 +9,7 @@ const Navigation = () => {
 
   const menuItems = [
     { label: "Acasă", href: "/" },
-    { label: "Despre Noi", href: "#despre" },
+    { label: "Despre Noi", href: "/despre-noi" },
   ];
 
   const campYears = ["2023", "2024", "2025", "2026"];

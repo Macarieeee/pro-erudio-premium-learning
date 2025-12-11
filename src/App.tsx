@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import CampPage from "./pages/CampPage";
 import JournalPage from "./pages/JournalPage";
+import AboutPage from "./pages/AboutPage";
 
 const queryClient = new QueryClient();
 
@@ -18,6 +19,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/despre-noi" element={<AboutPage />} />
           <Route path="/tabara-poiana-marului-2023" element={<CampPage year="2023" campName="Tabăra Poiana Mărului" />} />
           <Route path="/tabara-poiana-marului-2024" element={<CampPage year="2024" campName="Tabăra Poiana Mărului" />} />
           <Route path="/tabara-poiana-marului-2025" element={<CampPage year="2025" campName="Tabăra Poiana Mărului" />} />
