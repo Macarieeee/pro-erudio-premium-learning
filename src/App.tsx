@@ -17,7 +17,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
+      <BrowserRouter basename="/pro-erudio-premium-learning">
       <ScrollToTop />
         <Routes>
           <Route path="/" element={<Index />} />
