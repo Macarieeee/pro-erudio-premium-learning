@@ -2,9 +2,8 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Calendar, MapPin, Users, Clock, Star, CheckCircle, XCircle, Mail, Phone, FileText, Percent } from "lucide-react";
+import { Calendar, MapPin, Users, Clock, Star, CheckCircle } from "lucide-react";
 import summerCampImage from "@/assets/summer-camp.jpg";
-import { Link } from "react-router-dom";
 
 interface CampPageProps {
   year: string;
@@ -17,65 +16,25 @@ const CampPage = ({ year, campName }: CampPageProps) => {
     duration: "7 zile / 6 nopți",
     ageGroup: "8-16 ani",
     dates: `15-22 Iulie ${year}`,
-    price: "1.200",
-    accommodation: "Pensiune cu camere duble și baie proprie",
   };
 
-  const tarifInclude = [
-    "Cazare în pensiune",
-    "Pensiune completă (3 mese pe zi + gustări)",
-    "15 lecții de engleză pe săptămână în grupuri internaționale, cu profesori vorbitori nativi",
-    "Test inițial de evaluare",
-    "Materiale de studiu",
-    "Certificate de absolvire a cursurilor",
-    "Program zilnic de activități comune",
-    "Program zilnic tematic",
-    "Excursii (două excursii de jumătate de zi și una de o zi întreagă)",
-    "Un însoțitor de grup de la Pro Erudio la 10 copii",
-    "Transport local pentru excursii",
+  const highlights = [
+    "Cursuri intensive de limba engleză",
+    "Activități outdoor și drumeții",
+    "Jocuri și competiții în echipă",
+    "Seri tematice și foc de tabără",
+    "Ateliere creative și artistice",
+    "Excursii în natură",
   ];
 
-  const tarifNuInclude = [
-    "Transport personal până la locația taberei",
-    "Asigurare storno (opțional) și de călătorie",
-    "Cheltuieli personale (suveniruri, gustări suplimentare)",
-  ];
-
-  const excursiiActivitati = [
-    { zi: "Ziua 2", activitate: "Excursie la Cetatea Râșnov" },
-    { zi: "Ziua 3", activitate: "Drumeție în munți + picnic" },
-    { zi: "Ziua 4", activitate: "Vizită la Castelul Bran" },
-    { zi: "Ziua 5", activitate: "Activități sportive și jocuri în echipă" },
-    { zi: "Ziua 6", activitate: "Excursie de o zi întreagă la Brașov" },
-  ];
-
-  const documenteNecesare = [
-    "Formularul de înscriere completat",
-    "Copie după certificatul de naștere sau carte de identitate",
-    "Adeverință medicală de la medicul de familie",
-    "Declarație parentală pentru participare",
-    "Avans de 300 euro la înscriere",
-  ];
-
-  const reduceri = [
-    "5% pentru continuitate (doar pentru copiii care au participat la programul de tabără din vara precedentă)",
-    "5% pentru doi copii ai aceleiași familii",
-    "10% pentru înscrierea până la 31 martie",
-  ];
-
-  const programOrientativ = [
-    { time: "08:00", activities: ["Trezire", "Mic dejun", "Mic dejun", "Mic dejun", "Mic dejun", "Mic dejun", "Mic dejun"] },
-    { time: "09:30-12:30", activities: ["Sosire", "Lecții engleză", "Lecții engleză", "Lecții engleză", "Lecții engleză", "Lecții engleză", "Excursie Brașov"] },
-    { time: "13:00-14:00", activities: ["Instalare", "Prânz", "Prânz", "Prânz", "Prânz", "Prânz", "Prânz în oraș"] },
-    { time: "14:00-18:00", activities: ["Cunoaștere", "Excursie Râșnov", "Drumeție", "Castelul Bran", "Jocuri echipă", "Activități creative", "Vizită centru"] },
-    { time: "18:00-19:00", activities: ["Cină", "Cină", "Cină", "Cină", "Cină", "Cină", "Cină"] },
-    { time: "19:30-22:00", activities: ["Seară cunoaștere", "Disco", "Foc tabără", "Film Night", "Quiz Night", "Seară talent", "Ceremonie final"] },
-  ];
-
-  const alteTabere = [
-    { name: "Tabăra UK - Oxford", year: "2024", link: "/tabara-uk-2024" },
-    { name: "Tabăra Marea Neagră", year: "2024", link: "/tabara-marea-neagra-2024" },
-    { name: "Tabăra Dublin", year: "2024", link: "/tabara-dublin-2024" },
+  const schedule = [
+    { time: "08:00", activity: "Trezire și mic dejun" },
+    { time: "09:30", activity: "Sesiune de engleză (interactiv)" },
+    { time: "12:30", activity: "Prânz și relaxare" },
+    { time: "14:30", activity: "Activități outdoor" },
+    { time: "18:00", activity: "Cină" },
+    { time: "19:30", activity: "Activități de seară" },
+    { time: "22:00", activity: "Ora de somn" },
   ];
 
   const testimonials = [
@@ -91,8 +50,6 @@ const CampPage = ({ year, campName }: CampPageProps) => {
     },
   ];
 
-  const days = ["Ziua 1", "Ziua 2", "Ziua 3", "Ziua 4", "Ziua 5", "Ziua 6", "Ziua 7"];
-
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
@@ -107,17 +64,15 @@ const CampPage = ({ year, campName }: CampPageProps) => {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
           <div className="absolute bottom-0 left-0 right-0 p-8 lg:p-16">
-            <div className="container mx-auto text-center">
-              <h1 className="text-3xl md:text-5xl font-bold text-foreground mb-4">
-                {campName} {year}
+            <div className="container mx-auto">
+              <span className="inline-block bg-accent text-accent-foreground px-4 py-1 rounded-full text-sm font-semibold mb-4">
+                {year}
+              </span>
+              <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-4">
+                {campName}
               </h1>
-              <div className="flex items-baseline justify-center gap-2 mb-4">
-                <span className="text-primary text-lg font-semibold">EURO</span>
-                <span className="text-5xl md:text-7xl font-bold text-primary">{campDetails.price}</span>
-                <span className="text-muted-foreground text-lg">/participant</span>
-              </div>
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                {campDetails.location}
+              <p className="text-xl text-muted-foreground max-w-2xl">
+                O aventură educațională de neuitat în inima naturii
               </p>
             </div>
           </div>
@@ -125,154 +80,103 @@ const CampPage = ({ year, campName }: CampPageProps) => {
       </section>
 
       {/* Quick Info */}
-      <section className="py-8 bg-secondary/30">
+      <section className="py-12 bg-secondary/30">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                <MapPin className="h-6 w-6 text-primary" />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Locație</p>
+                <p className="font-semibold text-foreground">{campDetails.location}</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                <Clock className="h-6 w-6 text-primary" />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Durată</p>
+                <p className="font-semibold text-foreground">{campDetails.duration}</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                <Users className="h-6 w-6 text-primary" />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Vârstă</p>
+                <p className="font-semibold text-foreground">{campDetails.ageGroup}</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                <Calendar className="h-6 w-6 text-primary" />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Perioada</p>
+                <p className="font-semibold text-foreground">{campDetails.dates}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Description & Highlights */}
+      <section className="py-20">
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-12">
             <div>
-              <p className="text-sm text-muted-foreground">Perioada</p>
-              <p className="font-semibold text-foreground">{campDetails.dates}</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
+                Despre Tabără
+              </h2>
+              <p className="text-muted-foreground mb-6 leading-relaxed">
+                Tabăra Poiana Mărului oferă copiilor o experiență unică de învățare a limbii engleze 
+                într-un cadru natural spectaculos. Programul nostru combină sesiuni interactive de 
+                engleză cu activități outdoor captivante, creând un mediu perfect pentru dezvoltarea 
+                limbajului și a abilităților sociale.
+              </p>
+              <p className="text-muted-foreground leading-relaxed">
+                Sub îndrumarea profesorilor noștri experimentați și a animatorilor dedicați, copiii 
+                vor descoperi bucuria învățării prin joc, vor face prieteni noi și vor crea amintiri 
+                de neuitat.
+              </p>
             </div>
             <div>
-              <p className="text-sm text-muted-foreground">Vârstă recomandată</p>
-              <p className="font-semibold text-foreground">{campDetails.ageGroup}</p>
-            </div>
-            <div>
-              <p className="text-sm text-muted-foreground">Durată</p>
-              <p className="font-semibold text-foreground">{campDetails.duration}</p>
-            </div>
-            <div>
-              <p className="text-sm text-muted-foreground">Cazare</p>
-              <p className="font-semibold text-foreground">{campDetails.accommodation}</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Descriere Generală */}
-      <section className="py-16">
-        <div className="container mx-auto px-4 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">
-              Descriere Generală
-          </h2>
-          <div className="max-w-4xl mx-auto">
-            <p className="text-muted-foreground mb-6 leading-relaxed text-lg">
-              Poiana Mărului este o zonă de o frumusețe naturală deosebită, situată în inima munților 
-              Făgăraș, la aproximativ 1.000 de metri altitudine. Această destinație oferă cadrul perfect 
-              pentru o tabără de vară, combinând aerul curat de munte cu peisaje spectaculoase și 
-              posibilități nelimitate de explorare.
-            </p>
-            <p className="text-muted-foreground mb-6 leading-relaxed text-lg">
-              Tabăra noastră oferă copiilor o experiență unică de învățare a limbii engleze 
-              într-un cadru natural spectaculos. Programul nostru combină sesiuni interactive de 
-              engleză cu activități outdoor captivante, creând un mediu perfect pentru dezvoltarea 
-              limbajului și a abilităților sociale.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Descrierea Locației */}
-      <section className="py-16 bg-secondary/30">
-        <div className="container mx-auto px-4 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">
-            Locația
-          </h2>
-          <div className="max-w-4xl mx-auto">
-            <p className="text-muted-foreground mb-6 leading-relaxed text-lg">
-              Pensiunea noastră parteneră este situată în centrul localității Poiana Mărului, 
-              oferind condiții excelente de cazare și masă. Clădirea dispune de camere moderne, 
-              spații comune generoase și facilități adaptate pentru programele de tabără.
-            </p>
-            <img 
-              src={summerCampImage} 
-              alt="Locația taberei"
-              className="w-full max-w-2xl mx-auto rounded-lg shadow-lg mb-8"
-            />
-            <h3 className="text-2xl font-bold text-foreground mb-4">Facilități</h3>
-            <div className="grid md:grid-cols-2 gap-4">
-              <ul className="space-y-2 text-muted-foreground">
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
-                  Camere duble cu baie proprie
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
-                  Sală de mese cu capacitate mare
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
-                  Sală de activități indoor
-                </li>
-              </ul>
-              <ul className="space-y-2 text-muted-foreground">
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
-                  Teren de sport exterior
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
-                  Zonă de foc de tabără
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
-                  Wi-Fi gratuit
-                </li>
-              </ul>
+              <h3 className="text-2xl font-bold text-foreground mb-6">
+                Ce Include Tabăra
+              </h3>
+              <div className="space-y-4">
+                {highlights.map((highlight, index) => (
+                  <div key={index} className="flex items-center gap-3">
+                    <CheckCircle className="h-5 w-5 text-accent flex-shrink-0" />
+                    <span className="text-foreground">{highlight}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Tariful Include */}
-      <section className="py-16">
+      {/* Schedule */}
+      <section className="py-20 bg-secondary/30">
         <div className="container mx-auto px-4 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">
-            {campName} – Tariful include:
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-12 text-center">
+            Program Zilnic
           </h2>
-          <div className="max-w-4xl mx-auto">
-            <ul className="space-y-3">
-              {tarifInclude.map((item, index) => (
-                <li key={index} className="flex items-start gap-3 text-foreground">
-                  <CheckCircle className="h-5 w-5 text-accent flex-shrink-0 mt-0.5" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* Tariful Nu Include */}
-      <section className="py-16 bg-secondary/30">
-        <div className="container mx-auto px-4 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">
-            {campName} – Tariful nu include:
-          </h2>
-          <div className="max-w-4xl mx-auto">
-            <ul className="space-y-3">
-              {tarifNuInclude.map((item, index) => (
-                <li key={index} className="flex items-start gap-3 text-foreground">
-                  <XCircle className="h-5 w-5 text-destructive flex-shrink-0 mt-0.5" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* Program de excursii și activități */}
-      <section className="py-16">
-        <div className="container mx-auto px-4 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">
-            Program de excursii și activități
-          </h2>
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-2xl mx-auto">
             <div className="space-y-4">
-              {excursiiActivitati.map((item, index) => (
-                <div key={index} className="flex items-center gap-4 p-4 bg-card rounded-lg border border-border">
-                  <span className="font-bold text-primary min-w-[80px]">{item.zi}</span>
-                  <span className="text-foreground">{item.activitate}</span>
+              {schedule.map((item, index) => (
+                <div 
+                  key={index} 
+                  className="flex items-center gap-6 p-4 bg-background rounded-lg shadow-sm"
+                >
+                  <span className="text-lg font-bold text-primary min-w-[60px]">
+                    {item.time}
+                  </span>
+                  <span className="text-foreground">{item.activity}</span>
                 </div>
               ))}
             </div>
@@ -280,113 +184,8 @@ const CampPage = ({ year, campName }: CampPageProps) => {
         </div>
       </section>
 
-      {/* Înscrieri și rezervări */}
-      <section className="py-16 bg-secondary/30">
-        <div className="container mx-auto px-4 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">
-            Înscrieri și rezervări
-          </h2>
-          <div className="max-w-4xl mx-auto bg-card p-8 rounded-lg border border-border">
-            <p className="text-foreground mb-6 leading-relaxed">
-              Pentru rezervări vă rugăm să <strong>completați formularul din partea de sus a paginii</strong> sau 
-              să ne trimiteți un email la{" "}
-              <a href="mailto:office@proerudio.ro" className="text-primary hover:underline font-semibold">
-                office@proerudio.ro
-              </a>.
-            </p>
-            <p className="text-foreground mb-6 leading-relaxed">
-              După confirmarea înscrierii, veți fi contactat pentru achitarea avansului de 300 euro. 
-              Diferența până la prețul final al taberei se achită în alte două tranșe, una în martie 
-              și una în mai.
-            </p>
-            <div className="flex items-center gap-3 text-foreground">
-              <Phone className="h-5 w-5 text-primary" />
-              <span>Pentru alte informații, contactați-ne la telefon: </span>
-              <strong>0724 527 838 (Roxana Popescu)</strong>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Documente necesare înscrierii */}
-      <section className="py-16">
-        <div className="container mx-auto px-4 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">
-            Documente necesare înscrierii
-          </h2>
-          <div className="max-w-4xl mx-auto">
-            <ul className="space-y-3">
-              {documenteNecesare.map((item, index) => (
-                <li key={index} className="flex items-start gap-3 text-foreground">
-                  <FileText className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* Reduceri */}
-      <section className="py-16 bg-secondary/30">
-        <div className="container mx-auto px-4 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">
-            Reduceri
-          </h2>
-          <div className="max-w-4xl mx-auto">
-            <ul className="space-y-3">
-              {reduceri.map((item, index) => (
-                <li key={index} className="flex items-start gap-3 text-foreground">
-                  <Percent className="h-5 w-5 text-accent flex-shrink-0 mt-0.5" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* Program Orientativ */}
-      <section className="py-16">
-        <div className="container mx-auto px-4 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">
-            Program orientativ
-          </h2>
-          <div className="max-w-6xl mx-auto overflow-x-auto">
-            <table className="w-full border-collapse min-w-[800px]">
-              <thead>
-                <tr>
-                  <th className="bg-primary text-primary-foreground p-3 text-left font-semibold border border-border">
-                    Ora
-                  </th>
-                  {days.map((day, index) => (
-                    <th key={index} className="bg-primary text-primary-foreground p-3 text-center font-semibold border border-border">
-                      {day}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {programOrientativ.map((row, index) => (
-                  <tr key={index} className={index % 2 === 0 ? "bg-card" : "bg-secondary/30"}>
-                    <td className="p-3 border border-border font-semibold text-foreground">
-                      {row.time}
-                    </td>
-                    {row.activities.map((activity, actIndex) => (
-                      <td key={actIndex} className="p-3 border border-border text-center text-muted-foreground">
-                        {activity}
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
       {/* Testimonials */}
-      <section className="py-16 bg-secondary/30">
+      <section className="py-20">
         <div className="container mx-auto px-4 lg:px-8">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-12 text-center">
             Experiențe din Tabără
@@ -407,33 +206,6 @@ const CampPage = ({ year, campName }: CampPageProps) => {
                     <p className="font-semibold text-foreground">{testimonial.name}</p>
                     <p className="text-sm text-muted-foreground">{testimonial.role}</p>
                   </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Alte tabere organizate de Pro Erudio */}
-      <section className="py-16">
-        <div className="container mx-auto px-4 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">
-            Alte tabere organizate de Pro Erudio
-          </h2>
-          <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            {alteTabere.map((tabara, index) => (
-              <Card key={index} className="bg-card border-border hover:shadow-lg transition-shadow">
-                <CardContent className="p-6">
-                  <img 
-                    src={summerCampImage} 
-                    alt={tabara.name}
-                    className="w-full h-40 object-cover rounded-lg mb-4"
-                  />
-                  <h3 className="font-bold text-foreground mb-2">{tabara.name}</h3>
-                  <p className="text-sm text-muted-foreground mb-4">{tabara.year}</p>
-                  <Button variant="outline" className="w-full" asChild>
-                    <Link to={tabara.link}>Vezi detalii</Link>
-                  </Button>
                 </CardContent>
               </Card>
             ))}
