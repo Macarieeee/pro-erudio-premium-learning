@@ -2,7 +2,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Calendar, MapPin, Users, Clock, Star, CheckCircle, Mountain, XCircle, Percent, FileText, Clipboard, Compass, Building } from "lucide-react";
+import { Calendar, MapPin, Users, Clock, CheckCircle, Mountain, XCircle, Percent, FileText, Clipboard, Compass, Building, Wifi, Car, UtensilsCrossed, TreePine } from "lucide-react";
 import summerCampImage from "@/assets/summer-camp.jpg";
 
 interface CampPageProps {
@@ -27,34 +27,17 @@ const CampPage = ({ year, campName }: CampPageProps) => {
     "Excursii în natură",
   ];
 
-  const schedule = [
-    { time: "08:00", activity: "Trezire și mic dejun" },
-    { time: "09:30", activity: "Sesiune de engleză (interactiv)" },
-    { time: "12:30", activity: "Prânz și relaxare" },
-    { time: "14:30", activity: "Activități outdoor" },
-    { time: "18:00", activity: "Cină" },
-    { time: "19:30", activity: "Activități de seară" },
-    { time: "22:00", activity: "Ora de somn" },
-  ];
-
-  const testimonials = [
-    {
-      name: "Maria P.",
-      role: "Părinte",
-      text: "Copilul meu a revenit de la tabără plin de energie și cu o pasiune reînnoită pentru limba engleză!",
-    },
-    {
-      name: "Andrei C.",
-      role: `Participant ${year}`,
-      text: "Cea mai tare experiență! Am făcut prieteni noi și am învățat engleză fără să simt.",
-    },
-  ];
-
   const locationDescription = {
     title: "Pensiunea Natura",
     description: "Situată în inima munților, pensiunea oferă un cadru natural spectaculos, perfect pentru activități educaționale și recreative. Camerele sunt confortabile și dotate cu toate facilitățile necesare pentru un sejur plăcut.",
-    features: ["Aer curat de munte", "Terenuri de sport", "Sală de mese spațioasă", "Grădină și spații verzi"],
   };
+
+  const locationFacilities = [
+    { icon: Wifi, label: "WiFi gratuit" },
+    { icon: Car, label: "Parcare gratuită" },
+    { icon: UtensilsCrossed, label: "Restaurant" },
+    { icon: TreePine, label: "Grădină" },
+  ];
 
   const includedInPrice = [
     "Cazare 6 nopți în camere cu 3-4 paturi",
@@ -74,12 +57,13 @@ const CampPage = ({ year, campName }: CampPageProps) => {
     "Excursii extra neplanificate în program",
   ];
 
-  const excursionsProgram = [
-    { day: "Ziua 2", activity: "Drumeție la Cascada din apropiere" },
-    { day: "Ziua 3", activity: "Vizită la ferma tradițională" },
-    { day: "Ziua 5", activity: "Excursie la Cetatea Medievală" },
-    { day: "Ziua 6", activity: "Picnic și jocuri în natură" },
-  ];
+  const activitiesDescription = `Activitățile sunt numeroase și foarte variate:
+
+• activități sportive în aer liber și în sala de sport multifuncțională
+• ateliere de actorie, fotbal, arts & crafts, cluburi de conversație, seminarii pe diferite teme, jocuri de echipă (ex Treasure Hunt, Bingo) etc
+• quiz-uri, vizionări de filme, prezentări de modă, seri tematice etc
+• excursii de o jumătate de zi în orașul Dublin (plimbări pietonale, shopping, vizita la Muzeul Național de Istorie, la Grădina Botanică, Parcul St Stephen's Green etc)
+• o excursie de o zi întreagă (posibil la Dún Laoghaire and Bray, două orășele pe coastă, mai sus de Dublin sau Howth, un sat pescăresc din secolul al XIV-lea).`;
 
   const registrationInfo = {
     steps: [
@@ -108,16 +92,6 @@ const CampPage = ({ year, campName }: CampPageProps) => {
     { type: "Frați/Surori", value: "15%", condition: "Al doilea copil din familie" },
     { type: "Fidele", value: "10%", condition: "Participanți din edițiile anterioare" },
     { type: "Grup", value: "5%", condition: "Grupuri de minim 5 copii" },
-  ];
-
-  const detailedSchedule = [
-    { day: "Ziua 1", activities: ["Sosire și cazare", "Cunoaștere și jocuri de spargere a gheții", "Cină festivă de bun venit"] },
-    { day: "Ziua 2", activities: ["Curs engleză: Introducere", "Drumeție la cascadă", "Seară tematică: Movie Night"] },
-    { day: "Ziua 3", activities: ["Curs engleză: Conversație", "Vizită fermă tradițională", "Foc de tabără"] },
-    { day: "Ziua 4", activities: ["Curs engleză: Jocuri interactive", "Competiții sportive", "Talent Show"] },
-    { day: "Ziua 5", activities: ["Curs engleză: Drama & Theatre", "Excursie cetate", "Seară disco"] },
-    { day: "Ziua 6", activities: ["Curs engleză: Prezentări", "Picnic în natură", "Ceremonie de premiere"] },
-    { day: "Ziua 7", activities: ["Mic dejun festiv", "Schimb de contacte", "Plecare"] },
   ];
 
   const otherCamps = [
@@ -237,85 +211,44 @@ const CampPage = ({ year, campName }: CampPageProps) => {
         </div>
       </section>
 
-      {/* Schedule */}
-      <section className="py-20 bg-secondary/30">
-        <div className="container mx-auto px-4 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-12 text-center">
-            Program Zilnic
-          </h2>
-          <div className="max-w-2xl mx-auto">
-            <div className="space-y-4">
-              {schedule.map((item, index) => (
-                <div 
-                  key={index} 
-                  className="flex items-center gap-6 p-4 bg-background rounded-lg shadow-sm"
-                >
-                  <span className="text-lg font-bold text-primary min-w-[60px]">
-                    {item.time}
-                  </span>
-                  <span className="text-foreground">{item.activity}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section className="py-20">
-        <div className="container mx-auto px-4 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-12 text-center">
-            Experiențe din Tabără
-          </h2>
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {testimonials.map((testimonial, index) => (
-              <Card key={index} className="bg-card border-border">
-                <CardContent className="pt-6">
-                  <div className="flex gap-1 mb-4">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="h-5 w-5 fill-accent text-accent" />
-                    ))}
-                  </div>
-                  <p className="text-muted-foreground mb-6 italic">
-                    "{testimonial.text}"
-                  </p>
-                  <div>
-                    <p className="font-semibold text-foreground">{testimonial.name}</p>
-                    <p className="text-sm text-muted-foreground">{testimonial.role}</p>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Location Description */}
       <section className="py-20 bg-secondary/30">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="flex items-center gap-3 mb-8 justify-center">
+          <div className="flex items-center gap-3 mb-12 justify-center">
             <Mountain className="h-8 w-8 text-primary" />
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">
               Descrierea Locației
             </h2>
           </div>
-          <div className="max-w-4xl mx-auto">
-            <Card className="bg-card border-border">
-              <CardContent className="pt-6">
-                <h3 className="text-2xl font-bold text-foreground mb-4">{locationDescription.title}</h3>
-                <p className="text-muted-foreground mb-6 leading-relaxed">
-                  {locationDescription.description}
-                </p>
-                <div className="grid sm:grid-cols-2 gap-3">
-                  {locationDescription.features.map((feature, index) => (
-                    <div key={index} className="flex items-center gap-2">
-                      <CheckCircle className="h-5 w-5 text-accent flex-shrink-0" />
-                      <span className="text-foreground">{feature}</span>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+          <div className="grid lg:grid-cols-2 gap-12 items-start">
+            <div>
+              <h3 className="text-2xl font-bold text-foreground mb-4">{locationDescription.title}</h3>
+              <p className="text-muted-foreground mb-8 leading-relaxed">
+                {locationDescription.description}
+              </p>
+              <Card className="bg-card border-border">
+                <CardContent className="pt-6">
+                  <h4 className="text-lg font-semibold text-foreground mb-4">Facilități</h4>
+                  <div className="grid grid-cols-2 gap-4">
+                    {locationFacilities.map((facility, index) => (
+                      <div key={index} className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                          <facility.icon className="h-5 w-5 text-primary" />
+                        </div>
+                        <span className="text-foreground">{facility.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+            <div className="rounded-2xl overflow-hidden shadow-lg">
+              <img 
+                src={summerCampImage} 
+                alt="Locația taberei"
+                className="w-full h-[400px] object-cover"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -369,17 +302,19 @@ const CampPage = ({ year, campName }: CampPageProps) => {
               Program de Excursii și Activități
             </h2>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
-            {excursionsProgram.map((excursion, index) => (
-              <Card key={index} className="bg-card border-border hover:shadow-lg transition-shadow">
-                <CardContent className="pt-6 text-center">
-                  <span className="inline-block bg-primary text-primary-foreground px-3 py-1 rounded-full text-sm font-semibold mb-3">
-                    {excursion.day}
-                  </span>
-                  <p className="text-foreground font-medium">{excursion.activity}</p>
-                </CardContent>
-              </Card>
-            ))}
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <p className="text-muted-foreground leading-relaxed whitespace-pre-line">
+                {activitiesDescription}
+              </p>
+            </div>
+            <div className="rounded-2xl overflow-hidden shadow-lg">
+              <img 
+                src={summerCampImage} 
+                alt="Activități și excursii"
+                className="w-full h-[400px] object-cover"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -479,7 +414,7 @@ const CampPage = ({ year, campName }: CampPageProps) => {
         </div>
       </section>
 
-      {/* Program Orientativ Detaliat */}
+      {/* Program Orientativ */}
       <section className="py-20 bg-secondary/30">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="flex items-center gap-3 mb-12 justify-center">
@@ -489,25 +424,12 @@ const CampPage = ({ year, campName }: CampPageProps) => {
             </h2>
           </div>
           <div className="max-w-4xl mx-auto">
-            <div className="space-y-4">
-              {detailedSchedule.map((day, index) => (
-                <Card key={index} className="bg-card border-border">
-                  <CardContent className="pt-6">
-                    <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-                      <span className="inline-block bg-primary text-primary-foreground px-4 py-2 rounded-full text-sm font-bold min-w-[100px] text-center">
-                        {day.day}
-                      </span>
-                      <div className="flex flex-wrap gap-2">
-                        {day.activities.map((activity, actIndex) => (
-                          <span key={actIndex} className="px-3 py-1 bg-secondary rounded-full text-sm text-foreground">
-                            {activity}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+            <div className="rounded-2xl overflow-hidden shadow-lg">
+              <img 
+                src={summerCampImage} 
+                alt="Program orientativ"
+                className="w-full object-contain"
+              />
             </div>
           </div>
         </div>
@@ -524,8 +446,15 @@ const CampPage = ({ year, campName }: CampPageProps) => {
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
             {otherCamps.map((camp, index) => (
-              <Card key={index} className="bg-card border-border hover:shadow-lg transition-shadow cursor-pointer group">
-                <CardContent className="pt-6 text-center">
+              <Card key={index} className="bg-card border-border hover:shadow-lg transition-shadow cursor-pointer group overflow-hidden">
+                <div className="h-40 overflow-hidden">
+                  <img 
+                    src={summerCampImage} 
+                    alt={camp.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <CardContent className="pt-4 text-center">
                   <span className="inline-block bg-accent/20 text-accent px-3 py-1 rounded-full text-xs font-semibold mb-3">
                     {camp.type}
                   </span>
