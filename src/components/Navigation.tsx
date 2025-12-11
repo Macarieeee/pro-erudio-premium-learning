@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Navigation = () => {
@@ -43,15 +43,24 @@ const Navigation = () => {
                 <ChevronDown className="h-4 w-4 transition-transform group-hover:rotate-180" />
               </button>
               <div className="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                <div className="bg-background border border-border rounded-lg shadow-lg py-2 min-w-[120px]">
+                <div className="bg-background border border-border rounded-lg shadow-lg py-2 min-w-[100px]">
                   {campYears.map((year) => (
-                    <a
-                      key={year}
-                      href={`#tabere-${year}`}
-                      className="block px-4 py-2 text-foreground hover:bg-accent transition-colors"
-                    >
-                      {year}
-                    </a>
+                    <div key={year} className="relative group/year">
+                      <button className="w-full flex items-center justify-center gap-2 px-4 py-2 text-foreground hover:bg-accent transition-colors">
+                        <span>{year}</span>
+                        <ChevronRight className="h-4 w-4" />
+                      </button>
+                      <div className="absolute left-full top-0 pl-2 opacity-0 invisible group-hover/year:opacity-100 group-hover/year:visible transition-all duration-200">
+                        <div className="bg-background border border-border rounded-lg shadow-lg py-2 min-w-[200px]">
+                          <a
+                            href={`#tabara-poiana-marului-${year}`}
+                            className="block px-4 py-2 text-foreground hover:bg-accent transition-colors whitespace-nowrap"
+                          >
+                            Tabara Poiana Marului {year}
+                          </a>
+                        </div>
+                      </div>
+                    </div>
                   ))}
                 </div>
               </div>
