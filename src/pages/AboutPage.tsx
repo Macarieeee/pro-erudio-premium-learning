@@ -2,7 +2,8 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Users, Award, BookOpen, Heart, Globe, Target, CheckCircle, Mail, Phone, MapPin } from "lucide-react";
+import { Users, Award, BookOpen, Heart, Globe, Target, CheckCircle, Mail, Phone, MapPin, ChevronLeft, ChevronRight } from "lucide-react";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import aboutClassroomImage from "@/assets/about-classroom.jpg";
 import summerCampImage from "@/assets/summer-camp.jpg";
 
@@ -30,6 +31,30 @@ const AboutPage = () => {
       name: "Alexandru Radu",
       role: "Coordonator Activități",
       description: "Animator profesionist cu certificări în educație non-formală.",
+      image: summerCampImage,
+    },
+    {
+      name: "Cristina Munteanu",
+      role: "Profesor Engleză",
+      description: "Specializată în predarea limbii engleze pentru copii și adolescenți.",
+      image: summerCampImage,
+    },
+    {
+      name: "Dan Georgescu",
+      role: "Animator",
+      description: "Expert în activități recreative și jocuri educative pentru toate vârstele.",
+      image: summerCampImage,
+    },
+    {
+      name: "Ioana Stanciu",
+      role: "Profesor Engleză",
+      description: "Cu experiență în pregătirea pentru examenele Cambridge și IELTS.",
+      image: summerCampImage,
+    },
+    {
+      name: "Mihai Popa",
+      role: "Coordonator Sport",
+      description: "Profesor de educație fizică cu pasiune pentru activitățile outdoor.",
       image: summerCampImage,
     },
   ];
@@ -213,24 +238,38 @@ const AboutPage = () => {
               Oamenii dedicați care fac totul posibil
             </p>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {teamMembers.map((member, index) => (
-              <Card key={index} className="bg-card border-border overflow-hidden hover:shadow-lg transition-shadow">
-                <div className="h-48 overflow-hidden">
-                  <img 
-                    src={member.image} 
-                    alt={member.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <CardContent className="pt-4">
-                  <h3 className="text-lg font-bold text-foreground">{member.name}</h3>
-                  <p className="text-primary font-medium text-sm mb-2">{member.role}</p>
-                  <p className="text-muted-foreground text-sm">{member.description}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-4">
+              {teamMembers.map((member, index) => (
+                <CarouselItem key={index} className="pl-4 basis-full sm:basis-1/2 lg:basis-1/4">
+                  <Card className="bg-card border-border overflow-hidden hover:shadow-lg transition-shadow h-full">
+                    <div className="h-48 overflow-hidden">
+                      <img 
+                        src={member.image} 
+                        alt={member.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <CardContent className="pt-4">
+                      <h3 className="text-lg font-bold text-foreground">{member.name}</h3>
+                      <p className="text-primary font-medium text-sm mb-2">{member.role}</p>
+                      <p className="text-muted-foreground text-sm">{member.description}</p>
+                    </CardContent>
+                  </Card>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <div className="flex justify-center gap-4 mt-8">
+              <CarouselPrevious className="static translate-y-0 bg-primary text-primary-foreground hover:bg-primary/90" />
+              <CarouselNext className="static translate-y-0 bg-primary text-primary-foreground hover:bg-primary/90" />
+            </div>
+          </Carousel>
         </div>
       </section>
 
