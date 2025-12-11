@@ -1,70 +1,77 @@
-import { BookOpen, Globe, Lightbulb, Music } from "lucide-react";
+import { Plane, Mountain, Sun, Snowflake } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const CoursesSection = () => {
-  const courses = [
+  const camps = [
     {
-      icon: BookOpen,
-      title: "Limba Engleză",
-      subtitle: "Pentru Copii, Adolescenți & Adulți",
-      description: "Cursuri adaptate fiecărei vârste, de la primii pași până la nivel avansat. Pregătire pentru examene Cambridge, conversație, gramatică și vocabular.",
+      icon: Plane,
+      title: "Tabere Internaționale UK",
+      subtitle: "Londra, Manchester, Cambridge",
+      description: "Experiență unică de imersie în cultura britanică. Cursuri de engleză în universități renumite, vizite culturale și activități cu copii din toată lumea.",
       color: "bg-primary",
+      link: "/tabara-poiana-marului-2025",
     },
     {
-      icon: Globe,
-      title: "Germană & Franceză",
-      subtitle: "Deschide Noi Orizonturi",
-      description: "Învață limbi străine cu profesori nativi sau certificați. Programe pentru începători și avansați, focus pe conversație și cultură.",
+      icon: Mountain,
+      title: "Tabere România - Munte",
+      subtitle: "Poiana Mărului, Bran, Predeal",
+      description: "Tabere în natură cu cursuri de engleză, drumeții, activități sportive și seri tematice. Perfect pentru copiii care iubesc aventura.",
       color: "bg-emerald-500",
+      link: "/tabara-poiana-marului-2025",
     },
     {
-      icon: Lightbulb,
-      title: "Dezvoltare Personală",
-      subtitle: "Workshops Interactive",
-      description: "Gândire critică, încredere în sine, public speaking, leadership pentru copii și adolescenți. Construiește competențe pentru viață.",
-      color: "bg-violet-500",
+      icon: Sun,
+      title: "Tabere România - Mare",
+      subtitle: "Costinești, Eforie",
+      description: "Vacanță la mare combinată cu învățarea limbii engleze. Activități pe plajă, sporturi nautice și distracție garantată.",
+      color: "bg-amber-500",
+      link: "/tabara-poiana-marului-2025",
     },
     {
-      icon: Music,
-      title: "Dans & Creativitate",
-      subtitle: "Mișcare și Expresie",
-      description: "Cursuri de dans pentru copii: modern, hip-hop, balet. Dezvoltă coordonarea, ritmul și creativitatea într-un cadru distractiv.",
-      color: "bg-rose-500",
+      icon: Snowflake,
+      title: "Tabere de Iarnă",
+      subtitle: "Ski & English",
+      description: "Învață engleza în timp ce te bucuri de schi și activități de iarnă. Cursuri dimineața, distracție pe pârtie după-amiaza.",
+      color: "bg-sky-500",
+      link: "/tabara-poiana-marului-2025",
     },
   ];
 
   return (
-    <section id="cursuri" className="py-20 bg-secondary">
+    <section id="tabere" className="py-20 bg-secondary">
       <div className="container mx-auto px-4 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            Cursurile Noastre
+            Tipuri de Tabere
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Programe diverse pentru toate vârstele și interesele. Alege cursul potrivit pentru tine sau copilul tău.
+            Alege tabăra potrivită pentru copilul tău. Fiecare program combină învățarea limbii engleze cu aventură și distracție.
           </p>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {courses.map((course, index) => (
+          {camps.map((camp, index) => (
             <div 
               key={index}
               className="bg-card rounded-2xl p-8 border border-border hover:shadow-lg transition-all duration-300 group"
             >
-              <div className={`w-14 h-14 rounded-xl ${course.color} flex items-center justify-center mb-6`}>
-                <course.icon className="w-7 h-7 text-primary-foreground" />
+              <div className={`w-14 h-14 rounded-xl ${camp.color} flex items-center justify-center mb-6`}>
+                <camp.icon className="w-7 h-7 text-primary-foreground" />
               </div>
               <h3 className="text-2xl font-bold text-foreground mb-2">
-                {course.title}
+                {camp.title}
               </h3>
               <p className="text-primary font-medium mb-3">
-                {course.subtitle}
+                {camp.subtitle}
               </p>
               <p className="text-muted-foreground mb-6">
-                {course.description}
+                {camp.description}
               </p>
-              <Button variant="outline" className="rounded-full group-hover:bg-primary group-hover:text-primary-foreground transition-all">
-                Află mai mult
+              <Button variant="outline" className="rounded-full group-hover:bg-primary group-hover:text-primary-foreground transition-all" asChild>
+                <Link to={camp.link}>
+                  Vezi Detalii
+                </Link>
               </Button>
             </div>
           ))}
