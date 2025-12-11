@@ -1,12 +1,6 @@
 import { useState } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -43,19 +37,25 @@ const Navigation = () => {
               </a>
             ))}
             
-            <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center gap-1 text-primary-foreground/90 hover:text-primary-foreground transition-colors font-medium">
+            <div className="relative group">
+              <button className="flex items-center gap-1 text-primary-foreground/90 hover:text-primary-foreground transition-colors font-medium">
                 Tabere
-                <ChevronDown className="h-4 w-4" />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                {campYears.map((year) => (
-                  <DropdownMenuItem key={year} asChild>
-                    <a href={`#tabere-${year}`}>{year}</a>
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
+                <ChevronDown className="h-4 w-4 transition-transform group-hover:rotate-180" />
+              </button>
+              <div className="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                <div className="bg-background border border-border rounded-lg shadow-lg py-2 min-w-[120px]">
+                  {campYears.map((year) => (
+                    <a
+                      key={year}
+                      href={`#tabere-${year}`}
+                      className="block px-4 py-2 text-foreground hover:bg-accent transition-colors"
+                    >
+                      {year}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
 
             <Button className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold rounded-full px-6">
               Test amplasament
