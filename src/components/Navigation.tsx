@@ -1,6 +1,12 @@
 import { useState } from "react";
-import { Menu, X, Sparkles } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -8,10 +14,10 @@ const Navigation = () => {
   const menuItems = [
     { label: "Acasă", href: "#" },
     { label: "Despre Noi", href: "#despre" },
-    { label: "Cursuri", href: "#cursuri" },
-    { label: "Tabere de Vară", href: "#tabere" },
-    { label: "Testimoniale", href: "#testimoniale" },
+    { label: "Jurnale de Tabără", href: "#testimoniale" },
   ];
+
+  const campYears = ["2023", "2024", "2025", "2026"];
 
   return (
     <nav className="fixed top-0 w-full bg-primary/95 backdrop-blur-sm z-50">
@@ -36,8 +42,23 @@ const Navigation = () => {
                 {item.label}
               </a>
             ))}
+            
+            <DropdownMenu>
+              <DropdownMenuTrigger className="flex items-center gap-1 text-primary-foreground/90 hover:text-primary-foreground transition-colors font-medium">
+                Tabere
+                <ChevronDown className="h-4 w-4" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                {campYears.map((year) => (
+                  <DropdownMenuItem key={year} asChild>
+                    <a href={`#tabere-${year}`}>{year}</a>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+
             <Button className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold rounded-full px-6">
-              Consultație Gratuită
+              Test amplasament
             </Button>
           </div>
 
@@ -64,8 +85,25 @@ const Navigation = () => {
                 {item.label}
               </a>
             ))}
+            
+            <div className="py-2">
+              <p className="text-primary-foreground font-medium mb-2">Tabere</p>
+              <div className="pl-4 space-y-2">
+                {campYears.map((year) => (
+                  <a
+                    key={year}
+                    href={`#tabere-${year}`}
+                    className="block text-primary-foreground/80 hover:text-primary-foreground transition-colors"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {year}
+                  </a>
+                ))}
+              </div>
+            </div>
+
             <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-semibold rounded-full">
-              Consultație Gratuită
+              Test amplasament
             </Button>
           </div>
         </div>
