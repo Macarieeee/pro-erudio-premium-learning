@@ -44,40 +44,63 @@ Mergem la culcare epuizați, dar fericiți. Ne întrebăm ce aventuri ne așteap
     },
     {
       day: "Ziua 3",
-      content: `Ziua a treia a venit cu și mai multe surprize plăcute. După micul dejun, am plecat la cursurile de engleză unde am lucrat în grupuri mici pe proiecte creative. Profesorii sunt foarte prietenoși și ne încurajează să vorbim cât mai mult în engleză.
+      content: `În a treia zi de tabără am fost foarte activi încă de dimineață. După micul dejun ne-am împărțit în două grupuri, în funcție de preferințe. O echipă a mers însoțită de Reyhan la un parc de trambuline absolut formidabil, unde am țopăit, rostogolit, întrecut în sărituri și tumbe în aer sau luat la trântă cu niște ciocane uriașe pe bârne… sau luat la țintă cu mingi mici de plastic, în care puteai să și înoti sau să te scufunzi… În fine, fiecare a găsit ceva de făcut pe gustul lui acolo, inclusiv să își completeze micul dejun cu un sendviș uriaș sau o înghețata în asteptarea prânzului. Cea de-a doua grupă a mers la Laser Quest, unde s-au împușcat după pofta inimii. Bonusul a fost că aceasta activitate s-a desfășurat într-un mall imens, iar cei dornici de shopping au putut să petreacă ceva timp și prin magazine. Desigur că timpul a fost insuficient, dar ne-am propus să revenim.
 
-După-amiaza am avut prima noastră excursie în afara campusului - o plimbare prin centrul orașului Manchester. Am vizitat Piața Principală, am făcut poze lângă statuile celebre și am descoperit arhitectura victoriană impresionantă a orașului. Magazinele erau tentante, dar ne-am păstrat banii pentru suveniruri la final.
+      Imediat după prânz (a fost coadă mare la cantină de data aceasta și nu am mai avut timp să mergem în camere, așa că ne-am propus să identificam orele cu mai puțină aglomerație ca să scurtăm timpul de așteptare) am mers la orele de limba engleza în fabuloasa cladire în stil Victorian. Au fost doua sesiuni de curs, cu jumătate de oră pauză între ele, dar mulți nu au mai ajuns în camere, au preferat să  socializeze în Parcul Peel, zona perfectă pentru relaxare. Orele de engleză au fost interactive, bazate pe discuții, proiecte, cu activități în perechi și echipe, așa cum noi suntem deja obșinuiti să lucrăm. 
 
-Seara am avut "International Night" unde fiecare naționalitate a prezentat ceva din cultura sa. Noi, românii, am prezentat dansuri tradiționale și am povestit despre tradițiile noastre. A fost o seară memorabilă plină de dans, muzică și râsete.`,
-      galleryLink: "https://www.facebook.com/media/set/?set=a.1329896498587712&type=3"
+      Activitatea de seara a fost distractivă și diversă. Am avut de ales între piscină și jocuri de masă la interior sau atelier de dans. Ne-am împărțit fiecare pe unde a vrut, dar se pare că cei care au ales jocurile de masă au tras lozul câștigător. S-a jucat sah, Monopoly, Jenga, jocuri de cărți, s-a pictat pe pietre și s-a modelat cu argilă. Desigur, unii au făcut de toate, mutându-se de la stație la stație, inclusiv de la dans la șah :). A fost super distracție, mai ales ca aveam posibilitatea să alegem muzica…
+`,
+      galleryLink: "https://www.facebook.com/media/set/?set=a.1330787151831980&type=3"
     },
     {
       day: "Ziua 4",
-      content: `Ziua patru a fost dedicată sportului și competițiilor. Dimineața, după cursuri, am avut un turneu de fotbal între naționalități. Echipa României s-a descurcat foarte bine, ajungând până în semifinale!
+      content: `În a patra zi de tabără deja avem rutina stabilită: ne întâlnim la cazare, mergem la masă, apoi la activitatea de dimineață, prânz, cursuri, activitatea de seara și ziua este gata… În dimineata aceasta luăm autobuzul spre Manchester. Un double-decker aproape gol (nu pentru mult timp că doar noi suntem 45…), așa că mergem la etaj, să avem priveliște. După aprximativ o jumătate de oră ajungem la Muzeul Stiinței și Industriilor unde aflăm despre dezvoltarea orașului industrial Manchester. Aflăm despre modul de viață în Epoca Industrială, despre comerțul cu lână și industria bumbacului, despre prima moară de bumbac care datează din 1780, despre prima șină de cale ferată care leagă Manchestrul de Liverpool în 1830 pentru a înlesni transportul între cele două orașe etc. Aflăm cu stupoare că în a doua jumătate a secolului al XVIII-lea doar jumătate dintre copii atingeau vârsta de doi ani, iar la cinci ani ajungeau doar 104 din 1000. Procente copleșitoare, informații care te tulbură, mașinării de tot felul, o dimineată plină.
 
-După-amiaza am participat la ateliere de artă și meșteșuguri - am făcut brățări prieteniei și am pictat tricouri. Fiecare și-a personalizat tricoul cu amintiri din tabără.
-
-Seara am avut Movie Night în aer liber. Am stat pe pături pe iarbă și am urmărit un film clasic britanic cu popcorn. Atmosfera a fost magică sub cerul înstelat al Angliei.`,
-      galleryLink: "https://www.facebook.com/media/set/?set=a.1329896498587712&type=3"
+      În rest, programul zilnic își urmează cursul obișnuit, iar seara avem din nou de ales între atelierul de jocuri, cel de vopsit tricouri și cel de baking. Ca și data trecută, unii au reușit să participe la mai multe și să lege noi prietenii în timp ce se distrează.
+`,
+      galleryLink: "https://www.facebook.com/media/set/?set=a.1332021865041842&type=3"
     },
     {
       day: "Ziua 5",
-      content: `A cincea zi a fost ziua excursiei mari! Am plecat cu autocarul spre Liverpool, orașul Beatles. Am vizitat celebrul Cavern Club, locul unde Beatles și-au început cariera, și am făcut poze la statuile lor de pe malul râului Mersey.
+      content: `Am depășit deja jumătatea timpului pe care îl avem de petrecut la Manchester și nu știm când a trecut... 
 
-Am avut timp liber pentru shopping și am mâncat tradiționalul Fish & Chips la un restaurant de pe Dock. Priveliștea portului era spectaculoasă, cu clădiri istorice și nave moderne.
+      În a cincea zi de tabără am mers la Galeria de Artă Whitworth din Manchester. Această galerie, pe langă obișnuitele exponate, are și o parte interactivă, în sensul că am putut să ne punem la încercare talentul artistic cu pensula pe pânză... A fost foarte simpatic, iar unii dintre noi chiar au reușit să contureze ceva cu sens... Ca la orice punct de atracție în Marea Britanie, și aici am găsit o cafenea cu prăjituri spectaculoase. Pe scurt, la această vizită fiecare a găsit ceva de făcut, văzut sau gustat.
 
-Seara, odată întorși în campus, am avut karaoke. Nu trebuie să spun că hiturile Beatles au fost cele mai cântate piese ale serii!`,
-      galleryLink: "https://www.facebook.com/media/set/?set=a.1329896498587712&type=3"
+      După prânz și cursurile de engleză, am avut o serie de activități în Parcul Peel. Am jucat volei, fotbal, badminton, am sărit coarda sau pur și simplu ne-am distrat la terenul de joacă. Organizatorii au avut și pături, deci cine a dorit a putut și să joace cărți sau se relaxeze pe iarbă cu telefonul în mână ori de vorbă cu prietenii.
+
+      Seara ar fi trebuit să se încheie cu un moment disco, dar au fost ceva probleme tehnice care s-au remediat destul de târziu, când majoritatea copiilor deja se retrăseseră spre camere. Am obținut, totuși, promisiunea că a doua zi să se țină din nou discoteca, speram să nu mai existe probleme.
+`,
+      galleryLink: "https://www.facebook.com/media/set/?set=a.1332985374945491&type=3"
     },
     {
       day: "Ziua 6",
-      content: `Ultima zi completă în tabără a fost plină de emoții. Dimineața am avut ultimele cursuri de engleză și am primit certificatele de participare. Profesorii ne-au felicitat pentru progresul făcut și ne-au încurajat să continuăm să învățăm.
+      content: `A sosit și mult așteptata zi în care să facem turul ghidat al Stadionului Etihad, faimosul stadion al echipei Manchester City. A fost absolut grandios. Nu doar că am avut acces la stadionul propriu-zis și am putut să facem poze cu gazonul, lojele, am trecut prin tunelul prin care jucătorii intră pe teren, dar am văzut vestiarele, am atins tricourile celor mai faimoși fotbaliști ai lumii, am stat pe bancile pe care se așează și fotbaliștii clubului. Dar punctul de mare atracție al vizitei a fost sala în care se fac conferințele de presă întrucât am putut să facem poze la masă cu Joseph (Pep) Guardiola în persoană. Amintiri unice, emoții de neuitat… Desigur, plecarea a durat mai mult decât am anticipat fiindcă ultima oprire a fost la magazine, de unde fiecare a vrut să plece cu o amintire, mai mult sau mai puțin costisitoare.
 
-După-amiaza a fost dedicată pregătirilor pentru seara de gală. Am repetat spectacolele, ne-am pregătit costumele și am decorat sala de festivități.
-
-Seara de gală a fost punctul culminant al taberei. Fiecare grup a prezentat câte ceva: dans, teatru, cântece. Am râs, am aplaudat și chiar am lăcrimat puțin când am realizat că aventura se apropie de final. Ne-am făcut promisiuni să păstrăm legătura și să ne revedem.`,
-      galleryLink: "https://www.facebook.com/media/set/?set=a.1329896498587712&type=3"
+      Așa cum ni se promisese, seara am avut disco. Aranjați care mai de care (în special fetele), am dansat și cântat melodii alese de noi sau alții, a fost foarte frumos! 
+`,
+      galleryLink: "https://www.facebook.com/media/set/?set=a.1334672534776775&type=3 "
     },
+    {
+      day: "Ziua 7",
+      content: `În ultima zi de tabără am mers în excursia de o zi la Chester, unul dintre cele mai frumoase orășele din Marea Britanie. Am aflat despre istoria asezării care datează de pe vremea romanilor, când s-a constituit ca o fortăreață militară (79BC) cu numele Deva Victrix. După retragerea romană orașul a fost ocupat de anglo-saxoni, cei care au fortificat pereții cetății pentru a se apăra de raidurile vikingilor. Mai tarziu, cucerirea Normandă a adus orașul sub conducerea ducelui de Chester (de unde și numele), după care localitatea a devenit un port important, pus în umbră de Liverpool abia în secolul al XVIII-lea. Orașul cunoaște un nou moment de dezvoltare în perioada victoriană, din această perioadă datând foarte multe clădiri, care îi și conferă o culoare aparte. 
+
+      Vizita noastră a început cu un tur pietonal în centrul Chester-ului, a continuat cu vizitarea faimoasei și grandioasei catedrale, după care am mers la un tur ghidat cu vaporul, când am văzut majoritatea clădirilor emblematice pentru oraș. După ce am vizitat și un edificiu roman, am început lunga plimbare pe cei trei kilometri de ziduri de apărare care încercuiesc orașul. Minunate priveliști pe cel mai bine păstrat și cel mai lung zid de apărare din Marea Britanie.
+
+      Obosiți, dar fericiți, am ajuns în campus chiar la timp pentru o cină mai târzie decât de obicei (cina era în general la ora 18.00). Activitatea de seară a fost opțională, dar toți au ales să aparticipe la jocuri în Peel Parc, doar este ultima seară petrecută în această tabără și trebuie să profităm la maxim de fiecare moment.
+ 
+`,
+      galleryLink: "https://www.facebook.com/media/set/?set=a.1335540731356622&type=3  "
+    },
+    {
+      day: "Ziua 8 - ultima zi de tabără ",
+      content: `Ultima zi de tabără a fost tristă fiindcă trebuia să ne despărțim de prieteni dragi. După ce am făcut poze în fel și chip cu certificatele primite la curs (am avut și mândria ca două dintre elevele noastre să fie desemnate Student of the Week pentru implicare din timpul cursurilor și cunoștințele de limbă engleză), am vrut neapărat să ne luam la revedere de la toti activity leaders englezi. Fiindcă unii au fost greu de găsit, chiar am întârziat puțin plecarea, noroc că domnul șofer a fost super înțelegător.
+
+      A urmat lunga călătorie înapoi spre casă, cu escală la Amsterdam și mult timp liber la Duty Free, moment tocmai bun să mai cumpărăm câte ceva celor dragi. 
+
+`,
+      galleryLink: "https://www.facebook.com/media/set/?set=a.1335540731356622&type=3"
+    },
+    
   ];
 
   const otherJournals = [
@@ -92,7 +115,7 @@ Seara de gală a fost punctul culminant al taberei. Fiecare grup a prezentat câ
       <Navigation />
       
       {/* Hero Section - Same as Camp Page */}
-      <section className="relative pt-16">
+      {/* <section className="relative pt-16">
         <div className="h-[60vh] relative overflow-hidden">
           <img 
             src={summerCampImage} 
@@ -114,10 +137,10 @@ Seara de gală a fost punctul culminant al taberei. Fiecare grup a prezentat câ
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Quick Info */}
-      <section className="py-12 bg-secondary/30">
+      {/* <section className="py-12 bg-secondary/30">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <div className="flex items-center gap-3">
@@ -158,10 +181,10 @@ Seara de gală a fost punctul culminant al taberei. Fiecare grup a prezentat câ
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Journal Intro */}
-      <section className="py-16">
+      <section className="py-16 mt-10">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">

@@ -5,12 +5,40 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Luggage } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  School,
+  Dumbbell,
+  Clapperboard,
+  Waves,
+  FlaskConical,
+  BookOpen,
+  Library,
+  Circle,
+  Home,
+  Utensils,
+  Coffee,
+  Store,
+} from "lucide-react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Calendar, MapPin, Users, Clock, CheckCircle, Mountain, XCircle, Percent, FileText, Clipboard, Compass, Building, Wifi, Car, UtensilsCrossed, TreePine, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import summerCampImage from "@/assets/summer-camp.jpg";
+import summerCampImage from "@/assets/Grosvenor Hall.jpg";
+import activityImage1 from "@/assets/Grosvenor Hall - Activity.gif";
+import activityImage2 from "@/assets/Grosvenor Hall - Activity2.jpg";
+import activityImage3 from "@/assets/Grosvenor Hall - Activity3.webp";
+import activityImage4 from "@/assets/Grosvenor Hall - Activity4.png";
+import kitTabaraImage from "@/assets/Kit Tabara Pro Erudio.jpg";
+const activityImages = [
+  activityImage1,
+  activityImage2,
+  activityImage3,
+  activityImage4,
+  // poți adăuga / scoate câte vrei
+];
+import programImage from "@/assets/Program.jpg";
 
 interface CampPageProps {
   year: string;
@@ -67,10 +95,10 @@ const CampPage = ({ year, campName }: CampPageProps) => {
     });
   };
   const campDetails = {
-    location: "Poiana Mărului, Brașov",
-    duration: "7 zile / 6 nopți",
-    ageGroup: "8-16 ani",
-    dates: `15-22 Iulie ${year}`,
+    location: "Grosvenor Activity Centre",
+    duration: "8 zile / 7 nopți",
+    ageGroup: "11-18 ani",
+    dates: `25 iulie – 01 august 2026`,
   };
 
   const highlights = [
@@ -83,34 +111,44 @@ const CampPage = ({ year, campName }: CampPageProps) => {
   ];
 
   const locationDescription = {
-    title: "Pensiunea Natura",
-    description: "Situată în inima munților, pensiunea oferă un cadru natural spectaculos, perfect pentru activități educaționale și recreative. Camerele sunt confortabile și dotate cu toate facilitățile necesare pentru un sejur plăcut.",
+    title: "Centrul de activități Grosvenor Hall",
+    description: "Centrul de aventură în care vom merge anul acesta, Grosvenor Hall din Kent, este situat pe coasta de sud-vest a Angliei, aproape de orașul Dover și la două ore distanță de Londra. Unul dintre cele mai mari centre PGL, are o capacitate de cazare de peste1000 de locuri și se întinde pe 50 de hectare de teren. Grosvenor Hall este un fost conac care cuprinde, pe langă pădure și zone întinse de gazon, un lac spectaculos. Din primul moment când intri in centrul de activități simți că te cuprinde un fior de adrenalină, iar pe măsură ce descoperi tot ceea ce oferă, îți dai seama că aici se găsește ceva de făcut pentru toate gusturile. Centrul de activități Grosvenor Hall cuprinde peste 20 de zone de aventură: terenuri de sport potrivite tuturor condițiilor meteo, săli de activități la interior (inclusiv sală de jocuri), teren de scrimă, ateliere de construcție plute, zonă de cățărări, zonă de trekking, tir cu arcul, tiroliană, grajduri, lacuri, păduri etc, astfel încât o săptămâna pare scurtă pentru câte vom avea de făcut.",
   };
 
-  const locationFacilities = [
-    { icon: Wifi, label: "WiFi gratuit" },
-    { icon: Car, label: "Parcare gratuită" },
-    { icon: UtensilsCrossed, label: "Restaurant" },
-    { icon: TreePine, label: "Grădină" },
-  ];
+const locationFacilities = [
+  { icon: School, label: "Săli de clase bine echipate, inclusiv săli multimedia" },
+  { icon: Dumbbell, label: "Centre sportive" },
+  { icon: Clapperboard, label: "Studiouri media/de dans" },
+  { icon: Waves, label: "Piscină interioară" },
+  { icon: FlaskConical, label: "Laboratoare de științe și limbi străine" },
+  { icon: Library, label: "Bibliotecă și librării" },
+  { icon: Circle, label: "Terenuri de fotbal" }, // alternativă sigură
+  { icon: Home, label: "Sală de festivități" },
+  { icon: Utensils, label: "Cantină" },
+  { icon: Coffee, label: "Cafenea" },
+  { icon: Store, label: "Magazine" },
+];
 
-  const includedInPrice = [
-    "Cazare 6 nopți în camere cu 3-4 paturi",
-    "Pensiune completă (3 mese/zi + gustări)",
-    "Cursuri de limba engleză (15 ore)",
-    "Toate activitățile și excursiile din program",
-    "Materiale didactice și certificat de participare",
-    "Supraveghere 24/7 de către echipa de animatori",
-    "Asigurare medicală pe perioada taberei",
-    "Transport local pentru excursii",
-  ];
 
-  const notIncludedInPrice = [
-    "Transport dus-întors (opțional organizat)",
-    "Cheltuieli personale (suveniruri, gustări extra)",
-    "Activități opționale contra cost",
-    "Excursii extra neplanificate în program",
-  ];
+const includedInPrice = [
+  "Cazare în campus",
+  "Pensiune completă",
+  "15 lecții de engleză pe săptămână, în grupuri internaționale, cu profesori vorbitori nativi",
+  "Test inițial de evaluare",
+  "Materiale de studiu",
+  "Certificat de absolvire a cursurilor",
+  "Program zilnic de activități comune",
+  "Program zilnic tematic",
+  "Excursii: una de jumătate de zi și una de o zi întreagă săptămânal",
+  "Un însoțitor de grup de la Pro Erudio la fiecare 10 copii",
+];
+
+const notIncludedInPrice = [
+  "Transport avion (250–350 euro, în funcție de oferta companiei de zbor la momentul rezervării locului)",
+  "Transfer de la/ către aeroport și campus (costul se calculează în funcție de numărul copiilor înscriși și se achită cu o lună înainte de plecare)",
+  "Asigurare storno / de călătorie",
+];
+
 
   const activitiesDescription = `Activitățile sunt numeroase și foarte variate:
 
@@ -118,35 +156,47 @@ const CampPage = ({ year, campName }: CampPageProps) => {
 • ateliere de actorie, fotbal, arts & crafts, cluburi de conversație, seminarii pe diferite teme, jocuri de echipă (ex Treasure Hunt, Bingo) etc
 • quiz-uri, vizionări de filme, prezentări de modă, seri tematice etc
 • excursii de o jumătate de zi în orașul Dublin (plimbări pietonale, shopping, vizita la Muzeul Național de Istorie, la Grădina Botanică, Parcul St Stephen's Green etc)
-• o excursie de o zi întreagă (posibil la Dún Laoghaire and Bray, două orășele pe coastă, mai sus de Dublin sau Howth, un sat pescăresc din secolul al XIV-lea).`;
+• o excursie de o zi întreagă (posibil la Dún Laoghaire and Bray, două orășele pe coastă, mai sus de Dublin sau Howth, un sat pescăresc din secolul al XIV-lea).
+
+Exemple de activități de seară:
+
+• Ambush
+• Campfire
+• Capture the Flag
+• Disco
+• Passport to the World
+• PGL Sports Night
+• Photo Challenge
+• Robot Wars
+• Quiz Show
+• Snap Shot
+• Splash
+• Wacky Races`;
 
   const registrationInfo = {
     steps: [
-      "Completarea formularului de înscriere online sau fizic",
-      "Achitarea avansului de 30% din tarif",
-      "Trimiterea documentelor necesare",
-      "Confirmarea locului prin email",
+      "Pentru rezervări vă rugăm să completaţi formularul din partea de jos a paginii sau să ne trimiteţi un email",
+      "Plata avansului (250 GBP din preţul taberei) se face după contituirea grupul și rezervarea biletelor de avion. Diferența se achită în două rate: una în februarie și a doua în mai.",
+      "Pentru orice alte informaţii, vă rugăm să nu ezitaţi să ne contactaţi la telefon",
     ],
     contact: {
-      phone: "+40 722 123 456",
-      email: "inscrieri@proerudio.ro",
+      phone: "0741 389 897 (Roxana Popescu)",
+      email: "office@proerudio.ro",
     },
   };
 
-  const requiredDocuments = [
-    "Copie act identitate copil (certificat naștere/CI)",
-    "Copie CI părinte/tutore legal",
-    "Adeverință medicală de la medicul de familie",
-    "Fișa medicală completată",
-    "Acord parental semnat",
-    "Declarație pe proprie răspundere",
-  ];
+const requiredDocuments = [
+  "Formularul de înscriere completat",
+  "Pașaport",
+  "Declarație notarială cu acordul ambilor părinți",
+  "Avans de 250 GBP la înscriere",
+  "Autorizație de călătorie în Marea Britanie (ETA)",
+];
+
 
   const discounts = [
-    { type: "Early Bird", value: "10%", condition: "Pentru înscrieri până la 31 martie" },
-    { type: "Frați/Surori", value: "15%", condition: "Al doilea copil din familie" },
-    { type: "Fidele", value: "10%", condition: "Participanți din edițiile anterioare" },
-    { type: "Grup", value: "5%", condition: "Grupuri de minim 5 copii" },
+    { type: "Continuitate", value: "5%", condition: "Doar pentru copiii care au participat la programul de tabara din vara 2025" },
+    { type: "Frați/Surori", value: "5%", condition: "Pentru doi copii ai aceleiași familii" },
   ];
 
   const otherCamps = [
@@ -162,24 +212,21 @@ const CampPage = ({ year, campName }: CampPageProps) => {
       
       {/* Hero Section */}
       <section className="relative pt-16">
-        <div className="h-[60vh] relative overflow-hidden">
+        <div className="h-[70vh] relative overflow-hidden">
           <img 
             src={summerCampImage} 
-            alt={`${campName} ${year}`}
+            alt={`${campName} 2026`}
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-background via-background/50 to-transparent" />
           <div className="absolute bottom-0 left-0 right-0 p-8 lg:p-16">
             <div className="container mx-auto">
-              <span className="inline-block bg-accent text-accent-foreground px-4 py-1 rounded-full text-sm font-semibold mb-4">
-                {year}
+              <span className="inline-block bg-accent text-accent-foreground px-4 py-1 rounded-full text-sm font-semibold">
+                2026
               </span>
-              <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-4">
-                {campName}
+              <h1 className="text-4xl md:text-6xl font-bold text-foreground">
+                Tabără educațională în Marea Britanie
               </h1>
-              <p className="text-xl text-muted-foreground max-w-2xl">
-                O aventură educațională de neuitat în inima naturii
-              </p>
             </div>
           </div>
         </div>
@@ -238,15 +285,19 @@ const CampPage = ({ year, campName }: CampPageProps) => {
                 Despre Tabără
               </h2>
               <p className="text-muted-foreground mb-6 leading-relaxed">
-                Tabăra Poiana Mărului oferă copiilor o experiență unică de învățare a limbii engleze 
-                într-un cadru natural spectaculos. Programul nostru combină sesiuni interactive de 
-                engleză cu activități outdoor captivante, creând un mediu perfect pentru dezvoltarea 
-                limbajului și a abilităților sociale.
+                Anul acesta vă propunem o tabăra internațională care urmează tipicul unei tabere de aventură adresate 
+                copiilor britanici. Singură diferența este includerea în program a cursurilor de limba engleză în timpul 
+                dimineții și a excursiilor, săptămânal una de o zi întreagă și una de o jumătate de zi, special concepute 
+                pentru elevii străini.
               </p>
               <p className="text-muted-foreground leading-relaxed">
-                Sub îndrumarea profesorilor noștri experimentați și a animatorilor dedicați, copiii 
-                vor descoperi bucuria învățării prin joc, vor face prieteni noi și vor crea amintiri 
-                de neuitat.
+                Colaborăm cu PGL Travel, care este o companie fondată în anul 1957 și are ca obiect principal de activitate furnizarea de activități 
+                sportive, recreative și educaționale pentru copiii britanici și internaționali în centre proprii. De-a lungul anilor, 
+                compania a achiziționat numeroase centre, majoritatea în Marea Britanie: 10 în Anglia, 1 în Scoția și 1 în Țara 
+                Galilor. În anii 1990 PGL și-a extins activitatea în Franța, intrând chiar și pe piața școlilor de schi pentru copii.
+                 Specific fiecărui centru este faptul că se întinde pe domenii uriașe, care cuprind lacuri sau râuri, păduri, plaje 
+                 sau zone stâncoase, terenuri de sport, piste de biciclete, săli de sport la interior, centre de activități de aventură,
+                  mici magazine, săli de clasă și ateliere pe diferite teme.
               </p>
             </div>
             <div>
@@ -268,45 +319,62 @@ const CampPage = ({ year, campName }: CampPageProps) => {
 
       {/* Location Description */}
       <section className="py-20 bg-secondary/30">
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className="flex items-center gap-3 mb-12 justify-center">
-            <Mountain className="h-8 w-8 text-primary" />
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-              Descrierea Locației
-            </h2>
+  <div className="container mx-auto px-4 lg:px-8">
+
+    {/* Titelul secțiunii */}
+    <div className="flex items-center gap-3 mb-12 justify-center">
+      <Mountain className="h-8 w-8 text-primary" />
+      <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+        Descrierea Locației
+      </h2>
+    </div>
+
+    {/* TEXT + POZĂ */}
+    <div className="grid lg:grid-cols-2 gap-12 items-start">
+      {/* Text în stânga */}
+      <div>
+        <h3 className="text-2xl font-bold text-foreground mb-4">
+          {locationDescription.title}
+        </h3>
+        <p className="text-muted-foreground mb-8 leading-relaxed">
+          {locationDescription.description}
+        </p>
+      </div>
+
+      {/* Imagine în dreapta */}
+      <div className="rounded-2xl overflow-hidden shadow-lg">
+        <img 
+          src={summerCampImage}
+          alt="Locația taberei"
+          className="w-full h-[400px] object-cover"
+        />
+      </div>
+    </div>
+
+    {/* FACILITĂȚI PE FULL WIDTH */}
+    <div className="mt-12">
+      <Card className="bg-card border-border">
+        <CardContent className="pt-6">
+          <h4 className="text-lg font-semibold text-foreground mb-6">Facilități</h4>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {locationFacilities.map((facility, index) => (
+              <div key={index} className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                  <facility.icon className="h-5 w-5 text-primary" />
+                </div>
+                <span className="text-foreground">{facility.label}</span>
+              </div>
+            ))}
           </div>
-          <div className="grid lg:grid-cols-2 gap-12 items-start">
-            <div>
-              <h3 className="text-2xl font-bold text-foreground mb-4">{locationDescription.title}</h3>
-              <p className="text-muted-foreground mb-8 leading-relaxed">
-                {locationDescription.description}
-              </p>
-              <Card className="bg-card border-border">
-                <CardContent className="pt-6">
-                  <h4 className="text-lg font-semibold text-foreground mb-4">Facilități</h4>
-                  <div className="grid grid-cols-2 gap-4">
-                    {locationFacilities.map((facility, index) => (
-                      <div key={index} className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                          <facility.icon className="h-5 w-5 text-primary" />
-                        </div>
-                        <span className="text-foreground">{facility.label}</span>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-            <div className="rounded-2xl overflow-hidden shadow-lg">
-              <img 
-                src={summerCampImage} 
-                alt="Locația taberei"
-                className="w-full h-[400px] object-cover"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
+
+        </CardContent>
+      </Card>
+    </div>
+
+  </div>
+</section>
+
 
       {/* Ce include tariful / Ce nu include */}
       <section className="py-20">
@@ -350,29 +418,41 @@ const CampPage = ({ year, campName }: CampPageProps) => {
 
       {/* Program de excursii și activități */}
       <section className="py-20 bg-secondary/30">
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className="flex items-center gap-3 mb-12 justify-center">
-            <Compass className="h-8 w-8 text-primary" />
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-              Program de Excursii și Activități
-            </h2>
+  <div className="container mx-auto px-4 lg:px-8">
+    <div className="flex items-center gap-3 mb-12 justify-center">
+      <Compass className="h-8 w-8 text-primary" />
+      <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+        Program de Excursii și Activități
+      </h2>
+    </div>
+
+    <div className="grid lg:grid-cols-2 gap-12 items-center">
+      {/* Textul în stânga */}
+      <div>
+        <p className="text-muted-foreground leading-relaxed whitespace-pre-line">
+          {activitiesDescription}
+        </p>
+      </div>
+
+      {/* Grid de poze în dreapta */}
+      <div className="grid grid-cols-2 gap-4 rounded-2xl overflow-hidden shadow-lg">
+        {activityImages.map((src, index) => (
+          <div
+            key={index}
+            className="relative w-full aspect-[4/3] overflow-hidden"
+          >
+            <img
+              src={src}
+              alt={`Activitate ${index + 1}`}
+              className="w-full h-full object-cover"
+            />
           </div>
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <p className="text-muted-foreground leading-relaxed whitespace-pre-line">
-                {activitiesDescription}
-              </p>
-            </div>
-            <div className="rounded-2xl overflow-hidden shadow-lg">
-              <img 
-                src={summerCampImage} 
-                alt="Activități și excursii"
-                className="w-full h-[400px] object-cover"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
 
       {/* Înscrieri și rezervări */}
       <section className="py-20">
@@ -455,16 +535,42 @@ const CampPage = ({ year, campName }: CampPageProps) => {
               Reduceri Disponibile
             </h2>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
-            {discounts.map((discount, index) => (
-              <Card key={index} className="bg-card border-border text-center hover:shadow-lg transition-shadow">
-                <CardContent className="pt-6">
-                  <span className="text-4xl font-bold text-accent">{discount.value}</span>
-                  <h3 className="text-lg font-semibold text-foreground mt-2 mb-2">{discount.type}</h3>
-                  <p className="text-sm text-muted-foreground">{discount.condition}</p>
-                </CardContent>
-              </Card>
-            ))}
+          <div className="grid justify-center grid-cols-[repeat(auto-fit,_minmax(260px,_1fr))] gap-6 max-w-5xl mx-auto">
+  {discounts.map((discount, index) => (
+    <Card
+      key={index}
+      className="bg-card border-border text-center hover:shadow-lg transition-shadow"
+    >
+      <CardContent className="pt-6">
+        <span className="text-4xl font-bold text-accent">{discount.value}</span>
+        <h3 className="text-lg font-semibold text-foreground mt-2 mb-2">
+          {discount.type}
+        </h3>
+        <p className="text-sm text-muted-foreground">{discount.condition}</p>
+      </CardContent>
+    </Card>
+  ))}
+</div>
+
+        </div>
+      </section>
+        {/* Ce trebuie sa contina bagajul copiilor */}
+      <section className="py-20 bg-secondary/30">
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className="flex items-center gap-3 mb-12 justify-center">
+            <Luggage className="h-8 w-8 text-primary" />
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
+              Ce trebuie sa contina bagajul copiilor
+            </h2>
+          </div>
+          <div className="max-w-4xl mx-auto">
+            <div className="rounded-2xl overflow-hidden shadow-lg">
+              <img 
+                src={kitTabaraImage} 
+                alt="Ce trebuie sa contina bagajul copiilor"
+                className="w-full object-contain"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -481,7 +587,7 @@ const CampPage = ({ year, campName }: CampPageProps) => {
           <div className="max-w-4xl mx-auto">
             <div className="rounded-2xl overflow-hidden shadow-lg">
               <img 
-                src={summerCampImage} 
+                src={programImage} 
                 alt="Program orientativ"
                 className="w-full object-contain"
               />
