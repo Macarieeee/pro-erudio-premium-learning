@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import summerCampImage from "@/assets/summer-camp.jpg";
+import englishTestImage from "@/assets/Placement-Test.webp";
 
 const EnglishTestSection = () => {
   return (
@@ -28,7 +28,7 @@ const EnglishTestSection = () => {
           </div>
           <div className="rounded-2xl overflow-hidden shadow-lg">
             <img 
-              src={summerCampImage} 
+              src={englishTestImage} 
               alt="Test de amplasament nivel engleză"
               className="w-full h-[400px] object-cover"
             />
