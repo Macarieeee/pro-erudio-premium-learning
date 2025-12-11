@@ -50,7 +50,7 @@ const Navigation = () => {
                         <span>{year}</span>
                         <ChevronRight className="h-4 w-4" />
                       </button>
-                      <div className="absolute left-full top-0 pl-2 opacity-0 invisible group-hover/year:opacity-100 group-hover/year:visible transition-all duration-200">
+                      <div className="absolute right-full top-0 pr-2 opacity-0 invisible group-hover/year:opacity-100 group-hover/year:visible transition-all duration-200">
                         <div className="bg-background border border-border rounded-lg shadow-lg py-2 min-w-[200px]">
                           <a
                             href={`#tabara-poiana-marului-${year}`}
