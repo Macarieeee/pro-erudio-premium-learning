@@ -276,14 +276,16 @@ const AboutPage = () => {
       {/* Contact Section */}
       <section className="py-20">
         <div className="container mx-auto px-4 lg:px-8">
+        <div className="text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
             Întrebări despre Tabere?
           </h2>
-          <p className="text-muted-foreground mb-8 leading-relaxed max-w-2xl">
+          <p className="text-muted-foreground mb-8 leading-relaxed max-w-2xl mx-auto">
             Vrei să afli mai multe despre taberele noastre? Suntem aici să răspundem la toate 
             întrebările tale despre program, locații, prețuri și înscrieri.
           </p>
-          <div className="flex flex-wrap gap-8">
+        </div>
+        <div className="flex flex-wrap gap-8 justify-center">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
                 <Phone className="h-6 w-6 text-primary" />
