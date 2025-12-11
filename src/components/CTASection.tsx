@@ -16,9 +16,9 @@ const CTASection = () => {
         </div>
         
         <div className="max-w-3xl mx-auto">
-          <Card className="bg-primary-foreground/10 border-primary-foreground/20 backdrop-blur">
+          <Card className="bg-card border-0 shadow-2xl">
             <CardContent className="p-8">
-              <RegistrationForm variant="dark" />
+              <RegistrationForm />
             </CardContent>
           </Card>
         </div>
