@@ -1,8 +1,8 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Users, Award, BookOpen, Heart, Globe, Target, CheckCircle, Mail, Phone, MapPin, ChevronLeft, ChevronRight } from "lucide-react";
+import { Users, Award, BookOpen, Heart, Globe, Target, CheckCircle, Mail, Phone, MapPin } from "lucide-react";
+import RegistrationForm from "@/components/RegistrationForm";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import aboutClassroomImage from "@/assets/about-classroom.jpg";
 import summerCampImage from "@/assets/summer-camp.jpg";
@@ -315,19 +315,14 @@ const AboutPage = () => {
                 </div>
               </div>
             </div>
-            <div className="bg-primary rounded-2xl p-8 text-center">
-              <h3 className="text-2xl font-bold text-primary-foreground mb-4">
+            <div className="bg-primary rounded-2xl p-8">
+              <h3 className="text-2xl font-bold text-primary-foreground mb-4 text-center">
                 Rezervă un Loc la Tabără!
               </h3>
-              <p className="text-primary-foreground/80 mb-6">
+              <p className="text-primary-foreground/80 mb-6 text-center">
                 Înscrierile pentru taberele 2025 sunt deschise. Locurile sunt limitate!
               </p>
-              <Button 
-                size="lg"
-                className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold rounded-full px-8"
-              >
-                Înscrie-te Acum
-              </Button>
+              <RegistrationForm variant="dark" />
             </div>
           </div>
         </div>
