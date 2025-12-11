@@ -1,26 +1,26 @@
-import { Heart, Users, Gamepad2, Award } from "lucide-react";
+import { Heart, Users, Gamepad2, Award, Globe, Shield } from "lucide-react";
 
 const AboutSection = () => {
   const features = [
     {
-      icon: Heart,
-      title: "Pasiune pentru Educație",
-      description: "Profesorii noștri pasionați creează un mediu cald și inspirațional pentru fiecare elev.",
+      icon: Globe,
+      title: "Tabere Internaționale",
+      description: "Experiențe în UK, Irlanda și alte destinații pentru imersie totală în limba engleză.",
     },
     {
       icon: Users,
       title: "Grupe Mici",
-      description: "Maximum 8 elevi per clasă pentru atenție personalizată și progres rapid.",
+      description: "Maximum 15 copii per grupă pentru atenție personalizată și siguranță maximă.",
     },
     {
       icon: Gamepad2,
-      title: "Metode Interactive",
-      description: "Lecții captivante prin jocuri, conversații și activități practice.",
+      title: "Învățare prin Joc",
+      description: "Activități interactive, excursii și jocuri care fac învățatul distractiv.",
     },
     {
-      icon: Award,
-      title: "Rezultate Măsurabile",
-      description: "Urmărim progresul fiecărui elev și certificăm competențele dobândite.",
+      icon: Shield,
+      title: "Siguranță 24/7",
+      description: "Supraveghere permanentă și echipă de animatori experimentați.",
     },
   ];
 
@@ -29,10 +29,11 @@ const AboutSection = () => {
       <div className="container mx-auto px-4 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-            Despre Noi
+            Despre Taberele Noastre
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            De peste 15 ani, construim fundații solide pentru viitorul elevilor noștri. Credem în puterea educației personalizate, în bucuria învățării și în dezvoltarea completă a fiecărui copil - academic, emoțional și social.
+            De peste 14 ani, organizăm tabere de limbă engleză care combină educația cu aventura. 
+            Copiii învață engleza natural, prin conversații reale, activități captivante și experiențe culturale autentice.
           </p>
         </div>
         

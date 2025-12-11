@@ -1,36 +1,36 @@
-import { GraduationCap, Users, Sparkles, LineChart, Heart, Trophy } from "lucide-react";
+import { GraduationCap, Users, Sparkles, Shield, Heart, Trophy } from "lucide-react";
 
 const WhyChooseUs = () => {
   const reasons = [
     {
       icon: GraduationCap,
-      title: "Profesori Experimentați și Prietenoși",
-      description: "Echipa noastră de pedagogi pasionați face fiecare lecție captivantă și eficientă.",
+      title: "Profesori Nativi și Certificați",
+      description: "Echipa de profesori cu experiență internațională și certificări Cambridge.",
     },
     {
-      icon: Users,
-      title: "Grupe Mici de Învățare",
-      description: "Maximum 8 elevi per clasă pentru atenție individualizată și progres rapid.",
+      icon: Shield,
+      title: "Siguranță Garantată",
+      description: "Supraveghere 24/7, asigurare medicală și protocol strict de siguranță.",
     },
     {
       icon: Sparkles,
-      title: "Lecții Interactive și Moderne",
-      description: "Folosim tehnologie, jocuri și activități practice pentru o învățare plăcută.",
+      title: "Activități Variate",
+      description: "Sporturi, excursii, ateliere creative și seri tematice pentru fiecare zi.",
     },
     {
-      icon: LineChart,
-      title: "Urmărire Personalizată a Progresului",
-      description: "Evaluări regulate și feedback detaliat pentru părinți și elevi.",
+      icon: Users,
+      title: "Grupe Internaționale",
+      description: "Socializare cu copii din alte țări pentru practică reală a limbii.",
     },
     {
       icon: Heart,
-      title: "Atmosferă Pozitivă și Creativă",
-      description: "Mediu sigur și încurajator unde fiecare copil se simte valorizat.",
+      title: "Experiențe de Neuitat",
+      description: "Amintiri pentru o viață și prietenii care durează dincolo de tabără.",
     },
     {
       icon: Trophy,
-      title: "Rezultate Dovedite",
-      description: "Sute de absolvenți cu certificări internaționale și progres măsurabil.",
+      title: "Peste 2000 de Absolvenți",
+      description: "14 ani de experiență și mii de copii fericiți care revin an de an.",
     },
   ];
 
@@ -39,10 +39,10 @@ const WhyChooseUs = () => {
       <div className="container mx-auto px-4 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            De Ce Să Ne Alegi?
+            De Ce Taberele Pro Erudio?
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Ne diferențiem prin dedicarea noastră pentru succesul fiecărui elev și abordarea holistică a educației.
+            Ne diferențiem prin dedicarea pentru fiecare copil și experiența acumulată în organizarea taberelor educaționale.
           </p>
         </div>
         
