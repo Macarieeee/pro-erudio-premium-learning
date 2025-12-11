@@ -1,51 +1,35 @@
-import CourseCard from "./CourseCard";
-import { BookOpen, Users, Trophy, Sparkles } from "lucide-react";
+import { BookOpen, Globe, Lightbulb, Music } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const CoursesSection = () => {
   const courses = [
     {
-      title: "English for Beginners",
-      description: "Perfect pentru copiii care încep călătoria lor în învățarea limbii engleze.",
-      level: "Nivel: Beginner (A1-A2)",
       icon: BookOpen,
-      features: [
-        "Vocabular fundamental și pronunție corectă",
-        "Activități interactive și jocuri educative",
-        "Materiale Cambridge adaptate pentru copii",
-      ],
+      title: "Limba Engleză",
+      subtitle: "Pentru Copii, Adolescenți & Adulți",
+      description: "Cursuri adaptate fiecărei vârste, de la primii pași până la nivel avansat. Pregătire pentru examene Cambridge, conversație, gramatică și vocabular.",
+      color: "bg-primary",
     },
     {
-      title: "English Intermediate",
-      description: "Dezvoltă abilitățile de conversație și înțelegere a textelor mai complexe.",
-      level: "Nivel: Intermediate (B1-B2)",
-      icon: Users,
-      features: [
-        "Conversații fluente pe teme diverse",
-        "Gramatică avansată și scriere structurată",
-        "Pregătire pentru examene Cambridge (PET, FCE)",
-      ],
+      icon: Globe,
+      title: "Germană & Franceză",
+      subtitle: "Deschide Noi Orizonturi",
+      description: "Învață limbi străine cu profesori nativi sau certificați. Programe pentru începători și avansați, focus pe conversație și cultură.",
+      color: "bg-emerald-500",
     },
     {
-      title: "English Advanced",
-      description: "Atingerea unui nivel excelent de cunoaștere a limbii engleze.",
-      level: "Nivel: Advanced (C1-C2)",
-      icon: Trophy,
-      features: [
-        "Comunicare la nivel aproape nativ",
-        "Analiză literară și eseuri complexe",
-        "Pregătire pentru CAE și CPE",
-      ],
+      icon: Lightbulb,
+      title: "Dezvoltare Personală",
+      subtitle: "Workshops Interactive",
+      description: "Gândire critică, încredere în sine, public speaking, leadership pentru copii și adolescenți. Construiește competențe pentru viață.",
+      color: "bg-violet-500",
     },
     {
-      title: "English for Fun",
-      description: "Cursuri creative și interactive pentru copii care vor să învețe prin joc.",
-      level: "Nivel: Toate nivelurile",
-      icon: Sparkles,
-      features: [
-        "Activități creative: teatru, muzică, arte",
-        "Teme atractive și apropiate de interesele copiilor",
-        "Accent pe vorbire și exprimare liberă",
-      ],
+      icon: Music,
+      title: "Dans & Creativitate",
+      subtitle: "Mișcare și Expresie",
+      description: "Cursuri de dans pentru copii: modern, hip-hop, balet. Dezvoltă coordonarea, ritmul și creativitatea într-un cadru distractiv.",
+      color: "bg-rose-500",
     },
   ];
 
@@ -54,16 +38,35 @@ const CoursesSection = () => {
       <div className="container mx-auto px-4 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            Cursuri de limba engleză
+            Cursurile Noastre
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Alege programul potrivit pentru nivelul și obiectivele copilului tău
+            Programe diverse pentru toate vârstele și interesele. Alege cursul potrivit pentru tine sau copilul tău.
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {courses.map((course, index) => (
-            <CourseCard key={index} {...course} />
+            <div 
+              key={index}
+              className="bg-card rounded-2xl p-8 border border-border hover:shadow-lg transition-all duration-300 group"
+            >
+              <div className={`w-14 h-14 rounded-xl ${course.color} flex items-center justify-center mb-6`}>
+                <course.icon className="w-7 h-7 text-primary-foreground" />
+              </div>
+              <h3 className="text-2xl font-bold text-foreground mb-2">
+                {course.title}
+              </h3>
+              <p className="text-primary font-medium mb-3">
+                {course.subtitle}
+              </p>
+              <p className="text-muted-foreground mb-6">
+                {course.description}
+              </p>
+              <Button variant="outline" className="rounded-full group-hover:bg-primary group-hover:text-primary-foreground transition-all">
+                Află mai mult
+              </Button>
+            </div>
           ))}
         </div>
       </div>

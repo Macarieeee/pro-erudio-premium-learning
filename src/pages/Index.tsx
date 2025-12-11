@@ -1,27 +1,25 @@
 import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
-import CoursesSection from "@/components/CoursesSection";
-import WhyChooseUs from "@/components/WhyChooseUs";
 import AboutSection from "@/components/AboutSection";
-import PersonalDevelopment from "@/components/PersonalDevelopment";
+import CoursesSection from "@/components/CoursesSection";
 import SummerCamps from "@/components/SummerCamps";
-import BlogSection from "@/components/BlogSection";
+import WhyChooseUs from "@/components/WhyChooseUs";
 import Testimonials from "@/components/Testimonials";
+import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
 
 const Index = () => {
   return (
     <div className="min-h-screen">
       <Navigation />
-      <main className="pt-20">
+      <main>
         <Hero />
-        <CoursesSection />
-        <WhyChooseUs />
         <AboutSection />
-        <PersonalDevelopment />
+        <CoursesSection />
         <SummerCamps />
-        <BlogSection />
+        <WhyChooseUs />
         <Testimonials />
+        <CTASection />
       </main>
       <Footer />
     </div>
