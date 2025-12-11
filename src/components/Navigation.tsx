@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Menu, X, ChevronDown, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import logo from "@/assets/logo.svg";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,14 +18,9 @@ const Navigation = () => {
     <nav className="fixed top-0 w-full bg-primary/95 backdrop-blur-sm z-50">
       <div className="container mx-auto px-4 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-primary-foreground flex items-center justify-center">
-              <span className="text-primary font-bold text-lg">L</span>
-            </div>
-            <Link to="/" className="text-xl font-bold text-primary-foreground">
-              Language School
-            </Link>
-          </div>
+          <Link to="/" className="flex items-center gap-2">
+            <img src={logo} alt="Pro Erudio Logo" className="h-10 w-auto" />
+          </Link>
 
           <div className="hidden lg:flex items-center space-x-8">
             {menuItems.map((item) => (
