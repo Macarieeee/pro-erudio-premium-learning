@@ -1,83 +1,86 @@
 import summerImage from "@/assets/summer-camp.jpg";
 import { Button } from "@/components/ui/button";
-import { MapPin, Calendar, Users } from "lucide-react";
+import { TreePine, Languages, Users, Compass, Check, Calendar } from "lucide-react";
 
 const SummerCamps = () => {
-  return (
-    <section id="vara" className="py-20 bg-secondary">
-      <div className="container mx-auto px-4 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            Cursuri de vară și tabere
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Vacanțe de neuitat care combină învățarea cu aventura și distracția
-          </p>
-        </div>
+  const features = [
+    { icon: TreePine, label: "Activități Outdoor" },
+    { icon: Languages, label: "Imersiune Lingvistică" },
+    { icon: Users, label: "Teambuilding" },
+    { icon: Compass, label: "Experiențe Culturale" },
+  ];
 
-        <div className="space-y-12">
-          {/* Tabere în România */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-            <div className="order-2 lg:order-1">
-              <h3 className="text-3xl font-bold text-foreground mb-4">
-                Tabere de vară în România
-              </h3>
-              <p className="text-lg text-muted-foreground mb-6">
-                Tabere de zi și rezidențiale în locații pitorești din țară. Copiii învață engleza într-un mod natural, prin jocuri, sport, arte și activități outdoor.
-              </p>
-              <div className="space-y-3 mb-6">
-                <div className="flex items-center text-muted-foreground">
-                  <MapPin className="w-5 h-5 text-primary mr-3" />
-                  <span>Delta Dunării, Munții Apuseni, Brașov</span>
-                </div>
-                <div className="flex items-center text-muted-foreground">
-                  <Calendar className="w-5 h-5 text-primary mr-3" />
-                  <span>Iulie - August (sesiuni de 1-2 săptămâni)</span>
-                </div>
-                <div className="flex items-center text-muted-foreground">
-                  <Users className="w-5 h-5 text-primary mr-3" />
-                  <span>Grupe mici (max 12 copii/grup)</span>
-                </div>
-              </div>
-              <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
-                Află mai mult
-              </Button>
+  const benefits = [
+    "Grupe organizate pe vârstă (7-14 ani)",
+    "Instructori certificați și animatori",
+    "Masă completă și cazare confortabilă",
+    "Lecții de engleză zilnice în format distractiv",
+  ];
+
+  return (
+    <section id="tabere" className="py-20 bg-background">
+      <div className="container mx-auto px-4 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="relative">
+            <div className="rounded-3xl overflow-hidden shadow-2xl">
+              <img 
+                src={summerImage} 
+                alt="Tabere de vară" 
+                className="w-full h-full object-cover"
+              />
             </div>
-            <div className="order-1 lg:order-2 rounded-2xl overflow-hidden shadow-[var(--shadow-elegant)]">
-              <img src={summerImage} alt="Summer camp" className="w-full h-full object-cover" />
+            <div className="absolute -bottom-4 -right-4 bg-accent text-accent-foreground rounded-2xl px-6 py-3 shadow-lg">
+              <div className="flex items-center gap-2">
+                <span className="text-2xl">🏕️</span>
+                <span className="font-bold">Tabere 2025</span>
+              </div>
             </div>
           </div>
+          
+          <div>
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+              Tabere de Vară & Evenimente
+            </h2>
+            <p className="text-lg text-muted-foreground mb-8">
+              Vacanțe de neuitat unde învățarea se îmbină cu aventura! Elevii noștri participă la tabere educaționale interactive cu focus pe limbi străine, teamwork și activități în aer liber.
+            </p>
+            
+            <div className="grid grid-cols-2 gap-4 mb-8">
+              {features.map((feature, index) => (
+                <div 
+                  key={index}
+                  className="flex items-center gap-3 bg-secondary rounded-xl p-4"
+                >
+                  <feature.icon className="w-5 h-5 text-primary" />
+                  <span className="font-medium text-foreground">{feature.label}</span>
+                </div>
+              ))}
+            </div>
 
-          {/* Tabere în UK */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-            <div className="rounded-2xl overflow-hidden shadow-[var(--shadow-elegant)]">
-              <img src={summerImage} alt="UK summer camp" className="w-full h-full object-cover" />
-            </div>
-            <div>
-              <h3 className="text-3xl font-bold text-foreground mb-4">
-                Tabere în Marea Britanie
-              </h3>
-              <p className="text-lg text-muted-foreground mb-6">
-                Experiență completă de imersiune în limba și cultura britanică. Cursuri la școli de renume din UK, cazare la familii sau în campusuri universitare, excursii la London, Oxford, Cambridge.
-              </p>
-              <div className="space-y-3 mb-6">
-                <div className="flex items-center text-muted-foreground">
-                  <MapPin className="w-5 h-5 text-primary mr-3" />
-                  <span>Brighton, Oxford, Cambridge, Edinburgh</span>
-                </div>
-                <div className="flex items-center text-muted-foreground">
-                  <Calendar className="w-5 h-5 text-primary mr-3" />
-                  <span>Iulie - August (sesiuni de 2-4 săptămâni)</span>
-                </div>
-                <div className="flex items-center text-muted-foreground">
-                  <Users className="w-5 h-5 text-primary mr-3" />
-                  <span>Însoțitori români + cadre didactice britanice</span>
-                </div>
+            <div className="bg-secondary rounded-2xl p-6 mb-8">
+              <div className="flex items-center gap-2 mb-4">
+                <Calendar className="w-5 h-5 text-primary" />
+                <h3 className="font-bold text-foreground">Sesiuni Disponibile</h3>
               </div>
-              <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold">
-                Află mai mult
-              </Button>
+              <p className="text-muted-foreground mb-4">
+                Iulie - August 2025 | Diferite locații în România
+              </p>
+              <ul className="space-y-2">
+                {benefits.map((benefit, index) => (
+                  <li key={index} className="flex items-center gap-2 text-muted-foreground">
+                    <Check className="w-4 h-4 text-primary" />
+                    {benefit}
+                  </li>
+                ))}
+              </ul>
             </div>
+
+            <Button 
+              size="lg" 
+              className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-full"
+            >
+              Rezervă Loc la Tabără
+            </Button>
           </div>
         </div>
       </div>

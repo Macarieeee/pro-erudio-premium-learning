@@ -1,26 +1,28 @@
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const menuItems = [
-    { label: "Cursuri de limba engleză", href: "#cursuri" },
-    { label: "Alte cursuri pentru copii", href: "#dezvoltare" },
-    { label: "Cursuri de vară", href: "#vara" },
-    { label: "Evenimente", href: "#articole" },
-    { label: "Tabere", href: "#tabere" },
-    { label: "Contact", href: "#contact" },
+    { label: "Acasă", href: "#" },
+    { label: "Despre Noi", href: "#despre" },
+    { label: "Cursuri", href: "#cursuri" },
+    { label: "Tabere de Vară", href: "#tabere" },
+    { label: "Testimoniale", href: "#testimoniale" },
   ];
 
   return (
-    <nav className="fixed top-0 w-full bg-background/95 backdrop-blur-sm border-b border-border z-50">
+    <nav className="fixed top-0 w-full bg-primary/95 backdrop-blur-sm z-50">
       <div className="container mx-auto px-4 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          <div className="flex items-center">
-            <a href="/" className="text-2xl font-bold text-primary hover:opacity-80 transition-opacity">
-              Pro Erudio
+        <div className="flex items-center justify-between h-16">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-lg bg-primary-foreground flex items-center justify-center">
+              <span className="text-primary font-bold text-lg">L</span>
+            </div>
+            <a href="/" className="text-xl font-bold text-primary-foreground">
+              Language School
             </a>
           </div>
 
@@ -29,19 +31,18 @@ const Navigation = () => {
               <a
                 key={item.href}
                 href={item.href}
-                className="text-foreground hover:text-primary transition-colors font-medium relative group"
+                className="text-primary-foreground/90 hover:text-primary-foreground transition-colors font-medium"
               >
                 {item.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
               </a>
             ))}
-            <Button className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold">
-              Înscrie-te
+            <Button className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold rounded-full px-6">
+              Consultație Gratuită
             </Button>
           </div>
 
           <button
-            className="lg:hidden text-foreground"
+            className="lg:hidden text-primary-foreground"
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
           >
@@ -51,20 +52,20 @@ const Navigation = () => {
       </div>
 
       {isOpen && (
-        <div className="lg:hidden bg-background border-t border-border">
+        <div className="lg:hidden bg-primary border-t border-primary-foreground/20">
           <div className="container mx-auto px-4 py-4 space-y-4">
             {menuItems.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
-                className="block text-foreground hover:text-primary transition-colors font-medium py-2"
+                className="block text-primary-foreground/90 hover:text-primary-foreground transition-colors font-medium py-2"
                 onClick={() => setIsOpen(false)}
               >
                 {item.label}
               </a>
             ))}
-            <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-semibold">
-              Înscrie-te
+            <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-semibold rounded-full">
+              Consultație Gratuită
             </Button>
           </div>
         </div>

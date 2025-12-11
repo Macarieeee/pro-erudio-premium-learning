@@ -1,46 +1,61 @@
-import { Award, TrendingUp, Heart } from "lucide-react";
+import { GraduationCap, Users, Sparkles, LineChart, Heart, Trophy } from "lucide-react";
 
 const WhyChooseUs = () => {
   const reasons = [
     {
-      icon: Award,
-      title: "Profesori certificați Cambridge",
-      description: "Echipa noastră este formată din profesori cu certificări internaționale și experiență vastă în predarea limbii engleze.",
+      icon: GraduationCap,
+      title: "Profesori Experimentați și Prietenoși",
+      description: "Echipa noastră de pedagogi pasionați face fiecare lecție captivantă și eficientă.",
     },
     {
-      icon: TrendingUp,
-      title: "Rezultate excepționale",
-      description: "95% dintre elevii noștri promovează examenele Cambridge cu rezultate peste medie. Succesul lor este și succesul nostru.",
+      icon: Users,
+      title: "Grupe Mici de Învățare",
+      description: "Maximum 8 elevi per clasă pentru atenție individualizată și progres rapid.",
+    },
+    {
+      icon: Sparkles,
+      title: "Lecții Interactive și Moderne",
+      description: "Folosim tehnologie, jocuri și activități practice pentru o învățare plăcută.",
+    },
+    {
+      icon: LineChart,
+      title: "Urmărire Personalizată a Progresului",
+      description: "Evaluări regulate și feedback detaliat pentru părinți și elevi.",
     },
     {
       icon: Heart,
-      title: "Mediu modern și prietenos",
-      description: "Săli de clasă dotate modern, materiale interactive și o atmosferă caldă care încurajează învățarea prin bucurie.",
+      title: "Atmosferă Pozitivă și Creativă",
+      description: "Mediu sigur și încurajator unde fiecare copil se simte valorizat.",
+    },
+    {
+      icon: Trophy,
+      title: "Rezultate Dovedite",
+      description: "Sute de absolvenți cu certificări internaționale și progres măsurabil.",
     },
   ];
 
   return (
-    <section className="py-20 bg-background">
+    <section className="py-20 bg-secondary">
       <div className="container mx-auto px-4 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            De ce să ne alegi?
+            De Ce Să Ne Alegi?
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Experiență, profesionalism și dedicare pentru fiecare elev
+            Ne diferențiem prin dedicarea noastră pentru succesul fiecărui elev și abordarea holistică a educației.
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {reasons.map((reason, index) => (
             <div 
               key={index} 
-              className="bg-card p-8 rounded-xl border border-border hover:shadow-[var(--shadow-hover)] transition-all duration-300 group"
+              className="bg-card p-8 rounded-2xl border border-border hover:shadow-lg transition-all duration-300 group"
             >
-              <div className="w-16 h-16 rounded-full bg-light-blue flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                <reason.icon className="w-8 h-8 text-primary" />
+              <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
+                <reason.icon className="w-7 h-7 text-primary" />
               </div>
-              <h3 className="text-2xl font-bold text-card-foreground mb-4">
+              <h3 className="text-xl font-bold text-foreground mb-3">
                 {reason.title}
               </h3>
               <p className="text-muted-foreground">
