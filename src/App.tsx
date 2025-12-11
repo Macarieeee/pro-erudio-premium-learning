@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import CampPage from "./pages/CampPage";
+import JournalPage from "./pages/JournalPage";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,10 @@ const App = () => (
           <Route path="/tabara-poiana-marului-2024" element={<CampPage year="2024" campName="Tabăra Poiana Mărului" />} />
           <Route path="/tabara-poiana-marului-2025" element={<CampPage year="2025" campName="Tabăra Poiana Mărului" />} />
           <Route path="/tabara-poiana-marului-2026" element={<CampPage year="2026" campName="Tabăra Poiana Mărului" />} />
+          <Route path="/jurnal-poiana-marului-2023" element={<JournalPage year="2023" campName="Tabăra Poiana Mărului" />} />
+          <Route path="/jurnal-poiana-marului-2024" element={<JournalPage year="2024" campName="Tabăra Poiana Mărului" />} />
+          <Route path="/jurnal-poiana-marului-2025" element={<JournalPage year="2025" campName="Tabăra Poiana Mărului" />} />
+          <Route path="/jurnal-poiana-marului-2026" element={<JournalPage year="2026" campName="Tabăra Poiana Mărului" />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
