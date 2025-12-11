@@ -19,7 +19,9 @@ const Navigation = () => {
       <div className="container mx-auto px-4 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <Link to="/" className="flex items-center gap-2">
-            <img src={logo} alt="Pro Erudio Logo" className="h-10 w-auto" />
+            <div className="bg-white rounded-lg p-1">
+              <img src={logo} alt="Pro Erudio Logo" className="h-8 w-auto" />
+            </div>
           </Link>
 
           <div className="hidden lg:flex items-center space-x-8">
