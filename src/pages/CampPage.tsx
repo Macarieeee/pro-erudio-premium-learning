@@ -151,11 +151,9 @@ const CampPage = ({ year, campName }: CampPageProps) => {
       {/* Descriere Generală */}
       <section className="py-16">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="bg-[#6b7b5f] text-white py-4 px-6 mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold text-center uppercase tracking-wide">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">
               Descriere Generală
-            </h2>
-          </div>
+          </h2>
           <div className="max-w-4xl mx-auto">
             <p className="text-muted-foreground mb-6 leading-relaxed text-lg">
               Poiana Mărului este o zonă de o frumusețe naturală deosebită, situată în inima munților 
@@ -176,11 +174,9 @@ const CampPage = ({ year, campName }: CampPageProps) => {
       {/* Descrierea Locației */}
       <section className="py-16 bg-secondary/30">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="bg-[#6b7b5f] text-white py-4 px-6 mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold text-center uppercase tracking-wide">
-              Locația
-            </h2>
-          </div>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">
+            Locația
+          </h2>
           <div className="max-w-4xl mx-auto">
             <p className="text-muted-foreground mb-6 leading-relaxed text-lg">
               Pensiunea noastră parteneră este situată în centrul localității Poiana Mărului, 
@@ -230,11 +226,9 @@ const CampPage = ({ year, campName }: CampPageProps) => {
       {/* Tariful Include */}
       <section className="py-16">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="bg-[#6b7b5f] text-white py-4 px-6 mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold text-center">
-              {campName} – Tariful include:
-            </h2>
-          </div>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">
+            {campName} – Tariful include:
+          </h2>
           <div className="max-w-4xl mx-auto">
             <ul className="space-y-3">
               {tarifInclude.map((item, index) => (
@@ -251,11 +245,9 @@ const CampPage = ({ year, campName }: CampPageProps) => {
       {/* Tariful Nu Include */}
       <section className="py-16 bg-secondary/30">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="bg-[#4a5a4a] text-white py-4 px-6 mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold text-center">
-              {campName} – Tariful nu include:
-            </h2>
-          </div>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">
+            {campName} – Tariful nu include:
+          </h2>
           <div className="max-w-4xl mx-auto">
             <ul className="space-y-3">
               {tarifNuInclude.map((item, index) => (
@@ -272,11 +264,9 @@ const CampPage = ({ year, campName }: CampPageProps) => {
       {/* Program de excursii și activități */}
       <section className="py-16">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="bg-[#6b7b5f] text-white py-4 px-6 mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold text-center">
-              Program de excursii și activități
-            </h2>
-          </div>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">
+            Program de excursii și activități
+          </h2>
           <div className="max-w-4xl mx-auto">
             <div className="space-y-4">
               {excursiiActivitati.map((item, index) => (
@@ -293,11 +283,9 @@ const CampPage = ({ year, campName }: CampPageProps) => {
       {/* Înscrieri și rezervări */}
       <section className="py-16 bg-secondary/30">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="bg-[#6b7b5f] text-white py-4 px-6 mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold text-center">
-              Înscrieri și rezervări
-            </h2>
-          </div>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">
+            Înscrieri și rezervări
+          </h2>
           <div className="max-w-4xl mx-auto bg-card p-8 rounded-lg border border-border">
             <p className="text-foreground mb-6 leading-relaxed">
               Pentru rezervări vă rugăm să <strong>completați formularul din partea de sus a paginii</strong> sau 
@@ -323,11 +311,9 @@ const CampPage = ({ year, campName }: CampPageProps) => {
       {/* Documente necesare înscrierii */}
       <section className="py-16">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="bg-[#6b7b5f] text-white py-4 px-6 mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold text-center">
-              Documente necesare înscrierii
-            </h2>
-          </div>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">
+            Documente necesare înscrierii
+          </h2>
           <div className="max-w-4xl mx-auto">
             <ul className="space-y-3">
               {documenteNecesare.map((item, index) => (
@@ -344,11 +330,9 @@ const CampPage = ({ year, campName }: CampPageProps) => {
       {/* Reduceri */}
       <section className="py-16 bg-secondary/30">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="bg-[#6b7b5f] text-white py-4 px-6 mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold text-center">
-              Reduceri
-            </h2>
-          </div>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">
+            Reduceri
+          </h2>
           <div className="max-w-4xl mx-auto">
             <ul className="space-y-3">
               {reduceri.map((item, index) => (
@@ -365,11 +349,9 @@ const CampPage = ({ year, campName }: CampPageProps) => {
       {/* Program Orientativ */}
       <section className="py-16">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="bg-[#6b7b5f] text-white py-4 px-6 mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold text-center">
-              Program orientativ
-            </h2>
-          </div>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">
+            Program orientativ
+          </h2>
           <div className="max-w-6xl mx-auto overflow-x-auto">
             <table className="w-full border-collapse min-w-[800px]">
               <thead>
@@ -435,11 +417,9 @@ const CampPage = ({ year, campName }: CampPageProps) => {
       {/* Alte tabere organizate de Pro Erudio */}
       <section className="py-16">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="bg-primary text-primary-foreground py-4 px-6 mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold text-center">
-              Alte tabere organizate de Pro Erudio
-            </h2>
-          </div>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">
+            Alte tabere organizate de Pro Erudio
+          </h2>
           <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
             {alteTabere.map((tabara, index) => (
               <Card key={index} className="bg-card border-border hover:shadow-lg transition-shadow">
