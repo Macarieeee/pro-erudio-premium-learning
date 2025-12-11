@@ -12,49 +12,49 @@ const AboutPage = () => {
     {
       name: "Maria Popescu",
       role: "Director & Fondator",
-      description: "Cu peste 15 ani de experiență în educație și o pasiune pentru limbile străine.",
+      description: "Fondator Pro Erudio, cu peste 14 ani de experiență în organizarea taberelor de engleză.",
       image: summerCampImage,
     },
     {
       name: "Andrei Ionescu",
-      role: "Coordonator Tabere",
-      description: "Specialist în organizarea taberelor educaționale și activități pentru copii.",
+      role: "Coordonator Tabere Internaționale",
+      description: "Responsabil pentru taberele din UK și Irlanda, expert în logistică internațională.",
       image: summerCampImage,
     },
     {
       name: "Elena Dumitrescu",
-      role: "Profesor Principal Engleză",
-      description: "Certificată Cambridge, cu experiență în predarea limbii engleze la toate nivelurile.",
+      role: "Director Academic",
+      description: "Certificată Cambridge CELTA, coordonează programele de engleză din toate taberele.",
       image: summerCampImage,
     },
     {
       name: "Alexandru Radu",
-      role: "Coordonator Activități",
-      description: "Animator profesionist cu certificări în educație non-formală.",
+      role: "Coordonator Activități & Animație",
+      description: "15 ani experiență în animație, creatorul programelor de activități din tabere.",
       image: summerCampImage,
     },
     {
       name: "Cristina Munteanu",
-      role: "Profesor Engleză",
-      description: "Specializată în predarea limbii engleze pentru copii și adolescenți.",
+      role: "Profesor Engleză Senior",
+      description: "Specializată în metode interactive de predare pentru copii și adolescenți.",
       image: summerCampImage,
     },
     {
       name: "Dan Georgescu",
-      role: "Animator",
-      description: "Expert în activități recreative și jocuri educative pentru toate vârstele.",
+      role: "Animator Principal",
+      description: "Expert în team building și jocuri educative, adorat de copii în fiecare tabără.",
       image: summerCampImage,
     },
     {
       name: "Ioana Stanciu",
       role: "Profesor Engleză",
-      description: "Cu experiență în pregătirea pentru examenele Cambridge și IELTS.",
+      description: "Specializată în pregătire Cambridge, participă la taberele internaționale.",
       image: summerCampImage,
     },
     {
       name: "Mihai Popa",
-      role: "Coordonator Sport",
-      description: "Profesor de educație fizică cu pasiune pentru activitățile outdoor.",
+      role: "Coordonator Sport & Outdoor",
+      description: "Instructor de drumeții și sporturi, responsabil pentru activitățile outdoor.",
       image: summerCampImage,
     },
   ];
@@ -62,33 +62,33 @@ const AboutPage = () => {
   const values = [
     {
       icon: Heart,
-      title: "Pasiune pentru Educație",
-      description: "Credem că învățarea trebuie să fie o experiență plăcută și memorabilă.",
+      title: "Învățare prin Aventură",
+      description: "Credem că engleza se învață cel mai bine prin experiențe memorabile și activități captivante.",
     },
     {
       icon: Users,
-      title: "Comunitate",
-      description: "Construim legături durabile între copii, părinți și educatori.",
+      title: "Siguranță pe Primul Loc",
+      description: "Supraveghere 24/7, protocoale stricte și echipă dedicată pentru siguranța fiecărui copil.",
     },
     {
       icon: Award,
-      title: "Excelență",
-      description: "Ne străduim să oferim cele mai înalte standarde în tot ceea ce facem.",
+      title: "Excelență în Educație",
+      description: "Profesori certificați Cambridge și metode dovedite pentru progres real în engleză.",
     },
     {
       icon: Globe,
-      title: "Deschidere",
-      description: "Promovăm diversitatea culturală și înțelegerea internațională.",
+      title: "Experiențe Internaționale",
+      description: "Tabere în UK, Irlanda și România pentru imersie culturală autentică.",
     },
   ];
 
   const milestones = [
-    { year: "2010", event: "Fondarea Pro Erudio" },
-    { year: "2012", event: "Prima tabără internațională în UK" },
-    { year: "2015", event: "Peste 500 de copii participanți" },
-    { year: "2018", event: "Extinderea programelor în toată România" },
-    { year: "2020", event: "Adaptarea programelor online" },
-    { year: "2023", event: "Peste 2000 de absolvenți ai taberelor" },
+    { year: "2010", event: "Prima tabără de engleză Pro Erudio în România" },
+    { year: "2012", event: "Lansarea primei tabere internaționale în Londra" },
+    { year: "2014", event: "Extinderea în Irlanda - Dublin și Cork" },
+    { year: "2016", event: "Peste 1000 de copii participanți la tabere" },
+    { year: "2019", event: "Deschiderea taberelor de iarnă și Paște" },
+    { year: "2023", event: "Peste 2500 de absolvenți și 50+ ediții de tabere" },
   ];
 
   return (
@@ -110,10 +110,10 @@ const AboutPage = () => {
                 Despre Noi
               </span>
               <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-4">
-                Pro Erudio
+                Tabere de Engleză Pro Erudio
               </h1>
               <p className="text-xl text-muted-foreground max-w-2xl">
-                Educație prin experiență de peste 14 ani
+                Peste 14 ani de experiență în organizarea taberelor educaționale
               </p>
             </div>
           </div>
@@ -132,27 +132,27 @@ const AboutPage = () => {
                 </h2>
               </div>
               <p className="text-muted-foreground mb-6 leading-relaxed">
-                Pro Erudio a fost fondată cu convingerea că învățarea unei limbi străine trebuie să fie 
-                o aventură captivantă, nu o corvoadă. De peste un deceniu, organizăm tabere educaționale 
-                care combină studiul limbii engleze cu activități creative, sportive și culturale.
+                Pro Erudio organizează tabere de limbă engleză din 2010, cu convingerea că cea mai bună 
+                modalitate de a învăța o limbă străină este prin imersie și experiențe de neuitat. 
+                Taberele noastre combină cursuri intensive de engleză cu aventură, sport și cultură.
               </p>
               <p className="text-muted-foreground mb-6 leading-relaxed">
-                Misiunea noastră este să oferim copiilor și tinerilor oportunitatea de a învăța engleză 
-                într-un mediu stimulant, sigur și prietenos, unde pot să își dezvolte nu doar abilitățile 
-                lingvistice, ci și încrederea în sine, creativitatea și abilitățile sociale.
+                Misiunea noastră este să oferim copiilor și adolescenților oportunitatea de a învăța 
+                engleza într-un mediu internațional, sigur și distractiv, unde fac prieteni din toată 
+                lumea și creează amintiri pentru o viață.
               </p>
               <div className="space-y-3">
                 <div className="flex items-center gap-3">
                   <CheckCircle className="h-5 w-5 text-accent flex-shrink-0" />
-                  <span className="text-foreground">Profesori calificați și dedicați</span>
+                  <span className="text-foreground">Peste 50 de ediții de tabere organizate</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <CheckCircle className="h-5 w-5 text-accent flex-shrink-0" />
-                  <span className="text-foreground">Metode interactive de învățare</span>
+                  <span className="text-foreground">Destinații în România, UK și Irlanda</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <CheckCircle className="h-5 w-5 text-accent flex-shrink-0" />
-                  <span className="text-foreground">Locații sigure și bine echipate</span>
+                  <span className="text-foreground">Profesori certificați Cambridge și echipă dedicată</span>
                 </div>
               </div>
             </div>
@@ -235,7 +235,7 @@ const AboutPage = () => {
               </h2>
             </div>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Oamenii dedicați care fac totul posibil
+              Profesorii și animatorii care fac taberele noastre speciale
             </p>
           </div>
           <Carousel
@@ -279,11 +279,11 @@ const AboutPage = () => {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-                Contactează-ne
+                Întrebări despre Tabere?
               </h2>
               <p className="text-muted-foreground mb-8 leading-relaxed">
-                Ai întrebări despre programele noastre? Suntem aici să te ajutăm! 
-                Nu ezita să ne contactezi pentru orice informații suplimentare.
+                Vrei să afli mai multe despre taberele noastre? Suntem aici să răspundem la toate 
+                întrebările tale despre program, locații, prețuri și înscrieri.
               </p>
               <div className="space-y-6">
                 <div className="flex items-center gap-4">
@@ -317,16 +317,16 @@ const AboutPage = () => {
             </div>
             <div className="bg-primary rounded-2xl p-8 text-center">
               <h3 className="text-2xl font-bold text-primary-foreground mb-4">
-                Hai să Vorbim!
+                Rezervă un Loc la Tabără!
               </h3>
               <p className="text-primary-foreground/80 mb-6">
-                Programează o întâlnire sau solicită mai multe informații despre taberele noastre.
+                Înscrierile pentru taberele 2025 sunt deschise. Locurile sunt limitate!
               </p>
               <Button 
                 size="lg"
                 className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold rounded-full px-8"
               >
-                Trimite un Mesaj
+                Înscrie-te Acum
               </Button>
             </div>
           </div>
