@@ -44,7 +44,7 @@ const Navigation = () => {
                 </a>
               )
             ))}
-            
+
             {/* Tabere Dropdown */}
             <div className="relative group">
               <button className="flex items-center gap-1 text-primary-foreground/90 hover:text-primary-foreground transition-colors font-medium">
@@ -105,9 +105,12 @@ const Navigation = () => {
               </div>
             </div>
 
-            <Button className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold rounded-full px-6">
-              Test amplasament
-            </Button>
+            <Link to="/teste-amplasament">
+              <Button className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold rounded-full px-6">
+                Test amplasament
+              </Button>
+            </Link>
+
           </div>
 
           <button
@@ -144,7 +147,7 @@ const Navigation = () => {
                 </a>
               )
             ))}
-            
+
             <div className="py-2">
               <p className="text-primary-foreground font-medium mb-2">Tabere</p>
               <div className="pl-4 space-y-2">
@@ -177,9 +180,12 @@ const Navigation = () => {
               </div>
             </div>
 
-            <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-semibold rounded-full">
-              Test amplasament
-            </Button>
+            <Link to="/teste-amplasament">
+              <Button className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold rounded-full px-6">
+                Test amplasament
+              </Button>
+            </Link>
+
           </div>
         </div>
       )}
