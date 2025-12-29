@@ -1,4 +1,4 @@
-import { Plane, Mountain, Sun, Snowflake } from "lucide-react";
+import { Plane, Mountain, Sun, Snowflake, Backpack } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
@@ -6,33 +6,33 @@ const CoursesSection = () => {
   const camps = [
     {
       icon: Plane,
-      title: "Tabere Internaționale UK",
-      subtitle: "Londra, Manchester, Cambridge",
-      description: "Experiență unică de imersie în cultura britanică. Cursuri de engleză în universități renumite, vizite culturale și activități cu copii din toată lumea.",
+      title: "Tabără de limbă engleză si aventură în Marea Britanie",
+      subtitle: "Grosvenor Activity Centre",
+      description: "Cursuri de limba engleză, activități de aventură in aer liber (rafting, escalada, scrimă, canotaj, tir cu arcul, etc.), vizite culturale și concursuri în echipe multinaționale.",
       color: "bg-primary",
       link: "/tabara-poiana-marului-2025",
     },
     {
-      icon: Mountain,
-      title: "Tabere România - Munte",
-      subtitle: "Poiana Mărului, Bran, Predeal",
-      description: "Tabere în natură cu cursuri de engleză, drumeții, activități sportive și seri tematice. Perfect pentru copiii care iubesc aventura.",
+      icon: Backpack,
+      title: "Școală internațională de vară în Irlanda de Nord",
+      subtitle: "Dublin City University",
+      description: "Cursuri de limba engleză la renumita universitate din Dublin. Cazare în campus universitar, excursii la obiective turistice locale, activități sportive și seri tematice în grupuri internaționale.",
       color: "bg-emerald-500",
       link: "/tabara-poiana-marului-2025",
     },
     {
       icon: Sun,
-      title: "Tabere România - Mare",
-      subtitle: "Costinești, Eforie",
-      description: "Vacanță la mare combinată cu învățarea limbii engleze. Activități pe plajă, sporturi nautice și distracție garantată.",
+      title: "Tabără de limba engleză în România",
+      subtitle: "Moinești, Județul Bacău",
+      description: "Cursuri de limba engleză dimineața, provocări pe echipe la atelierele de după-amiază și seară, mese cu bufet suedez, cazare în complex turistic nou și excursii la obiective turistice din zonă.",
       color: "bg-amber-500",
       link: "/tabara-poiana-marului-2025",
     },
     {
-      icon: Snowflake,
-      title: "Tabere de Iarnă",
-      subtitle: "Ski & English",
-      description: "Învață engleza în timp ce te bucuri de schi și activități de iarnă. Cursuri dimineața, distracție pe pârtie după-amiaza.",
+      icon: Mountain,
+      title: "Tabără de limba engleză în România",
+      subtitle: "Poiana Mărului, Județul Brașov",
+      description: "Tabără în natură, cursuri de limba engleză, drumeții, provocări în echipe și seri tematice. Perfect pentru copiii care iubesc aventura.",
       color: "bg-sky-500",
       link: "/tabara-poiana-marului-2025",
     },
@@ -46,7 +46,7 @@ const CoursesSection = () => {
             Tipuri de Tabere
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Alege tabăra potrivită pentru copilul tău. Fiecare program combină învățarea limbii engleze cu aventură și distracție.
+            Alege tabăra potrivită pentru copilul tău. Fiecare program combină învățarea limbii engleze cu activități culturale, sportive, artistice și de divertisment.
           </p>
         </div>
         
@@ -59,7 +59,7 @@ const CoursesSection = () => {
               <div className={`w-14 h-14 rounded-xl ${camp.color} flex items-center justify-center mb-6`}>
                 <camp.icon className="w-7 h-7 text-primary-foreground" />
               </div>
-              <h3 className="text-2xl font-bold text-foreground mb-2">
+              <h3 className="text-xl font-bold text-foreground mb-2">
                 {camp.title}
               </h3>
               <p className="text-primary font-medium mb-3">

@@ -105,3 +105,9 @@ All colors MUST be HSL.
     @apply transition-transform duration-200 hover:scale-105;
   }
 }
+
+
+.font-large {
+  font-size: 1.125rem; /* 18px */
+  line-height: 1.5rem; /* 24px */
+}

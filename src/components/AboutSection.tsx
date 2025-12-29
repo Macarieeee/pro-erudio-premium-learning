@@ -1,26 +1,26 @@
-import { Heart, Users, Gamepad2, Award, Globe, Shield } from "lucide-react";
+import { Heart, Users, Gamepad2, Award, Globe, Landmark, BrainCog, Waypoints, Handshake } from "lucide-react";
 
 const AboutSection = () => {
   const features = [
     {
-      icon: Globe,
-      title: "Tabere Internaționale",
-      description: "Experiențe în UK, Irlanda și alte destinații pentru imersie totală în limba engleză.",
+      icon: Waypoints,
+      title: "Programe de vară pentru copii și adolescenți",
+      description: "Experiențe în România, UK și alte destinații pentru perfecționarea abilităților de exprimare în limba engleză.",
     },
     {
-      icon: Users,
-      title: "Grupe Mici",
-      description: "Maximum 15 copii per grupă pentru atenție personalizată și siguranță maximă.",
+      icon: Handshake,
+      title: "Lucru în echipă",
+      description: "Obiectivul principal al taberelor din România este îmbunătățirea abilităților de lucru în echipă pentru toți copiii și leadership pentru conducătorii de echipă.",
     },
     {
-      icon: Gamepad2,
+      icon: BrainCog,
       title: "Învățare prin Joc",
-      description: "Activități interactive, excursii și jocuri care fac învățatul distractiv.",
+      description: "Activitățile din tabără sunt interactive și în general bazate pe competiția între echipe, într-o întrecere de tipul Harry Potter, care facilitează dezvoltarea personală într-o atmosferă dinamică, dar relaxată, fară a pune presiune pe participanți.",
     },
     {
-      icon: Shield,
-      title: "Siguranță 24/7",
-      description: "Supraveghere permanentă și echipă de animatori experimentați.",
+      icon: Landmark,
+      title: "Excursii și intrări la obiective turistice",
+      description: "Toate programele noastre de vară cuprind o importantă coordonată culturală prin vizite la diferite obiective turistice din zona în care ne aflăm.",
     },
   ];
 
@@ -32,8 +32,8 @@ const AboutSection = () => {
             Despre Taberele Noastre
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            De peste 14 ani, organizăm tabere de limbă engleză care combină educația cu aventura. 
-            Copiii învață engleza natural, prin conversații reale, activități captivante și experiențe culturale autentice.
+            Din 2011 organizăm tabere de limbă engleză care combină educația cu distracția. 
+            Copiii își perfecționează limba engleză în mod natural prin conversații reale, activități captivante, lucru în echipă și experiențe culturale autentice.
           </p>
         </div>
         

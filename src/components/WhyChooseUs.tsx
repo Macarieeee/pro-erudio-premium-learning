@@ -4,33 +4,33 @@ const WhyChooseUs = () => {
   const reasons = [
     {
       icon: GraduationCap,
-      title: "Profesori Nativi și Certificați",
-      description: "Echipa de profesori cu experiență internațională și certificări Cambridge.",
+      title: "Profesori cu experiență",
+      description: "Echipa de profesori dedicați meseriei și pasionați de lucrul cu copiii.",
     },
     {
       icon: Shield,
-      title: "Siguranță Garantată",
-      description: "Supraveghere 24/7, asigurare medicală și protocol strict de siguranță.",
+      title: "Siguranța copiilor",
+      description: "Supraveghere permanentă, reguli stricte pentru siguranța copiilor, activități de aventură si personal calificat, atenție constantă din partea personala pentru bunăstarea copiilor, program de somn în intervalul orar 23:00-07:00.",
     },
     {
       icon: Sparkles,
-      title: "Activități Variate",
-      description: "Sporturi, excursii, ateliere creative și seri tematice pentru fiecare zi.",
+      title: "Activități variate",
+      description: "Cursuri de limba engleză, activități sportive, excursii, ateliere creative, provocări pe echipe și seri tematice pentru fiecare zi.",
     },
     {
       icon: Users,
-      title: "Grupe Internaționale",
-      description: "Socializare cu copii din alte țări pentru practică reală a limbii.",
+      title: "Prieteni noi",
+      description: "Socializare cu copii din alte țări sau alți elevi români pentru exersarea limbii engleze în contexte autentice de învățare prin proiecte si activități în echipe. Legarea de noi prietenii este in acest fel garantată.",
     },
     {
       icon: Heart,
-      title: "Experiențe de Neuitat",
-      description: "Amintiri pentru o viață și prietenii care durează dincolo de tabără.",
+      title: "Experiențe de neuitat",
+      description: "Amintiri pentru o viață și prietenii care durează dincolo de tabără. Fiecare tabără este o aventură unică care îmbină învățarea cu distracția.",
     },
     {
       icon: Trophy,
-      title: "Peste 2000 de Absolvenți",
-      description: "14 ani de experiență și mii de copii fericiți care revin an de an.",
+      title: "Peste 2000 de participanți",
+      description: "Peste 14 ani de experiență și mii de copii fericiți care revin an de an în taberele noastre din România și străinătate.",
     },
   ];
 
@@ -39,10 +39,10 @@ const WhyChooseUs = () => {
       <div className="container mx-auto px-4 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            De Ce Taberele Pro Erudio?
+            De ce taberele Pro Erudio?
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Ne diferențiem prin dedicarea pentru fiecare copil și experiența acumulată în organizarea taberelor educaționale.
+            Ne diferențiem prin atenția acordată fiecărui copil și formatul original al taberelor, cu obiective educaționale precise.
           </p>
         </div>
         

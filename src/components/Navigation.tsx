@@ -15,12 +15,12 @@ const Navigation = () => {
   const campYears = ["2023", "2024", "2025", "2026"];
 
   return (
-    <nav className="fixed top-0 w-full bg-primary/95 backdrop-blur-sm z-50">
+    <nav className="fixed top-0 w-full bg-secondary/95 backdrop-blur-sm z-50 pb-2 pt-2">
       <div className="container mx-auto px-4 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <Link to="/" className="flex items-center gap-2">
-            <div className="bg-white rounded-lg p-1">
-              <img src={logo} alt="Pro Erudio Logo" className="h-8 w-auto" />
+            <div>
+              <img src={logo} alt="Pro Erudio Logo" className="h-16 w-auto" />
             </div>
           </Link>
 
@@ -30,7 +30,7 @@ const Navigation = () => {
                 <Link
                   key={item.href}
                   to={item.href}
-                  className="text-primary-foreground/90 hover:text-primary-foreground transition-colors font-medium"
+                  className="text-secondary-foreground/90 hover:text-secondary-foreground transition-colors font-medium font-large"
                 >
                   {item.label}
                 </Link>
@@ -38,7 +38,7 @@ const Navigation = () => {
                 <a
                   key={item.href}
                   href={item.href}
-                  className="text-primary-foreground/90 hover:text-primary-foreground transition-colors font-medium"
+                  className="text-secondary-foreground/90 hover:text-primary-foreground transition-colors font-medium font-large"
                 >
                   {item.label}
                 </a>
@@ -47,7 +47,7 @@ const Navigation = () => {
 
             {/* Tabere Dropdown */}
             <div className="relative group">
-              <button className="flex items-center gap-1 text-primary-foreground/90 hover:text-primary-foreground transition-colors font-medium">
+              <button className="flex items-center gap-1 text-secondary-foreground/90 hover:text-secondary-foreground font-large transition-colors font-medium">
                 Tabere
                 <ChevronDown className="h-4 w-4 transition-transform group-hover:rotate-180" />
               </button>
@@ -77,7 +77,7 @@ const Navigation = () => {
 
             {/* Jurnale de Tabără Dropdown */}
             <div className="relative group">
-              <button className="flex items-center gap-1 text-primary-foreground/90 hover:text-primary-foreground transition-colors font-medium">
+              <button className="flex items-center gap-1 text-secondary-foreground/90 hover:text-secondary-foreground font-large transition-colors font-medium">
                 Jurnale de Tabără
                 <ChevronDown className="h-4 w-4 transition-transform group-hover:rotate-180" />
               </button>
@@ -106,7 +106,7 @@ const Navigation = () => {
             </div>
 
             <Link to="/teste-amplasament">
-              <Button className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold rounded-full px-6">
+              <Button className="bg-accent hover:bg-accent/90 text-accent-foreground font-medium rounded-full px-6 font-large">
                 Test amplasament
               </Button>
             </Link>

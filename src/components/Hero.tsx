@@ -10,19 +10,19 @@ const Hero = () => {
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: `url(${heroImage})` }}
       >
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/95 via-primary/90 to-primary/85" />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/80 via-primary/70 to-primary/60" />
       </div>
       
       <div className="container mx-auto px-4 relative z-10 text-center py-20">
         <div className="inline-flex items-center gap-2 bg-primary-foreground/10 backdrop-blur-sm rounded-full px-4 py-2 mb-8">
           <Sparkles className="w-4 h-4 text-primary-foreground" />
-          <span className="text-primary-foreground text-sm font-medium">
-            Tabere de Engleză pentru Copii și Adolescenți
+          <span className="text-primary-foreground text-sm font-medium font-large">
+            Tabere de limba engleză pentru copii și adolescenți
           </span>
         </div>
         
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-primary-foreground mb-2">
-          Tabere de Engleză
+        <h1 className="text-4xl md:text-6xl lg:text-6xl font-bold text-primary-foreground mb-2">
+          Tabere și școli de vară de limba engleză
         </h1>
         <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8">
           <span className="bg-accent text-accent-foreground px-4 py-1 rounded-lg inline-block">
@@ -31,7 +31,7 @@ const Hero = () => {
         </h1>
         
         <p className="text-lg md:text-xl text-primary-foreground/90 max-w-2xl mx-auto mb-10">
-          Învață engleza prin aventură! Tabere educaționale în România și internațional, cu activități captivante, profesori dedicați și experiențe de neuitat.
+          Învață limba engleza prin activități interactive și aventură în natură! Tabere educaționale în România și străinătate, cu activități captivante, profesori dedicați și experiențe de neuitat.
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
