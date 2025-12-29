@@ -136,7 +136,7 @@ const RegistrationForm = ({ variant = "light", defaultCamp = "poiana-marului-202
 
       {/* Transport Option */}
       <div className="space-y-3">
-        <Label className={`${labelClass} font-medium`}>Doriți opțiunea de transport până în locație?</Label>
+        <Label className={`${labelClass} font-medium`}>Optați pentru rezervarea locului la transport prin Pro Erudio?</Label>
         <RadioGroup 
           value={formData.transport} 
           onValueChange={(value) => setFormData({...formData, transport: value})}

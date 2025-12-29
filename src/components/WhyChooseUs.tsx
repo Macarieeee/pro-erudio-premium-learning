@@ -1,16 +1,16 @@
-import { GraduationCap, Users, Sparkles, Shield, Heart, Trophy } from "lucide-react";
+import { BookOpenCheck, Users, Sparkles, SwatchBook, Heart, Handshake } from "lucide-react";
 
 const WhyChooseUs = () => {
   const reasons = [
     {
-      icon: GraduationCap,
-      title: "Profesori cu experiență",
-      description: "Echipa de profesori dedicați meseriei și pasionați de lucrul cu copiii.",
+      icon: BookOpenCheck,
+      title: "Cursuri de limbă engleză",
+      description: "Ținem cont de nivelul de limbă engleză si vârsta copiilor atunci când facem plasarea in grupe. Adaptăm activitățile în funcție de nevoile lor de învățare și interesele vârstei.",
     },
     {
-      icon: Shield,
-      title: "Siguranța copiilor",
-      description: "Supraveghere permanentă, reguli stricte pentru siguranța copiilor, activități de aventură si personal calificat, atenție constantă din partea personala pentru bunăstarea copiilor, program de somn în intervalul orar 23:00-07:00.",
+      icon: SwatchBook,
+      title: "Ateliere de după-amiază",
+      description: "Atelierele din timpul după-amiezii se desfășoară în echipe eterogene ca vârstă, având obiectivul de a îmbunătăți abilitățile de comunicare prin participarea la realizarea de proiecte și activități practice.",
     },
     {
       icon: Sparkles,
@@ -27,11 +27,12 @@ const WhyChooseUs = () => {
       title: "Experiențe de neuitat",
       description: "Amintiri pentru o viață și prietenii care durează dincolo de tabără. Fiecare tabără este o aventură unică care îmbină învățarea cu distracția.",
     },
-    {
-      icon: Trophy,
-      title: "Peste 2000 de participanți",
-      description: "Peste 14 ani de experiență și mii de copii fericiți care revin an de an în taberele noastre din România și străinătate.",
+     {
+      icon: Handshake,
+      title: "Lucrul în echipă",
+      description: "Obiectivul principal al taberelor din România este îmbunătățirea abilităților de lucru în echipă pentru toți copiii și leadership pentru conducătorii de echipă.",
     },
+    
   ];
 
   return (

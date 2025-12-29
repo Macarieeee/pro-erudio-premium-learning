@@ -14,7 +14,7 @@ const JournalPage = ({ year, campName }: JournalPageProps) => {
     location: "Poiana Mărului, Brașov",
     duration: "7 zile / 6 nopți",
     ageGroup: "8-16 ani",
-    dates: `15-22 Iulie ${year}`,
+    dates: `27 Iulie - 3 August 2025`,
   };
 
   const journalEntries = [

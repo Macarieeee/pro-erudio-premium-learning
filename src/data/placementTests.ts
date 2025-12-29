@@ -12,7 +12,7 @@ export type Test = {
   title: string;
   subtitle: string;
   questions: Question[];
-  writingTask?: { title: string; details: string; minWords?: number; maxWords?: number };
+  writingTask?: { title: string; details: string; task:string; minWords?: number; maxWords?: number };
 };
 
 export const placementTests: Test[] = [
@@ -55,7 +55,9 @@ export const placementTests: Test[] = [
     writingTask: {
       title: "Sarcină de lucru suplimentară (opțional)",
       details:
-        "Write a short composition (50–100 words) about your favourite animal. What does it look like? What can it do? Where does it live? What does it eat? Why do you like it?",
+        "Simți că întrebările au fost ușoare și nu evalueaza exact nivelul tău de cunoștință în limba engleză? Ai aici ocazia să ne arăți ce poți prin redactarea unei scurte compuneri.",
+      task: "Write a short composition (50–100 words) about your favourite animal. What does it look like? What can it do? Where does it live? What does it eat? Why do you like it?",
+        
       minWords: 50,
       maxWords: 100,
     },
@@ -97,12 +99,16 @@ export const placementTests: Test[] = [
       { id: 29, prompt: "Choose the correct sentence:", options: [{ key: "a", text: "He told that he was busy." }, { key: "b", text: "He told me that he was busy." }, { key: "c", text: "He said me that he was busy." }], correct: "b" },
       { id: 30, prompt: "I’ll go to the party if I ___ free.", options: [{ key: "a", text: "am" }, { key: "b", text: "will be" }, { key: "c", text: "would be" }], correct: "a" },
     ],
-    writingTask: {
-      title: "Extra task (opțional)",
+        writingTask: {
+      title: "Sarcină de lucru suplimentară (opțional)",
       details:
-        "Write a story (120–180 words) beginning with: “It was a cold October evening when I heard a strange noise coming from behind the kitchen door…” Include a clear sequence of events, descriptive details, and a surprising ending.",
-      minWords: 120,
-      maxWords: 180,
+        "Simți că întrebările au fost ușoare și nu evalueaza exact nivelul tău de cunoștință în limba engleză? Ai aici ocazia să ne arăți ce poți prin redactarea unei scurte compuneri.",
+
+  task: "Write a story (120–180 words) beginning with: “It was a cold October evening when I heard a strange noise coming from behind the kitchen door…” Include a clear sequence of events, descriptive details, and a surprising ending.",
+
+      minWords: 50,
+      maxWords: 100,
     },
   },
+
 ];

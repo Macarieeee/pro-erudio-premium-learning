@@ -7,12 +7,12 @@ const CTASection = () => {
       <div className="container mx-auto px-4 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-primary-foreground mb-6">
-            Rezervă Locul la Tabăra 2025!
+            Rezervă-ți acum locul în tabăra din vara 2026!
           </h2>
-          <p className="text-lg text-primary-foreground/90 max-w-2xl mx-auto">
+          {/* <p className="text-lg text-primary-foreground/90 max-w-2xl mx-auto">
             Locurile sunt limitate! Înscrie-l pe copilul tău acum pentru o experiență educațională de neuitat. 
             Reduceri Early Bird disponibile pentru înscrierile timpurii.
-          </p>
+          </p> */}
         </div>
         
         <div className="max-w-3xl mx-auto">

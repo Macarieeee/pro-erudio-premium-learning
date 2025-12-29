@@ -1,17 +1,32 @@
-import { Heart, Users, Gamepad2, Award, Globe, Landmark, BrainCog, Waypoints, Handshake } from "lucide-react";
+import { Heart, Users, Gamepad2, Award, Globe, Landmark, BrainCog, Waypoints, Handshake, Trophy, GraduationCap, Shield } from "lucide-react";
 
 const AboutSection = () => {
   const features = [
     {
       icon: Waypoints,
       title: "Programe de vară pentru copii și adolescenți",
-      description: "Experiențe în România, UK și alte destinații pentru perfecționarea abilităților de exprimare în limba engleză.",
+      description: "Experiențe în România, Marea Britanie și alte destinații pentru perfecționarea abilităților de exprimare în limba engleză.",
     },
     {
-      icon: Handshake,
-      title: "Lucru în echipă",
-      description: "Obiectivul principal al taberelor din România este îmbunătățirea abilităților de lucru în echipă pentru toți copiii și leadership pentru conducătorii de echipă.",
+      icon: Trophy,
+      title: "Peste 2000 de participanți",
+      description: "Peste 14 ani de experiență și mii de copii fericiți care revin an de an în taberele noastre din România și străinătate.",
     },
+    {
+      icon: GraduationCap,
+      title: "Profesori cu experiență",
+      description: "Echipa de profesori dedicați meseriei și pasionați de lucrul cu copiii.",
+    },
+    {
+      icon: Shield,
+      title: "Siguranța copiilor",
+      description: "Supraveghere permanentă, reguli stricte pentru siguranța copiilor, activități de aventură si personal calificat, atenție constantă din partea personala pentru bunăstarea copiilor, program de somn în intervalul orar 23:00-07:00.",
+    },
+    // {
+    //   icon: Handshake,
+    //   title: "Lucru în echipă",
+    //   description: "Obiectivul principal al taberelor din România este îmbunătățirea abilităților de lucru în echipă pentru toți copiii și leadership pentru conducătorii de echipă.",
+    // },
     {
       icon: BrainCog,
       title: "Învățare prin Joc",
@@ -19,7 +34,7 @@ const AboutSection = () => {
     },
     {
       icon: Landmark,
-      title: "Excursii și intrări la obiective turistice",
+      title: "Excursii la obiective turistice",
       description: "Toate programele noastre de vară cuprind o importantă coordonată culturală prin vizite la diferite obiective turistice din zona în care ne aflăm.",
     },
   ];
@@ -37,7 +52,7 @@ const AboutSection = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature, index) => (
             <div 
               key={index} 

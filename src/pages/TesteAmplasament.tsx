@@ -43,8 +43,8 @@ export default function TesteAmplasament() {
     return (
         <section className="py-16">
             <div className="container mx-auto px-4 lg:px-8 max-w-5xl">
-                <h1 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-10">
-                    Teste de amplasament
+                <h1 className="text-3xl md:text-4xl font-bold text-primary text-center mb-10">
+                    Test de plasare pentru cursul de limba engleză
                 </h1>
 
                 {step === "form" && (
@@ -156,6 +156,7 @@ export default function TesteAmplasament() {
                             <div className="mt-8 rounded-2xl border border-border p-5">
                                 <div className="font-semibold text-foreground mb-2">{test.writingTask.title}</div>
                                 <p className="text-sm text-muted-foreground mb-4">{test.writingTask.details}</p>
+                                <p className="text-sm text-primary mb-4 ">{test.writingTask.task}</p>
                                 <textarea
                                     className="w-full min-h-[160px] rounded-xl border border-border bg-background p-4 text-foreground"
                                     placeholder="Scrie aici (opțional)..."

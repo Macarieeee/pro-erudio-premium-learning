@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Luggage } from "lucide-react";
+import { Luggage, ReceiptPoundSterling } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   School,
@@ -97,17 +97,18 @@ const CampPage = ({ year, campName }: CampPageProps) => {
   const campDetails = {
     location: "Grosvenor Activity Centre",
     duration: "8 zile / 7 nopți",
-    ageGroup: "11-18 ani",
+    ageGroup: "11-16 ani",
     dates: `25 iulie – 01 august 2026`,
+    price: "740 GBP",
   };
 
   const highlights = [
-    "Cursuri intensive de limba engleză",
-    "Activități outdoor și drumeții",
+    "Cursuri de limba engleză cu profesori britanici",
+    "Activități outdoor și indoor",
     "Jocuri și competiții în echipă",
-    "Seri tematice și foc de tabără",
     "Ateliere creative și artistice",
-    "Excursii în natură",
+    "Seri tematice și foc de tabără",
+    "Excursii la obiective turistice locale",
   ];
 
   const locationDescription = {
@@ -235,7 +236,7 @@ const requiredDocuments = [
       {/* Quick Info */}
       <section className="py-12 bg-secondary/30">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-5">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
                 <MapPin className="h-6 w-6 text-primary" />
@@ -270,6 +271,15 @@ const requiredDocuments = [
               <div>
                 <p className="text-sm text-muted-foreground">Perioada</p>
                 <p className="font-semibold text-foreground">{campDetails.dates}</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                <ReceiptPoundSterling className="h-6 w-6 text-primary" />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Preț</p>
+                <p className="font-semibold text-foreground">{campDetails.price}</p>
               </div>
             </div>
           </div>
