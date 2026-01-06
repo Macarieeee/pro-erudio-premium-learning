@@ -3,6 +3,38 @@ import Footer from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, MapPin, Users, Clock, ExternalLink, Building } from "lucide-react";
 import summerCampImage from "@/assets/summer-camp.jpg";
+import ziua11 from "@/assets/Ziua1-1.jpg";
+import ziua12 from "@/assets/Ziua1-2.jpg";
+import ziua13 from "@/assets/Ziua1-3.jpg";
+import ziua14 from "@/assets/Ziua1-4.jpg";
+import ziua21 from "@/assets/Ziua2-1.jpg";
+import ziua22 from "@/assets/Ziua2-2.jpg";
+import ziua23 from "@/assets/Ziua2-3.jpg";
+import ziua24 from "@/assets/Ziua2-4.jpg";
+import ziua31 from "@/assets/Ziua3-1.jpg";
+import ziua32 from "@/assets/Ziua3-2.jpg";
+import ziua33 from "@/assets/Ziua3-3.jpg";
+import ziua34 from "@/assets/Ziua3-4.jpg";
+import ziua41 from "@/assets/Ziua4-1.jpg";
+import ziua42 from "@/assets/Ziua4-2.jpg";
+import ziua43 from "@/assets/Ziua4-3.jpg";
+import ziua44 from "@/assets/Ziua4-4.jpg";
+import ziua51 from "@/assets/Ziua5-1.jpg";
+import ziua52 from "@/assets/Ziua5-2.jpg";
+import ziua53 from "@/assets/Ziua5-3.jpg";
+import ziua54 from "@/assets/Ziua5-4.jpg";
+import ziua61 from "@/assets/Ziua6-1.jpg";
+import ziua62 from "@/assets/Ziua6-2.jpg";
+import ziua63 from "@/assets/Ziua6-3.jpg";
+import ziua64 from "@/assets/Ziua6-4.jpg";
+import ziua71 from "@/assets/Ziua7-1.jpg";
+import ziua72 from "@/assets/Ziua7-2.jpg";
+import ziua73 from "@/assets/Ziua7-3.jpg";
+import ziua74 from "@/assets/Ziua7-4.jpg";
+import ziua81 from "@/assets/Ziua8-1.jpg";
+import ziua82 from "@/assets/Ziua8-2.jpg";
+import ziua83 from "@/assets/Ziua8-3.jpg";
+import ziua84 from "@/assets/Ziua8-4.jpg";
 
 interface JournalPageProps {
   year: string;
@@ -25,7 +57,13 @@ const JournalPage = ({ year, campName }: JournalPageProps) => {
 După o primire foarte călduroasă (am mâncat pizza cu mare poftă că ne era și foame, YUM!) ne-am primit cheile de la camere, deci până acum totul la superlativ, prea bine să fie adevărat 😊. Partea neplăcută a fost că încă se făcea curățenie în cameră și, deși inițial ni s-a spus că putem să mergem să ne odihnim fiecare în patul lui la ora 15.30, așteptarea a fost mai lungă decât ne gândeam...Nu a fost o problemă foarte mare întrucât ni s-a pus la dispoziție o zonă în care să ne relaxăm, iar cei mai curioși dintre noi au plecat puțin în recunoaștere prin campus. Campusul este superb, cu clădiri tipic englezești, o alternanță modern (cu sticlă și forme neregulate) și tradițional (acoperite cu cărămidă roșie), cu foarte multe spații verzi și flori, o împletire armonioasă între natură și eleganță arhitecturală. Și camerele sunt spectaculos de frumoase, ca niște camere de hotel (fiecare cameră cu baie proprie), dar cu spații comune pe fiecare apartament, spațiu care deja presimțim că va fi folosit ca zonă de socializare în timpul liber.
 
 Cina a fost acceptabilă, după standarde englezești, dar suficient de bună și variată ca să ne dea energie pentru o plimbare după masă. Oricum, oboseala drumului, schimbarea de fus orar și somnul scurt din noaptea anterioară ne-a făcut să căutăm să ne retragem în camerele noastre mai devreme decât în serile ce vor urma.`,
-      galleryLink: "https://www.facebook.com/media/set/?set=a.1329458625298166&type=3"
+      galleryLink: "https://www.facebook.com/media/set/?set=a.1329458625298166&type=3",
+      images: [
+    ziua21,
+    ziua22,
+    ziua23,
+    ziua24,
+  ],
     },
     {
       day: "Ziua 2",
@@ -40,7 +78,13 @@ A doua activitate de după-amiază a fost un Scavenger Hunt pentru a ne consolid
 Activitatea de seară a fost un deliciu culinar sub îndrumarea haioasei Sabrina. Am făcut cupcakes 😊. Cu unt, cu creme de mai multe feluri, decorate, pufoase și înmiresmate cu fel de fel de esențe, pe scurt delicioase. Iar când le pregătești alături de prieteni și cu propriile mâini, clar le vei savura. Unde pui că primești ca bonus și rețeta, pe care o poți reinterpreta acasă pe gustul tău 😊.
 
 Mergem la culcare epuizați, dar fericiți. Ne întrebăm ce aventuri ne așteaptă ziua următoare…`,
-      galleryLink: "https://www.facebook.com/media/set/?set=a.1329896498587712&type=3"
+      galleryLink: "https://www.facebook.com/media/set/?set=a.1329896498587712&type=3",
+       images: [
+    ziua11,
+    ziua12,
+    ziua13,
+    ziua14,
+  ],
     },
     {
       day: "Ziua 3",
@@ -50,7 +94,13 @@ Mergem la culcare epuizați, dar fericiți. Ne întrebăm ce aventuri ne așteap
 
       Activitatea de seara a fost distractivă și diversă. Am avut de ales între piscină și jocuri de masă la interior sau atelier de dans. Ne-am împărțit fiecare pe unde a vrut, dar se pare că cei care au ales jocurile de masă au tras lozul câștigător. S-a jucat sah, Monopoly, Jenga, jocuri de cărți, s-a pictat pe pietre și s-a modelat cu argilă. Desigur, unii au făcut de toate, mutându-se de la stație la stație, inclusiv de la dans la șah :). A fost super distracție, mai ales ca aveam posibilitatea să alegem muzica…
 `,
-      galleryLink: "https://www.facebook.com/media/set/?set=a.1330787151831980&type=3"
+      galleryLink: "https://www.facebook.com/media/set/?set=a.1330787151831980&type=3",
+      images: [
+    ziua31,
+    ziua32,
+    ziua33,
+    ziua34,
+  ],
     },
     {
       day: "Ziua 4",
@@ -58,7 +108,13 @@ Mergem la culcare epuizați, dar fericiți. Ne întrebăm ce aventuri ne așteap
 
       În rest, programul zilnic își urmează cursul obișnuit, iar seara avem din nou de ales între atelierul de jocuri, cel de vopsit tricouri și cel de baking. Ca și data trecută, unii au reușit să participe la mai multe și să lege noi prietenii în timp ce se distrează.
 `,
-      galleryLink: "https://www.facebook.com/media/set/?set=a.1332021865041842&type=3"
+      galleryLink: "https://www.facebook.com/media/set/?set=a.1332021865041842&type=3",
+      images: [
+    ziua41,
+    ziua42,
+    ziua43,
+    ziua44,
+  ],
     },
     {
       day: "Ziua 5",
@@ -70,7 +126,13 @@ Mergem la culcare epuizați, dar fericiți. Ne întrebăm ce aventuri ne așteap
 
       Seara ar fi trebuit să se încheie cu un moment disco, dar au fost ceva probleme tehnice care s-au remediat destul de târziu, când majoritatea copiilor deja se retrăseseră spre camere. Am obținut, totuși, promisiunea că a doua zi să se țină din nou discoteca, speram să nu mai existe probleme.
 `,
-      galleryLink: "https://www.facebook.com/media/set/?set=a.1332985374945491&type=3"
+      galleryLink: "https://www.facebook.com/media/set/?set=a.1332985374945491&type=3",
+      images: [
+    ziua51,
+    ziua52,
+    ziua53,
+    ziua54,
+  ],
     },
     {
       day: "Ziua 6",
@@ -78,7 +140,13 @@ Mergem la culcare epuizați, dar fericiți. Ne întrebăm ce aventuri ne așteap
 
       Așa cum ni se promisese, seara am avut disco. Aranjați care mai de care (în special fetele), am dansat și cântat melodii alese de noi sau alții, a fost foarte frumos! 
 `,
-      galleryLink: "https://www.facebook.com/media/set/?set=a.1334672534776775&type=3 "
+      galleryLink: "https://www.facebook.com/media/set/?set=a.1334672534776775&type=3 ",
+      images: [
+    ziua61,
+    ziua62,
+    ziua63,
+    ziua64,
+  ],
     },
     {
       day: "Ziua 7",
@@ -89,7 +157,13 @@ Mergem la culcare epuizați, dar fericiți. Ne întrebăm ce aventuri ne așteap
       Obosiți, dar fericiți, am ajuns în campus chiar la timp pentru o cină mai târzie decât de obicei (cina era în general la ora 18.00). Activitatea de seară a fost opțională, dar toți au ales să aparticipe la jocuri în Peel Parc, doar este ultima seară petrecută în această tabără și trebuie să profităm la maxim de fiecare moment.
  
 `,
-      galleryLink: "https://www.facebook.com/media/set/?set=a.1335540731356622&type=3  "
+      galleryLink: "https://www.facebook.com/media/set/?set=a.1335540731356622&type=3  ",
+      images: [
+    ziua71,
+    ziua72,
+    ziua73,
+    ziua74,
+  ],
     },
     {
       day: "Ziua 8 - ultima zi de tabără ",
@@ -98,7 +172,13 @@ Mergem la culcare epuizați, dar fericiți. Ne întrebăm ce aventuri ne așteap
       A urmat lunga călătorie înapoi spre casă, cu escală la Amsterdam și mult timp liber la Duty Free, moment tocmai bun să mai cumpărăm câte ceva celor dragi. 
 
 `,
-      galleryLink: "https://www.facebook.com/media/set/?set=a.1335540731356622&type=3"
+      galleryLink: "https://www.facebook.com/media/set/?set=a.1336400084604020&type=3",
+      images: [
+    ziua81,
+    ziua82,
+    ziua83,
+    ziua84,
+  ],
     },
     
   ];
@@ -199,40 +279,63 @@ Mergem la culcare epuizați, dar fericiți. Ne întrebăm ce aventuri ne așteap
 
       {/* Journal Entries */}
       <section className="py-12">
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className="max-w-4xl mx-auto space-y-12">
-            {journalEntries.map((entry, index) => (
-              <Card key={index} className="bg-card border-border overflow-hidden">
-                <CardContent className="p-8">
-                  <div className="flex items-center gap-3 mb-6">
-                    <span className="inline-block bg-primary text-primary-foreground px-4 py-2 rounded-full text-lg font-bold">
-                      {entry.day}
-                    </span>
+  <div className="container mx-auto px-4 lg:px-8">
+    <div className="max-w-4xl mx-auto space-y-12">
+      {journalEntries.map((entry, index) => (
+        <Card key={index} className="bg-card border-border overflow-hidden">
+          <CardContent className="p-8">
+            <div className="flex items-center gap-3 mb-6">
+              <span className="inline-block bg-primary text-primary-foreground px-4 py-2 rounded-full text-lg font-bold">
+                {entry.day}
+              </span>
+            </div>
+
+            <div className="prose prose-lg max-w-none">
+              {entry.content.split("\n\n").map((paragraph, pIndex) => (
+                <p
+                  key={pIndex}
+                  className="text-muted-foreground mb-4 leading-relaxed whitespace-pre-line"
+                >
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+
+            {entry.galleryLink && (
+              <a
+                href={entry.galleryLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 mt-6 text-primary hover:text-primary/80 font-medium transition-colors"
+              >
+                <ExternalLink className="h-5 w-5" />
+                Vezi galeria foto completă aici!
+              </a>
+            )}
+
+            {entry.images?.length ? (
+              <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
+                {entry.images.slice(0, 4).map((img, imgIndex) => (
+                  <div
+                    key={imgIndex}
+                    className="relative aspect-square overflow-hidden rounded-xl border border-border shadow-sm"
+                  >
+                    <img
+                      src={img}
+                      alt={`Galerie ${entry.day} - ${imgIndex + 1}`}
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                    />
                   </div>
-                  <div className="prose prose-lg max-w-none">
-                    {entry.content.split('\n\n').map((paragraph, pIndex) => (
-                      <p key={pIndex} className="text-muted-foreground mb-4 leading-relaxed whitespace-pre-line">
-                        {paragraph}
-                      </p>
-                    ))}
-                  </div>
-                  {entry.galleryLink && (
-                    <a 
-                      href={entry.galleryLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 mt-6 text-primary hover:text-primary/80 font-medium transition-colors"
-                    >
-                      <ExternalLink className="h-5 w-5" />
-                      Vezi galeria foto completă aici!
-                    </a>
-                  )}
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
+                ))}
+              </div>
+            ) : null}
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  </div>
+</section>
+
 
       {/* Other Journals */}
       <section className="py-20 bg-secondary/30">

@@ -12,7 +12,7 @@ const Footer = () => {
             <div>
               <h4 className="font-semibold text-background mb-1">Telefon</h4>
               <a href="tel:+40123456789" className="text-background/70 hover:text-background transition-colors">
-                +40 123 456 789
+                0724 527 838 (Roxana Popescu)
               </a>
             </div>
           </div>
@@ -24,7 +24,7 @@ const Footer = () => {
             <div>
               <h4 className="font-semibold text-background mb-1">Email</h4>
               <a href="mailto:contact@languageschool.ro" className="text-background/70 hover:text-background transition-colors">
-                contact@languageschool.ro
+                office@proerudio.ro
               </a>
             </div>
           </div>
@@ -44,7 +44,7 @@ const Footer = () => {
         </div>
         
         <div className="border-t border-background/20 pt-8 text-center text-background/60">
-          <p>&copy; 2025 Language School. Toate drepturile rezervate.</p>
+          <p>&copy; 2026 Pro Erudio. Toate drepturile rezervate. Build by Macarie Mihai-Alexandru</p>
         </div>
       </div>
     </footer>

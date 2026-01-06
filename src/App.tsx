@@ -24,19 +24,22 @@ const App = () => (
       <BrowserRouter basename="/pro-erudio-premium-learning">
       <ScrollToTop />
         <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/despre-noi" element={<AboutPage />} />
-          <Route path="/tabara-poiana-marului-2023" element={<CampPage year="2023" campName="Tabăra Poiana Mărului" />} />
-          <Route path="/tabara-poiana-marului-2024" element={<CampPage year="2024" campName="Tabăra Poiana Mărului" />} />
-          <Route path="/tabara-poiana-marului-2025" element={<CampPage year="2025" campName="Tabăra Poiana Mărului" />} />
-          <Route path="/tabara-poiana-marului-2026" element={<CampPage year="2026" campName="Tabăra Poiana Mărului" />} />
-          <Route path="/jurnal-poiana-marului-2023" element={<JournalPage year="2023" campName="Tabăra Poiana Mărului" />} />
-          <Route path="/jurnal-poiana-marului-2024" element={<JournalPage year="2024" campName="Tabăra Poiana Mărului" />} />
-          <Route path="/jurnal-poiana-marului-2025" element={<JournalPage year="2025" campName="Tabăra Poiana Mărului" />} />
-          <Route path="/jurnal-poiana-marului-2026" element={<JournalPage year="2026" campName="Tabăra Poiana Mărului" />} />
-          <Route path="/teste-amplasament" element={<TesteAmplasament />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+  <Route path="/" element={<Index />} />
+  <Route path="/despre-noi" element={<AboutPage />} />
+
+  {/* ruta dinamică pentru TOATE taberele */}
+  <Route path="/:slug" element={<CampPage />} />
+
+  {/* jurnale - poți face la fel, dar nu e obligatoriu acum */}
+  <Route path="/jurnal-poiana-marului-2023" element={<JournalPage year="2023" campName="Tabăra Poiana Mărului" />} />
+  <Route path="/jurnal-poiana-marului-2024" element={<JournalPage year="2024" campName="Tabăra Poiana Mărului" />} />
+  <Route path="/jurnal-poiana-marului-2025" element={<JournalPage year="2025" campName="Tabăra Poiana Mărului" />} />
+  <Route path="/jurnal-poiana-marului-2026" element={<JournalPage year="2026" campName="Tabăra Poiana Mărului" />} />
+
+  <Route path="/teste-amplasament" element={<TesteAmplasament />} />
+  <Route path="*" element={<NotFound />} />
+</Routes>
+
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

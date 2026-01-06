@@ -4,6 +4,46 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import logo from "@/assets/logo.svg";
 
+const campsByYear = [
+  {
+    year: 2026,
+    camps: [
+      { label: "Școala de vară de limbă engleză la Dublin", to: "/scoala-de-vara-dublin-2026" },
+      { label: "Tabara in Marea Britanie Grosvenor Hall Activity Centre", to: "/tabara-marea-britanie-grosvenor-hall-2026" },
+      { label: "Tabără de limba engleză și aventură în România – Moinești", to: "/tabara-moinesti-2026" },
+      { label: "Tabără de limba engleză și aventură în România – Poiana Mărului", to: "/tabara-poiana-marului-2026" },
+    ],
+  },
+  {
+    year: 2025,
+    camps: [
+      { label: "Școală de vară de limba engleză în Marea Britanie – Manchester", to: "/tabara-marea-britanie-manchester-2025" },
+      { label: "Tabără de limba engleză și aventură în România – Poiana Mărului", to: "/tabara-poiana-marului-2025" },
+      { label: "Tabără de limba engleză și aventură în România – Moinești", to: "/tabara-moinesti-2025" },
+    ],
+  },
+  {
+    year: 2024,
+    camps: [
+      { label: "Tabără de limba engleză și aventură în România – Predeal", to: "/tabara-predeal-2024" },
+      { label: "Tabără de limba engleză și aventură în România – Poiana Mărului", to: "/tabara-poiana-marului-2024" },
+      { label: "Tabără în Marea Britanie – Little Canada Activity Centre", to: "/tabara-marea-britanie-2024" },
+      { label: "Școală de vară de limba engleză în Marea Britanie – Winchester", to: "/scoala-de-vara-marea-britanie-2024" },
+    ],
+  },
+  {
+    year: 2023,
+    camps: [
+      { label: "Tabăra de Engleză - Poiana Mărului", to: "/tabara-de-engleza-poiana-marului-2023" },
+      { label: "Tabăra de Engleză - Valea Oltului", to: "/tabara-de-engleza-valea-oltului-2023" },
+      { label: "Tabăra de Engleză - Marea Britanie", to: "/tabara-de-engleza-marea-britanie-2023" },
+      { label: "Școală de vară - Marea Britanie", to: "/scoala-de-vara-marea-britanie-2023" },
+    ],
+  },
+  
+];
+
+
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -12,7 +52,7 @@ const Navigation = () => {
     { label: "Despre Noi", href: "/despre-noi" },
   ];
 
-  const campYears = ["2023", "2024", "2025", "2026"];
+  const campYears = campsByYear.map(item => item.year);
 
   return (
     <nav className="fixed top-0 w-full bg-secondary/95 backdrop-blur-sm z-50 pb-2 pt-2">
@@ -47,33 +87,39 @@ const Navigation = () => {
 
             {/* Tabere Dropdown */}
             <div className="relative group">
-              <button className="flex items-center gap-1 text-secondary-foreground/90 hover:text-secondary-foreground font-large transition-colors font-medium">
-                Tabere
-                <ChevronDown className="h-4 w-4 transition-transform group-hover:rotate-180" />
-              </button>
-              <div className="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                <div className="bg-background border border-border rounded-lg shadow-lg py-2 min-w-[100px]">
-                  {campYears.map((year) => (
-                    <div key={year} className="relative group/year">
-                      <button className="w-full flex items-center justify-center gap-2 px-4 py-2 text-foreground hover:bg-accent transition-colors">
-                        <span>{year}</span>
-                        <ChevronRight className="h-4 w-4" />
-                      </button>
-                      <div className="absolute right-full top-0 pr-2 opacity-0 invisible group-hover/year:opacity-100 group-hover/year:visible transition-all duration-200">
-                        <div className="bg-background border border-border rounded-lg shadow-lg py-2 min-w-[220px]">
-                          <Link
-                            to={`/tabara-poiana-marului-${year}`}
-                            className="block px-4 py-2 text-foreground hover:bg-accent transition-colors whitespace-nowrap"
-                          >
-                            Tabăra Poiana Mărului {year}
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+  <button className="flex items-center gap-1 text-secondary-foreground/90 hover:text-secondary-foreground font-large transition-colors font-medium">
+    Tabere
+    <ChevronDown className="h-4 w-4 transition-transform group-hover:rotate-180" />
+  </button>
+
+  <div className="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+    <div className="bg-background border border-border rounded-lg shadow-lg py-2 min-w-[100px]">
+      {campsByYear.map((item) => (
+        <div key={item.year} className="relative group/year">
+          <button className="w-full flex items-center justify-center gap-2 px-4 py-2 text-foreground hover:bg-accent transition-colors">
+            <span>{item.year}</span>
+            <ChevronRight className="h-4 w-4" />
+          </button>
+
+          <div className="absolute right-full top-0 pr-2 opacity-0 invisible group-hover/year:opacity-100 group-hover/year:visible transition-all duration-200">
+            <div className="bg-background border border-border rounded-lg shadow-lg py-2 min-w-[220px]">
+              {item.camps.map((camp) => (
+                <Link
+                  key={camp.to}
+                  to={camp.to}
+                  className="block px-4 py-2 text-foreground hover:bg-accent transition-colors whitespace-nowrap"
+                >
+                  {camp.label}
+                </Link>
+              ))}
             </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
 
             {/* Jurnale de Tabără Dropdown */}
             <div className="relative group">
