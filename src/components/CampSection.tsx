@@ -64,7 +64,7 @@ if (s.type === "gridBullets") {
                                 {/* Rich Text */}
                                 {s.type === "richText" && (
                                     <>
-                                        <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 text-center">
+                                        <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
                                             {s.title}
                                         </h2>
                                         {s.paragraphs.map((p, i) => (

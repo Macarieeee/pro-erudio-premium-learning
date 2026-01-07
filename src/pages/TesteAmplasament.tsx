@@ -4,11 +4,16 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
 
-type StudentInfo = { firstName: string; lastName: string; email: string };
+type StudentInfo = {
+    firstName: string;
+    lastName: string;
+    age: number | "";
+    email?: string;
+};
 
 export default function TesteAmplasament() {
     const [step, setStep] = useState<"form" | "test" | "done">("form");
-    const [student, setStudent] = useState<StudentInfo>({ firstName: "", lastName: "", email: "" });
+    const [student, setStudent] = useState<StudentInfo>({ firstName: "", lastName: "", age: "", email: "" });
 
     const [selectedTestId, setSelectedTestId] = useState<Test["id"]>("yle");
     const test = useMemo(() => placementTests.find(t => t.id === selectedTestId)!, [selectedTestId]);
@@ -20,7 +25,8 @@ export default function TesteAmplasament() {
     const canStart =
         student.firstName.trim().length > 1 &&
         student.lastName.trim().length > 1 &&
-        /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(student.email.trim());
+        typeof student.age === "number"
+
 
     const answeredCount = Object.keys(answers).length;
     const total = test.questions.length;
@@ -51,26 +57,45 @@ export default function TesteAmplasament() {
                     <div className="bg-card border border-border rounded-2xl p-6 md:p-8">
                         <h2 className="text-xl font-semibold text-foreground mb-6">Date elev</h2>
 
-                        <div className="grid md:grid-cols-3 gap-4">
+                        <div className="grid md:grid-cols-4 gap-4">
                             <input
                                 className="h-11 rounded-xl border border-border bg-background px-4 text-foreground"
                                 placeholder="Nume"
                                 value={student.lastName}
                                 onChange={(e) => setStudent(s => ({ ...s, lastName: e.target.value }))}
                             />
+
                             <input
                                 className="h-11 rounded-xl border border-border bg-background px-4 text-foreground"
                                 placeholder="Prenume"
                                 value={student.firstName}
                                 onChange={(e) => setStudent(s => ({ ...s, firstName: e.target.value }))}
                             />
+
+                            {/* ✅ VÂRSTĂ */}
                             <input
+                                type="number"
+                                min={6}
+                                max={18}
                                 className="h-11 rounded-xl border border-border bg-background px-4 text-foreground"
-                                placeholder="Email"
-                                value={student.email}
-                                onChange={(e) => setStudent(s => ({ ...s, email: e.target.value }))}
+                                placeholder="Vârstă"
+                                value={student.age}
+                                onChange={(e) =>
+                                    setStudent(s => ({ ...s, age: e.target.value === "" ? "" : Number(e.target.value) }))
+                                }
                             />
+
+                            {/* ✅ EMAIL OPȚIONAL */}
+                            <div className="flex flex-col">
+                                <input
+                                    className="h-11 rounded-xl border border-border bg-background px-4 text-foreground"
+                                    placeholder="Email (opțional)"
+                                    value={student.email}
+                                    onChange={(e) => setStudent(s => ({ ...s, email: e.target.value }))}
+                                />
+                            </div>
                         </div>
+
 
                         <div className="mt-6">
                             <h3 className="text-sm font-semibold text-foreground mb-2">Alege testul</h3>
@@ -81,12 +106,20 @@ export default function TesteAmplasament() {
                                         type="button"
                                         onClick={() => setSelectedTestId(t.id)}
                                         className={`rounded-xl border px-4 py-3 text-left transition duration-300 ease-in-out ${selectedTestId === t.id
-                                                ? "border-primary bg-primary/10"
-                                                : "border-border bg-background hover:bg-secondary/40"
+                                            ? "border-primary bg-primary/10"
+                                            : "border-border bg-background hover:bg-secondary/40"
                                             }`}
                                     >
                                         <div className="font-semibold text-foreground">{t.title}</div>
                                         <div className="text-sm text-muted-foreground">{t.subtitle}</div>
+                                        {t.image && (
+                                            <img
+                                                src={t.image}
+                                                alt={t.title}
+                                                className="mt-3 h-40 w-full rounded-xl object-cover border border-border"
+                                                loading="lazy"
+                                            />
+                                        )}
                                     </button>
                                 ))}
                             </div>

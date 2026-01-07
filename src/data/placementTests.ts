@@ -1,3 +1,6 @@
+import PlacementTest1 from "@/assets/Placement-Test1.webp";
+import PlacementTest2 from "@/assets/Placement-Test2.jpg";
+
 export type Choice = "a" | "b" | "c";
 
 export type Question = {
@@ -11,6 +14,7 @@ export type Test = {
   id: "yle" | "a2b2";
   title: string;
   subtitle: string;
+  image?: string;
   questions: Question[];
   writingTask?: { title: string; details: string; task:string; minWords?: number; maxWords?: number };
 };
@@ -20,6 +24,7 @@ export const placementTests: Test[] = [
     id: "yle",
     title: "Test de plasare YLE",
     subtitle: "Pentru copii 8–10 ani (30 întrebări grilă + compunere opțională)",
+    image: PlacementTest1,
     questions: [
       { id: 1, prompt: 'Choose the correct word: “This is my ___.”', options: [{ key: "a", text: "dog" }, { key: "b", text: "run" }, { key: "c", text: "happy" }], correct: "a" },
       { id: 2, prompt: 'Choose the correct form: “She ___ 10 years old.”', options: [{ key: "a", text: "are" }, { key: "b", text: "is" }, { key: "c", text: "am" }], correct: "b" },
@@ -67,6 +72,7 @@ export const placementTests: Test[] = [
     id: "a2b2",
     title: "Test de plasare A2–B2",
     subtitle: "Pentru copii 11–14 ani (30 întrebări grilă + story task opțional)",
+    image: PlacementTest2,
     questions: [
       { id: 1, prompt: "If it ___ tomorrow, we’ll stay at home.", options: [{ key: "a", text: "will rain" }, { key: "b", text: "rains" }, { key: "c", text: "rained" }], correct: "b" },
       { id: 2, prompt: "He speaks English ___ than me.", options: [{ key: "a", text: "good" }, { key: "b", text: "well" }, { key: "c", text: "better" }], correct: "c" },

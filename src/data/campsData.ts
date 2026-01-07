@@ -58,7 +58,7 @@ export const DEFAULT_REGISTRATION = {
     steps: [
         "Pentru rezervări vă rugăm să completaţi formularul din partea de jos a paginii sau să ne trimiteţi un email.",
         "Plata avansului se face după confirmarea locului și a logisticii (transport/cazare) pentru grup.",
-        "Pentru orice alte informaţii, vă rugăm să nu ezitaţi să ne contactaţi la telefon.",
+        "Pentru orice alte informaţii, vă rugăm să nu ezitaţi să ne contactaţi la telefon sau pe email.",
     ],
     contact: {
         phone: "0741 389 897 (Roxana Popescu)",
@@ -82,6 +82,11 @@ export const DEFAULT_REQUIRED_DOCS = [
     "Formularul de înscriere completat",
     "Copie CI/Pașaport (în funcție de destinație)",
     "Declarație notarială cu acordul ambilor părinți (pentru taberele externe)",
+    "Avans la înscriere (conform ofertei)",
+];
+
+export const ROMANIA_REQUIRED_DOCS = [
+    "Formularul de înscriere completat",
     "Avans la înscriere (conform ofertei)",
 ];
 
@@ -426,11 +431,11 @@ export const campsData: CampConfig[] = [
         },
 
         quickInfo: {
-            location: "Kent, Marea Britanie (Grosvenor Hall)",
-            duration: "8 zile / 7 nopți (placeholder)",
-            ageGroup: "11–16 ani (placeholder)",
-            dates: "Iulie/August 2026 (completează exact perioada)",
-            price: "— (completează prețul)",
+            location: "Grosvenor Activity Centre",
+            duration: "8 zile / 7 nopți",
+            ageGroup: "11 – 16 ani",
+            dates: "25 iulie – 01 august 2026",
+            price: "GPB 740 / participant",
         },
         highlights: [
             "Cursuri de engleză cu profesori vorbitori nativi (dacă se aplică)",
@@ -466,7 +471,7 @@ export const campsData: CampConfig[] = [
             "Asigurare storno/ de călătorie",
         ],
         activitiesDescription:
-            "Activitățile includ jocuri de echipă, trasee, provocări de aventură și ateliere. Conținutul exact se stabilește în funcție de centrul și programul final.",
+            "Activitățile din tabără sunt numeroase și foarte variate, fiind concepute atât pentru participare individuală, cât și pentru lucrul în echipă, toate fiind disponibile în cadrul centrului, chiar dacă nu se poate anticipa exact care dintre ele vor fi desfășurate în săptămâna în care grupul va fi prezent. Printre activitățile de zi se numără: Abseiling, Aeroball, Archery, Buggy Building, Canoeing, Challenge Course, Climbing, Crate Challenge, Fencing, Giant Swing, Jacob’s Ladder, Orienteering, Problem Solving, Raft Building, Sensory Trail, Survivor, Trapeze, Vertical Challenge și Zip Wire. Seara, programul continuă cu activități interactive și recreative precum Ambush, Campfire, Capture the Flag, Disco, Passport to the World, PGL Sports Night, Photo Challenge, Robot Wars, Quiz Show, Snap Shot, Splash și Wacky Races. Pe lângă aceste experiențe, participanții vor descoperi istoria și cultura zonei prin două excursii, una de o zi întreagă și una de jumătate de zi, cu posibile destinații două dintre următoarele orașe: Dover (cu vizitarea castelului), Portsmouth (cu vizitarea castelului), Cambridge (unde se face punting pe râu), Canterbury (cu vizitarea catedralei), Brighton (cu intrare la Brighton Sea Life Centre) și Leeds (cu vizitarea castelului).",
         activityImages: IMGSET_DEFAULT,
         discounts: [
             { type: "Continuitate", value: "5%", condition: "Doar pentru copiii care au participat la programul de tabără din vara 2025" },
@@ -711,7 +716,6 @@ export const campsData: CampConfig[] = [
             "Activități de echipă, jocuri, mini-proiecte în engleză, provocări de aventură și sesiuni interactive. Programul final depinde de locație și grup.",
         activityImages: IMGSET_DEFAULT,
         discounts: [
-            { type: "Continuitate", value: "5%", condition: "Doar pentru copiii care au participat la programul de tabără din vara 2025" },
             { type: "Frați/Surori", value: "5%", condition: "Pentru doi copii ai aceleiași familii" },
         ],
         otherCamps: [
@@ -740,7 +744,7 @@ export const campsData: CampConfig[] = [
         luggageImage: { src: kitTabaraImage, alt: "Bagaj recomandat" },
         programImage: { src: programImage, alt: "Program orientativ" },
         registrationInfo: DEFAULT_REGISTRATION,
-        requiredDocuments: DEFAULT_REQUIRED_DOCS,
+        requiredDocuments: ROMANIA_REQUIRED_DOCS,
         form: {
             selectValue: "tabara-moinesti-2026",
             selectLabel: "Tabără de limba engleză și aventură în România – Moinești 2026",
@@ -898,7 +902,6 @@ export const campsData: CampConfig[] = [
             "Activități de echipă, jocuri, mini-proiecte în engleză, provocări de aventură și sesiuni interactive. Programul final depinde de locație și grup.",
         activityImages: IMGSET_DEFAULT,
         discounts: [
-            { type: "Continuitate", value: "5%", condition: "Doar pentru copiii care au participat la programul de tabără din vara 2025" },
             { type: "Frați/Surori", value: "5%", condition: "Pentru doi copii ai aceleiași familii" },
         ],
         otherCamps: [
@@ -927,7 +930,7 @@ export const campsData: CampConfig[] = [
         luggageImage: { src: kitTabaraImage, alt: "Bagaj recomandat" },
         programImage: { src: programImage, alt: "Program orientativ" },
         registrationInfo: DEFAULT_REGISTRATION,
-        requiredDocuments: DEFAULT_REQUIRED_DOCS,
+        requiredDocuments: ROMANIA_REQUIRED_DOCS,
         form: {
             selectValue: "tabara-poiana-marului-2026",
             selectLabel: "Tabără de limba engleză și aventură în România – Poiana Mărului 2026",

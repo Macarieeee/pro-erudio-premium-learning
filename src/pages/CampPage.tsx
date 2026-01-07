@@ -53,7 +53,7 @@ const CampPage = () => {
     showRequiredDocs: true,
     showDiscounts: true,
     showActivitiesDescription: true,
-      showActivities: true,
+    showActivities: true,
     ...(camp.visibility ?? {}),
   };
 
@@ -107,80 +107,108 @@ const CampPage = () => {
     <div className="min-h-screen bg-background">
       <Navigation />
 
-      {/* Hero Section */}
-      <section className="relative pt-16">
-        <div className="h-[70vh] relative overflow-hidden">
-          <img src={camp.hero.image} alt={camp.hero.imageAlt} className="w-full h-full object-cover" />
-          <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-background via-background/50 to-transparent" />
-          <div className="absolute bottom-0 left-0 right-0 p-8 lg:p-16">
-            <div className="container mx-auto">
-              <span className="inline-block bg-accent text-accent-foreground px-4 py-1 rounded-full text-sm font-semibold">
-                {camp.hero.badge}
-              </span>
-              <h1 className="text-3xl md:text-5xl font-bold text-foreground">{camp.hero.title}</h1>
-            </div>
+{/* HERO + QUICK INFO (100vh fold) */}
+<section className="mt-[70px] h-[calc(100vh-4rem)] flex flex-col">
+  {/* HERO */}
+  <div className="relative flex-1 overflow-hidden">
+    <img
+      src={camp.hero.image}
+      alt={camp.hero.imageAlt}
+      className="w-full h-full object-cover object-bottom"
+    />
+
+    {/* Gradient pentru lizibilitate */}
+    <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-background via-background/40 to-transparent" />
+
+    {/* Text */}
+    <div className="absolute bottom-0 left-0 right-0 p-6 lg:p-8">
+      <div className="container mx-auto px-4 lg:px-8">
+        <span className="inline-block bg-accent text-accent-foreground px-4 py-1 rounded-full text-sm font-semibold">
+          {camp.hero.badge}
+        </span>
+
+        <h1 className="mt-2 text-3xl md:text-5xl font-bold text-foreground">
+          {camp.hero.title}
+        </h1>
+      </div>
+    </div>
+  </div>
+
+  {/* QUICK INFO */}
+  <div className="bg-secondary/30 py-4 md:py-6">
+    <div className="container mx-auto px-4 lg:px-8">
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-y-4 md:gap-y-0">
+        {/* Locație */}
+        <div className="flex items-center gap-3">
+          <div className="shrink-0 w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+            <MapPin className="h-6 w-6 text-primary" />
+          </div>
+          <div>
+            <p className="text-sm text-muted-foreground">Locație</p>
+            <p className="font-semibold text-foreground">
+              {camp.quickInfo.location}
+            </p>
           </div>
         </div>
-      </section>
 
-      {/* Quick Info */}
-      <section className="py-12 bg-secondary/30">
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-5">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                <MapPin className="h-6 w-6 text-primary" />
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Locație</p>
-                <p className="font-semibold text-foreground">{camp.quickInfo.location}</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                <Clock className="h-6 w-6 text-primary" />
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Durată</p>
-                <p className="font-semibold text-foreground">{camp.quickInfo.duration}</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                <Users className="h-6 w-6 text-primary" />
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Vârstă</p>
-                <p className="font-semibold text-foreground">{camp.quickInfo.ageGroup}</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                <Calendar className="h-6 w-6 text-primary" />
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Perioada</p>
-                <p className="font-semibold text-foreground">{camp.quickInfo.dates}</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                <ReceiptPoundSterling className="h-6 w-6 text-primary" />
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Preț</p>
-                <p className="font-semibold text-foreground">{camp.quickInfo.price}</p>
-              </div>
-            </div>
+        {/* Durată */}
+        <div className="flex items-center gap-3">
+          <div className="shrink-0 w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+            <Clock className="h-6 w-6 text-primary" />
+          </div>
+          <div>
+            <p className="text-sm text-muted-foreground">Durată</p>
+            <p className="font-semibold text-foreground">
+              {camp.quickInfo.duration}
+            </p>
           </div>
         </div>
-      </section>
 
-      
+        {/* Vârstă */}
+        <div className="flex items-center gap-3">
+          <div className="shrink-0 w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+            <Users className="h-6 w-6 text-primary" />
+          </div>
+          <div>
+            <p className="text-sm text-muted-foreground">Vârstă</p>
+            <p className="font-semibold text-foreground">
+              {camp.quickInfo.ageGroup}
+            </p>
+          </div>
+        </div>
+
+        {/* Perioadă */}
+        <div className="flex items-center gap-3">
+          <div className="shrink-0 w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+            <Calendar className="h-6 w-6 text-primary" />
+          </div>
+          <div>
+            <p className="text-sm text-muted-foreground">Perioada</p>
+            <p className="font-semibold text-foreground">
+              {camp.quickInfo.dates}
+            </p>
+          </div>
+        </div>
+
+        {/* Preț */}
+        <div className="flex items-center gap-3">
+          <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+            <ReceiptPoundSterling className="h-6 w-6 text-primary" />
+          </div>
+          <div>
+            <p className="text-sm text-muted-foreground">Preț</p>
+            <p className="font-semibold text-foreground">
+              {camp.quickInfo.price}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
 
       {/* Description & Highlights */}
       {v.showAbout ? (
@@ -193,9 +221,8 @@ const CampPage = () => {
                 {camp.about.paragraphs.map((p, idx) => (
                   <p
                     key={idx}
-                    className={`text-muted-foreground leading-relaxed ${
-                      idx !== camp.about.paragraphs.length - 1 ? "mb-6" : ""
-                    }`}
+                    className={`text-muted-foreground leading-relaxed ${idx !== camp.about.paragraphs.length - 1 ? "mb-6" : ""
+                      }`}
                   >
                     {p}
                   </p>
@@ -203,7 +230,7 @@ const CampPage = () => {
               </div>
 
               <div>
-                <h3 className="text-2xl font-bold text-foreground mb-6">Ce Include Tabăra</h3>
+                <h3 className="text-2xl font-bold text-foreground mb-6">Ce include Tabăra</h3>
                 <div className="space-y-4">
                   {camp.highlights.map((highlight, index) => (
                     <div key={index} className="flex items-center gap-3">
@@ -224,7 +251,7 @@ const CampPage = () => {
           <div className="container mx-auto px-4 lg:px-8">
             <div className="flex items-center gap-3 mb-12 justify-center">
               <Mountain className="h-8 w-8 text-primary" />
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground">Descrierea Locației</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground">Descrierea locației</h2>
             </div>
 
             <div className="grid lg:grid-cols-2 gap-12 items-start">
@@ -267,16 +294,16 @@ const CampPage = () => {
           </div>
         </section>
       ) : null}
-{/* Secțiuni extra (Moinești etc.) */}
+      {/* Secțiuni extra (Moinești etc.) */}
       {camp.sections?.length ? (
-  <section className="py-20">
-    <div className="container mx-auto px-4 lg:px-8">
-      <div className="max-w-6xl mx-auto">
-        <CampSections sections={camp.sections} />
-      </div>
-    </div>
-  </section>
-) : null}
+        <section>
+          <div className="container mx-auto px-4 lg:px-8">
+            <div className="max-w-6xl mx-auto">
+              <CampSections sections={camp.sections} />
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       {/* Ce include tariful / Ce nu include */}
       <section className="py-20">
@@ -285,7 +312,7 @@ const CampPage = () => {
             <div>
               <div className="flex items-center gap-3 mb-6">
                 <CheckCircle className="h-7 w-7 text-accent" />
-                <h2 className="text-2xl md:text-3xl font-bold text-foreground">Ce Include Tariful</h2>
+                <h2 className="text-2xl md:text-3xl font-bold text-foreground">Ce include tariful</h2>
               </div>
               <div className="space-y-3">
                 {camp.includedInPrice.map((item, index) => (
@@ -300,7 +327,7 @@ const CampPage = () => {
             <div>
               <div className="flex items-center gap-3 mb-6">
                 <XCircle className="h-7 w-7 text-destructive" />
-                <h2 className="text-2xl md:text-3xl font-bold text-foreground">Ce Nu Include Tariful</h2>
+                <h2 className="text-2xl md:text-3xl font-bold text-foreground">Ce nu include tariful</h2>
               </div>
               <div className="space-y-3">
                 {camp.notIncludedInPrice.map((item, index) => (
@@ -317,41 +344,41 @@ const CampPage = () => {
 
       {/* Program de excursii și activități (guard: poate să nu existe imagini) */}
       {v.showActivities && (camp.activitiesDescription || camp.activityImages?.length) ? (
-  <section className="py-20 bg-secondary/30">
-    <div className="container mx-auto px-4 lg:px-8">
-      <div className="flex items-center gap-3 mb-12 justify-center">
-        <Compass className="h-8 w-8 text-primary" />
-        <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-          Program de Excursii și Activități
-        </h2>
-      </div>
+        <section className="py-20 bg-secondary/30">
+          <div className="container mx-auto px-4 lg:px-8">
+            <div className="flex items-center gap-3 mb-12 justify-center">
+              <Compass className="h-8 w-8 text-primary" />
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+                Program de excursii și activități
+              </h2>
+            </div>
 
-      <div className="grid lg:grid-cols-2 gap-12 items-center">
-        <div>
-          {camp.activitiesDescription ? (
-            <p className="text-muted-foreground leading-relaxed whitespace-pre-line">
-              {camp.activitiesDescription}
-            </p>
-          ) : null}
-        </div>
-
-        {camp.activityImages?.length ? (
-          <div className="grid grid-cols-2 gap-4 rounded-2xl overflow-hidden shadow-lg">
-            {camp.activityImages.map((src, index) => (
-              <div key={index} className="relative w-full aspect-[4/3] overflow-hidden">
-                <img
-                  src={src}
-                  alt={`Activitate ${index + 1}`}
-                  className="w-full h-full object-cover"
-                />
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div>
+                {camp.activitiesDescription ? (
+                  <p className="text-muted-foreground leading-relaxed whitespace-pre-line">
+                    {camp.activitiesDescription}
+                  </p>
+                ) : null}
               </div>
-            ))}
+
+              {camp.activityImages?.length ? (
+                <div className="grid grid-cols-2 gap-4 rounded-2xl overflow-hidden shadow-lg">
+                  {camp.activityImages.map((src, index) => (
+                    <div key={index} className="relative w-full aspect-[4/3] overflow-hidden">
+                      <img
+                        src={src}
+                        alt={`Activitate ${index + 1}`}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  ))}
+                </div>
+              ) : null}
+            </div>
           </div>
-        ) : null}
-      </div>
-    </div>
-  </section>
-) : null}
+        </section>
+      ) : null}
 
 
       {/* Înscrieri și rezervări */}
@@ -359,13 +386,13 @@ const CampPage = () => {
         <div className="container mx-auto px-4 lg:px-8">
           <div className="flex items-center gap-3 mb-12 justify-center">
             <Clipboard className="h-8 w-8 text-primary" />
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Înscrieri și Rezervări</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Înscrieri și rezervări</h2>
           </div>
 
           <div className="max-w-3xl mx-auto">
             <div className="grid md:grid-cols-2 gap-8">
               <div>
-                <h3 className="text-xl font-bold text-foreground mb-4">Pași pentru Înscriere</h3>
+                <h3 className="text-xl font-bold text-foreground mb-4">Pași pentru înscriere</h3>
                 <div className="space-y-4">
                   {camp.registrationInfo.steps.map((step, index) => (
                     <div key={index} className="flex items-start gap-3">
@@ -379,7 +406,7 @@ const CampPage = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-bold text-foreground mb-4">Contact Înscrieri</h3>
+                <h3 className="text-xl font-bold text-foreground mb-4">Contact înscrieri</h3>
                 <Card className="bg-primary/5 border-primary/20">
                   <CardContent className="pt-6 space-y-4">
                     <div className="flex items-center gap-3">
@@ -411,7 +438,7 @@ const CampPage = () => {
           <div className="container mx-auto px-4 lg:px-8">
             <div className="flex items-center gap-3 mb-12 justify-center">
               <FileText className="h-8 w-8 text-primary" />
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground">Documente Necesare Înscrierii</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground">Documente necesare înscrierii</h2>
             </div>
 
             <div className="max-w-2xl mx-auto">
@@ -434,7 +461,7 @@ const CampPage = () => {
           <div className="container mx-auto px-4 lg:px-8">
             <div className="flex items-center gap-3 mb-12 justify-center">
               <Percent className="h-8 w-8 text-accent" />
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground">Reduceri Disponibile</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground">Reduceri disponibile</h2>
             </div>
 
             <div className="grid justify-center grid-cols-[repeat(auto-fit,_minmax(260px,_1fr))] gap-6 max-w-5xl mx-auto">
@@ -478,7 +505,7 @@ const CampPage = () => {
           <div className="container mx-auto px-4 lg:px-8">
             <div className="flex items-center gap-3 mb-12 justify-center">
               <Calendar className="h-8 w-8 text-primary" />
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground">Program Orientativ</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground">Program orientativ</h2>
             </div>
 
             <div className="max-w-4xl mx-auto">
@@ -496,7 +523,7 @@ const CampPage = () => {
           <div className="container mx-auto px-4 lg:px-8">
             <div className="flex items-center gap-3 mb-12 justify-center">
               <Building className="h-8 w-8 text-primary" />
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground">Alte Tabere Organizate de Pro Erudio</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground">Alte tabere organizate de Pro Erudio</h2>
             </div>
 
             <div className="grid sm:grid-cols-3 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
@@ -539,7 +566,7 @@ const CampPage = () => {
           <div className="container mx-auto px-4 lg:px-8">
             <div className="max-w-3xl mx-auto">
               <div className="text-center mb-10">
-                <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4">Formular de Înscriere</h2>
+                <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4">Formular de înscriere</h2>
                 <p className="text-primary-foreground/80">
                   Completează formularul pentru a rezerva un loc la {camp.campName} {camp.year}
                 </p>

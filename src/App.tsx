@@ -36,7 +36,7 @@ const App = () => (
   <Route path="/jurnal-poiana-marului-2025" element={<JournalPage year="2025" campName="Tabăra Poiana Mărului" />} />
   <Route path="/jurnal-poiana-marului-2026" element={<JournalPage year="2026" campName="Tabăra Poiana Mărului" />} />
 
-  <Route path="/teste-amplasament" element={<TesteAmplasament />} />
+  <Route path="/teste-de-amplasare" element={<TesteAmplasament />} />
   <Route path="*" element={<NotFound />} />
 </Routes>
 
