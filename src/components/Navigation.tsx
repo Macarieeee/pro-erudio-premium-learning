@@ -42,6 +42,11 @@ const campsByYear = [
   },
 ];
 
+const journalItems = [
+  { label: "Jurnal Manchester 2025", slug: "manchester-2025" },
+  { label: "Jurnal Moinești 2025", slug: "moinesti-2025" },
+];
+
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -139,15 +144,15 @@ const Navigation = () => {
                 <ChevronDown className="h-4 w-4 transition-transform group-hover:rotate-180" />
               </button>
 
-              <div className="absolute top-full left-[-100px] pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+              <div className="absolute top-full left-[-200px] pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                 <div className="bg-background border border-border rounded-lg shadow-lg py-2 min-w-[260px]">
-                  {journalYears.map((year) => (
+                  {journalItems.map((item) => (
                     <Link
-                      key={year}
-                      to={`/jurnal-poiana-marului-${year}`}
+                      key={item.slug}
+                      to={`/jurnal/${item.slug}`}
                       className="block px-4 py-2 text-foreground hover:bg-accent transition-colors whitespace-nowrap"
                     >
-                      Jurnal Poiana Mărului {year}
+                      {item.label}
                     </Link>
                   ))}
                 </div>
@@ -176,9 +181,9 @@ const Navigation = () => {
       {isOpen && (
         <div className="lg:hidden bg-secondary/95 border-t border-secondary-foreground/20">
           <div
-      className="container mx-auto px-4 py-4 space-y-4 overflow-y-auto overscroll-contain"
-      style={{ maxHeight: "calc(100vh - 80px)" }} // 80px ≈ înălțimea navbarului tău
-    >
+            className="container mx-auto px-4 py-4 space-y-4 overflow-y-auto overscroll-contain"
+            style={{ maxHeight: "calc(100vh - 80px)" }} // 80px ≈ înălțimea navbarului tău
+          >
             <Link
               to="/"
               className="block text-secondary-foreground/90 hover:text-secondary-foreground transition-colors font-medium py-2"

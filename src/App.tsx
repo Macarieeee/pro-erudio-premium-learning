@@ -30,11 +30,7 @@ const App = () => (
   {/* ruta dinamică pentru TOATE taberele */}
   <Route path="/:slug" element={<CampPage />} />
 
-  {/* jurnale - poți face la fel, dar nu e obligatoriu acum */}
-  <Route path="/jurnal-poiana-marului-2023" element={<JournalPage year="2023" campName="Tabăra Poiana Mărului" />} />
-  <Route path="/jurnal-poiana-marului-2024" element={<JournalPage year="2024" campName="Tabăra Poiana Mărului" />} />
-  <Route path="/jurnal-poiana-marului-2025" element={<JournalPage year="2025" campName="Tabăra Poiana Mărului" />} />
-  <Route path="/jurnal-poiana-marului-2026" element={<JournalPage year="2026" campName="Tabăra Poiana Mărului" />} />
+  <Route path="/jurnal/:slug" element={<JournalPage />} />
 
   <Route path="/teste-de-amplasare" element={<TesteAmplasament />} />
   <Route path="*" element={<NotFound />} />

@@ -1,0 +1,285 @@
+// src/data/journals.ts
+import summerCampImage from "@/assets/summer-camp.jpg";
+
+// Manchester 2025 images
+import ziua11 from "@/assets/Ziua1-1.jpg";
+import ziua12 from "@/assets/Ziua1-2.jpg";
+import ziua13 from "@/assets/Ziua1-3.jpg";
+import ziua14 from "@/assets/Ziua1-4.jpg";
+import ziua21 from "@/assets/Ziua2-1.jpg";
+import ziua22 from "@/assets/Ziua2-2.jpg";
+import ziua23 from "@/assets/Ziua2-3.jpg";
+import ziua24 from "@/assets/Ziua2-4.jpg";
+import ziua31 from "@/assets/Ziua3-1.jpg";
+import ziua32 from "@/assets/Ziua3-2.jpg";
+import ziua33 from "@/assets/Ziua3-3.jpg";
+import ziua34 from "@/assets/Ziua3-4.jpg";
+import ziua41 from "@/assets/Ziua4-1.jpg";
+import ziua42 from "@/assets/Ziua4-2.jpg";
+import ziua43 from "@/assets/Ziua4-3.jpg";
+import ziua44 from "@/assets/Ziua4-4.jpg";
+import ziua51 from "@/assets/Ziua5-1.jpg";
+import ziua52 from "@/assets/Ziua5-2.jpg";
+import ziua53 from "@/assets/Ziua5-3.jpg";
+import ziua54 from "@/assets/Ziua5-4.jpg";
+import ziua61 from "@/assets/Ziua6-1.jpg";
+import ziua62 from "@/assets/Ziua6-2.jpg";
+import ziua63 from "@/assets/Ziua6-3.jpg";
+import ziua64 from "@/assets/Ziua6-4.jpg";
+import ziua71 from "@/assets/Ziua7-1.jpg";
+import ziua72 from "@/assets/Ziua7-2.jpg";
+import ziua73 from "@/assets/Ziua7-3.jpg";
+import ziua74 from "@/assets/Ziua7-4.jpg";
+import ziua81 from "@/assets/Ziua8-1.jpg";
+import ziua82 from "@/assets/Ziua8-2.jpg";
+import ziua83 from "@/assets/Ziua8-3.jpg";
+import ziua84 from "@/assets/Ziua8-4.jpg";
+import moinesti11 from "@/assets/Moinesti11.jpg";
+import moinesti12 from "@/assets/Moinesti12.jpg";
+import moinesti13 from "@/assets/Moinesti13.jpg";
+import moinesti14 from "@/assets/Moinesti14.jpg";
+import moinesti21 from "@/assets/Moinesti21.jpg";
+import moinesti22 from "@/assets/Moinesti22.jpg";
+import moinesti23 from "@/assets/Moinesti23.jpg";
+import moinesti24 from "@/assets/Moinesti24.jpg";
+import moinesti31 from "@/assets/Moinesti31.jpg";
+import moinesti32 from "@/assets/Moinesti32.jpg";
+import moinesti33 from "@/assets/Moinesti33.jpg";
+import moinesti34 from "@/assets/Moinesti34.jpg";
+import moinesti41 from "@/assets/Moinesti41.jpg";
+import moinesti42 from "@/assets/Moinesti42.jpg";
+import moinesti43 from "@/assets/Moinesti43.jpg";
+import moinesti44 from "@/assets/Moinesti44.jpg";
+import moinesti51 from "@/assets/Moinesti51.jpg";
+import moinesti52 from "@/assets/Moinesti52.jpg";
+import moinesti53 from "@/assets/Moinesti53.jpg";
+import moinesti54 from "@/assets/Moinesti54.jpg";
+import moinesti61 from "@/assets/Moinesti61.jpg";
+import moinesti62 from "@/assets/Moinesti62.jpg";
+import moinesti63 from "@/assets/Moinesti63.jpg";
+import moinesti64 from "@/assets/Moinesti64.jpg";
+
+export type JournalEntry = {
+  day: string;
+  content: string;
+  galleryLink?: string;
+  images?: string[];
+};
+
+export type Journal = {
+  slug: string; // ex: "manchester-2025"
+  navbarLabel: string; // cum apare în dropdown
+  title: string; // titlul mare
+  subtitle?: string; // "Jurnal de tabără"
+  campus?: string; // ex: "Universitatea din Salford (Manchester)"
+  dates: string;
+  heroImage?: string;
+  heroAlt?: string;
+
+  quickInfo?: {
+    location: string;
+    duration: string;
+    ageGroup: string;
+  };
+
+  entries: JournalEntry[];
+};
+
+export const journals: Record<string, Journal> = {
+  "manchester-2025": {
+    slug: "manchester-2025",
+    navbarLabel: "Jurnal Manchester 2025",
+    title: "Școală internațională de vară de limbă engleză în Marea Britanie",
+    subtitle: "Jurnal de tabără",
+    campus: "Universitatea din Salford (Manchester)",
+    dates: "27 Iulie - 3 August 2025",
+    heroImage: summerCampImage,
+    heroAlt: "Manchester 2025",
+
+    quickInfo: {
+      location: "Manchester, Marea Britanie",
+      duration: "7 zile / 6 nopți",
+      ageGroup: "8-16 ani",
+    },
+
+    entries: [
+      {
+        day: "Ziua 1",
+        content: `Prima zi de tabără a început extrem de devreme întrucât avionul era la ora 7.00. Cu emoții și somnoroși sau nu 😊, ne-am întâlnit cu totii, părinți și copii, la ora 4.30 la Aeroportul Otopeni, zona Plecări. Totul a decurs conform planurilor, nimeni nu a întârziat sau a avut dificulțăți la îmbarcare, scurta escală de la Amsterdam a fost fix cât să schimbăm avioanele în mare grabă, așa că la 10.20, ora Marii Britanii, am aterizat pe aeroportul din Manchester, destinația călătoriei noastre. De acolo am fost preluați cu autocarul pentru transferul spre Universitatea din Salford, iar în jurul orei 13.30 am sosit în campus. 
+
+După o primire foarte călduroasă (am mâncat pizza cu mare poftă că ne era și foame, YUM!) ne-am primit cheile de la camere, deci până acum totul la superlativ, prea bine să fie adevărat 😊. Partea neplăcută a fost că încă se făcea curățenie în cameră și, deși inițial ni s-a spus că putem să mergem să ne odihnim fiecare în patul lui la ora 15.30, așteptarea a fost mai lunga decât ne gândeam...Nu a fost o problemă foarte mare întrucât ni s-a pus la dispoziție o zonă în care să ne realxăm, iar cei mai curioși dintre noi au plecat puțin în recunoastere prin campus. Campusul este superb, cu clădiri tipic englezești, o alternanță modern (cu sticlă și forme neregulate) și tradițional (acoperite cu cărămidă roșie), cu foarte multe spații verzi și flori, o împletire armonioasă între natură și eleganță arhitecturală. Și camerele sunt spectaculos de frumoase, ca niste camere de hotel (fiecare cameră cu baie proprie), dar cu spații comune pe fiecare apartament, spațiu care deja presimțim că va fi folosit ca zonă de socializare în timpul liber. 
+
+Cina a fost acceptabilă, după standarde englezești, dar suficient de bună si variată ca să ne dea energie pentru o plimbare după masă. Oricum, oboseala drumului, schimbarea de fus orar și somnul scurt din noaptea anterioară ne-a făcut să căutăm să ne retragem în camerele noastre mai devreme decât în serile ce vor urma. `,
+        galleryLink: "https://www.facebook.com/media/set/?set=a.1329458625298166&type=3",
+        images: [ziua21, ziua22, ziua23, ziua24],
+      },
+      {
+        day: "Ziua 2",
+        content: `A doua zi a început tot devreme, dar de data aceasta dimineața ne-a găsit odihniți și nerăbdători să descoperim mai mult din ceea ce are să ne ofere programul de tabără. La ora 8.00 ne-am întâlnit cu toții în fața clădirilor de cazare (există acolo o zonă special dedicată, cu băncuțe și arbuști) pentru a merge la cantină. Distanța dintre cazare și cantină era de aproximativ un sfert de oră, dar clădirea în care se țineau cursurile era chiar lângă cantină, deci trebuia sa avem grija în fiecare dimineață să ne luam din cameră tot ce aveam nevoie, organizarea face mereu diferența. 
+
+La ora 9.00 au început cursurile de limbă engleză, iar în prima parte copiii au primit un test (inclusiv o probă orală), la care s-au descurcat remarcabil, motiv pentru care au fost plasați în grupe mai mult ai noștri cu ai noștri întrucât nivelul lor de limbă engleză este mult peste media de cunoștințe ale celorlalte nationalități. Motiv de bucurie, dar și de tristețe întrucât unul dintre obiectivele taberei este să socializeze în grupuri internaționale. Sigur vom mai avea ocazii... 
+
+Prima activitate de după-amiază a fost prezentarea programului, a echipei, a regulilor taberei etc și o scurtă plimbare prin campus pentru a ne arăta distanțele cele mai scurte dintre punctele de interes. Campusul este enorm și activitațile pot fi programate în diferite zone, deci această orientare a fost foarte binevenită. 
+
+A doua activitate de după-amiază a fost un Scavenger Hunt pentru a ne consolida informațiile primite la atelierul anterior despre unde se află diferite clădiri și a ne ajuta să ne cunoaștem mai bine. S-au format echipe internaționale, deci a trebuit să colaborăm și cu copii din alte țări pentru îndeplinirea sarcinilor de lucru. 
+
+Activitatea de seară a fost un deliciu culinar sub îndrumarea haioasei Sabrina. Am făcut cupcakes 😊. Cu unt, cu creme de mai multe feluri, decorate, pufoase și înmiresmate cu fel de fel de esențe, pe scurt delicioase. Iar când le pregătești alături de prieteni și cu propriile mâini, clar le vei savura. Unde pui că primești ca bonus și rețeta, pe care o poți reinterpreta acasă pe gustul tău 😊. 
+
+Mergem la culcare epuizați, dar fericiți. Ne întrebăm ce aventuri ne așteaptă ziua următoare… `,
+        galleryLink: "https://www.facebook.com/media/set/?set=a.1329896498587712&type=3",
+        images: [ziua11, ziua12, ziua13, ziua14],
+      },
+      {
+        day: "Ziua 3",
+        content: `În a treia zi de tabără am fost foarte activi încă de dimineață. După micul dejun ne-am împărțit în două grupuri, în funcție de preferințe. O echipă a mers însoțită de Reyhan la un parc de trambuline absolut formidabil, unde am țopăit, rostogolit, întrecut în sărituri și tumbe în aer sau luat la trântă cu niște ciocane uriașe pe bârne… sau luat la țintă cu mingi mici de plastic, în care puteai să și înoti sau să te scufunzi… În fine, fiecare a găsit ceva de făcut pe gustul lui acolo, inclusiv să își completeze micul dejun cu un sendviș uriaș sau o înghețata în asteptarea prânzului. Cea de-a doua grupă a mers la Laser Quest, unde s-au împușcat după pofta inimii. Bonusul a fost că aceasta activitate s-a desfășurat într-un mall imens, iar cei dornici de shopping au putut să petreacă ceva timp și prin magazine. Desigur că timpul a fost insuficient, dar ne-am propus să revenim. 
+
+Imediat după prânz (a fost coadă mare la cantină de data aceasta și nu am mai avut timp să mergem în camere, așa că ne-am propus să identificam orele cu mai puțină aglomerație ca să scurtăm timpul de așteptare) am mers la orele de limba engleza în fabuloasa cladire în stil Victorian. Au fost doua sesiuni de curs, cu jumătate de oră pauză între ele, dar mulți nu au mai ajuns în camere, au preferat să  socializeze în Parcul Peel, zona perfectă pentru relaxare. Orele de engleză au fost interactive, bazate pe discuții, proiecte, cu activități în perechi și echipe, așa cum noi suntem deja obșinuiti să lucrăm.  
+
+Activitatea de seara a fost distractivă și diversă. Am avut de ales între piscină și jocuri de masă la interior sau atelier de dans. Ne-am împărțit fiecare pe unde a vrut, dar se pare că cei care au ales jocurile de masă au tras lozul câștigător. S-a jucat sah, Monopoly, Jenga, jocuri de cărți, s-a pictat pe pietre și s-a modelat cu argilă. Desigur, unii au făcut de toate, mutându-se de la stație la stație, inclusiv de la dans la șah :). A fost super distracție, mai ales ca aveam posibilitatea să alegem muzica… `,
+        galleryLink: "https://www.facebook.com/media/set/?set=a.1330787151831980&type=3",
+        images: [ziua31, ziua32, ziua33, ziua34],
+      },
+      {
+        day: "Ziua 4",
+        content: `În a patra zi de tabără deja avem rutina stabilită: ne întâlnim la cazare, mergem la masă, apoi la activitatea de dimineață, prânz, cursuri, activitatea de seara și ziua este gata… În dimineata aceasta luăm autobuzul spre Manchester. Un double-decker aproape gol (nu pentru mult timp că doar noi suntem 45…), așa că mergem la etaj, să avem priveliște. După aprximativ o jumătate de oră ajungem la Muzeul Stiinței și Industriilor unde aflăm despre dezvoltarea orașului industrial Manchester. Aflăm despre modul de viață în Epoca Industrială, despre comerțul cu lână și industria bumbacului, despre prima moară de bumbac care datează din 1780, despre prima șină de cale ferată care leagă Manchestrul de Liverpool în 1830 pentru a înlesni transportul între cele două orașe etc. Aflăm cu stupoare că în a doua jumătate a secolului al XVIII-lea doar jumătate dintre copii atingeau vârsta de doi ani, iar la cinci ani ajungeau doar 104 din 1000. Procente copleșitoare, informații care te tulbură, mașinării de tot felul, o dimineată plină. 
+
+În rest, programul zilnic își urmează cursul obișnuit, iar seara avem din nou de ales între atelierul de jocuri, cel de vopsit tricouri și cel de baking. Ca și data trecută, unii au reușit să participe la mai multe și să lege noi prietenii în timp ce se distrează. `,
+        galleryLink: "https://www.facebook.com/media/set/?set=a.1332021865041842&type=3",
+        images: [ziua41, ziua42, ziua43, ziua44],
+      },
+      {
+        day: "Ziua 5",
+        content: `Am depășit deja jumătatea timpului pe care îl avem de petrecut la Manchester și nu știm când a trecut...  
+
+În a cincea zi de tabără am mers la Galeria de Artă Whitworth din Manchester. Această galerie, pe langă obișnuitele exponate, are și o parte interactivă, în sensul că am putut să ne punem la încercare talentul artistic cu pensula pe pânză... A fost foarte simpatic, iar unii dintre noi chiar au reușit să contureze ceva cu sens... Ca la orice punct de atracție în Marea Britanie, și aici am găsit o cafenea cu prăjituri spectaculoase. Pe scurt, la această vizită fiecare a găsit ceva de făcut, văzut sau gustat. 
+
+După prânz și cursurile de engleză, am avut o serie de activități în Parcul Peel. Am jucat volei, fotbal, badminton, am sărit coarda sau pur și simplu ne-am distrat la terenul de joacă. Organizatorii au avut și pături, deci cine a dorit a putut și să joace cărți sau se relaxeze pe iarbă cu telefonul în mână ori de vorbă cu prietenii. 
+
+Seara ar fi trebuit să se încheie cu un moment disco, dar au fost ceva probleme tehnice care s-au remediat destul de târziu, când majoritatea copiilor deja se retrăseseră spre camere. Am obținut, totuși, promisiunea că a doua zi să se țină din nou discoteca, speram să nu mai existe probleme.`,
+        galleryLink: "https://www.facebook.com/media/set/?set=a.1332985374945491&type=3",
+        images: [ziua51, ziua52, ziua53, ziua54],
+      },
+      {
+        day: "Ziua 6",
+        content: `A sosit și mult așteptata zi în care să facem turul ghidat al Stadionului Etihad, faimosul stadion al echipei Manchester City. A fost absolut grandios. Nu doar că am avut acces la stadionul propriu-zis și am putut să facem poze cu gazonul, lojele, am trecut prin tunelul prin care jucătorii intră pe teren, dar am văzut vestiarele, am atins tricourile celor mai faimoși fotbaliști ai lumii, am stat pe bancile pe care se așează și fotbaliștii clubului. Dar punctul de mare atracție al vizitei a fost sala în care se fac conferințele de presă întrucât am putut să facem poze la masă cu Joseph (Pep) Guardiola în persoană. Amintiri unice, emoții de neuitat… Desigur, plecarea a durat mai mult decât am anticipat fiindcă ultima oprire a fost la magazine, de unde fiecare a vrut să plece cu o amintire, mai mult sau mai puțin costisitoare. 
+
+Așa cum ni se promisese, seara am avut disco. Aranjați care mai de care (în special fetele), am dansat și cântat melodii alese de noi sau alții, a fost foarte frumos!`,
+        galleryLink: "https://www.facebook.com/media/set/?set=a.1334672534776775&type=3",
+        images: [ziua61, ziua62, ziua63, ziua64],
+      },
+      {
+        day: "Ziua 7",
+        content: `În ultima zi de tabără am mers în excursia de o zi la Chester, unul dintre cele mai frumoase orășele din Marea Britanie. Am aflat despre istoria asezării care datează de pe vremea romanilor, când s-a constituit ca o fortăreață militară (79BC) cu numele Deva Victrix. După retragerea romană orașul a fost ocupat de anglo-saxoni, cei care au fortificat pereții cetății pentru a se apăra de raidurile vikingilor. Mai tarziu, cucerirea Normandă a adus orașul sub conducerea ducelui de Chester (de unde și numele), după care localitatea a devenit un port important, pus în umbră de Liverpool abia în secolul al XVIII-lea. Orașul cunoaște un nou moment de dezvoltare în perioada victoriană, din această perioadă datând foarte multe clădiri, care îi și conferă o culoare aparte.  
+
+Vizita noastră a început cu un tur pietonal în centrul Chester-ului, a continuat cu vizitarea faimoasei și grandioasei catedrale, după care am mers la un tur ghidat cu vaporul, când am văzut majoritatea clădirilor emblematice pentru oraș. După ce am vizitat și un edificiu roman, am început lunga plimbare pe cei trei kilometri de ziduri de apărare care încercuiesc orașul. Minunate priveliști pe cel mai bine păstrat și cel mai lung zid de apărare din Marea Britanie. 
+
+Obosiți, dar fericiți, am ajuns în campus chiar la timp pentru o cină mai târzie decât de obicei (cina era în general la ora 18.00). Activitatea de seară a fost opțională, dar toți au ales să aparticipe la jocuri în Peel Parc, doar este ultima seară petrecută în această tabără și trebuie să profităm la maxim de fiecare moment. `,
+        galleryLink: "https://www.facebook.com/media/set/?set=a.1335540731356622&type=3",
+        images: [ziua71, ziua72, ziua73, ziua74],
+      },
+      {
+        day: "Ziua 8 - ultima zi de tabără",
+        content: `Ultima zi de tabără a fost tristă fiindcă trebuia să ne despărțim de prieteni dragi. După ce am făcut poze în fel și chip cu certificatele primite la curs (am avut și mândria ca două dintre elevele noastre să fie desemnate Student of the Week pentru implicare din timpul cursurilor și cunoștințele de limbă engleză), am vrut neapărat să ne luam la revedere de la toti activity leaders englezi. Fiindcă unii au fost greu de găsit, chiar am întârziat puțin plecarea, noroc că domnul șofer a fost super înțelegător. 
+
+A urmat lunga călătorie înapoi spre casă, cu escală la Amsterdam și mult timp liber la Duty Free, moment tocmai bun să mai cumpărăm câte ceva celor dragi.  `,
+        galleryLink: "https://www.facebook.com/media/set/?set=a.1336400084604020&type=3",
+        images: [ziua81, ziua82, ziua83, ziua84],
+      },
+    ],
+  },
+
+  // Exemplu pentru al doilea jurnal (completezi tu ulterior)
+  "moinesti-2025": {
+    slug: "moinesti-2025",
+    navbarLabel: "JURNAL DE TABĂRĂ ENGLISH EXPLORERS CAMP 2024",
+    title: "Tabără de limba engleză și aventură în România",
+    subtitle: "Jurnal de tabără",
+    campus: "Moinești, România",
+    dates: "29 iunie – 4 iulie 2024",
+    heroImage: summerCampImage,
+    heroAlt: "Moinești 2024",
+    quickInfo: {
+      location: "Moinești, România",
+      duration: "—",
+      ageGroup: "—",
+    },
+    entries: [{
+        day: "Ziua 1",
+        content: `La ora 8.00 am pornit din Piata Constitutie catre Moinesti cu entuziasm, asa cum ne sta bine la inceput de tabara :). La ora 11.30 am facut un scurt popas de mancat sandvisuri si intins picioarele, drumul este lung, dar noi rezistam eroic. In autocar facem o multime de jocuri (cultura generala, atentie, rapiditate in gandire etc) ca sa treaca mai repede timpul si sa castigam deja puncte pentru viitoarele echipe. 
+
+Odată ajunși la cazare, in jurul orei 14.00, am luat prânzul. Am avut de ales dintre 3 feluri de ciorbe/supe, 4 preparate din carne (pulpe dezosate in sos la tava, ceafa/piept de pui la gratar si chiftelute de pui), alaturi de diferite garnituri (cartofi piure, prajiti sau la cuptor, paste in sos de smantana si mamaliguta) si salate (de rosii, de varza sau castraveti de vara murati). Am avut si desert o prajitura cu blat de nuca de cocos si crema de ciocolata. Apa minerala si plata la discretie pe mese. Adica destule variante pentru toate gusturile. Si toate gustoase! 
+
+Dupa mai putin de o ora de relaxare in camere, ne-am intalnit in fata salii de conferinte Antonia pentru prima serie de activitati. Am inceput cu 2 jocuri de cunoastere si am continuat cu formarea echipelor si activitati in echipe. A urmat prezentarea blazoanelor si a rolurilor fiecarui co-echipier intrucat in tabara de anul acesta fiecare echipa reprezinta un regat. Inainte de cina am aflat si regulile taberei, ca sa evitam orice neintelegere... 
+
+Cina a fost la fel de varianta si gustoasa ca si pranzul. Am avut snitele, diferite feluri de carne la cuptor, carnati, diferite de tipuri de cartofi, paste, orez, salate si desert. Am mancat pe saturate ca sa avem energie si pentru activitatile de seara. 
+
+Atelierul de seara a fost un TASK RACE care a avut, printre alte sarcini de lucru, si crearea unei coroane reprezentative pentru regatul fiecarei echipe. Intre timp am ramas fara baterie, deci vom completa albumul si cu creatiile celorlalte echipe, dar cu pozele facute cu telefoanele copiilor 🙂. Lucru in echipa cu adevarat! Multumim, copii! 
+
+Seara s-a incheiat cu impartirea stickerelor, ca de obicei. La ora 23.00 era liniste in toate camerele, toata lumea dormea bustean. `,
+        galleryLink: "https://www.facebook.com/media/set/?set=a.1304164541160908&amp;type=3",
+        images: [moinesti11, moinesti12, moinesti13, moinesti14],
+      },
+      {
+        day: "Ziua 2",
+        content: `A doua zi a început foarte devreme. La ora 7.00 deja era forfotă pe coridoare, deci încalzirea pe ritm de dans a fost exact ceea ce ne trebuia înainte de micul dejun copios și divers, așa cum ne-am obișnuit deja să fie mesele aici. 
+
+Cursurile de limbă engleză au fost împărtițe în două sesiuni cu un sfert de oră pauză între ele. La cursurile de dimineață nu se ține cont de echipe, ci de vârste și nivelul de cunoștințe de limbă engleză, deci avem ocazia să cunoaștem mai bine și alți copii. La cursuri am discutat despre impartanța știintei în viețile oamenilor și am făcut fel de fel de activități interactive plecând de la această temă pentru a ne perfecționa exprimarea în limba engleză și lărgi vocabularul tematic. A fost foarte interesant și totodată instructiv! 
+
+Atelierele de după-amiază au fost super simpatice. La primul, copiii au confecționat prototipul unei invenții care să le facă viața mai ușoară și apoi să îi facă o reclamă ca să îi convingă pe prietenii lor să o cumpere. Am avut de toate: cutii în care introduci tema și o scoți gata efectuata, brățări care îi țin departe pe copiii neprietenoși, dulapuri în care intri în haine obișnuite și ieși îmbrăcat cum îți dorești, poțiuni care îți asortează îmbrăcămintea, imprimante de haine și chiar niște dispozitive de apucat lucrurile de la distanță cu efort minim. Toate inspirate și foarte frumos explicate! Bravo, copii! 
+
+La al doilea atelier i-am provocat pe copii cu proiectarea unei vacanțe pentru o familie cu doi copii. Elementul surpriză a fost ca fiecare echipă a avut o suma diferită la dispoziție. Obiectivul acestei activități a fost să bugeteze o vacanță întrucât educația financiară este bine să înceapă la o vârstă mică, pentru copii este important să știe valoarea banilor. Întrucât știm că nu ei stabilesc destinații, activități, transport și mese în vacanță, le-am dat voie să folosească internetul pentru a afla prețuri realiste.  
+
+Este adevărat că nu este ușor să pleci în vacanta 5 zile cu un buget de 300 euro și că este greu să cheltuiești 5000 euro într-o vacanță la Costinești, dar echipele noastre au reușit. Acum știm că 70 euro este prea puțin pentru benzină până în Grecia și că un bilet la tren până la Mamaia costă mai mult de 5 euro 😅. Cât despre cazări și cheltuiala pentru o masă, prețurile pot varia atât de mult, încât poți găsi soluții pentru diferite bugete. Ceea ce este minunat, dar trebuie sa alegi cu înțelepciune 🥰. Excellent work, teams! 🫶 
+
+Între activitatile de după-amiază și cină am avut ceva timp liber, așa că cei mici s-au dat pe tiroliană câte ture au vrut ei, iar cei mari au jucat ping-pong sau au socializat de voie.  
+
+Activitatea de seară a venit cu provocări pe echipe. Am avut curse cu ștafetă, activități de coordonare (echipa mută paharul cu apă pus pe parașută), dexteritate (lovituri la țintă, aruncă cercul pe trompa elefantului), toate activitățile vizând creșterea unității echipei și credem că au fost un succes. Bravo, echipe! 🥰 `,
+        galleryLink: "https://www.facebook.com/media/set/?set=a.1305826244328071&type=3",
+        images: [moinesti21, moinesti22, moinesti23, moinesti24],
+      },
+      {
+        day: "Ziua 3",
+        content: `În cea de-a treia zi am început, ca de obicei :), cu încălzirea (exerciții de înviorare urmate de exerciții mai dinamice și, bineînțeles, de dansurile preferate). După încălzire, copiii au mers în echipe la micul dejun și apoi la cursurile de limbă engleză la care au discutat despre istorie, tema zilei fiind "Explore the Past!". Am discutat despre pirați faimoși și mituri legate de aceștia, evenimente misterioase din trecut, exploratori cunoscuți sau animale preistorice.  
+
+După prânz, am plecat cu autocarul să vizităm orașul Bacău, unde am văzut Casa Memorială "George Bacovia", locul unde acesta a compus aproape toata opera care l-a consacrat. Copiii au descoperit istoria familiei poetului cu ajutorul doamnei ghid, care le-a povestit într-un mod captivant anecdote din viața lui și chiar ne-a pus o înregistrare cu vocea poetului recitând "Amurg violet".  
+
+Înainte de a pleca înapoi spre hotel, am poposit pe Insula de agrement de pe Râul Bistrița, o alta mândrie locală, si ne-am răcorit cu înghețată sau suc, după preferințe. A urmat cina și activitatea de seară "Team Feuds", o adaptare a celebrului show "Ce spun românii?". Echipele noastre s-au duelat amical în cuvinte și idei, desigur că în limba engleză, deci toată lumea a ieșit câștigătoare :). Bravo, echipe! 💪 `,
+        galleryLink: "https://www.facebook.com/media/set/?set=a.1306676177576411&type=3",
+        images: [moinesti31, moinesti32, moinesti33, moinesti34],
+      },
+      {
+        day: "Ziua 4",
+        content: `În cea de-a patra zi de tabără am explorat artele. La grupele de limbă engleză cu elevi mari și nivel bun de cunoaștere a limbii engleze am tradus poezii de George Bacovia in grupuri de 3 copii, desigur fiind inspirați de vizita din ziua anterioară. La cei mai micuți am discutat despre artele vizuale, despre muzica și dans, teatru și cinematografie, după cum ne-au ghidat doamnele profesoare. Desigur că ne-am demonstrat abilitățile practice în activități în perechi și grupuri mici, așa cum ne stă bine să facem în tabără. 
+
+După prânz am făcut o scurtă excursie întrucât este păcat să ajungi într-un loc nou și să nu vezi ce îți oferă zona. Astfel, am vizitat două obictive emblematice pentru zona (supranumită și Valea Loarei de România), primul fiind Castelul Ghika de la Dofteana, care a fost construit la 1894 cu rol de casă de vânătoare, iar în timpul comunismului a fost utilizat ca spital de boli pulmonare, și ulterior orfelinat și internat pentru copii. Al doilea obiectiv a fost Palatul Ghika de la Comănești, construit în anul 1890, în stilul baroc târziu şi eclectic, de ,,meşteri italieni’’ la comanda proprietarului moşiei, Dimitrie Ghika. Parcul si palatul au fost resedinta familiei pana in 1946, dupa care a primit numeroase destinatii care au dus la degradarea acestuia. Acum în palat functioneaza Muzeul de Etnografie si Arta.  
+
+La întoarcerea din excursie, cine a mai avut energie înainte de cină a făcut o baie grozavă în piscina interioară sau a petrecut timp de calitate cu prieteni dragi la locul de joacă.  
+
+Activitatea de seară a fost foarte creativa. În echipe a trebuit să confecționăm un pom din hărtie rulată și să prezențăm povestea copacului, desigur ținând cont de mai multe elemente cheie. A fost foarte simpatic, dar deloc simplu de realizat. Provocare acceptata, reușită sigură. Bravo, copii! `,
+        galleryLink: "https://www.facebook.com/media/set/?set=a.1307487994161896&type=3",
+        images: [moinesti41, moinesti42, moinesti43, moinesti44],
+      },
+      {
+        day: "Ziua 5",
+        content: `Penultima zi de tabără a fost fabuloasă întrucât a fost dedicată sporturilor. La cursurile de dimineață am discutat despre sport și beneficiile lui și chiar am inventat un sport sau luat parte la diferite probe sportive, în funcție de vârstă și interesul participanților.  
+
+Dupa-amiaza a fost efervescentă întrucât am petrecut-o la piscina exterioară, unde am avut parte și de petrecere cu muzică și multă, multă spumă. Ca sa nu mai povestim că am primit și înghețată sau sucuri din partea casei, ca să fie petrecerea petrecere adevărată. 
+
+Seara a fost și ea grandioasă. După spectacolul de talente (și ce copii talentași am avut!!!) a urmat focul de tabără cu muzică și popcorn, apoi dans și scris mesaje pe șepci, în hohote de râs și plâns întrucât știm că este ultima seara împreună… Cel puțin ultima din acest an școlar întrucât sigur vom reveni aici și vara viitoare! `,
+        galleryLink: "https://www.facebook.com/media/set/?set=a.1312885916955437&type=3  ",
+        images: [moinesti51, moinesti52, moinesti53, moinesti54],
+      },
+      {
+        day: "Ziua 6",
+        content: `Ultima zi de tabăra a început tot cu mișcare, ca să avem energie toată ziua . După micul dejun a urmat ultima serie de puncte pentru echipe pentru a putea face clasamentul. Știm de acum, toate echipele au ieșit căștigătoare dacă pleacă din tabără îmbogățiți la minte și suflet, cu noi abilități învățate, mai responsabili și cu un bagaj mare de jocuri pe care să le incerce și cu prietenii  de acasă. 
+
+A urmat festivitatea de înmânare a certificatelor și tradiționala poză de grup, ca să avem dovada că au fost în tabără. Ce frumos a fost totul… 
+
+Cu tristețe că s-a terminat, dar bucuria că va urma și o data viitoare, ne ducem bagajele la autocar și ne îmbarcăm pentru drumul lung de întoarcere acasă. Pe drum, cu acordul părinților, oprim pentru o masa mult râvnită la KFC ca să ne consumăm și ultimii banuți de buzunar, pe care i-am păstrat cu grijă întrucât în tabără oricum nu am avut pe ce sa ii cheltuim. In jurul orei 18.00 am ajuns din nou în Piața Constitutiei, de unde ne-au preluat dragii noștri părinți. Bravo, echipe! Pe vara viitoare! `,
+        galleryLink: "https://www.facebook.com/media/set/?set=a.1315176926726336&type=3",
+        images: [moinesti61, moinesti62, moinesti63, moinesti64],
+      },],
+  },
+};
+
+export const journalList = Object.values(journals);
