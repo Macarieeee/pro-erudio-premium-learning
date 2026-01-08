@@ -75,7 +75,7 @@ const RegistrationForm = ({ variant = "light", defaultCamp = "poiana-marului-202
     : "text-muted-foreground";
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-6 scroll-mt-60" id="registrationForm" >
       {/* Camp Selection */}
       <div className="space-y-2">
         <Label htmlFor="camp" className={`${labelClass} font-medium`}>Tabăra selectată</Label>

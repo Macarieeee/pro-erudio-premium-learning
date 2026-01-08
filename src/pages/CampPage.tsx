@@ -106,9 +106,8 @@ const CampPage = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-
 {/* HERO + QUICK INFO (100vh fold) */}
-<section className="mt-[70px] h-[calc(100vh-4rem)] flex flex-col">
+<section className="pt-16 h-[calc(100vh-4rem)] flex flex-col">
   {/* HERO */}
   <div className="relative flex-1 overflow-hidden">
     <img
@@ -210,6 +209,7 @@ const CampPage = () => {
 
 
 
+
       {/* Description & Highlights */}
       {v.showAbout ? (
         <section className="py-20">
@@ -247,7 +247,7 @@ const CampPage = () => {
 
       {/* Location Description + Facilities */}
       {v.showFacilities ? (
-        <section className="py-20 bg-secondary/30">
+        <section className="py-4 bg-secondary/30">
           <div className="container mx-auto px-4 lg:px-8">
             <div className="flex items-center gap-3 mb-12 justify-center">
               <Mountain className="h-8 w-8 text-primary" />
@@ -307,7 +307,7 @@ const CampPage = () => {
 
       {/* Ce include tariful / Ce nu include */}
       <section className="py-20">
-        <div className="container mx-auto px-4 lg:px-8">
+        <div className="container mx-auto px-6 lg:px-6">
           <div className="grid lg:grid-cols-2 gap-12">
             <div>
               <div className="flex items-center gap-3 mb-6">
@@ -344,7 +344,7 @@ const CampPage = () => {
 
       {/* Program de excursii și activități (guard: poate să nu existe imagini) */}
       {v.showActivities && (camp.activitiesDescription || camp.activityImages?.length) ? (
-        <section className="py-20 bg-secondary/30">
+        <section className="py-4 bg-secondary/30">
           <div className="container mx-auto px-4 lg:px-8">
             <div className="flex items-center gap-3 mb-12 justify-center">
               <Compass className="h-8 w-8 text-primary" />
@@ -382,8 +382,8 @@ const CampPage = () => {
 
 
       {/* Înscrieri și rezervări */}
-      <section className="py-20">
-        <div className="container mx-auto px-4 lg:px-8">
+      <section className="py-4">
+        <div className="container mx-auto px-6 lg:px-8">
           <div className="flex items-center gap-3 mb-12 justify-center">
             <Clipboard className="h-8 w-8 text-primary" />
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">Înscrieri și rezervări</h2>
@@ -434,8 +434,8 @@ const CampPage = () => {
 
       {/* Documente necesare */}
       {v.showRequiredDocs && camp.requiredDocuments?.length ? (
-        <section className="py-20 bg-secondary/30">
-          <div className="container mx-auto px-4 lg:px-8">
+        <section className="py-6 bg-secondary/30">
+          <div className="container mx-auto px-6 lg:px-8">
             <div className="flex items-center gap-3 mb-12 justify-center">
               <FileText className="h-8 w-8 text-primary" />
               <h2 className="text-3xl md:text-4xl font-bold text-foreground">Documente necesare înscrierii</h2>
@@ -457,7 +457,7 @@ const CampPage = () => {
 
       {/* Reduceri */}
       {v.showDiscounts && camp.discounts?.length ? (
-        <section className="py-20">
+        <section className="py-6">
           <div className="container mx-auto px-4 lg:px-8">
             <div className="flex items-center gap-3 mb-12 justify-center">
               <Percent className="h-8 w-8 text-accent" />
@@ -481,7 +481,7 @@ const CampPage = () => {
 
       {/* Bagaj */}
       {v.showLuggageImage && camp.luggageImage?.src ? (
-        <section className="py-20 bg-secondary/30">
+        <section className="py-6 bg-secondary/30">
           <div className="container mx-auto px-4 lg:px-8">
             <div className="flex items-center gap-3 mb-12 justify-center">
               <Luggage className="h-8 w-8 text-primary" />
@@ -501,7 +501,7 @@ const CampPage = () => {
 
       {/* Program Orientativ */}
       {v.showProgramImage && camp.programImage?.src ? (
-        <section className="py-20 bg-secondary/30">
+        <section className="py-6 bg-secondary/30">
           <div className="container mx-auto px-4 lg:px-8">
             <div className="flex items-center gap-3 mb-12 justify-center">
               <Calendar className="h-8 w-8 text-primary" />
@@ -519,7 +519,7 @@ const CampPage = () => {
 
       {/* Alte tabere */}
       {v.showOtherCamps && camp.otherCamps?.length ? (
-        <section className="py-20">
+        <section className="py-6">
           <div className="container mx-auto px-4 lg:px-8">
             <div className="flex items-center gap-3 mb-12 justify-center">
               <Building className="h-8 w-8 text-primary" />
@@ -562,7 +562,7 @@ const CampPage = () => {
 
       {/* Registration Form */}
       {v.showRegistrationForm ? (
-        <section className="py-20 bg-primary">
+        <section className="py-6 bg-primary">
           <div className="container mx-auto px-4 lg:px-8">
             <div className="max-w-3xl mx-auto">
               <div className="text-center mb-10">

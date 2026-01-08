@@ -10,7 +10,7 @@ const CoursesSection = () => {
       subtitle: "Grosvenor Activity Centre",
       description: "Cursuri de limba engleză, activități de aventură in aer liber (rafting, escalada, scrimă, canotaj, tir cu arcul, etc.), vizite culturale și concursuri în echipe multinaționale.",
       color: "bg-primary",
-      link: "/tabara-poiana-marului-2025",
+      link: "/tabara-marea-britanie-grosvenor-hall-2026",
     },
     {
       icon: Backpack,
@@ -18,7 +18,7 @@ const CoursesSection = () => {
       subtitle: "Dublin City University",
       description: "Cursuri de limba engleză la renumita universitate din Dublin. Cazare în campus universitar, excursii la obiective turistice locale, activități sportive și seri tematice în grupuri internaționale.",
       color: "bg-emerald-500",
-      link: "/tabara-poiana-marului-2025",
+      link: "/scoala-de-vara-dublin-2026",
     },
     {
       icon: Sun,
@@ -26,7 +26,7 @@ const CoursesSection = () => {
       subtitle: "Moinești, Județul Bacău",
       description: "Cursuri de limba engleză dimineața, provocări pe echipe la atelierele de după-amiază și seară, mese cu bufet suedez, cazare în complex turistic nou și excursii la obiective turistice din zonă.",
       color: "bg-amber-500",
-      link: "/tabara-poiana-marului-2025",
+      link: "/tabara-moinesti-2026",
     },
     {
       icon: Mountain,
@@ -34,7 +34,7 @@ const CoursesSection = () => {
       subtitle: "Poiana Mărului, Județul Brașov",
       description: "Tabără în natură, cursuri de limba engleză, drumeții, provocări în echipe și seri tematice. Perfect pentru copiii care iubesc aventura.",
       color: "bg-sky-500",
-      link: "/tabara-poiana-marului-2025",
+      link: "/tabara-poiana-marului-2026",
     },
   ];
 
