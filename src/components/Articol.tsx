@@ -27,9 +27,15 @@ export default function ReasonsCampSection() {
                   className="bg-accent hover:bg-accent/90 text-accent-foreground rounded-full px-6 transition duration-300 ease-in-out"
                 >
                   {/* înlocuiește cu ruta/URL-ul articolului */}
-                  <Link to="https://www.proerudio.ro/8-motive-sa-mi-trimit-copilul-in-tabara/">
-                    Citește articolul integral aici →
-                  </Link>
+                  <a
+  href="https://www.proerudio.ro/8-motive-sa-mi-trimit-copilul-in-tabara/"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="inline-flex items-center"
+>
+  Citește articolul
+</a>
+
                 </Button>
               </div>
             </div>

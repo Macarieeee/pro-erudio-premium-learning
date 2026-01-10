@@ -10,10 +10,13 @@ export default defineConfig(({ mode }) => ({
     port: 8080,
   },
   plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
-  base: "/pro-erudio-premium-learning/",
+  base: "/",
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
   },
+   build: {
+    sourcemap: true,
+  }
 }));

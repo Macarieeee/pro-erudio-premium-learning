@@ -526,7 +526,12 @@ const CampPage = () => {
               <h2 className="text-3xl md:text-4xl font-bold text-foreground">Alte tabere organizate de Pro Erudio</h2>
             </div>
 
-            <div className="grid sm:grid-cols-3 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            <div
+  className={`grid gap-6 max-w-6xl mx-auto
+    ${camp.otherCamps.length === 3 ? "sm:grid-cols-3" : ""}
+    ${camp.otherCamps.length === 4 ? "sm:grid-cols-2 lg:grid-cols-4" : ""}
+  `}
+>
               {camp.otherCamps.map((c, idx) => (
                 <Link key={idx} to={c.to} className="block">
                   <Card className="bg-card border-border hover:shadow-lg transition-shadow cursor-pointer group overflow-hidden">

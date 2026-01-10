@@ -16,7 +16,7 @@ const Hero = () => {
       <div className="container mx-auto px-4 relative z-10 text-center py-20">
         <div className="inline-flex items-center gap-2 bg-primary-foreground/10 backdrop-blur-sm rounded-full px-4 py-2 mb-8">
           <Sparkles className="w-4 h-4 text-primary-foreground" />
-          <span className="text-primary-foreground text-sm font-medium font-large">
+          <span className="text-primary-foreground text-[12px]">
             Tabere de limba engleză pentru copii și adolescenți
           </span>
         </div>

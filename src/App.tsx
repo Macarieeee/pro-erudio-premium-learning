@@ -11,9 +11,6 @@ import AboutPage from "./pages/AboutPage";
 import ScrollToTop from "./components/ScrollToTop";
 import TesteAmplasament from "./pages/TesteAmplasament";
 
-
-
-
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -21,21 +18,22 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter basename="/pro-erudio-premium-learning">
-      <ScrollToTop />
+
+      <BrowserRouter>
+        <ScrollToTop />
         <Routes>
-  <Route path="/" element={<Index />} />
-  <Route path="/despre-noi" element={<AboutPage />} />
+          <Route path="/" element={<Index />} />
+          <Route path="/despre-noi" element={<AboutPage />} />
 
-  {/* ruta dinamică pentru TOATE taberele */}
-  <Route path="/:slug" element={<CampPage />} />
+          {/* ruta dinamică pentru tabere */}
+          <Route path="/:slug" element={<CampPage />} />
 
-  <Route path="/jurnal/:slug" element={<JournalPage />} />
+          {/* jurnal */}
+          <Route path="/jurnal/:slug" element={<JournalPage />} />
 
-  <Route path="/teste-de-amplasare" element={<TesteAmplasament />} />
-  <Route path="*" element={<NotFound />} />
-</Routes>
-
+          <Route path="/teste-de-amplasare" element={<TesteAmplasament />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

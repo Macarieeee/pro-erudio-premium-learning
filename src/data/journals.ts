@@ -189,8 +189,8 @@ A urmat lunga călătorie înapoi spre casă, cu escală la Amsterdam și mult t
   },
 
   // Exemplu pentru al doilea jurnal (completezi tu ulterior)
-  "moinesti-2025": {
-    slug: "moinesti-2025",
+  "moinesti-2024": {
+    slug: "moinesti-2024",
     navbarLabel: "JURNAL DE TABĂRĂ ENGLISH EXPLORERS CAMP 2024",
     title: "Tabără de limba engleză și aventură în România",
     subtitle: "Jurnal de tabără",
