@@ -2,7 +2,8 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import CampPage from "./pages/CampPage";
@@ -18,23 +19,16 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
+      <ScrollToTop />
 
-      <BrowserRouter>
-        <ScrollToTop />
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/despre-noi" element={<AboutPage />} />
-
-          {/* ruta dinamică pentru tabere */}
-          <Route path="/:slug" element={<CampPage />} />
-
-          {/* jurnal */}
-          <Route path="/jurnal/:slug" element={<JournalPage />} />
-
-          <Route path="/teste-de-amplasare" element={<TesteAmplasament />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Index />} />
+        <Route path="/despre-noi" element={<AboutPage />} />
+        <Route path="/:slug" element={<CampPage />} />
+        <Route path="/jurnal/:slug" element={<JournalPage />} />
+        <Route path="/teste-de-amplasare" element={<TesteAmplasament />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </TooltipProvider>
   </QueryClientProvider>
 );
