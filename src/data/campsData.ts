@@ -122,11 +122,12 @@ export type CampConfig = {
     campName: string;
 
     hero: {
-        badge: string;
-        title: string;
-        image: string;
-        imageAlt: string;
-    };
+  badge: string;
+  title: string;
+  image: string;
+  imageAlt: string;
+  objectPosition?: string; // ex: "center", "bottom", "50% 80%"
+};
 
     about: {
         title: string;
@@ -283,6 +284,7 @@ export const campsData: CampConfig[] = [
             title: "Școală de vară de limba ENGLEZĂ la Dublin (DCU)",
             image: heroDublinUniversity, // schimbă cu o poză DCU când o ai
             imageAlt: "Școală de vară de limba ENGLEZĂ la Dublin City University (DCU) 2026",
+            objectPosition: "bottom",
         },
         about: {
             title: "Despre Tabără",
@@ -421,6 +423,7 @@ export const campsData: CampConfig[] = [
             title: "Tabără în Marea Britanie – Grosvenor Hall Activity Centre",
             image: heroGrosvenor,
             imageAlt: "Grosvenor Hall 2026",
+            objectPosition: "50% 80%",
         },
         about: {
             title: "Despre Tabără",

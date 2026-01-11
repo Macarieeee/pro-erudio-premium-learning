@@ -113,7 +113,8 @@ const CampPage = () => {
     <img
       src={camp.hero.image}
       alt={camp.hero.imageAlt}
-      className="w-full h-full object-cover object-bottom"
+      className="w-full h-full object-cover"
+  style={{ objectPosition: camp.hero.objectPosition ?? "center" }}
     />
 
     {/* Gradient pentru lizibilitate */}
