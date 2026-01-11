@@ -487,8 +487,9 @@ const CampPage = () => {
             <div className="flex items-center gap-3 mb-12 justify-center">
               <Luggage className="h-8 w-8 text-primary" />
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
-                Ce trebuie sa contina bagajul copiilor
-              </h2>
+  {camp.luggageImage?.title ?? "Ce trebuie să conțină bagajul copiilor"}
+</h2>
+
             </div>
 
             <div className="max-w-4xl mx-auto">

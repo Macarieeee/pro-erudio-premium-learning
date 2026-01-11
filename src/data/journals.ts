@@ -74,6 +74,14 @@ import predeal41 from "@/assets/Predeal41.jpg";
 import predeal42 from "@/assets/Predeal42.jpg";
 import predeal43 from "@/assets/Predeal43.jpg";
 import predeal44 from "@/assets/Predeal44.jpg";
+import predeal51 from "@/assets/Predeal51.jpg";
+import predeal52 from "@/assets/Predeal52.jpg";
+import predeal53 from "@/assets/Predeal53.jpg";
+import predeal54 from "@/assets/Predeal54.jpg";
+import predeal61 from "@/assets/Predeal61.jpg";
+import predeal62 from "@/assets/Predeal62.jpg";
+import predeal63 from "@/assets/Predeal63.jpg";
+import predeal64 from "@/assets/Predeal64.jpg";
 
 export type JournalEntry = {
   day: string;
@@ -109,7 +117,7 @@ export const journals: Record<string, Journal> = {
     subtitle: "Jurnal de tabără",
     campus: "Universitatea din Salford (Manchester)",
     dates: "27 Iulie - 3 August 2025",
-    heroImage: summerCampImage,
+    heroImage: ziua51,
     heroAlt: "Manchester 2025",
 
     quickInfo: {
@@ -207,12 +215,12 @@ A urmat lunga călătorie înapoi spre casă, cu escală la Amsterdam și mult t
   // Exemplu pentru al doilea jurnal (completezi tu ulterior)
   "moinesti-2024": {
     slug: "moinesti-2024",
-    navbarLabel: "JURNAL DE TABĂRĂ ENGLISH EXPLORERS CAMP 2024",
+    navbarLabel: "JURNAL ENGLISH EXPLORERS CAMP 2024",
     title: "Tabără de limba engleză și aventură în România",
     subtitle: "Jurnal de tabără",
     campus: "Moinești, România",
     dates: "29 iunie – 4 iulie 2024",
-    heroImage: summerCampImage,
+    heroImage: moinesti43,
     heroAlt: "Moinești 2024",
     quickInfo: {
       location: "Moinești, România",
@@ -303,7 +311,7 @@ Cu tristețe că s-a terminat, dar bucuria că va urma și o data viitoare, ne d
     subtitle: "Jurnal de tabără",
     campus: "Predeal, România",
     dates: "30 iunie – 05 iulie 2024",
-    heroImage: summerCampImage,
+    heroImage: predeal13,
     heroAlt: "Predeal 2024",
     quickInfo: {
       location: "Predeal, România",
@@ -417,26 +425,26 @@ prezentările voastre în limba engleză au fost super convingătoare! Great wor
       },
       {
         day: "Ziua 5",
-        content: `Penultima zi de tabără a fost plină. După încălzirea de dimineață și cursurile de limbă engleză, primul
-atelier de după-amiază a fost &quot;Trainer for 15 minutes&quot;. Micii noștri traineri i-au învățat pe prietenii lor
-cum să deseneze un măr care să arate foarte real, un chip de fată, benzi desenate etc. Alții au avut
-ateliere de japoneză, șah, de fotbal, karate, bătut la tobe, dans, gimnastică, scrimă și multe altele.
-Colega noastră din Turcia le-a prezentat copiilor un instrument muzical tradițional și le-a cântat
-câteva cântece la acest instrument și voce. Felicitări tuturor pentru felul în care ați reușit să împărtășiți cu ceilalți din cunoștințele și 
-pasiunile voastre!
+        content: `Penultima zi de tabără a fost plină. După încălzirea de dimineață și cursurile de limbă engleză, primul atelier de după-amiază a fost "Trainer for 15 minutes". Micii noștri traineri i-au învățat pe prietenii lor cum să deseneze un măr care să arate foarte real, un chip de fată, benzi desenate etc. Alții au avut ateliere de japoneză, șah, de fotbal, karate, bătut la tobe, dans, gimnastică, scrimă și multe altele. Colega noastră din Turcia le-a prezentat copiilor un instrument muzical tradițional și le-a cântat câteva cântece la acest instrument și voce. Felicitări tuturor pentru felul în care ați reușit să împărtășiți cu ceilalți din cunoștințele și pasiunile voastre! 🥳  
+
+Al doilea atelier a fost de o provocare pe echipe. Copiii au trebuit să creeze un movie trailer pornind de la cuvinte cheie. Nu a fost o misiune ușoară, dar, cu energie și creativitate, toate echipele au reușit să producă un scurt filmuleț care să includă toți membrii și să răspundă sarcinilor de lucru. 💖  
+
+Ca în fiecare ultimă seară, copiii s-au întrecut în etalarea talentelor. Am avut de toate! De la dans și cântec la demonstrații de karate, scrimă, prezentări de desen sau desene executate pe loc, scenete și glume, rezolvări de cuburi Rubics etc. Mulțumiri și prezentatorilor noștri, ați fost foarte inspirați cu toții! 💖  
+
+A urmat focul de tabără, cu cântece la chitară și voce. Tehnologia ne-a ajutat să urmărim versurile și distracția a culminat cu dansul pinguinului și o horă, la cererea copiilor, desigur :). A fost o atmosferă grozavă! Bravo, copii! Ne bucurăm să vedem că știți să vă distrați și să trăiți momente de poveste în tabără! 💖 
 `,
-        galleryLink: "https://www.facebook.com/media/set/?set=a.1312885916955437&type=3  ",
-        images: [moinesti51, moinesti52, moinesti53, moinesti54],
+        galleryLink: "https://www.facebook.com/media/set/?set=a.1035027158074649&type=3 ",
+        images: [predeal51, predeal52, predeal53, predeal54],
       },
       {
         day: "Ziua 6",
-        content: `Ultima zi de tabăra a început tot cu mișcare, ca să avem energie toată ziua . După micul dejun a urmat ultima serie de puncte pentru echipe pentru a putea face clasamentul. Știm de acum, toate echipele au ieșit căștigătoare dacă pleacă din tabără îmbogățiți la minte și suflet, cu noi abilități învățate, mai responsabili și cu un bagaj mare de jocuri pe care să le incerce și cu prietenii  de acasă. 
+        content: `Ca orice lucru în viață, tot ce începe trebuie să se și termine... Cu promisiunea revederii, ne-am primit diplomele, am făcut poze cu echipa, ne-am scris mesaje pe șepcuțe, am schimbat numere de telefon și ne-am dus bagajul la autocar. Ce frumos a fost totul...  
 
-A urmat festivitatea de înmânare a certificatelor și tradiționala poză de grup, ca să avem dovada că au fost în tabără. Ce frumos a fost totul… 
+Pe drumul de întoarcere, am facut un scurt popas la benzinărie pentru o gustare ca se făcuse ora prânzului. Ce bine că am avut voie să ne cumparam ce vrem... Nu chiar orice și nici oricât :) doar știm că părinții ne așteaptă acasă cu bunătăți pe masă, iar regulile taberei în privința alimentației sănătoase se aplică și acum...  
 
-Cu tristețe că s-a terminat, dar bucuria că va urma și o data viitoare, ne ducem bagajele la autocar și ne îmbarcăm pentru drumul lung de întoarcere acasă. Pe drum, cu acordul părinților, oprim pentru o masa mult râvnită la KFC ca să ne consumăm și ultimii banuți de buzunar, pe care i-am păstrat cu grijă întrucât în tabără oricum nu am avut pe ce sa ii cheltuim. In jurul orei 18.00 am ajuns din nou în Piața Constitutiei, de unde ne-au preluat dragii noștri părinți. Bravo, echipe! Pe vara viitoare! `,
-        galleryLink: "https://www.facebook.com/media/set/?set=a.1315176926726336&type=3",
-        images: [moinesti61, moinesti62, moinesti63, moinesti64],
+Ultima vizita a fost la Casa de Târgoveț "Hagi Prodan”, unde domnul muzeograf ne-a vorbit despre povestea celei mai vechi case din Ploiești (1785), care are a supravieţuit vremii, vremurilor şi chiar bombardamentelor din timpul celui de-al Doilea Război Mondial. Am primit informații despre ce înseamnă "hagiu" și despre obiceiurile oamenilor din secolele XVIII-XIX, influențele orientului asupra culturii române etc. Tabăra s-a terminat, dar nu și vacanta! Dragi copii, vă dorim o vacanță plină de amintiri plăcute! Pe vara viitoare! Ați fost minunați! `,
+        galleryLink: "https://www.facebook.com/media/set/?set=a.1035516414692390&type=3  ",
+        images: [predeal61, predeal62, predeal63, predeal64],
       },],
   },
 };

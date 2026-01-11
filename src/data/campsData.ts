@@ -37,6 +37,8 @@ import activity2 from "@/assets/Grosvenor Hall - Activity2.jpg";
 import activity3 from "@/assets/Grosvenor Hall - Activity3.webp";
 import activity4 from "@/assets/Grosvenor Hall - Activity4.png";
 import kitTabaraImage from "@/assets/Kit Tabara Pro Erudio.jpg";
+import menuImage from "@/assets/meniuUK.jpg";
+import programUK from "@/assets/programUK.jpg";
 import programImage from "@/assets/Program.jpg";
 import heroDublinUniversity from "@/assets/Dublin City University.webp";
 import aboutDublin from "@/assets/Dublin About.jpg";
@@ -49,6 +51,13 @@ import heroPoianaMarului from "@/assets/PoianaMarului2026.jpg";
 import programDublinImage from "@/assets/ProgramDublin.png";
 import moinestiAbout from "@/assets/MoinestiAbout.jpg";
 import poianaMaruluiAbout from "@/assets/PoianaMaruluiAbout.jpeg";
+import heroManchester2025 from "@/assets/scoala-de-vara-manchesterB.jpg";
+import aboutManchester2025 from "@/assets/university_of_salford_campus_tour-1080p.00_00_01_09.Still001.jpg";
+import activityManchester1 from "@/assets/university_of_salford_campus_tour-1080p.00_00_39_23.Still004.jpg";
+import activityManchester2 from "@/assets/university_of_salford_campus_tour-1080p.00_02_57_09.Still008.jpg";
+import activityManchester3 from "@/assets/university_of_salford_campus_tour-1080p.00_04_48_24.Still010.jpg";
+import activityManchester4 from "@/assets/university_of_salford_campus_tour-1080p.00_07_02_15.Still012.jpg";
+import heroMoinești2025 from "@/assets/Tabara-moinestib.jpg";
 
 /* =======================
    DOAR DEFAULT-URI COMUNE
@@ -164,7 +173,11 @@ export type CampConfig = {
     otherCamps: { name: string; location: string; type: string; image?: string; to: string }[];
 
 
-    luggageImage: { src: string; alt: string };
+luggageImage?: {
+  src: string;
+  alt: string;
+  title?: string; // <-- nou
+};
     programImage: { src: string; alt: string };
 
     // DOAR astea două pot fi default
@@ -948,7 +961,7 @@ export const campsData: CampConfig[] = [
         hero: {
             badge: "2025",
             title: "Școală de vară de limba engleză în Marea Britanie – Manchester",
-            image: heroGrosvenor,
+            image: heroManchester2025,
             imageAlt: "Manchester 2025",
         },
         about: {
@@ -978,7 +991,7 @@ export const campsData: CampConfig[] = [
             title: "Școala",
             description:
                 "Universitatea din Manchester este cea mai mare universitate din Marea Britanie, fiind formată în 2004 din fuziunea dintre Victoria University of Manchester și UMIST (University of Manchester Institute of Science and Technology). Universitatea din Manchester este o universitate de cărămidă roșie, un produs al mișcării civice universitare de la sfârșitul secolului al XIX-lea. Campusul principal este la sud de centrul orașului Manchester pe Oxford Road. În 2016-2017, universitatea avea 40.490 de studenți și 10.400 de angajați, ceea ce a făcut-o a doua universitate din Marea Britanie (din 167 inclusiv Universitatea Deschisă) și cea mai mare universitate cu un singur loc. Universitatea avea un venit consolidat de 1 miliard de lire sterline în perioada 2017-2018, din care 298.7 milioane de lire sterline proveneau din subvenții și contracte de cercetare (locul 6 la nivel național, după Oxford, UCL, Cambridge, Imperial și Edinburgh). Campusul universitar al Universitatii Salford se situează în apropierea centrului orașului (20 de minute de mers pe jos) și este dotat cu săli de clasă moderne, amfiteatre, numeroase facilități sportive, precum și sală multifuncțională la interior și piscină.",
-            image: heroGrosvenor,
+            image: aboutManchester2025,
             imageAlt: "Manchester",
         },
         locationFacilities: makeFacilities("uk"),
@@ -1002,7 +1015,7 @@ export const campsData: CampConfig[] = [
         ],
         activitiesDescription:
             "Activitățile din tabără sunt numeroase și extrem de variate, fiind gândite pentru a îmbina mișcarea, creativitatea și socializarea: participanții vor lua parte la activități sportive desfășurate atât în aer liber, cât și în sala de sport multifuncțională, la ateliere de cooking, dans, actorie și fotbal, precum și la sesiuni de arts & crafts, cluburi de conversație, seminarii pe diferite teme, jocuri de echipă (precum Capture the Flag), jurnalism și media. Programul include, de asemenea, quiz-uri, vizionări de filme, prezentări de modă și seri tematice, alături de două excursii de o jumătate de zi pentru descoperirea orașului Manchester (cu posibile vizite la MediaCity, Muzeul Științei și Industriilor sau turul Stadionului Manchester City) și o excursie de o zi întreagă, cu destinații posibile precum York, Chester sau Liverpool.",
-        activityImages: IMGSET_DEFAULT,
+        activityImages: [activityManchester2, activityManchester3, activityManchester4, activityManchester1],
         discounts: [
             { type: "Continuitate", value: "5%", condition: "Completează dacă se aplică" },
             { type: "Frați", value: "5%", condition: "Completează dacă se aplică" },
@@ -1037,8 +1050,8 @@ export const campsData: CampConfig[] = [
                 to: "/tabara-moinesti-2026",
             },
         ],
-        luggageImage: { src: kitTabaraImage, alt: "Bagaj recomandat" },
-        programImage: { src: programImage, alt: "Program orientativ" },
+        luggageImage: { src: menuImage, alt: "Bagaj recomandat", title: "Exemplu meniu zilnic" },
+        programImage: { src: programUK, alt: "Program orientativ" },
         registrationInfo: DEFAULT_REGISTRATION,
         requiredDocuments: DEFAULT_REQUIRED_DOCS,
         form: {
@@ -1052,10 +1065,10 @@ export const campsData: CampConfig[] = [
         year: 2025,
         campName: "Tabără de limba engleză și aventură în România – Poiana Mărului",
         hero: {
-            badge: "2025",
-            title: "Tabără de limba engleză și aventură în România – Poiana Mărului",
-            image: heroGrosvenor,
-            imageAlt: "Poiana Mărului 2025",
+            badge: "2026",
+            title: "Tabără de limba engleză și aventură în România – Moinești",
+            image: heroMoinești,
+            imageAlt: "Tabără Moinești 2026",
         },
         about: {
             title: "Despre Tabără",
@@ -1064,45 +1077,190 @@ export const campsData: CampConfig[] = [
                 "Colaborăm cu PGL Travel, care este o companie fondată în anul 1957 și are ca obiect principal de activitate furnizarea de activități sportive, recreative și educaționale pentru copiii britanici și internaționali în centre proprii. De-a lungul anilor, compania a achiziționat numeroase centre, majoritatea în Marea Britanie: 10 în Anglia, 1 în Scoția și 1 în Țara Galilor. În anii 1990 PGL și-a extins activitatea în Franța, intrând chiar și pe piața școlilor de schi pentru copii. Specific fiecărui centru este faptul că se întinde pe domenii uriașe, care cuprind lacuri sau râuri, păduri, plaje sau zone stâncoase, terenuri de sport, piste de biciclete, săli de sport la interior, centre de activități de aventură, mici magazine, săli de clasă și ateliere pe diferite teme.",
             ],
         },
+        sections: [
+            {
+                type: "note",
+                text: "Pentru rezervările cu avans efectuate până la data de 15 februarie 2026, prețul este 2480 lei. După această dată prețul poate suferi modificări.",
+            },
+            {
+                type: "twoCols",
+                title: "Avantajele participării la tabăra de limba engleză și aventură",
+                left: [
+                    "la nivel personal, copiii vor învăţa să fie mai responsabili, independenți și îşi vor testa limitele într-un mediu controlat şi în siguranţă;",
+                    "la nivel interpersonal, copiii îşi vor face noi prieteni, vor învăţa să se joace tot felul de jocuri noi pe care le vor putea experimenta și cu prietenii de acasă, vor învăţa ce înseamnă munca în echipă şi sprijinul unui grup unit;",
+                    "la nivel lingvistic, copiii îşi vor îmbunătăţi cunoştinţele de limbă engleză cu accent pe receptarea și transmiterea de mesaje, îmbunătățirea fluenței în exprimare și a spontaneității și naturaleții în reacțiile la instrucțiuni primite în limba engleză;",
+                ],
+                right: [
+                    "Prin sistemul de lucru pe echipe (lucrând împreună copiii își dezvoltă sentimentul de apartenența la grup și sentimentul că fiecare contribuie la succesul echipei)",
+                    "Prin programul de limba engleză care se va desfășura pe două coordonate:",
+                    "Cursurile de limba engleză din timpul dimineții bazate pe comunicare (jocuri interactive cu profesor român de limba engleză sau trainer international)",
+                    "Atelierele din cursul după-amiezii și activitățile de seară se desfășoară în limba engleză și sunt susținute de echipe mixte formate din ghizi, profesori români de limba engleză și traineri internationali. Astfel, toți copiii beneficiază de interacțiunea cu animatorii, cu trainerii internaționali si cu monitorii (în special pentru atelierele care implică tehnici de supraviețuire și alte activități specifice muntelui), iar profesorii români de limba engleză acționează ca un liant între cele trei categorii asigurând astfel succesul tuturor activităților.",
+                ],
+            },
+            {
+                type: "gridBullets",
+                title: "Tabăra de limba engleză și aventură – Program zilnic orientativ:",
+                columns: 2,
+                cards: [
+                    {
+                        subtitle: "Ziua 1",
+                        items: [
+                            "8.00 – Plecarea din București cu autocarul (Piata Constitutiei)",
+                            "11.00 – Oprire la benzinărie pentru gustare",
+                            "14.30 – Cazare și prânz",
+                            "16.30 -18.30 – Jocuri de cunoaștere/stabilirea echipelor/prezentarea regulilor taberei",
+                            "19.30-20.30 – Cina",
+                            "20.30 – 22.00 – Scavanger Hunt",
+                            "22.30 – Stingerea",
+                        ],
+                    },
+                    {
+                        subtitle: "Ziua 2",
+                        items: [
+                            "08.00 – Deşteptarea muzicală",
+                            "08.30 – Înviorarea în ritm de dans",
+                            "09.00 – Micul dejun",
+                            "09.45 – 11.00 – Lesson 1 (ateliere interactive de limba engleză)",
+                            "11.15 – 12.45 – Lesson 2 (ateliere interactive de limba engleză)",
+                            "13.00 – Masa de prânz",
+                            "14.00 – 15.00 – Timp liber",
+                            "15.00 – 16.30 – Atelier 1 (activități pe echipe, la alegere)",
+                            "17.00 – 18.30 – Atelier 2 (activități pe echipe, la alegere)",
+                            "19.00 – Cina",
+                            "20.00 – 21.30 – Serata (activități recreative și de divertisment cu tot grupul)",
+                            "21.30 – 22.00 – Dans sau timp liber în camere",
+                            "22.30 – Stingerea",
+                        ],
+                    },
+                    {
+                        subtitle: "Ziua 3",
+                        items: [
+                            "08.00 – Deşteptarea muzicală",
+                            "08.30 – Înviorarea în ritm de dans",
+                            "09.00 – Micul dejun",
+                            "09.45 – 11.00 – Lesson 1 (ateliere interactive de limba engleză)",
+                            "11.15 – 12.45 – Lesson 2 (ateliere interactive de limba engleză)",
+                            "13.00 – Masa de prânz",
+                            "14.30 – Vizită la Cetatea Neamț",
+                            "17.00 – Bălăceală în piscină",
+                            "19.00 – Cina",
+                            "20.00 – 21.30 – Serata (activități recreative și de divertisment cu tot grupul)",
+                            "21.30 – 22.00 – Dans sau timp liber în camere",
+                            "22.30 – Stingerea",
+                        ],
+                    },
+                    {
+                        subtitle: "Ziua 4",
+                        items: [
+                            "08.00 – Deşteptarea muzicală",
+                            "08.30 – Înviorarea în ritm de dans",
+                            "09.00 – Micul dejun",
+                            "09.45 – 11.00 – Lesson 1 (ateliere interactive de limba engleză)",
+                            "11.15 – 12.45 – Lesson 2 (ateliere interactive de limba engleză)",
+                            "13.00 – Masa de prânz",
+                            "14.00 – 15.00 – Timp liber",
+                            "15.00 – 16.30 – Atelier 1 (activități pe echipe, la alegere)",
+                            "17.00 – 18.30 – Atelier 2 (activități pe echipe, la alegere)",
+                            "19.00 – Cina",
+                            "20.00 – 21.30 – Serata (activități recreative și de divertisment cu tot grupul)",
+                            "21.30 – 22.00 – Dans sau timp liber în camere",
+                            "22.30 – Stingerea",
+                        ],
+                    },
+                    {
+                        subtitle: "Ziua 5",
+                        items: [
+                            "08.00 – Deşteptarea muzicală",
+                            "08.30 – Înviorarea în ritm de dans",
+                            "09.00 – Micul dejun",
+                            "09.45 – 11.00 – Lesson 1 (ateliere interactive de limba engleză)",
+                            "11.15 – 12.45 – Lesson 2 (ateliere interactive de limba engleză)",
+                            "13.00 – Masa de prânz",
+                            "14.00 – Vizită la Casa Memorială Ion Creangă",
+                            "15.30 – Vizită la Curtea Domnească de la Piatra Nemți",
+                            "17.00 – Bălăceală în piscină",
+                            "19.00 – Cina",
+                            "20.00 – 21.30 – Serata (activități recreative și de divertisment cu tot grupul)",
+                            "21.30 – 22.00 – Dans sau timp liber în camere",
+                            "22.30 – Stingerea",
+                        ],
+                    },
+                    {
+                        subtitle: "Ziua 6",
+                        items: [
+                            "08.00 – Deşteptarea muzicală",
+                            "08.30 – Înviorarea în ritm de dans",
+                            "09.00 – Micul dejun",
+                            "09.45 – 11.00 – Festivitate de premiere si socializare",
+                            "11.00 – Plecare de la pensiune",
+                            "14.00 – Oprire la benzinărie pentru o gustare",
+                            "18.00 – Sosire in Bucuresti",
+                        ],
+                    },
+                ],
+            },
 
+            {
+                type: "richText",
+                title: "Atelierele de după-amiază se vor desfășura pe echipe de 7-9 copii și se vor desfășura în paralel. Iată câteva exemple de activități:",
+                paragraphs: [
+                    "Jocuri de cunoaștere și socializare (Mime, draw or describe, Minute to win it, curse de stafeta, Guess the character!, Photo contests, Charades, Casino Night, Chaos Games, Media Challenges, Beauty Workshop, Fashion Parade etc )",
+                    "Concursuri pe echipe (Treasute Hunt, Team Feuds, Talent Show, Harry Potter Night, Quiz Night, Karaoke etc)",
+                    "Activități artistice (confecționare brățări, pictură în natură, origami, modelare în plastilină)",
+                    "Activități sportive (fotbal, volei, tenis, baschet, dodgeball, Capture the Flag etc.)",
+                ],
+
+            },
+        ]
+        ,
+        visibility: {
+            showAbout: false,
+            showProgramImage: false,
+            showLuggageImage: false,
+            showActivities: false,
+        },
         quickInfo: {
-            location: "Poiana Mărului, România (placeholder)",
-            duration: "7 zile / 6 nopți (placeholder)",
-            ageGroup: "10–16 ani (placeholder)",
-            dates: "Vara 2025 (completează exact perioada)",
-            price: "— (completează prețul)",
+            location: "Moinești, Județul Bacău",
+            duration: "6 zile / 5 nopți",
+            ageGroup: "7-14 ani",
+            dates: "28 iunie – 03 iulie 2026",
+            price: "Lei 2480",
         },
         highlights: [
-            "Engleză aplicată + jocuri",
-            "Activități outdoor",
-            "Team challenges",
+            "Engleză aplicată prin joc și proiecte",
+            "Activități de aventură & teamwork",
             "Ateliere creative",
-            "Seri tematice",
-            "Coordonare și supraveghere",
+            "Drumeții / activități în natură (după caz)",
+            "Dezvoltare personală: încredere & autonomie",
+            "Program structurat și supravegheat",
         ],
         locationDescription: {
-            title: "Poiana Mărului – tabără activă în natură",
+            title: "Moinești – tabără activă în România",
             description:
-                "Tabără în natură cu program structurat: engleză funcțională, activități de echipă și provocări outdoor.",
-            image: heroGrosvenor,
-            imageAlt: "Poiana Mărului",
+                "Mario Resort & Event Center Moinești este situat în municipiul Moinești aflat în N-V județului Bacău, în bazinul mijlociu al sistemului de râuri Trotuș-Tazlău, localitate aflata la o distanta de 46 km de Bacău, 8 km de Comănești, 30 km de Tg. Ocna, 44 km de Slănic Moldova și 42 km de Onești. Cazarea se face în camere duble, triple sau de patru locuri, în funcție de disponibilitatea complexului. În funcție de gradul de ocupare, cazarea se va face la Hotel Mario, Hotel Topaz sau Pensiunea Mario. Momentan, noi am rezervat 50 de locuri, dar complexul are o capacitate de peste 200 de locuri.",
+            image: moinestiAbout,
+            imageAlt: "Moinești",
         },
-        locationFacilities: makeFacilities("romania-mountain"),
+        locationFacilities: makeFacilities("romania-city"),
         includedInPrice: [
-            "Cazare",
-            "Mese",
-            "Ateliere de engleză",
-            "Program activități",
-            "Coordonatori & supraveghere",
-            "Materiale",
+            "6 zile (5 nopţi) cazare cu pensiune completă;",
+            "Transport București-Moinești, tur-retur cu autocarul;",
+            "Vizită la Curtea Domnească din Piatra Neamț;",
+            "Vizită la Cetatea Neamț;",
+            "Vizită la Casa Memorială Ion Creangă;",
+            "Zilnic program de activități în limba engleză în cursul diminetii, două ateliere pe echipe (artistice, culturale, sportive etc) în cursul după-amiezii si o activitate de seară (cu tot grupul);",
+            "Program de limba engleză susținut de profesori de limba engleză si traineri internaționali de la “Pro Erudio” School of English;",
+            "Diplome, poze, șapca echipei cadou pentru toţi copiii și medalii pentru echipa căștigătoare;",
         ],
-        notIncludedInPrice: ["Transport (dacă nu este inclus)", "Cheltuieli personale"],
+        notIncludedInPrice: [
+            "Cheltuieli personale",
+            "Excursii opționale (dacă există)",
+        ],
         activitiesDescription:
-            "Activități în aer liber, jocuri de echipă, proiecte în engleză și seri tematice. Programul final se adaptează condițiilor meteo și grupului.",
+            "Activități de echipă, jocuri, mini-proiecte în engleză, provocări de aventură și sesiuni interactive. Programul final depinde de locație și grup.",
         activityImages: IMGSET_DEFAULT,
         discounts: [
-            { type: "Continuitate", value: "—", condition: "Completează dacă se aplică" },
-            { type: "Frați", value: "—", condition: "Completează dacă se aplică" },
+            { type: "Frați/Surori", value: "5%", condition: "Pentru doi copii ai aceleiași familii" },
         ],
         otherCamps: [
             {
@@ -1120,21 +1278,22 @@ export const campsData: CampConfig[] = [
                 to: "/tabara-poiana-marului-2026",
             },
             {
-                name: "Tabără de limba engleză și aventură în România – Moinești",
-                location: "România",
-                type: "Aventură",
-                image: heroMoinești,
-                to: "/tabara-moinesti-2026",
+                name: "Școală de vară de limba ENGLEZĂ la Dublin (DCU)",
+                location: "Irlanda de Nord",
+                type: "Internațională",
+                image: heroDublinUniversity,
+                to: "/scoala-de-vara-dublin-2026",
             },
         ],
         luggageImage: { src: kitTabaraImage, alt: "Bagaj recomandat" },
         programImage: { src: programImage, alt: "Program orientativ" },
         registrationInfo: DEFAULT_REGISTRATION,
-        requiredDocuments: DEFAULT_REQUIRED_DOCS,
+        requiredDocuments: ROMANIA_REQUIRED_DOCS,
         form: {
-            selectValue: "tabara-poiana-marului-2025",
-            selectLabel: "Tabără de limba engleză și aventură în România – Poiana Mărului 2025",
+            selectValue: "tabara-moinesti-2026",
+            selectLabel: "Tabără de limba engleză și aventură în România – Moinești 2026",
         },
+
     },
 
     {
@@ -1144,8 +1303,8 @@ export const campsData: CampConfig[] = [
         hero: {
             badge: "2025",
             title: "Tabără de limba engleză și aventură în România – Moinești",
-            image: heroGrosvenor,
-            imageAlt: "Moinești 2025",
+            image: heroMoinești2025,
+            imageAlt: "Tabără Moinești 2025",
         },
         about: {
             title: "Despre Tabără",
@@ -1154,44 +1313,190 @@ export const campsData: CampConfig[] = [
                 "Colaborăm cu PGL Travel, care este o companie fondată în anul 1957 și are ca obiect principal de activitate furnizarea de activități sportive, recreative și educaționale pentru copiii britanici și internaționali în centre proprii. De-a lungul anilor, compania a achiziționat numeroase centre, majoritatea în Marea Britanie: 10 în Anglia, 1 în Scoția și 1 în Țara Galilor. În anii 1990 PGL și-a extins activitatea în Franța, intrând chiar și pe piața școlilor de schi pentru copii. Specific fiecărui centru este faptul că se întinde pe domenii uriașe, care cuprind lacuri sau râuri, păduri, plaje sau zone stâncoase, terenuri de sport, piste de biciclete, săli de sport la interior, centre de activități de aventură, mici magazine, săli de clasă și ateliere pe diferite teme.",
             ],
         },
+        sections: [
+            {
+                type: "note",
+                text: "Pentru rezervările cu avans efectuate până la data de 15 februarie 2025, prețul este 2380 lei. După această dată prețul poate suferi modificări.",
+            },
+            {
+                type: "twoCols",
+                title: "Avantajele participării la tabăra de limba engleză și aventură",
+                left: [
+                    "la nivel personal, copiii vor învăţa să fie mai responsabili, independenți și îşi vor testa limitele într-un mediu controlat şi în siguranţă;",
+                    "la nivel interpersonal, copiii îşi vor face noi prieteni, vor învăţa să se joace tot felul de jocuri noi pe care le vor putea experimenta și cu prietenii de acasă, vor învăţa ce înseamnă munca în echipă şi sprijinul unui grup unit;",
+                    "la nivel lingvistic, copiii îşi vor îmbunătăţi cunoştinţele de limbă engleză cu accent pe receptarea și transmiterea de mesaje, îmbunătățirea fluenței în exprimare și a spontaneității și naturaleții în reacțiile la instrucțiuni primite în limba engleză;",
+                ],
+                right: [
+                    "Prin sistemul de lucru pe echipe (lucrând împreună copiii își dezvoltă sentimentul de apartenența la grup și sentimentul că fiecare contribuie la succesul echipei)",
+                    "Prin programul de limba engleză care se va desfășura pe două coordonate:",
+                    "Cursurile de limba engleză din timpul dimineții bazate pe comunicare (jocuri interactive cu profesor român de limba engleză sau trainer international)",
+                    "Atelierele din cursul după-amiezii și activitățile de seară se desfășoară în limba engleză și sunt susținute de echipe mixte formate din ghizi, profesori români de limba engleză și traineri internationali. Astfel, toți copiii beneficiază de interacțiunea cu animatorii, cu trainerii internaționali si cu monitorii (în special pentru atelierele care implică tehnici de supraviețuire și alte activități specifice muntelui), iar profesorii români de limba engleză acționează ca un liant între cele trei categorii asigurând astfel succesul tuturor activităților.",
+                ],
+            },
+            {
+                type: "gridBullets",
+                title: "Tabăra de limba engleză și aventură – Program zilnic orientativ:",
+                columns: 2,
+                cards: [
+                    {
+                        subtitle: "Ziua 1",
+                        items: [
+                            "8.00 – Plecarea din București cu autocarul (Piata Constitutiei)",
+                            "11.00 – Oprire la benzinărie pentru gustare",
+                            "14.30 – Cazare și prânz",
+                            "16.30 -18.30 – Jocuri de cunoaștere/stabilirea echipelor/prezentarea regulilor taberei",
+                            "19.30-20.30 – Cina",
+                            "20.30 – 22.00 – Scavanger Hunt",
+                            "22.30 – Stingerea",
+                        ],
+                    },
+                    {
+                        subtitle: "Ziua 2",
+                        items: [
+                            "08.00 – Deşteptarea muzicală",
+                            "08.30 – Înviorarea în ritm de dans",
+                            "09.00 – Micul dejun",
+                            "09.45 – 11.00 – Lesson 1 (ateliere interactive de limba engleză)",
+                            "11.15 – 12.45 – Lesson 2 (ateliere interactive de limba engleză)",
+                            "13.00 – Masa de prânz",
+                            "14.00 – 15.00 – Timp liber",
+                            "15.00 – 16.30 – Atelier 1 (activități pe echipe, la alegere)",
+                            "17.00 – 18.30 – Atelier 2 (activități pe echipe, la alegere)",
+                            "19.00 – Cina",
+                            "20.00 – 21.30 – Serata (activități recreative și de divertisment cu tot grupul)",
+                            "21.30 – 22.00 – Dans sau timp liber în camere",
+                            "22.30 – Stingerea",
+                        ],
+                    },
+                    {
+                        subtitle: "Ziua 3",
+                        items: [
+                            "08.00 – Deşteptarea muzicală",
+                            "08.30 – Înviorarea în ritm de dans",
+                            "09.00 – Micul dejun",
+                            "09.45 – 11.00 – Lesson 1 (ateliere interactive de limba engleză)",
+                            "11.15 – 12.45 – Lesson 2 (ateliere interactive de limba engleză)",
+                            "13.00 – Masa de prânz",
+                            "14.30 – Vizită la Cetatea Neamț",
+                            "17.00 – Bălăceală în piscină",
+                            "19.00 – Cina",
+                            "20.00 – 21.30 – Serata (activități recreative și de divertisment cu tot grupul)",
+                            "21.30 – 22.00 – Dans sau timp liber în camere",
+                            "22.30 – Stingerea",
+                        ],
+                    },
+                    {
+                        subtitle: "Ziua 4",
+                        items: [
+                            "08.00 – Deşteptarea muzicală",
+                            "08.30 – Înviorarea în ritm de dans",
+                            "09.00 – Micul dejun",
+                            "09.45 – 11.00 – Lesson 1 (ateliere interactive de limba engleză)",
+                            "11.15 – 12.45 – Lesson 2 (ateliere interactive de limba engleză)",
+                            "13.00 – Masa de prânz",
+                            "14.00 – 15.00 – Timp liber",
+                            "15.00 – 16.30 – Atelier 1 (activități pe echipe, la alegere)",
+                            "17.00 – 18.30 – Atelier 2 (activități pe echipe, la alegere)",
+                            "19.00 – Cina",
+                            "20.00 – 21.30 – Serata (activități recreative și de divertisment cu tot grupul)",
+                            "21.30 – 22.00 – Dans sau timp liber în camere",
+                            "22.30 – Stingerea",
+                        ],
+                    },
+                    {
+                        subtitle: "Ziua 5",
+                        items: [
+                            "08.00 – Deşteptarea muzicală",
+                            "08.30 – Înviorarea în ritm de dans",
+                            "09.00 – Micul dejun",
+                            "09.45 – 11.00 – Lesson 1 (ateliere interactive de limba engleză)",
+                            "11.15 – 12.45 – Lesson 2 (ateliere interactive de limba engleză)",
+                            "13.00 – Masa de prânz",
+                            "14.00 – Vizită la Casa Memorială Ion Creangă",
+                            "15.30 – Vizită la Curtea Domnească de la Piatra Nemți",
+                            "17.00 – Bălăceală în piscină",
+                            "19.00 – Cina",
+                            "20.00 – 21.30 – Serata (activități recreative și de divertisment cu tot grupul)",
+                            "21.30 – 22.00 – Dans sau timp liber în camere",
+                            "22.30 – Stingerea",
+                        ],
+                    },
+                    {
+                        subtitle: "Ziua 6",
+                        items: [
+                            "08.00 – Deşteptarea muzicală",
+                            "08.30 – Înviorarea în ritm de dans",
+                            "09.00 – Micul dejun",
+                            "09.45 – 11.00 – Festivitate de premiere si socializare",
+                            "11.00 – Plecare de la pensiune",
+                            "14.00 – Oprire la benzinărie pentru o gustare",
+                            "18.00 – Sosire in Bucuresti",
+                        ],
+                    },
+                ],
+            },
 
+            {
+                type: "richText",
+                title: "Atelierele de după-amiază se vor desfășura pe echipe de 7-9 copii și se vor desfășura în paralel. Iată câteva exemple de activități:",
+                paragraphs: [
+                    "Jocuri de cunoaștere și socializare (Mime, draw or describe, Minute to win it, curse de stafeta, Guess the character!, Photo contests, Charades, Casino Night, Chaos Games, Media Challenges, Beauty Workshop, Fashion Parade etc )",
+                    "Concursuri pe echipe (Treasute Hunt, Team Feuds, Talent Show, Harry Potter Night, Quiz Night, Karaoke etc)",
+                    "Activități artistice (confecționare brățări, pictură în natură, origami, modelare în plastilină)",
+                    "Activități sportive (fotbal, volei, tenis, baschet, dodgeball, Capture the Flag etc.)",
+                ],
+
+            },
+        ]
+        ,
+        visibility: {
+            showAbout: false,
+            showProgramImage: false,
+            showLuggageImage: false,
+            showActivities: false,
+        },
         quickInfo: {
-            location: "Moinești, România (placeholder)",
-            duration: "7 zile / 6 nopți (placeholder)",
-            ageGroup: "10–16 ani (placeholder)",
-            dates: "Vara 2025 (completează exact perioada)",
-            price: "— (completează prețul)",
+            location: "Moinești, Județul Bacău",
+            duration: "6 zile / 5 nopți",
+            ageGroup: "7-14 ani",
+            dates: "29 iunie – 04 iulie 2025",
+            price: "Lei 2380",
         },
         highlights: [
-            "Engleză prin activități practice",
-            "Aventură & provocări",
-            "Lucru în echipă",
-            "Ateliere & creativitate",
-            "Program echilibrat",
-            "Supraveghere completă",
+            "Engleză aplicată prin joc și proiecte",
+            "Activități de aventură & teamwork",
+            "Ateliere creative",
+            "Drumeții / activități în natură (după caz)",
+            "Dezvoltare personală: încredere & autonomie",
+            "Program structurat și supravegheat",
         ],
         locationDescription: {
-            title: "Moinești – tabără dinamică în România",
+            title: "Moinești – tabără activă în România",
             description:
-                "Tabără cu focus pe engleză aplicată și dezvoltarea abilităților sociale prin joc și activități de echipă.",
-            image: heroGrosvenor,
+                "Mario Resort & Event Center Moinești este situat în municipiul Moinești aflat în N-V județului Bacău, în bazinul mijlociu al sistemului de râuri Trotuș-Tazlău, localitate aflata la o distanta de 46 km de Bacău, 8 km de Comănești, 30 km de Tg. Ocna, 44 km de Slănic Moldova și 42 km de Onești. Cazarea se face în camere duble, triple sau de patru locuri, în funcție de disponibilitatea complexului. În funcție de gradul de ocupare, cazarea se va face la Hotel Mario, Hotel Topaz sau Pensiunea Mario. Momentan, noi am rezervat 50 de locuri, dar complexul are o capacitate de peste 200 de locuri.",
+            image: moinestiAbout,
             imageAlt: "Moinești",
         },
         locationFacilities: makeFacilities("romania-city"),
         includedInPrice: [
-            "Cazare",
-            "Mese",
-            "Ateliere engleză",
-            "Activități & coordonare",
-            "Materiale",
+            "6 zile (5 nopţi) cazare cu pensiune completă;",
+            "Transport București-Moinești, tur-retur cu autocarul;",
+            "Vizită la Curtea Domnească din Piatra Neamț;",
+            "Vizită la Cetatea Neamț;",
+            "Vizită la Casa Memorială Ion Creangă;",
+            "Zilnic program de activități în limba engleză în cursul diminetii, două ateliere pe echipe (artistice, culturale, sportive etc) în cursul după-amiezii si o activitate de seară (cu tot grupul);",
+            "Program de limba engleză susținut de profesori de limba engleză si traineri internaționali de la “Pro Erudio” School of English;",
+            "Diplome, poze, șapca echipei cadou pentru toţi copiii și medalii pentru echipa căștigătoare;",
         ],
-        notIncludedInPrice: ["Transport (dacă nu este inclus)", "Cheltuieli personale"],
+        notIncludedInPrice: [
+            "Cheltuieli personale",
+            "Excursii opționale (dacă există)",
+        ],
         activitiesDescription:
-            "Ateliere de engleză, jocuri, activități de echipă și sesiuni interactive. Programul final se personalizează pe grup.",
+            "Activități de echipă, jocuri, mini-proiecte în engleză, provocări de aventură și sesiuni interactive. Programul final depinde de locație și grup.",
         activityImages: IMGSET_DEFAULT,
         discounts: [
-            { type: "Continuitate", value: "—", condition: "Completează dacă se aplică" },
-            { type: "Frați", value: "—", condition: "Completează dacă se aplică" },
+            { type: "Frați/Surori", value: "5%", condition: "Pentru doi copii ai aceleiași familii" },
         ],
         otherCamps: [
             {
@@ -1209,20 +1514,20 @@ export const campsData: CampConfig[] = [
                 to: "/tabara-poiana-marului-2026",
             },
             {
-                name: "Tabără de limba engleză și aventură în România – Moinești",
-                location: "România",
-                type: "Aventură",
-                image: heroMoinești,
-                to: "/tabara-moinesti-2026",
+                name: "Școală de vară de limba ENGLEZĂ la Dublin (DCU)",
+                location: "Irlanda de Nord",
+                type: "Internațională",
+                image: heroDublinUniversity,
+                to: "/scoala-de-vara-dublin-2026",
             },
         ],
         luggageImage: { src: kitTabaraImage, alt: "Bagaj recomandat" },
         programImage: { src: programImage, alt: "Program orientativ" },
         registrationInfo: DEFAULT_REGISTRATION,
-        requiredDocuments: DEFAULT_REQUIRED_DOCS,
+        requiredDocuments: ROMANIA_REQUIRED_DOCS,
         form: {
-            selectValue: "tabara-moinesti-2025",
-            selectLabel: "Tabără de limba engleză și aventură în România – Moinești 2025",
+            selectValue: "tabara-moinesti-2026",
+            selectLabel: "Tabără de limba engleză și aventură în România – Moinești 2026",
         },
     },
 
