@@ -58,6 +58,22 @@ import moinesti61 from "@/assets/Moinesti61.jpg";
 import moinesti62 from "@/assets/Moinesti62.jpg";
 import moinesti63 from "@/assets/Moinesti63.jpg";
 import moinesti64 from "@/assets/Moinesti64.jpg";
+import predeal11 from "@/assets/Predeal11.jpg";
+import predeal12 from "@/assets/Predeal12.jpg";
+import predeal13 from "@/assets/Predeal13.jpg";
+import predeal14 from "@/assets/Predeal14.jpg";
+import predeal21 from "@/assets/Predeal21.jpg";
+import predeal22 from "@/assets/Predeal22.jpg";
+import predeal23 from "@/assets/Predeal23.jpg";
+import predeal24 from "@/assets/Predeal24.jpg";
+import predeal31 from "@/assets/Predeal31.jpg";
+import predeal32 from "@/assets/Predeal32.jpg";
+import predeal33 from "@/assets/Predeal33.jpg";
+import predeal34 from "@/assets/Predeal34.jpg";
+import predeal41 from "@/assets/Predeal41.jpg";
+import predeal42 from "@/assets/Predeal42.jpg";
+import predeal43 from "@/assets/Predeal43.jpg";
+import predeal44 from "@/assets/Predeal44.jpg";
 
 export type JournalEntry = {
   day: string;
@@ -266,6 +282,149 @@ Activitatea de seară a fost foarte creativa. În echipe a trebuit să confecți
 Dupa-amiaza a fost efervescentă întrucât am petrecut-o la piscina exterioară, unde am avut parte și de petrecere cu muzică și multă, multă spumă. Ca sa nu mai povestim că am primit și înghețată sau sucuri din partea casei, ca să fie petrecerea petrecere adevărată. 
 
 Seara a fost și ea grandioasă. După spectacolul de talente (și ce copii talentași am avut!!!) a urmat focul de tabără cu muzică și popcorn, apoi dans și scris mesaje pe șepci, în hohote de râs și plâns întrucât știm că este ultima seara împreună… Cel puțin ultima din acest an școlar întrucât sigur vom reveni aici și vara viitoare! `,
+        galleryLink: "https://www.facebook.com/media/set/?set=a.1312885916955437&type=3  ",
+        images: [moinesti51, moinesti52, moinesti53, moinesti54],
+      },
+      {
+        day: "Ziua 6",
+        content: `Ultima zi de tabăra a început tot cu mișcare, ca să avem energie toată ziua . După micul dejun a urmat ultima serie de puncte pentru echipe pentru a putea face clasamentul. Știm de acum, toate echipele au ieșit căștigătoare dacă pleacă din tabără îmbogățiți la minte și suflet, cu noi abilități învățate, mai responsabili și cu un bagaj mare de jocuri pe care să le incerce și cu prietenii  de acasă. 
+
+A urmat festivitatea de înmânare a certificatelor și tradiționala poză de grup, ca să avem dovada că au fost în tabără. Ce frumos a fost totul… 
+
+Cu tristețe că s-a terminat, dar bucuria că va urma și o data viitoare, ne ducem bagajele la autocar și ne îmbarcăm pentru drumul lung de întoarcere acasă. Pe drum, cu acordul părinților, oprim pentru o masa mult râvnită la KFC ca să ne consumăm și ultimii banuți de buzunar, pe care i-am păstrat cu grijă întrucât în tabără oricum nu am avut pe ce sa ii cheltuim. In jurul orei 18.00 am ajuns din nou în Piața Constitutiei, de unde ne-au preluat dragii noștri părinți. Bravo, echipe! Pe vara viitoare! `,
+        galleryLink: "https://www.facebook.com/media/set/?set=a.1315176926726336&type=3",
+        images: [moinesti61, moinesti62, moinesti63, moinesti64],
+      },],
+  },
+  "predeal-2024": {
+    slug: "predeal-2024",
+    navbarLabel: "English Explorers Camp – Predeal 2024",
+    title: "Tabără de limba engleză și aventură în România",
+    subtitle: "Jurnal de tabără",
+    campus: "Predeal, România",
+    dates: "30 iunie – 05 iulie 2024",
+    heroImage: summerCampImage,
+    heroAlt: "Predeal 2024",
+    quickInfo: {
+      location: "Predeal, România",
+      duration: "—",
+      ageGroup: "—",
+    },
+    entries: [{
+        day: "Ziua 1",
+        content: `Prima zi de tabără a început devreme. La ora 8.00 eram deja în Piața Constitutiei, pregătiți să ne
+îmbarcăm în autocar și să începem aventura!
+Ne-am oprit mai întâi la Conacul Bellu din Urlați, pe care l-am vizitat împărțiți în două grupe întrucât
+eram prea mulți pentru camerele micuțe. Unii au vizitat foișorul, iar ceilalți conacul propriu-zis. Am
+văzut o expoziție de obiecte din epoca eneolotică, precum și obiecte din colecția personală a lui
+Alexandru Bellu. Tot aici am mâncat și prânzul împachetat de acasă. Am vizitat crama, unde am văzut
+instrumentele de preparare a vinului, dar și butoaiele de depozitare. După plecare, în autocar, am
+răspuns la tot felul de întrebări, demonstrând că am fost atenți. Desigur că a contat și faptul că vom
+primi puncte pentru echipele viitoare :).
+Următoarea oprire a fost la Casa memorială George Enescu. Am aflat detalii despre viața faimosului
+compozitor, despre importanța activității sale pentru familia regală, am putut observa cum trăia
+maestrul alături de soția sa, am văzut prima vioară a acestuia, primită la doar 4 ani și am audiat un
+fragment din Prima Rapsodie Română într-un spațiu special amenajat pentru evenimente din fostul
+garaj al familiei Enescu.
+Am ajuns la cazare în jurul orei 14.30, încântați, dar flămânzi. Am înfulecat o supă de pui cu tăieței,
+apoi cărniță de porc la tava, cu orez și salata de varza, urmate de o porție de fructe (pepene rosu si
+caise). Ne-am instalat în camere, ne-am odihnit puțin, apoi ne-am strâns pe teren pentru activitățile
+introductive. Am aflat mai multe despre ceilalți copii, am fost împărțiți în echipe și ni s-au testat
+cunoștințele despre coechipieri/atenția.
+Următoarea activitate a fost prezentarea regulilor taberei și am avut ocazia să punem întrebări
+pentru a ne asigura că toate informațiile ajung la fiecare exact cum trebuie. Cina a fost bine venită la
+ora 19.30, când ne-am bucurat de un șnițel de pui cu piure și o porție de clătite cu înghețată. Seara
+am fost provocați atât fizic, cât și mental pentru a câștiga puncte pentru echipele noastre. Am sărit
+peste obstacole, am participat în curse de mai multe feluri, ne-am întrecut în rezistență, ne-am testat
+memoria, puterea fizică și dexteritate. Înainte de culcare, eforturile ne-au fost răsplătite cu stickere.
+La ora 23.00 toată lumea era în pat, mulți copii deja în tărâmul viselor.`,
+        galleryLink: "https://www.facebook.com/media/set/?set=a.1027486752162023&amp;type=3",
+        images: [predeal11, predeal12, predeal13, predeal14],
+      },
+      {
+        day: "Ziua 2",
+        content: `După un somn bine meritat, ne-am trezit înainte de ora programată, nerăbdători să ieșim afară la aer
+curat. Am început ziua cu un moment de încălzire și înviorare. Alexandra ne-a îndrumat să executăm
+mai multe exerciții și două dansuri, astfel încât la ora 9.00, la micul dejun, eram cu toții flămânzi. Am
+avut de ales între tot felul de legume proaspete, salată de vinete, zacuscă, cremă de brânză, brânză și
+cașcaval, mezeluri și crenvurști, omletă și ouă fierte, unt, gem, cereale de două feluri, iaurt ceai și alte
+bunătăți.
+
+A doua zi de tabără a fost ”Explore Imagination” și la cursurile de engleză inventat povești,
+reinterpretând opere de artă și creând propriile noastre lucrări artistice. La prânz am mâncat ciorbă
+de văcuță, apoi cărniță de pui în sos roșu cu mămăligă și salată. Yummy!
+După-amiază am fost împărțiți în trei grupuri, în funcție de vârstă, pentru a ne bălăci în piscină. Am
+avut mingiuțe și batoane din spumă, am înotat, ne-am întrecut la meciuri de polo, ba chiar unii dintre
+noi am învățat tehnici noi. Între timp, cei care își așteptau rândul la piscină au participat la ateliere
+artistice de tot felul, dar toate din aria artistică desen, creare de jocuri sau benzi desenate,
+confecționare rame sau creare de benzi desenate. La gustarea de după-amiază am primit nectarine,
+pe care le-am devorat instantaneu.
+Pentru activitatea de seară am fost provocați să rămânem pe tărâmul imaginației și să ne folosim de
+întreaga echipă, de la mic la mare, pentru a găsi sau a confecționa tot felul de obiecte magice,
+precum ochelarii rupți ai lui Harry Potter, aripa unei zâne sau ochiul unui căpcăun. A trebuit să
+inventăm povești despre cum am intrat în posesia acestor obiecte și să convingem juriul că sunt cât
+se poate de reale. Incredibil, toate echipele au fost triumfătoare și au adus toate cele zece obiecte
+cerute. Adevărul este ca nu strică să ai la îndemână o sabie cu laser sau un ou de dragon... Mai mult,
+poveștile noastre au fost atât de elaborate încât nici nu am mai avut timp de ceremonia sticker-elor,
+rămânând să le primim a doua zi de dimineață.
+Ne-am retras în camere puțin după ora 22.00 și până la 23.00 dormeam adânc, probabil visând la
+personajele fantastice si animalele mitologice care ne-au animat seara.`,
+        galleryLink: "https://www.facebook.com/media/set/?set=a.1028111892099509&amp;type=3",
+        images: [predeal21, predeal22, predeal23, predeal24],
+      },
+      {
+        day: "Ziua 3",
+        content: `După rutina de dimineață (încălzire și mic dejun), la cursurile de limbă engleză am discutat despre
+științe, tematica zilei fiind Explore Science. Cu cei mai mici am făcut experiențe pentru a observa
+transformările din natură cu ochii noștri, iar la grupele mai mari am discutat despre ultimele
+descoperiri, am inventat dispozitive care să ajute viața omului și am încercat să ghicim ce ne va aduce
+viitorul.
+La primul atelier de după-amiază, echipele au fost provocate să își folosească imaginația și
+cunoștințele pentru a proiecta un pod folosind un număr limitat de materiale reciclabile și orice
+elemente care puteau fi culese din natură fără a o răni. Puteți admira în imaginile alăturate proiectele
+copiilor. Toate minunate!
+La al doilea atelier, echipelor li s-a prezentat un scenariu apocaliptic în care omenirea trebuia să
+găsească o altă planetă locuibilă. Micii noștri cercetători trebuie să descrie condițiile de viață de
+acolo și să explice cât de ușor i-ar fi omenirii să populeze respectiva planetă! Excellent work, teams!
+Ziua a treia de tabără a fost una specială întrucât prima repriză din meciul România-Olanda s-a
+desfășurat în timpul cinei și am observat cât de mulți microbiști avem printre noi. După cină, nu am
+avut altă opțiune decât să continuăm vizionarea meciului în sala de conferință. Dezamăgirea a fost
+mare la finalul celei de a doua repriză, dar ne-am revenit repede la trei runde de întrebări despre
+științe. Felicitări tuturor echipelor!`,
+        galleryLink: "https://www.facebook.com/media/set/?set=a.1029430115301020&amp;type=3",
+        images: [predeal31, predeal32, predeal33, predeal34],
+      },
+      {
+        day: "Ziua 4",
+        content: `Cea de-a patra zi de tabără a fost foarte ploioasă. A plouat torențial dimineața, așa că încălzirea s-a
+făcut în premieră în sala de conferințe. Nu a fost ideal, dar, cu putina creativitate, orice este posibil.
+A plouat si in timpul atelierelor de limba engleza de dimineata. Totuși în scurtele momente în care s-a
+înseninat, am putut să ieșim în curte pentru un joculeț, două. După-amiaza a plouat continuu, deci a
+trebuit să găsim soluți de ateliere care să se poată desfășura la interior, Astfel, ne-am intrecut în
+talente și abilități, am aplaudat, ne-am mirat, am comentat și ne-am distrat de minune, în ciuda
+vremii.
+Activitatea de seară a fost Fashion Show. Prima provocare a serii a fost ca membrii echipelor să
+lucreze individual sau împreună pentru a lega șireturile de la adidași într-un mod anume, mai
+complicat decât un model obișnuit. Primele trei echipe care au reușit să lege șireturile și-au putut
+alege un element în plus pentru proba următoare. La proba principală a serii, copiii au primit un săcut
+cu diferențe obiecte reciclate, din care să confecționeze o ținută de gală pentru un membru al
+echipei. Provocarea a presupus și să aleagă o melodie pe care să defileze pe scena improvizată,
+precum și să creeze o poveste a ținutei: cum le-a venit ideea, cine sunt designerii fiecărui obiect
+vestimentar, cine este modelul/make-up artistul etc. Felicitări, copii! Sunteți super creativi, iar
+prezentările voastre în limba engleză au fost super convingătoare! Great work, teams!`,
+        galleryLink: "https://www.facebook.com/media/set/?set=a.1032985534945478&amp;type=3",
+        images: [predeal41, predeal42, predeal43, predeal44],
+      },
+      {
+        day: "Ziua 5",
+        content: `Penultima zi de tabără a fost plină. După încălzirea de dimineață și cursurile de limbă engleză, primul
+atelier de după-amiază a fost &quot;Trainer for 15 minutes&quot;. Micii noștri traineri i-au învățat pe prietenii lor
+cum să deseneze un măr care să arate foarte real, un chip de fată, benzi desenate etc. Alții au avut
+ateliere de japoneză, șah, de fotbal, karate, bătut la tobe, dans, gimnastică, scrimă și multe altele.
+Colega noastră din Turcia le-a prezentat copiilor un instrument muzical tradițional și le-a cântat
+câteva cântece la acest instrument și voce. Felicitări tuturor pentru felul în care ați reușit să împărtășiți cu ceilalți din cunoștințele și 
+pasiunile voastre!
+`,
         galleryLink: "https://www.facebook.com/media/set/?set=a.1312885916955437&type=3  ",
         images: [moinesti51, moinesti52, moinesti53, moinesti54],
       },

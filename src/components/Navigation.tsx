@@ -45,6 +45,7 @@ const campsByYear = [
 const journalItems = [
   { label: "Jurnal Manchester 2025", slug: "manchester-2025" },
   { label: "Jurnal Moinești 2024", slug: "moinesti-2024" },
+  { label: "Jurnal Predeal 2024", slug: "predeal-2024" },
 ];
 
 const Navigation = () => {
