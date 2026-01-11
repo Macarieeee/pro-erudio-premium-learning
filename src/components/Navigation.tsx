@@ -8,7 +8,7 @@ const campsByYear = [
   {
     year: 2026,
     camps: [
-      { label: "Școala de vară de limbă engleză la Dublin", to: "/scoala-de-vara-dublin-2026" },
+      { label: "Școala internațională de vară de limbă engleză la Dublin", to: "/scoala-de-vara-dublin-2026" },
       { label: "Tabara in Marea Britanie Grosvenor Hall Activity Centre", to: "/tabara-marea-britanie-grosvenor-hall-2026" },
       { label: "Tabără de limba engleză și aventură în România – Moinești", to: "/tabara-moinesti-2026" },
       { label: "Tabără de limba engleză și aventură în România – Poiana Mărului", to: "/tabara-poiana-marului-2026" },

@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { MessageSquare, Sparkles } from "lucide-react";
-import heroImage from "@/assets/hero-students.jpg";
+import heroImage from "@/assets/herohome.jpeg";
 import { Link } from "react-router-dom";
 
 const Hero = () => {

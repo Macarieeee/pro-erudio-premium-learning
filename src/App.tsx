@@ -26,7 +26,7 @@ const App = () => (
         <Route path="/despre-noi" element={<AboutPage />} />
         <Route path="/:slug" element={<CampPage />} />
         <Route path="/jurnal/:slug" element={<JournalPage />} />
-        <Route path="/teste-de-amplasare" element={<TesteAmplasament />} />
+        <Route path="/test-de-plasare" element={<TesteAmplasament />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </TooltipProvider>

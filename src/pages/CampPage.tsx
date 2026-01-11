@@ -231,7 +231,7 @@ const CampPage = () => {
               </div>
 
               <div>
-                <h3 className="text-2xl font-bold text-foreground mb-6">Ce include Tabăra</h3>
+                <h3 className="text-2xl font-bold text-foreground mb-6">Ce include tabăra</h3>
                 <div className="space-y-4">
                   {camp.highlights.map((highlight, index) => (
                     <div key={index} className="flex items-center gap-3">
@@ -298,7 +298,7 @@ const CampPage = () => {
       {/* Secțiuni extra (Moinești etc.) */}
       {camp.sections?.length ? (
         <section>
-          <div className="container mx-auto px-4 lg:px-8">
+          <div className="container mx-auto px-4 lg:px-8 py-[-30px]">
             <div className="max-w-6xl mx-auto">
               <CampSections sections={camp.sections} />
             </div>
@@ -307,7 +307,7 @@ const CampPage = () => {
       ) : null}
 
       {/* Ce include tariful / Ce nu include */}
-      <section className="py-20">
+      <section className="pb-6">
         <div className="container mx-auto px-6 lg:px-6">
           <div className="grid lg:grid-cols-2 gap-12">
             <div>

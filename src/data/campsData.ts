@@ -269,16 +269,16 @@ function makeFacilities(kind: "uk" | "dublin" | "romania-mountain" | "romania-ci
             label:
                 "Piscină exterioară",
         },
-        { icon: Trophy, label: "Teren multisport." },
-        { icon: Users, label: "Loc de joacă pentru copii." },
-        { icon: Building, label: "Sală multifuncțională." },
+        { icon: Trophy, label: "Teren multisport" },
+        { icon: Users, label: "Loc de joacă pentru copii" },
+        { icon: Building, label: "Sală multifuncțională" },
         {
             icon: Calendar,
             label:
                 "4 saloane de evenimente",
         },
-        { icon: Utensils, label: "2 restaurante." },
-        { icon: Compass, label: "Parcare amenajată." },
+        { icon: Utensils, label: "2 restaurante" },
+        { icon: Compass, label: "Parcare amenajată" },
     ];
 }
 
@@ -300,18 +300,19 @@ export const campsData: CampConfig[] = [
             objectPosition: "bottom",
         },
         about: {
-            title: "Despre Tabără",
+            title: "Descriere generală",
             paragraphs: [
-                "Dublin este un centru cultural major în Irlanda, orașul în care s-au născut sau în care au trăit mulți scriitori remarcabili, cunoscuți în toată lumea. Primul scriitor de renume din Dublin a fost Jonathan Swift (1667-1745), autorul Călătoriilor lui Gulliver, dar cel mai mare dintre ei a fost James Joyce (1882-1941), care a revoluționat literatura prin romanul sau “Ulise” in 1922, roman remarcabil și prin faptul ca este plin de detalii despre Dublinul din anii 1920. Alți patru scriitori originari din Dublin și care au primit premiul Nobel pentru literatură sunt: William Butler Yeats în 1923, George Bernard Shaw în 1925, Samuel Beckett în 1969, Seamus Heaney în 1995. Dublin este cel mai mare centru de învățământ din Irlanda, cu trei universități. Universitatea din Dublin se află în centrul orașului și este cea mai veche din Irlanda, fondată în secolul XVI. Singurul său colegiu constitutiv, Trinity College (TCD) a fost consacrat printr-un act semnat de către regina Elisabeta I a Angliei. Universitatea Națională a Irlandei (NUI) fondată în 1854, este acum cea mai mare universitate din Irlanda, cea mai recentă fiind Universitatea Orașului Dublin (DCU) fondată în 1975. Această universitate este specializată în afaceri, inginerie, știința și industrie.",
-                "Dublin este un important centru cultural irlandez, remarcându-se prin recunoașterea ca Oraș UNESCO al Literaturii în 2010. Orașul abundă în muzee, galerii de artă, instituții culturale și o scenă literară activă, influențată de mari scriitori și muzicieni. Dublinul dispune de o infrastructură culturală bogată, incluzând nu mai puțin de 62 de muzee, 51 de biblioteci publice, trei universități și 53 de galerii de artă..",
+                "Dublin este un centru cultural major în Irlanda, orașul în care s-au născut sau în care au trăit mulți scriitori remarcabili, cunoscuți în toată lumea. Primul scriitor de renume din Dublin a fost Jonathan Swift (1667-1745), autorul Călătoriilor lui Gulliver, dar cel mai mare dintre ei a fost James Joyce (1882-1941), care a revoluționat literatura prin romanul sau “Ulise” in 1922, roman remarcabil și prin faptul ca este plin de detalii despre Dublinul din anii 1920. Alți patru scriitori originari din Dublin și care au primit premiul Nobel pentru literatură sunt: William Butler Yeats în 1923, George Bernard Shaw în 1925, Samuel Beckett în 1969, Seamus Heaney în 1995. Dublin este cel mai mare centru de învățământ din Irlanda, cu trei universități.",
+                "Universitatea din Dublin se află în centrul orașului și este cea mai veche din Irlanda, fondată în secolul XVI. Singurul său colegiu constitutiv, Trinity College (TCD) a fost consacrat printr-un act semnat de către regina Elisabeta I a Angliei. Universitatea Națională a Irlandei (NUI) fondată în 1854, este acum cea mai mare universitate din Irlanda, cea mai recentă fiind Universitatea Orașului Dublin (DCU) fondată în 1975. Această universitate este specializată în afaceri, inginerie, știința și industrie.",
+                "Dublin este un important centru cultural irlandez, remarcându-se prin recunoașterea ca Oraș UNESCO al Literaturii în 2010. Orașul abundă în muzee, galerii de artă, instituții culturale și o scenă literară activă, influențată de mari scriitori și muzicieni. Dublinul dispune de o infrastructură culturală bogată, incluzând nu mai puțin de 62 de muzee, 51 de biblioteci publice, trei universități și 53 de galerii de artă.",
             ],
         },
 
         quickInfo: {
-            location: "Dublin City University (DCU), Dublin",
+            location: "Dublin, Irlanda",
             duration: "8 zile / 7 nopți",
-            ageGroup: "12–17 ani",
-            dates: "2–9 august 2026",
+            ageGroup: "12 – 17 ani",
+            dates: "2 – 9 august 2026",
             price: "940 EUR / participant",
         },
         highlights: [
@@ -439,7 +440,7 @@ export const campsData: CampConfig[] = [
             objectPosition: "50% 80%",
         },
         about: {
-            title: "Despre Tabără",
+            title: "Despre tabără",
             paragraphs: [
                 "Anul acesta vă propunem o tabăra internațională care urmează tipicul unei tabere de aventură adresate copiilor britanici. Singură diferența este includerea în program a cursurilor de limba engleză în timpul dimineții și a excursiilor, săptămânal una de o zi întreagă și una de o jumătate de zi, special concepute pentru elevii străini.",
                 "Colaborăm cu PGL Travel, care este o companie fondată în anul 1957 și are ca obiect principal de activitate furnizarea de activități sportive, recreative și educaționale pentru copiii britanici și internaționali în centre proprii. De-a lungul anilor, compania a achiziționat numeroase centre, majoritatea în Marea Britanie: 10 în Anglia, 1 în Scoția și 1 în Țara Galilor. În anii 1990 PGL și-a extins activitatea în Franța, intrând chiar și pe piața școlilor de schi pentru copii. Specific fiecărui centru este faptul că se întinde pe domenii uriașe, care cuprind lacuri sau râuri, păduri, plaje sau zone stâncoase, terenuri de sport, piste de biciclete, săli de sport la interior, centre de activități de aventură, mici magazine, săli de clasă și ateliere pe diferite teme.",
@@ -541,9 +542,10 @@ export const campsData: CampConfig[] = [
             title: "Tabără de limba engleză și aventură în România – Moinești",
             image: heroMoinești,
             imageAlt: "Tabără Moinești 2026",
+            objectPosition: "50% 70%",
         },
         about: {
-            title: "Despre Tabără",
+            title: "Despre tabără",
             paragraphs: [
                 "Anul acesta vă propunem o tabăra internațională care urmează tipicul unei tabere de aventură adresate copiilor britanici. Singură diferența este includerea în program a cursurilor de limba engleză în timpul dimineții și a excursiilor, săptămânal una de o zi întreagă și una de o jumătate de zi, special concepute pentru elevii străini.",
                 "Colaborăm cu PGL Travel, care este o companie fondată în anul 1957 și are ca obiect principal de activitate furnizarea de activități sportive, recreative și educaționale pentru copiii britanici și internaționali în centre proprii. De-a lungul anilor, compania a achiziționat numeroase centre, majoritatea în Marea Britanie: 10 în Anglia, 1 în Scoția și 1 în Țara Galilor. În anii 1990 PGL și-a extins activitatea în Franța, intrând chiar și pe piața școlilor de schi pentru copii. Specific fiecărui centru este faptul că se întinde pe domenii uriașe, care cuprind lacuri sau râuri, păduri, plaje sau zone stâncoase, terenuri de sport, piste de biciclete, săli de sport la interior, centre de activități de aventură, mici magazine, săli de clasă și ateliere pe diferite teme.",
@@ -552,7 +554,7 @@ export const campsData: CampConfig[] = [
         sections: [
             {
                 type: "note",
-                text: "Pentru rezervările cu avans efectuate până la data de 15 februarie 2026, prețul este 2480 lei. După această dată prețul poate suferi modificări.",
+                text: "Pentru rezervările cu avans efectuate până la data de 15 februarie 2026, prețul este de 2.480 lei(totul inclus: pensiune completă, cursuri, excursii, transport din București). După această dată prețul poate suferi modificări.",
             },
             {
                 type: "twoCols",
@@ -674,7 +676,7 @@ export const campsData: CampConfig[] = [
 
             {
                 type: "richText",
-                title: "Atelierele de după-amiază se vor desfășura pe echipe de 7-9 copii și se vor desfășura în paralel. Iată câteva exemple de activități:",
+                title: "Atelierele de după-amiază sunt creative, sportive, artistice și culturale și se vor desfășura pe echipe de 7-9 copii. Iată câteva exemple:",
                 paragraphs: [
                     "Jocuri de cunoaștere și socializare (Mime, draw or describe, Minute to win it, curse de stafeta, Guess the character!, Photo contests, Charades, Casino Night, Chaos Games, Media Challenges, Beauty Workshop, Fashion Parade etc )",
                     "Concursuri pe echipe (Treasute Hunt, Team Feuds, Talent Show, Harry Potter Night, Quiz Night, Karaoke etc)",
@@ -696,7 +698,7 @@ export const campsData: CampConfig[] = [
             duration: "6 zile / 5 nopți",
             ageGroup: "7-14 ani",
             dates: "28 iunie – 03 iulie 2026",
-            price: "Lei 2480",
+            price: "2.480 Lei (transport inclus)",
         },
         highlights: [
             "Engleză aplicată prin joc și proiecte",
@@ -776,6 +778,7 @@ export const campsData: CampConfig[] = [
             title: "Tabără de limba engleză și aventură în România – Poiana Mărului",
             image: heroPoianaMarului,
             imageAlt: "Tabără Poiana Mărului 2026",
+            objectPosition: "70% 80%",
         },
         about: {
             title: "Despre Tabără",
@@ -1014,7 +1017,7 @@ export const campsData: CampConfig[] = [
             "Cheltuieli personale",
         ],
         activitiesDescription:
-            "Activitățile din tabără sunt numeroase și extrem de variate, fiind gândite pentru a îmbina mișcarea, creativitatea și socializarea: participanții vor lua parte la activități sportive desfășurate atât în aer liber, cât și în sala de sport multifuncțională, la ateliere de cooking, dans, actorie și fotbal, precum și la sesiuni de arts & crafts, cluburi de conversație, seminarii pe diferite teme, jocuri de echipă (precum Capture the Flag), jurnalism și media. Programul include, de asemenea, quiz-uri, vizionări de filme, prezentări de modă și seri tematice, alături de două excursii de o jumătate de zi pentru descoperirea orașului Manchester (cu posibile vizite la MediaCity, Muzeul Științei și Industriilor sau turul Stadionului Manchester City) și o excursie de o zi întreagă, cu destinații posibile precum York, Chester sau Liverpool.",
+            "Activitățile din tabără sunt numeroase și extrem de variate, fiind gândite pentru a îmbina mișcarea, creativitatea și socializarea: participanții vor lua parte la activități sportive desfășurate atât în aer liber, cât și în sala de sport multifuncțională, la ateliere de cooking, dans, actorie și fotbal, precum și la sesiuni de arts & crafts, cluburi de conversație, seminarii pe diferite teme, jocuri de echipă (precum Capture the Flag), jurnalism și media. \n \n Programul include, de asemenea, quiz-uri, vizionări de filme, prezentări de modă și seri tematice, alături de două excursii de o jumătate de zi pentru descoperirea orașului Manchester (cu posibile vizite la MediaCity, Muzeul Științei și Industriilor sau turul Stadionului Manchester City) și o excursie de o zi întreagă, cu destinații posibile precum York, Chester sau Liverpool.",
         activityImages: [activityManchester2, activityManchester3, activityManchester4, activityManchester1],
         discounts: [
             { type: "Continuitate", value: "5%", condition: "Completează dacă se aplică" },

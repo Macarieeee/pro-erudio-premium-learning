@@ -27,9 +27,9 @@ const EnglishTestSection = () => {
               size="lg"
               className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold rounded-full px-8"
             >
-              <Link to="/teste-de-amplasare">
+              {/* <Link to="/test-de-plasare">
                 Începe Testul Gratuit
-              </Link>
+              </Link> */}
             </Button>
           </div>
           <div className="rounded-2xl overflow-hidden shadow-lg">
