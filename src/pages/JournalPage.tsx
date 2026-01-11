@@ -155,7 +155,7 @@ const JournalPage = () => {
                   className="block"
                 >
                   <Card className="bg-card border-border hover:shadow-lg transition-shadow cursor-pointer group overflow-hidden">
-                    <div className="h-45 overflow-hidden">
+                    <div className="h-40 overflow-hidden">
                       <img
                         src={j.heroImage}
                         alt={j.heroAlt || j.title}
