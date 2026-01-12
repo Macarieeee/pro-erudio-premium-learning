@@ -63,6 +63,8 @@ import heroMoinești2025 from "@/assets/Tabara-moinestib.jpg";
    DOAR DEFAULT-URI COMUNE
 ======================= */
 
+
+
 export const DEFAULT_REGISTRATION = {
     steps: [
         "Pentru rezervări vă rugăm să completaţi formularul din partea de jos a paginii sau să ne trimiteţi un email.",
@@ -85,6 +87,7 @@ export type CampVisibility = {
     showRequiredDocs?: boolean;
     showDiscounts?: boolean;
     showActivities?: boolean;
+    showPriceDetails?: boolean;
 };
 
 export const DEFAULT_REQUIRED_DOCS = [
@@ -307,7 +310,9 @@ export const campsData: CampConfig[] = [
                 "Dublin este un important centru cultural irlandez, remarcându-se prin recunoașterea ca Oraș UNESCO al Literaturii în 2010. Orașul abundă în muzee, galerii de artă, instituții culturale și o scenă literară activă, influențată de mari scriitori și muzicieni. Dublinul dispune de o infrastructură culturală bogată, incluzând nu mai puțin de 62 de muzee, 51 de biblioteci publice, trei universități și 53 de galerii de artă.",
             ],
         },
-
+visibility: {
+  showPriceDetails: false,
+},
         quickInfo: {
             location: "Dublin, Irlanda",
             duration: "8 zile / 7 nopți",
@@ -439,6 +444,9 @@ export const campsData: CampConfig[] = [
             imageAlt: "Grosvenor Hall 2026",
             objectPosition: "50% 80%",
         },
+        visibility: {
+  showPriceDetails: false,
+},
         about: {
             title: "Despre tabără",
             paragraphs: [
@@ -615,7 +623,7 @@ export const campsData: CampConfig[] = [
                             "09.45 – 11.00 – Lesson 1 (ateliere interactive de limba engleză)",
                             "11.15 – 12.45 – Lesson 2 (ateliere interactive de limba engleză)",
                             "13.00 – Masa de prânz",
-                            "14.30 – Vizită la Cetatea Neamț",
+                            "14.30 – Vizită la *Cetatea Neamț*",
                             "17.00 – Bălăceală în piscină",
                             "19.00 – Cina",
                             "20.00 – 21.30 – Serata (activități recreative și de divertisment cu tot grupul)",
@@ -650,8 +658,8 @@ export const campsData: CampConfig[] = [
                             "09.45 – 11.00 – Lesson 1 (ateliere interactive de limba engleză)",
                             "11.15 – 12.45 – Lesson 2 (ateliere interactive de limba engleză)",
                             "13.00 – Masa de prânz",
-                            "14.00 – Vizită la Casa Memorială Ion Creangă",
-                            "15.30 – Vizită la Curtea Domnească de la Piatra Nemți",
+                            "14.00 – Vizită la *Casa Memorială Ion Creangă*",
+                            "15.30 – Vizită la *Curtea Domnească* de la Piatra Nemți",
                             "17.00 – Bălăceală în piscină",
                             "19.00 – Cina",
                             "20.00 – 21.30 – Serata (activități recreative și de divertisment cu tot grupul)",
@@ -719,9 +727,9 @@ export const campsData: CampConfig[] = [
         includedInPrice: [
             "6 zile (5 nopţi) cazare cu pensiune completă;",
             "Transport București-Moinești, tur-retur cu autocarul;",
-            "Vizită la Curtea Domnească din Piatra Neamț;",
-            "Vizită la Cetatea Neamț;",
-            "Vizită la Casa Memorială Ion Creangă;",
+            "Vizită la *Curtea Domnească* din Piatra Neamț;",
+            "Vizită la *Cetatea Neamț*;",
+            "Vizită la *Casa Memorială Ion Creangă*;",
             "Zilnic program de activități în limba engleză în cursul diminetii, două ateliere pe echipe (artistice, culturale, sportive etc) în cursul după-amiezii si o activitate de seară (cu tot grupul);",
             "Program de limba engleză susținut de profesori de limba engleză si traineri internaționali de la “Pro Erudio” School of English;",
             "Diplome, poze, șapca echipei cadou pentru toţi copiii și medalii pentru echipa căștigătoare;",
@@ -816,8 +824,8 @@ export const campsData: CampConfig[] = [
                         subtitle: "Ziua 1",
                         items: [
                             "8.00 – Plecarea din București cu autocarul (Piata Constitutiei)",
-                            "11.00 – Vizită la Cetățile Hărman și Prejmer",
-                            "12.00 – Vizită la Casa Memorială George Enescu din Sinaia",
+                            "11.00 – Vizită la *Cetățile Hărman* și *Prejmer*",
+                            "12.00 – Vizită la *Casa Memorială George Enescu* din Sinaia",
                             "14.30 – Cazare și prânz",
                             "16.30 -18.30 – Jocuri de cunoaștere/stabilirea echipelor/prezentarea regulilor",
                             "19.30-20.30 – Cina",
@@ -905,9 +913,9 @@ export const campsData: CampConfig[] = [
         includedInPrice: [
             "6 zile (5 nopţi) cazare cu pensiune completă;",
             "Transport București-Poiana Mărului, tur-retur cu autocarul;",
-            "Vizită la Cetatea Hărman;",
-            "Vizită la Cetatea Prejmer;",
-            "Vizită la Peștera Valea Cetății;",
+            "Vizită la *Cetatea Hărman*;",
+            "Vizită la *Cetatea Prejmer*;",
+            "Vizită la *Peștera Valea Cetății*;",
             "Drumeție în pădure și construire de adăposturi în echipe;",
             "Zilnic program de activități în limba engleză în cursul diminetii, două ateliere pe echipe (artistice, culturale, sportive etc) în cursul după-amiezii si o activitate de seară (cu tot grupul);",
             "Program de limba engleză susținut de profesori de limba engleză si traineri internaționali de la “Pro Erudio” School of English;",

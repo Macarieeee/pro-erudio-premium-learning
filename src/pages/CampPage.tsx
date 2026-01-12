@@ -55,6 +55,7 @@ const CampPage = () => {
     showDiscounts: true,
     showActivitiesDescription: true,
     showActivities: true,
+      showPriceDetails: true,
     ...(camp.visibility ?? {}),
   };
 
@@ -71,6 +72,42 @@ const CampPage = () => {
     gdprConsent: false,
     termsConsent: false,
   });
+
+const renderItalicText = (text: string) => {
+  const result: React.ReactNode[] = [];
+  const regex = /\*(.*?)\*/g;
+
+  let lastIndex = 0;
+  let match;
+
+  while ((match = regex.exec(text)) !== null) {
+    // text normal înainte de italic
+    if (match.index > lastIndex) {
+      result.push(
+        <span key={lastIndex}>{text.slice(lastIndex, match.index)}</span>
+      );
+    }
+
+    // text italic
+    result.push(
+      <em key={match.index} className="italic">
+        {match[1]}
+      </em>
+    );
+
+    lastIndex = regex.lastIndex;
+  }
+
+  // text rămas după ultimul match
+  if (lastIndex < text.length) {
+    result.push(
+      <span key={lastIndex}>{text.slice(lastIndex)}</span>
+    );
+  }
+
+  return result;
+};
+
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -317,41 +354,63 @@ const CampPage = () => {
       ) : null}
 
       {/* Ce include tariful / Ce nu include */}
-      {/* <section className="pb-6">
-        <div className="container mx-auto px-6 lg:px-6">
-          <div className="grid lg:grid-cols-2 gap-12">
-            <div>
-              <div className="flex items-center gap-3 mb-6">
-                <CheckCircle className="h-7 w-7 text-accent" />
-                <h2 className="text-2xl md:text-3xl font-bold text-foreground">Ce include tariful</h2>
-              </div>
-              <div className="space-y-3">
-                {camp.includedInPrice.map((item, index) => (
-                  <div key={index} className="flex items-start gap-3 p-3 bg-accent/10 rounded-lg">
-                    <CheckCircle className="h-5 w-5 text-accent flex-shrink-0 mt-0.5" />
-                    <span className="text-foreground">{item}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
+{v.showPriceDetails && (
+  <section className="pb-6">
+    <div className="container mx-auto px-6 lg:px-6">
+      <div className="grid lg:grid-cols-2 gap-12">
 
-            <div>
-              <div className="flex items-center gap-3 mb-6">
-                <XCircle className="h-7 w-7 text-destructive" />
-                <h2 className="text-2xl md:text-3xl font-bold text-foreground">Ce nu include tariful</h2>
-              </div>
-              <div className="space-y-3">
-                {camp.notIncludedInPrice.map((item, index) => (
-                  <div key={index} className="flex items-start gap-3 p-3 bg-destructive/10 rounded-lg">
-                    <XCircle className="h-5 w-5 text-destructive flex-shrink-0 mt-0.5" />
-                    <span className="text-foreground">{item}</span>
-                  </div>
-                ))}
-              </div>
+        {/* INCLUDE */}
+        {camp.includedInPrice?.length > 0 && (
+          <div>
+            <div className="flex items-center gap-3 mb-6">
+              <CheckCircle className="h-7 w-7 text-accent" />
+              <h2 className="text-2xl md:text-3xl font-bold text-foreground">
+                Ce include tariful
+              </h2>
+            </div>
+            <div className="space-y-3">
+              {camp.includedInPrice.map((item, index) => (
+                <div
+                  key={index}
+                  className="flex items-start gap-3 p-3 bg-accent/10 rounded-lg"
+                >
+                  <CheckCircle className="h-5 w-5 text-accent flex-shrink-0 mt-0.5" />
+                  <span className="text-foreground">{renderItalicText(item)}</span>
+                </div>
+              ))}
             </div>
           </div>
-        </div>
-      </section> */}
+        )}
+
+        {/* NU INCLUDE */}
+        {camp.notIncludedInPrice?.length > 0 && (
+          <div>
+            <div className="flex items-center gap-3 mb-6">
+              <XCircle className="h-7 w-7 text-destructive" />
+              <h2 className="text-2xl md:text-3xl font-bold text-foreground">
+                Ce nu include tariful
+              </h2>
+            </div>
+            <div className="space-y-3">
+              {camp.notIncludedInPrice.map((item, index) => (
+                <div
+                  key={index}
+                  className="flex items-start gap-3 p-3 bg-destructive/10 rounded-lg"
+                >
+                  <XCircle className="h-5 w-5 text-destructive flex-shrink-0 mt-0.5" />
+                  <span className="text-foreground">{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+      </div>
+    </div>
+  </section>
+)}
+
+
 
       {/* Program de excursii și activități (guard: poate să nu existe imagini) */}
       {v.showActivities && (camp.activitiesDescription || camp.activityImages?.length) ? (

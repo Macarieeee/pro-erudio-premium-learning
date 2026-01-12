@@ -4,6 +4,42 @@ type Props = {
     sections?: CampSection[];
 };
 
+const renderItalicText = (text: string) => {
+  const result: React.ReactNode[] = [];
+  const regex = /\*(.*?)\*/g;
+
+  let lastIndex = 0;
+  let match;
+
+  while ((match = regex.exec(text)) !== null) {
+    // text normal înainte de italic
+    if (match.index > lastIndex) {
+      result.push(
+        <span key={lastIndex}>{text.slice(lastIndex, match.index)}</span>
+      );
+    }
+
+    // text italic
+    result.push(
+      <em key={match.index} className="italic">
+        {match[1]}
+      </em>
+    );
+
+    lastIndex = regex.lastIndex;
+  }
+
+  // text rămas după ultimul match
+  if (lastIndex < text.length) {
+    result.push(
+      <span key={lastIndex}>{text.slice(lastIndex)}</span>
+    );
+  }
+
+  return result;
+};
+
+
 export default function CampSections({ sections }: Props) {
     if (!sections?.length) return null;
 
@@ -47,7 +83,7 @@ if (s.type === "gridBullets") {
             <ul className="space-y-3">
               {card.items.map((it, j) => (
                 <li key={j} className="text-muted-foreground leading-relaxed">
-                  • {it}
+                  • {renderItalicText(it)}
                 </li>
               ))}
             </ul>
