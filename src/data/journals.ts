@@ -112,7 +112,7 @@ export type Journal = {
 export const journals: Record<string, Journal> = {
   "manchester-2025": {
     slug: "manchester-2025",
-    navbarLabel: "Jurnal Manchester 2025",
+    navbarLabel: "JURNAL ȘCOALĂ INTERNAȚIONALĂ 2025",
     title: "Școală internațională de vară de limbă engleză în Marea Britanie",
     subtitle: "Jurnal de tabără",
     campus: "Universitatea din Salford (Manchester)",

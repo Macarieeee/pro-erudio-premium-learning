@@ -58,7 +58,7 @@ if (s.type === "gridBullets") {
   );
 }
                 return (
-                    <section key={idx} className={`py-20 ${bg}`}>
+                    <section key={idx} className={`py-6 ${bg}`}>
                         <div className="container mx-auto px-4 lg:px-8">
                             <div className="max-w-5xl mx-auto">
                                 {/* Rich Text */}

@@ -11,6 +11,9 @@ import JournalPage from "./pages/JournalPage";
 import AboutPage from "./pages/AboutPage";
 import ScrollToTop from "./components/ScrollToTop";
 import TesteAmplasament from "./pages/TesteAmplasament";
+import DeclaratieConsimtamant from "@/pages/DeclaratieConsimtamant";
+import RegulamentFunctionare from "@/pages/RegulamentFunctionare";
+import JurnaleTabara from "@/pages/JurnaleTabara";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +31,9 @@ const App = () => (
         <Route path="/jurnal/:slug" element={<JournalPage />} />
         <Route path="/test-de-plasare" element={<TesteAmplasament />} />
         <Route path="*" element={<NotFound />} />
+        <Route path="/declaratie-consimtamant" element={<DeclaratieConsimtamant />} />
+        <Route path="/regulament" element={<RegulamentFunctionare />} />
+        <Route path="/jurnale" element={<JurnaleTabara />} />
       </Routes>
     </TooltipProvider>
   </QueryClientProvider>

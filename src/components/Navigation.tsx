@@ -141,7 +141,7 @@ const Navigation = () => {
             {/* Jurnale tabara dropdown */}
             <div className="relative group">
               <button className="flex items-center gap-1 text-secondary-foreground/90 hover:text-secondary-foreground font-large transition-colors font-medium">
-                Jurnale tabără
+                <Link to="/jurnale">Jurnale Tabără</Link>
                 <ChevronDown className="h-4 w-4 transition-transform group-hover:rotate-180" />
               </button>
 

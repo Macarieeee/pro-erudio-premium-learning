@@ -3,6 +3,7 @@ import { useParams, Navigate, Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import CampSections from "@/components/CampSection"; // ✅ asigură-te că fișierul se numește CampSections.tsx
+import RegistrationForm from "@/components/RegistrationForm";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -239,6 +240,15 @@ const CampPage = () => {
                       <span className="text-foreground">{highlight}</span>
                     </div>
                   ))}
+                  <h3 className="text-2xl font-bold text-foreground mb-6 pt-6">Ce nu include tabăra</h3>
+                  <div className="space-y-4">
+                {camp.notIncludedInPrice.map((item, index) => (
+                  <div key={index} className="flex items-center gap-3">
+                    <XCircle className="h-5 w-5 text-destructive flex-shrink-0 mt-0.5" />
+                    <span className="text-foreground">{item}</span>
+                  </div>
+                ))}
+                </div>
                 </div>
               </div>
             </div>
@@ -298,7 +308,7 @@ const CampPage = () => {
       {/* Secțiuni extra (Moinești etc.) */}
       {camp.sections?.length ? (
         <section>
-          <div className="container mx-auto px-4 lg:px-8 py-[-30px]">
+          <div className="container mx-auto px-4 lg:px-8">
             <div className="max-w-6xl mx-auto">
               <CampSections sections={camp.sections} />
             </div>
@@ -307,7 +317,7 @@ const CampPage = () => {
       ) : null}
 
       {/* Ce include tariful / Ce nu include */}
-      <section className="pb-6">
+      {/* <section className="pb-6">
         <div className="container mx-auto px-6 lg:px-6">
           <div className="grid lg:grid-cols-2 gap-12">
             <div>
@@ -341,7 +351,7 @@ const CampPage = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Program de excursii și activități (guard: poate să nu existe imagini) */}
       {v.showActivities && (camp.activitiesDescription || camp.activityImages?.length) ? (
@@ -407,7 +417,7 @@ const CampPage = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-bold text-foreground mb-4">Contact înscrieri</h3>
+                <h3 className="text-xl font-bold text-foreground mb-4">Contact informații și înscrieri</h3>
                 <Card className="bg-primary/5 border-primary/20">
                   <CardContent className="pt-6 space-y-4">
                     <div className="flex items-center gap-3">
@@ -568,230 +578,29 @@ const CampPage = () => {
       ) : null}
 
       {/* Registration Form */}
-      {v.showRegistrationForm ? (
-        <section className="py-6 bg-primary">
-          <div className="container mx-auto px-4 lg:px-8">
-            <div className="max-w-3xl mx-auto">
-              <div className="text-center mb-10">
-                <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4">Formular de înscriere</h2>
-                <p className="text-primary-foreground/80">
-                  Completează formularul pentru a rezerva un loc la {camp.campName} {camp.year}
-                </p>
-              </div>
+      <section className="py-6 bg-primary">
+  <div className="container mx-auto px-4 lg:px-8">
+    <div className="max-w-3xl mx-auto">
+      <div className="text-center mb-10">
+        <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4">
+          Formular de înscriere
+        </h2>
+        <p className="text-primary-foreground/80">
+          Completează formularul pentru a rezerva un loc la {camp.campName} {camp.year}
+        </p>
+      </div>
 
-              <Card className="bg-card border-0 shadow-2xl">
-                <CardContent className="p-8">
-                  <form onSubmit={handleSubmit} className="space-y-8">
-                    {/* Camp Selection */}
-                    <div className="space-y-2">
-                      <Label htmlFor="camp" className="text-foreground font-medium">
-                        Tabăra selectată
-                      </Label>
-                      <Select value={formData.selectedCamp} onValueChange={(value) => setFormData({ ...formData, selectedCamp: value })}>
-                        <SelectTrigger className="bg-background">
-                          <SelectValue placeholder="Selectează tabăra" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {campsData
-                            .filter((c) => c.year === 2026)
-                            .map((c) => (
-                              <SelectItem key={c.form.selectValue} value={c.form.selectValue}>
-                                {c.form.selectLabel}
-                              </SelectItem>
-                            ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    {/* Child Info */}
-                    <div className="space-y-4">
-                      <h3 className="text-lg font-semibold text-foreground border-b border-border pb-2">Date despre cursant</h3>
-
-                      <div className="grid sm:grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="childName" className="text-foreground">
-                            Numele și prenumele *
-                          </Label>
-                          <Input
-                            id="childName"
-                            placeholder="Numele complet al copilului"
-                            value={formData.childName}
-                            onChange={(e) => setFormData({ ...formData, childName: e.target.value })}
-                            required
-                            className="bg-background"
-                          />
-                        </div>
-
-                        <div className="space-y-2">
-                          <Label htmlFor="childCity" className="text-foreground">
-                            Localitatea de domiciliu *
-                          </Label>
-                          <Input
-                            id="childCity"
-                            placeholder="Orașul/Comuna"
-                            value={formData.childCity}
-                            onChange={(e) => setFormData({ ...formData, childCity: e.target.value })}
-                            required
-                            className="bg-background"
-                          />
-                        </div>
-                      </div>
-
-                      <div className="space-y-2">
-                        <Label htmlFor="childBirthDate" className="text-foreground">
-                          Data nașterii *
-                        </Label>
-                        <Input
-                          id="childBirthDate"
-                          type="date"
-                          value={formData.childBirthDate}
-                          onChange={(e) => setFormData({ ...formData, childBirthDate: e.target.value })}
-                          required
-                          className="bg-background"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Transport Option */}
-                    <div className="space-y-3">
-                      <Label className="text-foreground font-medium">Doriți opțiunea de transport până în locație?</Label>
-                      <RadioGroup
-                        value={formData.transport}
-                        onValueChange={(value) => setFormData({ ...formData, transport: value })}
-                        className="flex gap-6"
-                      >
-                        <div className="flex items-center space-x-2">
-                          <RadioGroupItem value="da" id="transport-da" />
-                          <Label htmlFor="transport-da" className="text-foreground cursor-pointer">
-                            Da
-                          </Label>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <RadioGroupItem value="nu" id="transport-nu" />
-                          <Label htmlFor="transport-nu" className="text-foreground cursor-pointer">
-                            Nu
-                          </Label>
-                        </div>
-                      </RadioGroup>
-                    </div>
-
-                    {/* Parent Info */}
-                    <div className="space-y-4">
-                      <h3 className="text-lg font-semibold text-foreground border-b border-border pb-2">Date despre părinte/tutore</h3>
-
-                      <div className="space-y-2">
-                        <Label htmlFor="parentName" className="text-foreground">
-                          Numele și prenumele *
-                        </Label>
-                        <Input
-                          id="parentName"
-                          placeholder="Numele complet al părintelui"
-                          value={formData.parentName}
-                          onChange={(e) => setFormData({ ...formData, parentName: e.target.value })}
-                          required
-                          className="bg-background"
-                        />
-                      </div>
-
-                      <div className="grid sm:grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="parentPhone" className="text-foreground">
-                            Telefon *
-                          </Label>
-                          <Input
-                            id="parentPhone"
-                            type="tel"
-                            placeholder="07XX XXX XXX"
-                            value={formData.parentPhone}
-                            onChange={(e) => setFormData({ ...formData, parentPhone: e.target.value })}
-                            required
-                            className="bg-background"
-                          />
-                        </div>
-
-                        <div className="space-y-2">
-                          <Label htmlFor="parentEmail" className="text-foreground">
-                            Email *
-                          </Label>
-                          <Input
-                            id="parentEmail"
-                            type="email"
-                            placeholder="email@exemplu.ro"
-                            value={formData.parentEmail}
-                            onChange={(e) => setFormData({ ...formData, parentEmail: e.target.value })}
-                            required
-                            className="bg-background"
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* How did you hear */}
-                    <div className="space-y-2">
-                      <Label htmlFor="source" className="text-foreground font-medium">
-                        Cum ați aflat de taberele noastre?
-                      </Label>
-                      <Select value={formData.source} onValueChange={(value) => setFormData({ ...formData, source: value })}>
-                        <SelectTrigger className="bg-background">
-                          <SelectValue placeholder="Selectează o opțiune" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="facebook">Facebook</SelectItem>
-                          <SelectItem value="instagram">Instagram</SelectItem>
-                          <SelectItem value="google">Căutare Google</SelectItem>
-                          <SelectItem value="recomandare">Recomandare prieten</SelectItem>
-                          <SelectItem value="participant-anterior">Am participat anterior</SelectItem>
-                          <SelectItem value="altele">Altele</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    {/* Consent Checkboxes */}
-                    <div className="space-y-4 pt-4 border-t border-border">
-                      <div className="flex items-start space-x-3">
-                        <Checkbox
-                          id="gdpr"
-                          checked={formData.gdprConsent}
-                          onCheckedChange={(checked) => setFormData({ ...formData, gdprConsent: checked as boolean })}
-                          required
-                        />
-                        <Label htmlFor="gdpr" className="text-sm text-muted-foreground leading-relaxed cursor-pointer">
-                          Am înțeles și sunt de acord cu{" "}
-                          <span className="text-primary font-medium">declarația de consimțământ</span> privind procesarea datelor
-                          personale în scopurile descrise*
-                        </Label>
-                      </div>
-
-                      <div className="flex items-start space-x-3">
-                        <Checkbox
-                          id="terms"
-                          checked={formData.termsConsent}
-                          onCheckedChange={(checked) => setFormData({ ...formData, termsConsent: checked as boolean })}
-                          required
-                        />
-                        <Label htmlFor="terms" className="text-sm text-muted-foreground leading-relaxed cursor-pointer">
-                          Am citit și sunt de acord cu{" "}
-                          <span className="text-primary font-medium">regulamentul de funcționare</span> al taberei*
-                        </Label>
-                      </div>
-                    </div>
-
-                    {/* Submit Button */}
-                    <Button
-                      type="submit"
-                      size="lg"
-                      className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-semibold rounded-full"
-                    >
-                      <Send className="w-5 h-5 mr-2" />
-                      Trimite Formularul de Înscriere
-                    </Button>
-                  </form>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </section>
-      ) : null}
+      <Card className="bg-card border-0 shadow-2xl">
+        <CardContent className="p-8">
+          <RegistrationForm
+            variant="light"
+            // defaultCamp={camp.form.selectValue} // sau cum ai tu
+          />
+        </CardContent>
+      </Card>
+    </div>
+  </div>
+</section>
 
       <Footer />
     </div>
