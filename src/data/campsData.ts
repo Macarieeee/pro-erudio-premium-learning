@@ -27,6 +27,7 @@ import {
     Trees,
     PawPrint,
     ParkingCircle,
+    Sofa,
 } from "lucide-react";
 
 // NOTE: folosesc assets existente (din CampPage-ul tău actual) ca să nu ai erori la build.
@@ -58,6 +59,33 @@ import activityManchester2 from "@/assets/university_of_salford_campus_tour-1080
 import activityManchester3 from "@/assets/university_of_salford_campus_tour-1080p.00_04_48_24.Still010.jpg";
 import activityManchester4 from "@/assets/university_of_salford_campus_tour-1080p.00_07_02_15.Still012.jpg";
 import heroMoinești2025 from "@/assets/Tabara-moinestib.jpg";
+import heroPoianaMarului2025 from "@/assets/Tabara-poiana-maruluiB.jpg";
+import heroPredeal2024 from "@/assets/predeal-b.jpg";
+import predealAbout from "@/assets/predealAbout.webp";
+import liddingtonHero from "@/assets/Liddington2.jpg";
+import liddingtonAbout from "@/assets/Liddington-harta-scaled.jpg"
+import activityLiggdington1 from "@/assets/activitati-1.jpg";
+import activityLiggdington2 from "@/assets/activitati-2.jpg";
+import activityLiggdington3 from "@/assets/activitati-3.jpg";
+import activityLiggdington4 from "@/assets/Liddington-cazare.jpg";
+import meniuLiddington from "@/assets/meniu.jpg";
+import heroWinchester2024 from "@/assets/winchesterb.jpg";
+import aboutWinchester2024 from "@/assets/winchester-1.jpg";
+import activityWinchester1 from "@/assets/winchester-2.jpg";
+import activityWinchester2 from "@/assets/Queens.jpg";
+import activityWinchester3 from "@/assets/panel-and-post-signs-mob-banner.jpg";
+import activityWinchester4 from "@/assets/24-ip-winchester-centre-profile-1-1.jpg";
+import programWinchesterImage from "@/assets/24-ip-winchester-sample-programme-1.jpg";
+import heroValeaOltului2023 from "@/assets/Tabara-Valea-Oltului-b.jpg";
+import aboutValeaOltului2023 from "@/assets/ValeaOltuluiAbout.jpg";
+import heroOsmington2023 from "@/assets/OsmingtonB.jpg";
+import aboutOsmington2023 from "@/assets/harta-centru.jpg";
+import heroPortsmouth2023 from "@/assets/scoala-de-vara-de-limba-engleza-University-of-Portsmouth-B.jpg";
+import aboutPortsmouth2023 from "@/assets/aisel_slides_02.png";
+import activityPortsmouth1 from "@/assets/Portsmouth3.jpg";
+import activityPortsmouth2 from "@/assets/portsmouth-3.jpg";
+import activityPortsmouth3 from "@/assets/portsmouth-2.jpg";
+import activityPortsmouth4 from "@/assets/portsmouth-1.jpg";
 
 /* =======================
    DOAR DEFAULT-URI COMUNE
@@ -144,6 +172,8 @@ export type CampConfig = {
     about: {
         title: string;
         paragraphs: string[];
+        extraTitle?: string;
+  extraParagraphs?: string[];
     };
 
     quickInfo: {
@@ -183,6 +213,8 @@ luggageImage?: {
 };
     programImage: { src: string; alt: string };
 
+    menuImage?: { src: string; alt: string };
+
     // DOAR astea două pot fi default
     registrationInfo: typeof DEFAULT_REGISTRATION;
     requiredDocuments: string[];
@@ -210,7 +242,7 @@ function otherCampsForYear(year: number) {
     ];
 }
 
-function makeFacilities(kind: "uk" | "dublin" | "romania-mountain" | "romania-city"): CampFacility[] {
+function makeFacilities(kind: "uk" | "dublin" | "romania-mountain" | "romania-city" | "predeal" | "liddington" | "winchester"): CampFacility[] {
     if (kind === "uk") {
         return [
             { icon: School, label: "Săli de clase bine echipate, inclusiv săli multimedia" },
@@ -226,6 +258,39 @@ function makeFacilities(kind: "uk" | "dublin" | "romania-mountain" | "romania-ci
             { icon: Store, label: "Magazine" },
         ];
     }
+if (kind === "winchester") {
+  return [
+    { icon: School, label: "Săli de clasă bine echipate, inclusiv săli multimedia" },
+    { icon: Dumbbell, label: "Centre sportive" },
+    { icon: FlaskConical, label: "Laboratoare de științe și limbi străine" },
+    { icon: Circle, label: "Terenuri de sport (fotbal, baschet, volei, badminton etc.)" },
+    { icon: Home, label: "Sală de festivități" },
+
+    { icon: Users, label: "Spații comune" },
+    { icon: Sofa, label: "IP Ocean Lounge (spațiu de socializare deschis toată ziua)" },
+    { icon: Utensils, label: "Cantină" },
+    { icon: Coffee, label: "Cafenea" },
+    { icon: Store, label: "Magazine" },
+  ];
+}
+
+    if (kind === "liddington") {
+  return [
+    { icon: School, label: "Săli de clase bine echipate, inclusiv săli multimedia" },
+    { icon: Dumbbell, label: "Sală de sport" },
+    { icon: FlaskConical, label: "Laboratoare de științe și limbi străine" },
+    { icon: Circle, label: "Terenuri de sport" },
+    { icon: Home, label: "Sală de festivități" },
+
+    { icon: Utensils, label: "Cantină" },
+    { icon: Coffee, label: "Cafenea" },
+    { icon: Store, label: "Minimarket" },
+    { icon: Users, label: "Zone de divertisment și socializare" },
+    { icon: Waves, label: "Acces privat la pârâul Wootton" },
+    { icon: Trees, label: "Zone de plimbare" },
+  ];
+}
+
     if (kind === "dublin") {
         return [
             { icon: School, label: "Săli de curs + workshop rooms" },
@@ -248,6 +313,20 @@ function makeFacilities(kind: "uk" | "dublin" | "romania-mountain" | "romania-ci
     { icon: Gamepad2, label: "Loc de joacă pentru copii la exterior" },
     { icon: Trees, label: "Curte interioară cu peisaj mirific" },
     { icon: PawPrint, label: "Mică fermă de animale" },
+    { icon: ParkingCircle, label: "Parcare proprie" },
+  ];
+}
+if (kind === "predeal") {
+  return [
+    { icon: BedDouble, label: "24 de spații de cazare (apartamente și garsoniere)" },
+    { icon: Bath, label: "Fiecare apartament/garsonieră are baie proprie" },
+    { icon: Waves, label: "Piscină interioară" },
+    { icon: Utensils, label: "Restaurant cu bucătărie românească" },
+    { icon: TentTree, label: "Terasă cu deschidere spre pădure" },
+
+    { icon: Presentation, label: "Sală de conferință (70 persoane) cu videoproiector și ecran" },
+    { icon: Gamepad2, label: "Loc de joacă pentru copii la exterior" },
+    { icon: Trees, label: "Curte interioară cu peisaj mirific" },
     { icon: ParkingCircle, label: "Parcare proprie" },
   ];
 }
@@ -318,7 +397,7 @@ visibility: {
             duration: "8 zile / 7 nopți",
             ageGroup: "12 – 17 ani",
             dates: "2 – 9 august 2026",
-            price: "940 EUR / participant",
+            price: "940 EUR",
         },
         highlights: [
             "15 lecții de engleză / săptămână în grupuri internaționale, cu profesori nativi",
@@ -460,7 +539,7 @@ visibility: {
             duration: "8 zile / 7 nopți",
             ageGroup: "11 – 16 ani",
             dates: "25 iulie – 01 august 2026",
-            price: "GPB 740 / participant",
+            price: "740 GPB",
         },
         highlights: [
             "Cursuri de engleză cu profesori vorbitori nativi (dacă se aplică)",
@@ -706,7 +785,7 @@ visibility: {
             duration: "6 zile / 5 nopți",
             ageGroup: "7-14 ani",
             dates: "28 iunie – 03 iulie 2026",
-            price: "2.480 Lei (transport inclus)",
+            price: "2.480 Lei",
         },
         highlights: [
             "Engleză aplicată prin joc și proiecte",
@@ -892,7 +971,7 @@ visibility: {
             duration: "6 zile / 5 nopți",
             ageGroup: "7-14 ani",
             dates: "12 – 17 iulie 2026",
-            price: "Lei 2380",
+            price: "2380 Lei",
         },
         highlights: [
             "Engleză aplicată prin joc și proiecte",
@@ -975,6 +1054,9 @@ visibility: {
             image: heroManchester2025,
             imageAlt: "Manchester 2025",
         },
+        visibility: {
+            showPriceDetails: false,
+        },
         about: {
             title: "Despre Tabără",
             paragraphs: [
@@ -988,7 +1070,7 @@ visibility: {
             duration: "8 zile / 7 nopți",
             ageGroup: "12–17 ani",
             dates: "27 iulie – 03 august 2025",
-            price: "GBP 940",
+            price: "940 GBP",
         },
         highlights: [
             "Engleză în context real (oraș universitar)",
@@ -1077,9 +1159,9 @@ visibility: {
         campName: "Tabără de limba engleză și aventură în România – Poiana Mărului",
         hero: {
             badge: "2025",
-            title: "Tabără de limba engleză și aventură în România – Moinești",
-            image: heroMoinești,
-            imageAlt: "Tabără Moinești 2026",
+            title: "Tabăra de limba engleză și aventură English Explorers Camp",
+            image: heroPoianaMarului2025,
+            imageAlt: "Tabără Poiana Marului 2025",
         },
         about: {
             title: "Despre Tabără",
@@ -1089,10 +1171,6 @@ visibility: {
             ],
         },
         sections: [
-            {
-                type: "note",
-                text: "Pentru rezervările cu avans efectuate până la data de 15 februarie 2026, prețul este 2480 lei. După această dată prețul poate suferi modificări.",
-            },
             {
                 type: "twoCols",
                 title: "Avantajele participării la tabăra de limba engleză și aventură",
@@ -1117,7 +1195,7 @@ visibility: {
                         subtitle: "Ziua 1",
                         items: [
                             "8.00 – Plecarea din București cu autocarul (Piata Constitutiei)",
-                            "11.00 – Oprire la benzinărie pentru gustare",
+                            "11.00 – Vizită la *Mănăstirea Rupestră* de la Șinca Veche;",
                             "14.30 – Cazare și prânz",
                             "16.30 -18.30 – Jocuri de cunoaștere/stabilirea echipelor/prezentarea regulilor taberei",
                             "19.30-20.30 – Cina",
@@ -1126,7 +1204,7 @@ visibility: {
                         ],
                     },
                     {
-                        subtitle: "Ziua 2",
+                        subtitle: "Ziua 2 - 5",
                         items: [
                             "08.00 – Deşteptarea muzicală",
                             "08.30 – Înviorarea în ritm de dans",
@@ -1137,59 +1215,6 @@ visibility: {
                             "14.00 – 15.00 – Timp liber",
                             "15.00 – 16.30 – Atelier 1 (activități pe echipe, la alegere)",
                             "17.00 – 18.30 – Atelier 2 (activități pe echipe, la alegere)",
-                            "19.00 – Cina",
-                            "20.00 – 21.30 – Serata (activități recreative și de divertisment cu tot grupul)",
-                            "21.30 – 22.00 – Dans sau timp liber în camere",
-                            "22.30 – Stingerea",
-                        ],
-                    },
-                    {
-                        subtitle: "Ziua 3",
-                        items: [
-                            "08.00 – Deşteptarea muzicală",
-                            "08.30 – Înviorarea în ritm de dans",
-                            "09.00 – Micul dejun",
-                            "09.45 – 11.00 – Lesson 1 (ateliere interactive de limba engleză)",
-                            "11.15 – 12.45 – Lesson 2 (ateliere interactive de limba engleză)",
-                            "13.00 – Masa de prânz",
-                            "14.30 – Vizită la Cetatea Neamț",
-                            "17.00 – Bălăceală în piscină",
-                            "19.00 – Cina",
-                            "20.00 – 21.30 – Serata (activități recreative și de divertisment cu tot grupul)",
-                            "21.30 – 22.00 – Dans sau timp liber în camere",
-                            "22.30 – Stingerea",
-                        ],
-                    },
-                    {
-                        subtitle: "Ziua 4",
-                        items: [
-                            "08.00 – Deşteptarea muzicală",
-                            "08.30 – Înviorarea în ritm de dans",
-                            "09.00 – Micul dejun",
-                            "09.45 – 11.00 – Lesson 1 (ateliere interactive de limba engleză)",
-                            "11.15 – 12.45 – Lesson 2 (ateliere interactive de limba engleză)",
-                            "13.00 – Masa de prânz",
-                            "14.00 – 15.00 – Timp liber",
-                            "15.00 – 16.30 – Atelier 1 (activități pe echipe, la alegere)",
-                            "17.00 – 18.30 – Atelier 2 (activități pe echipe, la alegere)",
-                            "19.00 – Cina",
-                            "20.00 – 21.30 – Serata (activități recreative și de divertisment cu tot grupul)",
-                            "21.30 – 22.00 – Dans sau timp liber în camere",
-                            "22.30 – Stingerea",
-                        ],
-                    },
-                    {
-                        subtitle: "Ziua 5",
-                        items: [
-                            "08.00 – Deşteptarea muzicală",
-                            "08.30 – Înviorarea în ritm de dans",
-                            "09.00 – Micul dejun",
-                            "09.45 – 11.00 – Lesson 1 (ateliere interactive de limba engleză)",
-                            "11.15 – 12.45 – Lesson 2 (ateliere interactive de limba engleză)",
-                            "13.00 – Masa de prânz",
-                            "14.00 – Vizită la Casa Memorială Ion Creangă",
-                            "15.30 – Vizită la Curtea Domnească de la Piatra Nemți",
-                            "17.00 – Bălăceală în piscină",
                             "19.00 – Cina",
                             "20.00 – 21.30 – Serata (activități recreative și de divertisment cu tot grupul)",
                             "21.30 – 22.00 – Dans sau timp liber în camere",
@@ -1204,8 +1229,8 @@ visibility: {
                             "09.00 – Micul dejun",
                             "09.45 – 11.00 – Festivitate de premiere si socializare",
                             "11.00 – Plecare de la pensiune",
-                            "14.00 – Oprire la benzinărie pentru o gustare",
-                            "18.00 – Sosire in Bucuresti",
+                            "14.00 – Vizită la *Casa Memorială Nicolae Grigorescu* din Câmpina;",
+                            "17.00 – Sosire in Bucuresti",
                         ],
                     },
                 ],
@@ -1231,11 +1256,11 @@ visibility: {
             showActivities: false,
         },
         quickInfo: {
-            location: "Moinești, Județul Bacău",
+            location: "Poiana Mărului, Județul Brașov",
             duration: "6 zile / 5 nopți",
             ageGroup: "7-14 ani",
-            dates: "28 iunie – 03 iulie 2026",
-            price: "Lei 2480",
+            dates: "13 – 18 iulie 2025\n20 – 25 iulie 2024",
+            price: "2.280 Lei",
         },
         highlights: [
             "Engleză aplicată prin joc și proiecte",
@@ -1246,13 +1271,13 @@ visibility: {
             "Program structurat și supravegheat",
         ],
         locationDescription: {
-            title: "Moinești – tabără activă în România",
+            title: "Poiana Mărului – tabără activă în România",
             description:
-                "Mario Resort & Event Center Moinești este situat în municipiul Moinești aflat în N-V județului Bacău, în bazinul mijlociu al sistemului de râuri Trotuș-Tazlău, localitate aflata la o distanta de 46 km de Bacău, 8 km de Comănești, 30 km de Tg. Ocna, 44 km de Slănic Moldova și 42 km de Onești. Cazarea se face în camere duble, triple sau de patru locuri, în funcție de disponibilitatea complexului. În funcție de gradul de ocupare, cazarea se va face la Hotel Mario, Hotel Topaz sau Pensiunea Mario. Momentan, noi am rezervat 50 de locuri, dar complexul are o capacitate de peste 200 de locuri.",
-            image: moinestiAbout,
-            imageAlt: "Moinești",
+                "Poiana Mărului este o stațiune de munte situată la 6 km de zona Bran-Moeciu, la 12 km de Râșnov, 12 km de Poiana Brașov și la o altitudine de 900m. Stațiunea suprinde și încântă prin sălbăticia peisajului, frumusețea și naturalețea unei zone abia descoperite de lumea civilizată. \n \n Situată la 2,5 km de șoseau principală, în inima Masivului Piatra Craiului, departe de trafic și poluarea zonelor intens populate, accesul catre pensiune se face pe un drum îngust, recent construit prin padure. Astfel, Pensiunea Poiana Mărului Ranch (clasificată cu patru margarete) combina facilitatile vieții moderne cu pitorescul peisajului înca neîntinat de mâna omului.",
+            image: poianaMaruluiAbout,
+            imageAlt: "Poiana Mărului",
         },
-        locationFacilities: makeFacilities("romania-city"),
+        locationFacilities: makeFacilities("romania-mountain"),
         includedInPrice: [
             "6 zile (5 nopţi) cazare cu pensiune completă;",
             "Transport București-Moinești, tur-retur cu autocarul;",
@@ -1472,7 +1497,7 @@ visibility: {
             duration: "6 zile / 5 nopți",
             ageGroup: "7-14 ani",
             dates: "29 iunie – 04 iulie 2025",
-            price: "Lei 2380",
+            price: "2380 Lei",
         },
         highlights: [
             "Engleză aplicată prin joc și proiecte",
@@ -1551,9 +1576,9 @@ visibility: {
         campName: "Tabără de limba engleză și aventură în România – Predeal",
         hero: {
             badge: "2024",
-            title: "Tabără de limba engleză și aventură în România – Predeal",
-            image: heroGrosvenor,
-            imageAlt: "Predeal 2024",
+            title: "Tabăra de limba engleză și aventură English Explorers Camp",
+            image: heroPredeal2024,
+            imageAlt: "Tabără Predeal 2024",
         },
         about: {
             title: "Despre Tabără",
@@ -1562,38 +1587,138 @@ visibility: {
                 "Colaborăm cu PGL Travel, care este o companie fondată în anul 1957 și are ca obiect principal de activitate furnizarea de activități sportive, recreative și educaționale pentru copiii britanici și internaționali în centre proprii. De-a lungul anilor, compania a achiziționat numeroase centre, majoritatea în Marea Britanie: 10 în Anglia, 1 în Scoția și 1 în Țara Galilor. În anii 1990 PGL și-a extins activitatea în Franța, intrând chiar și pe piața școlilor de schi pentru copii. Specific fiecărui centru este faptul că se întinde pe domenii uriașe, care cuprind lacuri sau râuri, păduri, plaje sau zone stâncoase, terenuri de sport, piste de biciclete, săli de sport la interior, centre de activități de aventură, mici magazine, săli de clasă și ateliere pe diferite teme.",
             ],
         },
+        sections: [
+            {
+                type: "twoCols",
+                title: "Avantajele participării la tabăra de limba engleză și aventură",
+                left: [
+                    "la nivel personal, copiii vor învăţa să fie mai responsabili, independenți și îşi vor testa limitele într-un mediu controlat şi în siguranţă;",
+                    "la nivel interpersonal, copiii îşi vor face noi prieteni, vor învăţa să se joace tot felul de jocuri noi pe care le vor putea experimenta și cu prietenii de acasă, vor învăţa ce înseamnă munca în echipă şi sprijinul unui grup unit;",
+                    "la nivel lingvistic, copiii îşi vor îmbunătăţi cunoştinţele de limbă engleză cu accent pe receptarea și transmiterea de mesaje, îmbunătățirea fluenței în exprimare și a spontaneității și naturaleții în reacțiile la instrucțiuni primite în limba engleză;",
+                ],
+                right: [
+                    "Prin sistemul de lucru pe echipe (lucrând împreună copiii își dezvoltă sentimentul de apartenența la grup și sentimentul că fiecare contribuie la succesul echipei)",
+                    "Prin programul de limba engleză care se va desfășura pe două coordonate:",
+                    "Cursurile de limba engleză din timpul dimineții bazate pe comunicare (jocuri interactive cu profesor român de limba engleză sau trainer international)",
+                    "Atelierele din cursul după-amiezii și activitățile de seară se desfășoară în limba engleză și sunt susținute de echipe mixte formate din ghizi, profesori români de limba engleză și traineri internationali. Astfel, toți copiii beneficiază de interacțiunea cu animatorii, cu trainerii internaționali si cu monitorii (în special pentru atelierele care implică tehnici de supraviețuire și alte activități specifice muntelui), iar profesorii români de limba engleză acționează ca un liant între cele trei categorii asigurând astfel succesul tuturor activităților.",
+                ],
+            },
+            {
+                type: "gridBullets",
+                title: "Tabăra de limba engleză și aventură – Program zilnic orientativ:",
+                columns: 2,
+                cards: [
+                    {
+                        subtitle: "Ziua 1",
+                        items: [
+                            "8.00 – Plecarea din București cu autocarul (Piata Constitutiei)",
+                            "11.00 – Vizită la *Conacul Bellu* din Urlați;",
+                            "12.00 – Vizită la *Casa Memorială George Enescu* din Sinaia;",
+                            "14.30 – Cazare și prânz",
+                            "16.30 -18.30 – Jocuri de cunoaștere/stabilirea echipelor/prezentarea regulilor taberei",
+                            "19.30-20.30 – Cina",
+                            "20.30 – 22.00 – Scavanger Hunt",
+                            "22.30 – Stingerea",
+                        ],
+                    },
+                    {
+                        subtitle: "Ziua 2 - 5",
+                        items: [
+                            "08.00 – Deşteptarea muzicală",
+                            "08.30 – Înviorarea în ritm de dans",
+                            "09.00 – Micul dejun",
+                            "09.45 – 11.00 – Lesson 1 (ateliere interactive de limba engleză)",
+                            "11.15 – 12.45 – Lesson 2 (ateliere interactive de limba engleză)",
+                            "13.00 – Masa de prânz",
+                            "14.00 – 15.00 – Timp liber",
+                            "15.00 – 16.30 – Atelier 1 (activități pe echipe, la alegere)",
+                            "17.00 – 18.30 – Atelier 2 (activități pe echipe, la alegere)",
+                            "19.00 – Cina",
+                            "20.00 – 21.30 – Serata (activități recreative și de divertisment cu tot grupul)",
+                            "21.30 – 22.00 – Dans sau timp liber în camere",
+                            "22.30 – Stingerea",
+                        ],
+                    },
+                    {
+                        subtitle: "Ziua 6",
+                        items: [
+                            "08.00 – Deşteptarea muzicală",
+                            "08.30 – Înviorarea în ritm de dans",
+                            "09.00 – Micul dejun",
+                            "09.45 – 11.00 – Festivitate de premiere si socializare",
+                            "11.30 – Plecare de la pensiune",
+                            "14.00 – Vizită la *Muzeul Trenulețelor* din Sinaia",
+                            "14.00 – Vizită la *Muzeul Casa de Târgoveț Hagi Prodan* din Ploiești",
+                            "17.00 – Sosire in Bucuresti",
+                        ],
+                    },
+                ],
+            },
 
+            {
+                type: "richText",
+                title: "Atelierele de după-amiază se vor desfășura pe echipe de 7-9 copii și se vor desfășura în paralel. Iată câteva exemple de activități:",
+                paragraphs: [
+                    "Jocuri de cunoaștere și socializare (Mime, draw or describe, Minute to win it, curse de stafeta, Guess the character!, Photo contests, Charades, Casino Night, Chaos Games, Media Challenges, Beauty Workshop, Fashion Parade etc )",
+                    "Concursuri pe echipe (Treasute Hunt, Team Feuds, Talent Show, Harry Potter Night, Quiz Night, Karaoke etc)",
+                    "Activități artistice (confecționare brățări, pictură în natură, origami, modelare în plastilină)",
+                    "Activități sportive (fotbal, volei, tenis, baschet, dodgeball, Capture the Flag etc.)",
+                ],
+
+            },
+        ]
+        ,
+        visibility: {
+            showAbout: false,
+            showProgramImage: false,
+            showLuggageImage: false,
+            showActivities: false,
+        },
         quickInfo: {
-            location: "Predeal, România (placeholder)",
-            duration: "7 zile / 6 nopți (placeholder)",
-            ageGroup: "10–16 ani (placeholder)",
-            dates: "Vara 2024 (completează exact perioada)",
-            price: "— (completează prețul)",
+            location: "Predeal, Județul Prahova",
+            duration: "6 zile / 5 nopți",
+            ageGroup: "7-14 ani",
+            dates: "30 iunie – 05 iulie 2024",
+            price: "2.280 Lei",
         },
         highlights: [
-            "Engleză aplicată + conversație",
-            "Drumeții & activități montane",
-            "Jocuri de echipă",
+            "Engleză aplicată prin joc și proiecte",
+            "Activități de aventură & teamwork",
             "Ateliere creative",
-            "Dezvoltare personală",
-            "Supraveghere completă",
+            "Drumeții / activități în natură (după caz)",
+            "Dezvoltare personală: încredere & autonomie",
+            "Program structurat și supravegheat",
         ],
         locationDescription: {
-            title: "Predeal – tabără la munte",
+            title: "Predeal – tabără activă în România",
             description:
-                "Program montan cu engleză aplicată și activități outdoor. Accent pe teamwork, autonomie și experiențe memorabile.",
-            image: heroGrosvenor,
-            imageAlt: "Predeal",
+                "Staţiunea Predeal este situatã în centrul României pe Valea Prahovei, între râurile Prahova şi Timiş, la poalele munţilor Bucegi (la nord-est de aceştia) şi cele ale munţilor Baiului (la nord-vest). \n \nOraşul Predeal este cel mai înalt oras din țară, aflat la altitudinea de 1030m-1110m și o destinație de călătorie adorată de bucureșteni. Oraşul Predeal oferã privelişti încântãtoare, fiind recomandat atât pentru recreere, cât şi pentru refacere din convalescenţã prin aerul sãu cu umiditate ridicatã şi nepoluat. \n \n Hotel Hera 3*** oferă oaspeților săi o oază de confort în mijlocul naturii în orice perioadă a anului. Structura inedită de cazare include 20 apartamente și 4 garsoniere cu suprafețe foarte generoase, dotări complete și vedere spectaculoasă asupra împrejurimilor.",
+            image: predealAbout,
+            imageAlt: "Poiana Mărului",
         },
-        locationFacilities: makeFacilities("romania-mountain"),
-        includedInPrice: ["Cazare", "Mese", "Ateliere engleză", "Program activități", "Coordonare"],
-        notIncludedInPrice: ["Transport (dacă nu este inclus)", "Cheltuieli personale"],
+        locationFacilities: makeFacilities("predeal"),
+        includedInPrice: [
+            "6 zile (5 nopţi) cazare cu pensiune completă;",
+            "Transport București-Moinești, tur-retur cu autocarul;",
+            "Vizită la *Conacul Bellu* din Urlați;",
+            "Vizită la *Casa Memorială George Enescu* din Sinaia;",
+            "Vizită la *Casa de Târgoveț Hagi Prodan* din Ploiești;",
+            "Vizită la *Muzeul Trenulețelor* din Sinaia;",
+            "Drumeție la *Cabana Trei Brazi*;",
+            "Traseu pe aventura parc (optional);",
+            "Zilnic program de activități în limba engleză în cursul diminetii, două ateliere pe echipe (artistice, culturale, sportive etc) în cursul după-amiezii si o activitate de seară (cu tot grupul);",
+            "Program de limba engleză susținut de profesori de limba engleză si traineri internaționali de la “Pro Erudio” School of English;",
+            "Diplome, poze, șapca echipei cadou pentru toţi copiii și medalii pentru echipa căștigătoare;",
+        ],
+        notIncludedInPrice: [
+            "Cheltuieli personale",
+            "Excursii opționale (dacă există)",
+        ],
         activitiesDescription:
-            "Drumeții, jocuri de echipă, ateliere de engleză și seri tematice. Programul final depinde de locație și condițiile meteo.",
+            "Activități de echipă, jocuri, mini-proiecte în engleză, provocări de aventură și sesiuni interactive. Programul final depinde de locație și grup.",
         activityImages: IMGSET_DEFAULT,
         discounts: [
-            { type: "Continuitate", value: "—", condition: "Completează dacă se aplică" },
-            { type: "Frați", value: "—", condition: "Completează dacă se aplică" },
+            { type: "Frați/Surori", value: "5%", condition: "Pentru doi copii ai aceleiași familii" },
         ],
         otherCamps: [
             {
@@ -1611,20 +1736,20 @@ visibility: {
                 to: "/tabara-poiana-marului-2026",
             },
             {
-                name: "Tabără de limba engleză și aventură în România – Moinești",
-                location: "România",
-                type: "Aventură",
-                image: heroMoinești,
-                to: "/tabara-moinesti-2026",
+                name: "Școală de vară de limba ENGLEZĂ la Dublin (DCU)",
+                location: "Irlanda de Nord",
+                type: "Internațională",
+                image: heroDublinUniversity,
+                to: "/scoala-de-vara-dublin-2026",
             },
         ],
         luggageImage: { src: kitTabaraImage, alt: "Bagaj recomandat" },
         programImage: { src: programImage, alt: "Program orientativ" },
         registrationInfo: DEFAULT_REGISTRATION,
-        requiredDocuments: DEFAULT_REQUIRED_DOCS,
+        requiredDocuments: ROMANIA_REQUIRED_DOCS,
         form: {
-            selectValue: "tabara-predeal-2024",
-            selectLabel: "Tabără de limba engleză și aventură în România – Predeal 2024",
+            selectValue: "tabara-moinesti-2026",
+            selectLabel: "Tabără de limba engleză și aventură în România – Moinești 2026",
         },
     },
 
@@ -1632,11 +1757,11 @@ visibility: {
         slug: "tabara-poiana-marului-2024",
         year: 2024,
         campName: "Tabără de limba engleză și aventură în România – Poiana Mărului",
-        hero: {
+                hero: {
             badge: "2024",
-            title: "Tabără de limba engleză și aventură în România – Poiana Mărului",
-            image: heroGrosvenor,
-            imageAlt: "Poiana Mărului 2024",
+            title: "Tabăra de limba engleză și aventură English Explorers Camp",
+            image: heroPoianaMarului2025,
+            imageAlt: "Tabără Poiana Marului 2024",
         },
         about: {
             title: "Despre Tabără",
@@ -1645,38 +1770,133 @@ visibility: {
                 "Colaborăm cu PGL Travel, care este o companie fondată în anul 1957 și are ca obiect principal de activitate furnizarea de activități sportive, recreative și educaționale pentru copiii britanici și internaționali în centre proprii. De-a lungul anilor, compania a achiziționat numeroase centre, majoritatea în Marea Britanie: 10 în Anglia, 1 în Scoția și 1 în Țara Galilor. În anii 1990 PGL și-a extins activitatea în Franța, intrând chiar și pe piața școlilor de schi pentru copii. Specific fiecărui centru este faptul că se întinde pe domenii uriașe, care cuprind lacuri sau râuri, păduri, plaje sau zone stâncoase, terenuri de sport, piste de biciclete, săli de sport la interior, centre de activități de aventură, mici magazine, săli de clasă și ateliere pe diferite teme.",
             ],
         },
+        sections: [
+            {
+                type: "twoCols",
+                title: "Avantajele participării la tabăra de limba engleză și aventură",
+                left: [
+                    "la nivel personal, copiii vor învăţa să fie mai responsabili, independenți și îşi vor testa limitele într-un mediu controlat şi în siguranţă;",
+                    "la nivel interpersonal, copiii îşi vor face noi prieteni, vor învăţa să se joace tot felul de jocuri noi pe care le vor putea experimenta și cu prietenii de acasă, vor învăţa ce înseamnă munca în echipă şi sprijinul unui grup unit;",
+                    "la nivel lingvistic, copiii îşi vor îmbunătăţi cunoştinţele de limbă engleză cu accent pe receptarea și transmiterea de mesaje, îmbunătățirea fluenței în exprimare și a spontaneității și naturaleții în reacțiile la instrucțiuni primite în limba engleză;",
+                ],
+                right: [
+                    "Prin sistemul de lucru pe echipe (lucrând împreună copiii își dezvoltă sentimentul de apartenența la grup și sentimentul că fiecare contribuie la succesul echipei)",
+                    "Prin programul de limba engleză care se va desfășura pe două coordonate:",
+                    "Cursurile de limba engleză din timpul dimineții bazate pe comunicare (jocuri interactive cu profesor român de limba engleză sau trainer international)",
+                    "Atelierele din cursul după-amiezii și activitățile de seară se desfășoară în limba engleză și sunt susținute de echipe mixte formate din ghizi, profesori români de limba engleză și traineri internationali. Astfel, toți copiii beneficiază de interacțiunea cu animatorii, cu trainerii internaționali si cu monitorii (în special pentru atelierele care implică tehnici de supraviețuire și alte activități specifice muntelui), iar profesorii români de limba engleză acționează ca un liant între cele trei categorii asigurând astfel succesul tuturor activităților.",
+                ],
+            },
+            {
+                type: "gridBullets",
+                title: "Tabăra de limba engleză și aventură – Program zilnic orientativ:",
+                columns: 2,
+                cards: [
+                    {
+                        subtitle: "Ziua 1",
+                        items: [
+                            "8.00 – Plecarea din București cu autocarul (Piata Constitutiei)",
+                            "11.00 – Vizită la *Mănăstirea Rupestră* de la Șinca Veche;",
+                            "14.30 – Cazare și prânz",
+                            "16.30 -18.30 – Jocuri de cunoaștere/stabilirea echipelor/prezentarea regulilor taberei",
+                            "19.30-20.30 – Cina",
+                            "20.30 – 22.00 – Scavanger Hunt",
+                            "22.30 – Stingerea",
+                        ],
+                    },
+                    {
+                        subtitle: "Ziua 2 - 5",
+                        items: [
+                            "08.00 – Deşteptarea muzicală",
+                            "08.30 – Înviorarea în ritm de dans",
+                            "09.00 – Micul dejun",
+                            "09.45 – 11.00 – Lesson 1 (ateliere interactive de limba engleză)",
+                            "11.15 – 12.45 – Lesson 2 (ateliere interactive de limba engleză)",
+                            "13.00 – Masa de prânz",
+                            "14.00 – 15.00 – Timp liber",
+                            "15.00 – 16.30 – Atelier 1 (activități pe echipe, la alegere)",
+                            "17.00 – 18.30 – Atelier 2 (activități pe echipe, la alegere)",
+                            "19.00 – Cina",
+                            "20.00 – 21.30 – Serata (activități recreative și de divertisment cu tot grupul)",
+                            "21.30 – 22.00 – Dans sau timp liber în camere",
+                            "22.30 – Stingerea",
+                        ],
+                    },
+                    {
+                        subtitle: "Ziua 6",
+                        items: [
+                            "08.00 – Deşteptarea muzicală",
+                            "08.30 – Înviorarea în ritm de dans",
+                            "09.00 – Micul dejun",
+                            "09.45 – 11.00 – Festivitate de premiere si socializare",
+                            "11.00 – Plecare de la pensiune",
+                            "14.00 – Vizită la *Casa Memorială Nicolae Grigorescu* din Câmpina;",
+                            "17.00 – Sosire in Bucuresti",
+                        ],
+                    },
+                ],
+            },
 
+            {
+                type: "richText",
+                title: "Atelierele de după-amiază se vor desfășura pe echipe de 7-9 copii și se vor desfășura în paralel. Iată câteva exemple de activități:",
+                paragraphs: [
+                    "Jocuri de cunoaștere și socializare (Mime, draw or describe, Minute to win it, curse de stafeta, Guess the character!, Photo contests, Charades, Casino Night, Chaos Games, Media Challenges, Beauty Workshop, Fashion Parade etc )",
+                    "Concursuri pe echipe (Treasute Hunt, Team Feuds, Talent Show, Harry Potter Night, Quiz Night, Karaoke etc)",
+                    "Activități artistice (confecționare brățări, pictură în natură, origami, modelare în plastilină)",
+                    "Activități sportive (fotbal, volei, tenis, baschet, dodgeball, Capture the Flag etc.)",
+                ],
+
+            },
+        ]
+        ,
+        visibility: {
+            showAbout: false,
+            showProgramImage: false,
+            showLuggageImage: false,
+            showActivities: false,
+        },
         quickInfo: {
-            location: "Poiana Mărului, România (placeholder)",
-            duration: "7 zile / 6 nopți (placeholder)",
-            ageGroup: "10–16 ani (placeholder)",
-            dates: "Vara 2024 (completează exact perioada)",
-            price: "— (completează prețul)",
+            location: "Poiana Mărului, Județul Brașov",
+            duration: "6 zile / 5 nopți",
+            ageGroup: "7-14 ani",
+            dates: "14 – 19 iulie 2024\n21 – 26 iulie 2024",
+            price: "2.180 Lei",
         },
         highlights: [
-            "Engleză prin joc și conversație",
-            "Activități outdoor",
-            "Jocuri & competiții",
+            "Engleză aplicată prin joc și proiecte",
+            "Activități de aventură & teamwork",
             "Ateliere creative",
-            "Seri tematice",
-            "Echipă de coordonare",
+            "Drumeții / activități în natură (după caz)",
+            "Dezvoltare personală: încredere & autonomie",
+            "Program structurat și supravegheat",
         ],
         locationDescription: {
-            title: "Poiana Mărului – tabără în natură",
+            title: "Poiana Mărului – tabără activă în România",
             description:
-                "Program structurat: engleză aplicată, activități de echipă și experiențe outdoor pentru energie și progres.",
-            image: heroGrosvenor,
+                "Poiana Mărului este o stațiune de munte situată la 6 km de zona Bran-Moeciu, la 12 km de Râșnov, 12 km de Poiana Brașov și la o altitudine de 900m. Stațiunea suprinde și încântă prin sălbăticia peisajului, frumusețea și naturalețea unei zone abia descoperite de lumea civilizată. \n \n Situată la 2,5 km de șoseau principală, în inima Masivului Piatra Craiului, departe de trafic și poluarea zonelor intens populate, accesul catre pensiune se face pe un drum îngust, recent construit prin padure. Astfel, Pensiunea Poiana Mărului Ranch (clasificată cu patru margarete) combina facilitatile vieții moderne cu pitorescul peisajului înca neîntinat de mâna omului.",
+            image: poianaMaruluiAbout,
             imageAlt: "Poiana Mărului",
         },
         locationFacilities: makeFacilities("romania-mountain"),
-        includedInPrice: ["Cazare", "Mese", "Ateliere engleză", "Program activități", "Coordonare"],
-        notIncludedInPrice: ["Transport (dacă nu este inclus)", "Cheltuieli personale"],
+        includedInPrice: [
+            "6 zile (5 nopţi) cazare cu pensiune completă;",
+            "Transport București-Moinești, tur-retur cu autocarul;",
+            "Vizită la Curtea Domnească din Piatra Neamț;",
+            "Vizită la Cetatea Neamț;",
+            "Vizită la Casa Memorială Ion Creangă;",
+            "Zilnic program de activități în limba engleză în cursul diminetii, două ateliere pe echipe (artistice, culturale, sportive etc) în cursul după-amiezii si o activitate de seară (cu tot grupul);",
+            "Program de limba engleză susținut de profesori de limba engleză si traineri internaționali de la “Pro Erudio” School of English;",
+            "Diplome, poze, șapca echipei cadou pentru toţi copiii și medalii pentru echipa căștigătoare;",
+        ],
+        notIncludedInPrice: [
+            "Cheltuieli personale",
+            "Excursii opționale (dacă există)",
+        ],
         activitiesDescription:
-            "Activități în aer liber, ateliere de engleză, jocuri de echipă și seri tematice. Programul final se adaptează grupului.",
+            "Activități de echipă, jocuri, mini-proiecte în engleză, provocări de aventură și sesiuni interactive. Programul final depinde de locație și grup.",
         activityImages: IMGSET_DEFAULT,
         discounts: [
-            { type: "Continuitate", value: "—", condition: "Completează dacă se aplică" },
-            { type: "Frați", value: "—", condition: "Completează dacă se aplică" },
+            { type: "Frați/Surori", value: "5%", condition: "Pentru doi copii ai aceleiași familii" },
         ],
         otherCamps: [
             {
@@ -1694,20 +1914,20 @@ visibility: {
                 to: "/tabara-poiana-marului-2026",
             },
             {
-                name: "Tabără de limba engleză și aventură în România – Moinești",
-                location: "România",
-                type: "Aventură",
-                image: heroMoinești,
-                to: "/tabara-moinesti-2026",
+                name: "Școală de vară de limba ENGLEZĂ la Dublin (DCU)",
+                location: "Irlanda de Nord",
+                type: "Internațională",
+                image: heroDublinUniversity,
+                to: "/scoala-de-vara-dublin-2026",
             },
         ],
         luggageImage: { src: kitTabaraImage, alt: "Bagaj recomandat" },
         programImage: { src: programImage, alt: "Program orientativ" },
         registrationInfo: DEFAULT_REGISTRATION,
-        requiredDocuments: DEFAULT_REQUIRED_DOCS,
+        requiredDocuments: ROMANIA_REQUIRED_DOCS,
         form: {
-            selectValue: "tabara-poiana-marului-2024",
-            selectLabel: "Tabără de limba engleză și aventură în România – Poiana Mărului 2024",
+            selectValue: "tabara-moinesti-2026",
+            selectLabel: "Tabără de limba engleză și aventură în România – Moinești 2026",
         },
     },
 
@@ -1715,53 +1935,89 @@ visibility: {
         slug: "tabara-marea-britanie-2024",
         year: 2024,
         campName: "Tabără în Marea Britanie – Little Canada Activity Centre",
-        hero: {
+          hero: {
             badge: "2024",
-            title: "Tabără în Marea Britanie – Little Canada Activity Centre",
-            image: heroGrosvenor,
-            imageAlt: "Little Canada 2024",
+            title: "TABĂRĂ educațională de limba ENGLEZĂ în Marea Britanie",
+            image: liddingtonHero,
+            imageAlt: "Little Canada Activity Centre",
         },
-        about: {
-            title: "Despre Tabără",
-            paragraphs: [
-                "Anul acesta vă propunem o tabăra internațională care urmează tipicul unei tabere de aventură adresate copiilor britanici. Singură diferența este includerea în program a cursurilor de limba engleză în timpul dimineții și a excursiilor, săptămânal una de o zi întreagă și una de o jumătate de zi, special concepute pentru elevii străini.",
-                "Colaborăm cu PGL Travel, care este o companie fondată în anul 1957 și are ca obiect principal de activitate furnizarea de activități sportive, recreative și educaționale pentru copiii britanici și internaționali în centre proprii. De-a lungul anilor, compania a achiziționat numeroase centre, majoritatea în Marea Britanie: 10 în Anglia, 1 în Scoția și 1 în Țara Galilor. În anii 1990 PGL și-a extins activitatea în Franța, intrând chiar și pe piața școlilor de schi pentru copii. Specific fiecărui centru este faptul că se întinde pe domenii uriașe, care cuprind lacuri sau râuri, păduri, plaje sau zone stâncoase, terenuri de sport, piste de biciclete, săli de sport la interior, centre de activități de aventură, mici magazine, săli de clasă și ateliere pe diferite teme.",
-            ],
+        visibility: {
+            showPriceDetails: false,
         },
+about: {
+  title: "Despre Tabără",
+  paragraphs: [
+    "Anul acesta vă propunem o tabără internațională care urmează tipicul unei tabere de aventură adresate copiilor britanici. Singura diferență este includerea în program a cursurilor de limba engleză în timpul dimineții și a excursiilor, săptămânal una de o zi întreagă și una de o jumătate de zi.",
+  ],
+
+  // 👇 NOU – doar pentru această tabără
+  extraTitle: "Cu cine colaborăm?",
+  extraParagraphs: [
+    "PGL Travel este o companie fondată în anul 1957 și are ca obiect principal de activitate furnizarea de activități sportive, recreative și educaționale pentru copiii britanici și internaționali în centre proprii. De-a lungul anilor, compania a achiziționat numeroase centre, majoritatea în Marea Britanie: 10 în Anglia, 1 în Scoția și 1 în Țara Galilor. În anii 1990 PGL și-a extins activitatea în Franța, intrând chiar și pe piața școlilor de schi pentru copii. Specific fiecărui centru este faptul că se întinde pe domenii uriașe, care cuprind lacuri sau râuri, păduri, plaje sau zone stâncoase, terenuri de sport, piste de biciclete, săli de sport la interior, centre de activități de aventură, mici magazine, săli de clasă și ateliere pe diferite teme.",
+  ],
+},
+        
 
         quickInfo: {
-            location: "UK – Little Canada (placeholder)",
-            duration: "8 zile / 7 nopți (placeholder)",
-            ageGroup: "11–16 ani (placeholder)",
-            dates: "Vara 2024 (completează exact perioada)",
-            price: "— (completează prețul)",
+            location: "Little Canada Activity Centre",
+            duration: "8 zile / 7 nopți",
+            ageGroup: "11–15 ani",
+            dates: "27 iulie – 03 august 2024",
+            price: "730 GBP",
         },
         highlights: [
-            "Experiență internațională",
-            "Aventură + activități outdoor",
-            "Program de grup & socializare",
-            "Excursii (după program)",
-            "Suport & coordonare",
-            "Progres în engleză (dacă se aplică)",
+            "Cazare în campus",
+            "Pensiune completă",
+            "15 lecții de engleză pe săptămâna în grupuri internaționale, cu profesori vorbitori nativi",
+            "Test inițial de evaluare",
+            "Materiale de studiu",
+            "Certificate de absolvire a cursurilor",
+            "Program zilnic de activități comune",
+            "Program zilnic tematic",
+            "Excursii (una de jumătate de zi și una de o zi întreagă sâptâmânal)",
+            "Un însoțitor de grup de la Pro Erudio pentru fiecare 15 copii",
         ],
         locationDescription: {
-            title: "Little Canada – centru de activități în UK",
+            title: "Centrul de activități Little Canada",
             description:
-                "Centru de aventură cu activități variate. Programul include provocări, jocuri de echipă și experiențe care cresc încrederea și autonomia.",
-            image: heroGrosvenor,
-            imageAlt: "Little Canada",
+                "Centrul de activități în care vom merge anul acesta, Little Canada este amplasat pe Insula Wight, aflată pe coasta de sud a Angliei, cu iesire la Canalul Mânecii, ceea ce îi conferă un specific aparte. Unul dintre cele mai mari centre PGL, are o capacitate de cazare de 850 de persoane, având o poziție convenabilă pe hartă, la două ore de Londra (cu autocarul) și destul de aproape de obiective turistice importante (Carisbrooke Castle, Isle of Wight Zoo, Tiger and Big Cat Sanctuary, Amazon World, Osborne House, Robin Hill Adventure Park etc), dar si de porturi, cum ar fi Portsmouth și Ryde. \n \n Centrul de pe Insula Wight este amplasat pe malurile pârâului Wootton, la doar 10 minute de port și cuprinde 24 de zone de aventură (terenuri de sport potrivite tuturor condițiilor meteo, săli de activități la interior (inclusiv sală de jocuri), teren de scrimă, ateliere de construcție plute, zonă de cățărări, zonă de trekking, tir cu arcul, tiroliană, grajduri etc ) întinse pe 48 de hectare de teren, centrul de activitati pe apa de la Portland (care a fost gazdă Olimpiadei sporturilor de apa din 2012) si acces direct la mare si plaja, astfel încât o săptămâna pare scurtă pentru câte vom avea de făcut.",
+            image: liddingtonAbout,
+            imageAlt: "Manchester",
         },
-        locationFacilities: makeFacilities("uk"),
-        includedInPrice: ["Cazare", "Mese", "Program activități", "Coordonare", "Materiale"],
-        notIncludedInPrice: ["Transport avion", "Transferuri (dacă nu sunt incluse)", "Asigurări", "Cheltuieli personale"],
+        locationFacilities: makeFacilities("liddington"),
+        includedInPrice: [
+            "Cazare în campus",
+            "Pensiune completă",
+            "15 lecții de engleză pe săptămâna în grupuri internaționale, cu profesori vorbitori nativi",
+            "Test inițial de evaluare",
+            "Certificate de absolvire a cursurilor",
+            "Program zilnic de activități comune",
+            "Program zilnic tematic",
+            "Excursii (două de jumătate de zi și una de o zi întreagă)",
+            "Un însoțitor de grup de la Pro Erudio la 10 copii",
+            "Asigurare de călătorie",
+        ],
+        notIncludedInPrice: [
+            "transport avion (aproximativ 350 euro, în funcție de oferta companiei de zbor la momentul rezervării locului)",
+            "Transfer de la/ la aeroport în campus (se calculează în luna iunie în funcție de numărul participanților)",
+            "Asigurare storno (optional)",
+            "Cheltuieli personale",
+        ],
         activitiesDescription:
-            "Activități indoor/outdoor, jocuri de echipă și provocări de aventură. Programul final depinde de centrul ales și grup.",
-        activityImages: IMGSET_DEFAULT,
+            "Activitățile desfășurate în cadrul taberei sunt numeroase și extrem de variate, fiind concepute pentru a stimula spiritul de aventură, lucrul în echipă și dezvoltarea personală a participanților. După-amiaza, copiii pot lua parte la activități precum Abseiling, Aeroball, Archery, Buggy Building, Canoeing, Challenge Course, Climbing, Crate Challenge, Fencing, Giant Swing, Jacob’s Ladder, Orienteering, Problem Solving, Raft Building, Sensory Trail, Survivor, Trapeze, Vertical Challenge și Zip Wire, fiecare dintre acestea fiind adaptată nivelului de vârstă și desfășurată în condiții de siguranță. Seara este dedicată activităților recreative și de socializare, incluzând jocuri și evenimente precum Ambush, Campfire, Capture the Flag, Disco, Passport to the World, PGL Sports Night, Photo Challenge, Robot Wars, Quiz Show, Snap Shot, Splash și Wacky Races, menite să consolideze relațiile dintre participanți și să creeze experiențe memorabile într-o atmosferă relaxată și distractivă.",
+        activityImages: [activityLiggdington1, activityLiggdington2, activityLiggdington3, activityLiggdington4],
         discounts: [
-            { type: "Continuitate", value: "—", condition: "Completează dacă se aplică" },
-            { type: "Frați", value: "—", condition: "Completează dacă se aplică" },
+            { type: "Continuitate", value: "5%", condition: "Completează dacă se aplică" },
+            { type: "Frați", value: "5%", condition: "Completează dacă se aplică" },
         ],
         otherCamps: [
+            {
+                name: "Școală de vară de limba ENGLEZĂ la Dublin (DCU)",
+                location: "Irlanda de Nord",
+                type: "Internațională",
+                image: heroDublinUniversity,
+                to: "/scoala-de-vara-dublin-2026",
+            },
             {
                 name: "Tabara in Marea Britanie Grosvenor Hall Activity Centre",
                 location: "Marea Britanie",
@@ -1784,13 +2040,28 @@ visibility: {
                 to: "/tabara-moinesti-2026",
             },
         ],
-        luggageImage: { src: kitTabaraImage, alt: "Bagaj recomandat" },
+        sections: [
+        {
+                type: "richText",
+                title: "Posibile destinații de excursii",
+                paragraphs: [
+                    "Portsmouth Historic Dockyard și HMS Victory, Photo contests, Charades, Casino Night, Chaos Games, Media Challenges, Beauty Workshop, Fashion Parade etc )",
+                    "Carisbrooke Castle și Newtown",
+                    "Robin Hill Country Park si Blackgand Chine",
+                    "Isle of Wight Zoo (Tiger and Cat Sanctuary)",
+                    "Osborne House",
+                ],
+
+            },
+    ],       
+        luggageImage: { src: kitTabaraImage, alt: "Bagaj Tabara", title: "Ce trebuie să conțină bagajul copiilor" },
         programImage: { src: programImage, alt: "Program orientativ" },
+        menuImage: { src: meniuLiddington, alt: "Meniu orientativ" },
         registrationInfo: DEFAULT_REGISTRATION,
         requiredDocuments: DEFAULT_REQUIRED_DOCS,
         form: {
-            selectValue: "tabara-marea-britanie-2024",
-            selectLabel: "Tabără în Marea Britanie – Little Canada Activity Centre 2024",
+            selectValue: "tabara-marea-britanie-grosvenor-hall-2026",
+            selectLabel: "Școală de vară de limba engleză în Marea Britanie – Manchester 2025",
         },
     },
 
@@ -1798,53 +2069,90 @@ visibility: {
         slug: "scoala-de-vara-marea-britanie-2024",
         year: 2024,
         campName: "Școală de vară de limba engleză în Marea Britanie – Winchester",
-        hero: {
+          hero: {
             badge: "2024",
-            title: "Școală de vară de limba engleză în Marea Britanie – Winchester",
-            image: heroGrosvenor,
-            imageAlt: "Winchester 2024",
+            title: "TABĂRĂ educațională de limba ENGLEZĂ în Marea Britanie",
+            image: heroWinchester2024,
+            imageAlt: "University of Winchester",
         },
-        about: {
-            title: "Despre Tabără",
-            paragraphs: [
-                "Anul acesta vă propunem o tabăra internațională care urmează tipicul unei tabere de aventură adresate copiilor britanici. Singură diferența este includerea în program a cursurilor de limba engleză în timpul dimineții și a excursiilor, săptămânal una de o zi întreagă și una de o jumătate de zi, special concepute pentru elevii străini.",
-                "Colaborăm cu PGL Travel, care este o companie fondată în anul 1957 și are ca obiect principal de activitate furnizarea de activități sportive, recreative și educaționale pentru copiii britanici și internaționali în centre proprii. De-a lungul anilor, compania a achiziționat numeroase centre, majoritatea în Marea Britanie: 10 în Anglia, 1 în Scoția și 1 în Țara Galilor. În anii 1990 PGL și-a extins activitatea în Franța, intrând chiar și pe piața școlilor de schi pentru copii. Specific fiecărui centru este faptul că se întinde pe domenii uriașe, care cuprind lacuri sau râuri, păduri, plaje sau zone stâncoase, terenuri de sport, piste de biciclete, săli de sport la interior, centre de activități de aventură, mici magazine, săli de clasă și ateliere pe diferite teme.",
-            ],
+        visibility: {
+            showPriceDetails: false,
         },
+about: {
+  title: "Despre Tabără",
+  paragraphs: [
+    "Una dintre cele mai frumoase destinații turistice ale Marii Britanii, Winchester este un oraș pitoresc situat pe malurile râului Itchen și cunoscut ca centru istoric și cultural al ținutul Hampshire. Orașul este faimos pentru catedrala Winchester, care are cel mai lung naos medieval din Europa, si pentru Colegiul Winchester, una dintre cele mai vechi instituții de învățământ din Marea Britanie, fondat de Episcopul William de Wykeham în 1382 ca școală de baieți.",
+    "La mai puțin de 100 de kilometri distanta de Londra, orașul Winchester este locul în care a trăit și scris Jane Austen, una dintre cele mai importante scriitoare ale secolului al XIX-lea. Tot aici găsim și The Great House sau Chawton House, un conac englezesc vechi de peste 400 ani, locul preferat de Jane Austen ca spațiul de desfășurare a acțiunii în romanele sale"
+],
+
+  // 👇 NOU – doar pentru această tabără
+  extraTitle: "",
+  extraParagraphs: [
+    "",
+  ],
+},
+        
 
         quickInfo: {
-            location: "Winchester, UK (placeholder)",
-            duration: "8 zile / 7 nopți (placeholder)",
-            ageGroup: "12–17 ani (placeholder)",
-            dates: "Vara 2024 (completează exact perioada)",
-            price: "— (completează prețul)",
+            location: "University of Winchester",
+            duration: "8 zile / 7 nopți",
+            ageGroup: "12 – 18 ani",
+            dates: "27 iulie – 03 august 2024",
+            price: "890 GBP",
         },
         highlights: [
-            "Cursuri de engleză + conversație",
-            "Excursii & obiective culturale",
-            "Activități de grup",
-            "Suport complet",
-            "Experiență internațională",
-            "Program echilibrat",
+            "Cazare în campus",
+            "Pensiune completă",
+            "15 lecții de engleză pe săptămâna în grupuri internaționale, cu profesori vorbitori nativi",
+            "Test inițial de evaluare",
+            "Materiale de studiu",
+            "Certificate de absolvire a cursurilor",
+            "Program zilnic de activități comune",
+            "Program zilnic tematic",
+            "Excursii (una de jumătate de zi și una de o zi întreagă sâptâmânal)",
+            "Un însoțitor de grup de la Pro Erudio pentru fiecare 15 copii",
         ],
         locationDescription: {
-            title: "Winchester – școală de vară în UK",
+            title: "",
             description:
-                "Program educațional cu cursuri și activități culturale. Ideal pentru dezvoltarea comunicării și a încrederii în vorbire.",
-            image: heroGrosvenor,
+                "Începuturile Universității Winchester și ale orașului sunt strâns legate de Colegiul Winchester, care a fost înființat prin eforturile Episcopului Wykeham, ulterior ajuns Cancelar al Angliei. Cariera lui Wykeham i-a permis dobândirea de averi uriașe, pe care le-a folosit pentru fondarea a două colegii importante chiar și astăzi: New College Oxford și Winchester College. Acestea urmau să furnizeze educație pentru 70 savanți sub motto-ul Manierele fac omul. Acest motto (Manners Makyth Man) încă ghiează viețile celor 700 de elevi care învață la Colegiul Winchester astăzi. \n \n Universitatea din Winchester a fost initial o mică insitituție de formare a profesorilor fondată de Biserica Anglicană în anul 1840. Acum, la această universitate studiază peste 9000 de tineri care pot alege dintre discipline de studiu cum ar fi: artele, managementul afacerilor, tehnologiile digitale, dreptul, medicina, științele sociale etc. Ceremonia de absolvire se ține la Catedrala Winchester, un reper istoric important pentru această zonă geografică.",
+            image: aboutWinchester2024,
             imageAlt: "Winchester",
         },
-        locationFacilities: makeFacilities("uk"),
-        includedInPrice: ["Cazare", "Mese", "Cursuri engleză", "Materiale", "Activități/excursii", "Coordonare"],
-        notIncludedInPrice: ["Transport avion", "Transferuri (dacă nu sunt incluse)", "Asigurări", "Cheltuieli personale"],
+        locationFacilities: makeFacilities("winchester"),
+        includedInPrice: [
+            "Cazare în campus",
+            "Pensiune completă",
+            "15 lecții de engleză pe săptămâna în grupuri internaționale, cu profesori vorbitori nativi",
+            "Test inițial de evaluare",
+            "Certificate de absolvire a cursurilor",
+            "Program zilnic de activități comune",
+            "Program zilnic tematic",
+            "Excursii (două de jumătate de zi și una de o zi întreagă)",
+            "Un însoțitor de grup de la Pro Erudio la 10 copii",
+            "Asigurare de călătorie",
+        ],
+        notIncludedInPrice: [
+            "transport avion (aproximativ 350 euro, în funcție de oferta companiei de zbor la momentul rezervării locului)",
+            "Transfer de la/ la aeroport în campus (se calculează în luna iunie în funcție de numărul participanților)",
+            "Asigurare storno (optional)",
+            "Cheltuieli personale",
+        ],
         activitiesDescription:
-            "Cursuri + activități urbane, proiecte de grup și sesiuni de conversație. Programul final se comunică înainte de plecare.",
-        activityImages: IMGSET_DEFAULT,
+            "Activitățile desfășurate în cadrul taberei sunt numeroase și foarte variate, oferind participanților ocazia de a explora și de a se bucura de experiențe educative, sportive și recreative. Programul include vizitarea orașului, cu activități de shopping și orientare, activități sportive în aer liber și în sala de sport multifuncțională, precum și o gamă largă de ateliere interactive, printre care se numără dans, zumba, actorie, arts & crafts, frisbee, cluburi de conversație, seminarii pe diferite teme, jocuri de echipă, treasure hunt, escape rooms, ateliere de înfrumusețare, tatuaje cu henna și ateliere de preparare a clătitelor. Serile sunt dedicate activităților de divertisment și socializare, incluzând quiz-uri, vizionări de filme, prezentări de modă, seri tematice, karaoke, mima, jocuri de tip Cluedo, precum și board games, toate contribuind la crearea unei atmosfere dinamice și memorabile.",
+        activityImages: [activityWinchester1, activityWinchester2, activityWinchester3, activityWinchester4],
         discounts: [
-            { type: "Continuitate", value: "—", condition: "Completează dacă se aplică" },
-            { type: "Frați", value: "—", condition: "Completează dacă se aplică" },
+            { type: "Continuitate", value: "5%", condition: "Completează dacă se aplică" },
+            { type: "Frați", value: "5%", condition: "Completează dacă se aplică" },
         ],
         otherCamps: [
+            {
+                name: "Școală de vară de limba ENGLEZĂ la Dublin (DCU)",
+                location: "Irlanda de Nord",
+                type: "Internațională",
+                image: heroDublinUniversity,
+                to: "/scoala-de-vara-dublin-2026",
+            },
             {
                 name: "Tabara in Marea Britanie Grosvenor Hall Activity Centre",
                 location: "Marea Britanie",
@@ -1866,14 +2174,13 @@ visibility: {
                 image: heroMoinești,
                 to: "/tabara-moinesti-2026",
             },
-        ],
-        luggageImage: { src: kitTabaraImage, alt: "Bagaj recomandat" },
-        programImage: { src: programImage, alt: "Program orientativ" },
+        ],    
+        programImage: { src: programWinchesterImage, alt: "Program orientativ" },
         registrationInfo: DEFAULT_REGISTRATION,
         requiredDocuments: DEFAULT_REQUIRED_DOCS,
         form: {
-            selectValue: "scoala-de-vara-marea-britanie-2024",
-            selectLabel: "Școală de vară de limba engleză în Marea Britanie – Winchester 2024",
+            selectValue: "tabara-marea-britanie-grosvenor-hall-2026",
+            selectLabel: "Școală de vară de limba engleză în Marea Britanie – Manchester 2025",
         },
     },
 
@@ -1882,11 +2189,11 @@ visibility: {
         slug: "tabara-de-engleza-poiana-marului-2023",
         year: 2023,
         campName: "Tabăra de Engleză - Poiana Mărului",
-        hero: {
+                hero: {
             badge: "2023",
-            title: "Tabăra de Engleză - Poiana Mărului",
-            image: heroGrosvenor,
-            imageAlt: "Poiana Mărului 2023",
+            title: "Tabăra de limba engleză și aventură English Explorers Camp",
+            image: heroPoianaMarului2025,
+            imageAlt: "Tabără Poiana Marului 2023",
         },
         about: {
             title: "Despre Tabără",
@@ -1895,38 +2202,133 @@ visibility: {
                 "Colaborăm cu PGL Travel, care este o companie fondată în anul 1957 și are ca obiect principal de activitate furnizarea de activități sportive, recreative și educaționale pentru copiii britanici și internaționali în centre proprii. De-a lungul anilor, compania a achiziționat numeroase centre, majoritatea în Marea Britanie: 10 în Anglia, 1 în Scoția și 1 în Țara Galilor. În anii 1990 PGL și-a extins activitatea în Franța, intrând chiar și pe piața școlilor de schi pentru copii. Specific fiecărui centru este faptul că se întinde pe domenii uriașe, care cuprind lacuri sau râuri, păduri, plaje sau zone stâncoase, terenuri de sport, piste de biciclete, săli de sport la interior, centre de activități de aventură, mici magazine, săli de clasă și ateliere pe diferite teme.",
             ],
         },
+        sections: [
+            {
+                type: "twoCols",
+                title: "Avantajele participării la tabăra de limba engleză și aventură",
+                left: [
+                    "la nivel personal, copiii vor învăţa să fie mai responsabili, independenți și îşi vor testa limitele într-un mediu controlat şi în siguranţă;",
+                    "la nivel interpersonal, copiii îşi vor face noi prieteni, vor învăţa să se joace tot felul de jocuri noi pe care le vor putea experimenta și cu prietenii de acasă, vor învăţa ce înseamnă munca în echipă şi sprijinul unui grup unit;",
+                    "la nivel lingvistic, copiii îşi vor îmbunătăţi cunoştinţele de limbă engleză cu accent pe receptarea și transmiterea de mesaje, îmbunătățirea fluenței în exprimare și a spontaneității și naturaleții în reacțiile la instrucțiuni primite în limba engleză;",
+                ],
+                right: [
+                    "Prin sistemul de lucru pe echipe (lucrând împreună copiii își dezvoltă sentimentul de apartenența la grup și sentimentul că fiecare contribuie la succesul echipei)",
+                    "Prin programul de limba engleză care se va desfășura pe două coordonate:",
+                    "Cursurile de limba engleză din timpul dimineții bazate pe comunicare (jocuri interactive cu profesor român de limba engleză sau trainer international)",
+                    "Atelierele din cursul după-amiezii și activitățile de seară se desfășoară în limba engleză și sunt susținute de echipe mixte formate din ghizi, profesori români de limba engleză și traineri internationali. Astfel, toți copiii beneficiază de interacțiunea cu animatorii, cu trainerii internaționali si cu monitorii (în special pentru atelierele care implică tehnici de supraviețuire și alte activități specifice muntelui), iar profesorii români de limba engleză acționează ca un liant între cele trei categorii asigurând astfel succesul tuturor activităților.",
+                ],
+            },
+            {
+                type: "gridBullets",
+                title: "Tabăra de limba engleză și aventură – Program zilnic orientativ:",
+                columns: 2,
+                cards: [
+                    {
+                        subtitle: "Ziua 1",
+                        items: [
+                            "8.00 – Plecarea din București cu autocarul (Piata Constitutiei)",
+                            "11.00 – Vizită la Gradina Zoologica si *Manastirea Dealu* din Târgoviște;",
+                            "14.30 – Cazare și prânz",
+                            "16.30 -18.30 – Jocuri de cunoaștere/stabilirea echipelor/prezentarea regulilor taberei",
+                            "19.30-20.30 – Cina",
+                            "20.30 – 22.00 – Scavanger Hunt",
+                            "22.30 – Stingerea",
+                        ],
+                    },
+                    {
+                        subtitle: "Ziua 2 - 6",
+                        items: [
+                            "08.00 – Deşteptarea muzicală",
+                            "08.30 – Înviorarea în ritm de dans",
+                            "09.00 – Micul dejun",
+                            "09.45 – 11.00 – Lesson 1 (ateliere interactive de limba engleză)",
+                            "11.15 – 12.45 – Lesson 2 (ateliere interactive de limba engleză)",
+                            "13.00 – Masa de prânz",
+                            "14.00 – 15.00 – Timp liber",
+                            "15.00 – 16.30 – Atelier 1 (activități pe echipe, la alegere)",
+                            "17.00 – 18.30 – Atelier 2 (activități pe echipe, la alegere)",
+                            "19.00 – Cina",
+                            "20.00 – 21.30 – Serata (activități recreative și de divertisment cu tot grupul)",
+                            "21.30 – 22.00 – Dans sau timp liber în camere",
+                            "22.30 – Stingerea",
+                        ],
+                    },
+                    {
+                        subtitle: "Ziua 7",
+                        items: [
+                            "08.00 – Deşteptarea muzicală",
+                            "08.30 – Înviorarea în ritm de dans",
+                            "09.00 – Micul dejun",
+                            "09.45 – 11.00 – Festivitate de premiere si socializare",
+                            "11.30 – Plecare de la pensiune",
+                            "14.00 – Vizită la *Peștera Ialomița*;",
+                            "17.00 – Sosire in Bucuresti",
+                        ],
+                    },
+                ],
+            },
 
+            {
+                type: "richText",
+                title: "Atelierele de după-amiază se vor desfășura pe echipe de 7-9 copii și se vor desfășura în paralel. Iată câteva exemple de activități:",
+                paragraphs: [
+                    "Jocuri de cunoaștere și socializare (Mime, draw or describe, Minute to win it, curse de stafeta, Guess the character!, Photo contests, Charades, Casino Night, Chaos Games, Media Challenges, Beauty Workshop, Fashion Parade etc )",
+                    "Concursuri pe echipe (Treasute Hunt, Team Feuds, Talent Show, Harry Potter Night, Quiz Night, Karaoke etc)",
+                    "Activități artistice (confecționare brățări, pictură în natură, origami, modelare în plastilină)",
+                    "Activități sportive (fotbal, volei, tenis, baschet, dodgeball, Capture the Flag etc.)",
+                ],
+
+            },
+        ]
+        ,
+        visibility: {
+            showAbout: false,
+            showProgramImage: false,
+            showLuggageImage: false,
+            showActivities: false,
+        },
         quickInfo: {
-            location: "Poiana Mărului, România (placeholder)",
-            duration: "7 zile / 6 nopți (placeholder)",
-            ageGroup: "10–16 ani (placeholder)",
-            dates: "Vara 2023 (completează exact perioada)",
-            price: "— (completează prețul)",
+            location: "Poiana Mărului, Județul Brașov",
+            duration: "6 zile / 5 nopți",
+            ageGroup: "7-14 ani",
+            dates: "09 – 14 iulie 2023\n16 – 21 iulie 2023",
+            price: "1.980 Lei",
         },
         highlights: [
-            "Engleză zilnic, prin metode interactive",
-            "Activități outdoor & jocuri",
+            "Engleză aplicată prin joc și proiecte",
+            "Activități de aventură & teamwork",
             "Ateliere creative",
-            "Lucru în echipă",
-            "Seri tematice",
-            "Coordonare și supraveghere",
+            "Drumeții / activități în natură (după caz)",
+            "Dezvoltare personală: încredere & autonomie",
+            "Program structurat și supravegheat",
         ],
         locationDescription: {
-            title: "Poiana Mărului – tabără în natură",
+            title: "Poiana Mărului – tabără activă în România",
             description:
-                "Program pentru copii care vor să practice engleza într-un cadru prietenos, cu activități în aer liber și mult teamwork.",
-            image: heroGrosvenor,
+                "Poiana Mărului este o stațiune de munte situată la 6 km de zona Bran-Moeciu, la 12 km de Râșnov, 12 km de Poiana Brașov și la o altitudine de 900m. Stațiunea suprinde și încântă prin sălbăticia peisajului, frumusețea și naturalețea unei zone abia descoperite de lumea civilizată. \n \n Situată la 2,5 km de șoseau principală, în inima Masivului Piatra Craiului, departe de trafic și poluarea zonelor intens populate, accesul catre pensiune se face pe un drum îngust, recent construit prin padure. Astfel, Pensiunea Poiana Mărului Ranch (clasificată cu patru margarete) combina facilitatile vieții moderne cu pitorescul peisajului înca neîntinat de mâna omului.",
+            image: poianaMaruluiAbout,
             imageAlt: "Poiana Mărului",
         },
         locationFacilities: makeFacilities("romania-mountain"),
-        includedInPrice: ["Cazare", "Mese", "Curs/atelier engleză", "Program activități", "Coordonare"],
-        notIncludedInPrice: ["Transport (dacă nu este inclus)", "Cheltuieli personale"],
+        includedInPrice: [
+            "6 zile (5 nopţi) cazare cu pensiune completă;",
+            "Transport București-Moinești, tur-retur cu autocarul;",
+            "Vizită la Curtea Domnească din Piatra Neamț;",
+            "Vizită la Cetatea Neamț;",
+            "Vizită la Casa Memorială Ion Creangă;",
+            "Zilnic program de activități în limba engleză în cursul diminetii, două ateliere pe echipe (artistice, culturale, sportive etc) în cursul după-amiezii si o activitate de seară (cu tot grupul);",
+            "Program de limba engleză susținut de profesori de limba engleză si traineri internaționali de la “Pro Erudio” School of English;",
+            "Diplome, poze, șapca echipei cadou pentru toţi copiii și medalii pentru echipa căștigătoare;",
+        ],
+        notIncludedInPrice: [
+            "Cheltuieli personale",
+            "Excursii opționale (dacă există)",
+        ],
         activitiesDescription:
-            "Engleză prin joc, proiecte scurte, activități de echipă și provocări outdoor. Programul exact depinde de locație și grup.",
+            "Activități de echipă, jocuri, mini-proiecte în engleză, provocări de aventură și sesiuni interactive. Programul final depinde de locație și grup.",
         activityImages: IMGSET_DEFAULT,
         discounts: [
-            { type: "Continuitate", value: "—", condition: "Completează dacă se aplică" },
-            { type: "Frați", value: "—", condition: "Completează dacă se aplică" },
+            { type: "Frați/Surori", value: "5%", condition: "Pentru doi copii ai aceleiași familii" },
         ],
         otherCamps: [
             {
@@ -1944,20 +2346,20 @@ visibility: {
                 to: "/tabara-poiana-marului-2026",
             },
             {
-                name: "Tabără de limba engleză și aventură în România – Moinești",
-                location: "România",
-                type: "Aventură",
-                image: heroMoinești,
-                to: "/tabara-moinesti-2026",
+                name: "Școală de vară de limba ENGLEZĂ la Dublin (DCU)",
+                location: "Irlanda de Nord",
+                type: "Internațională",
+                image: heroDublinUniversity,
+                to: "/scoala-de-vara-dublin-2026",
             },
         ],
         luggageImage: { src: kitTabaraImage, alt: "Bagaj recomandat" },
         programImage: { src: programImage, alt: "Program orientativ" },
         registrationInfo: DEFAULT_REGISTRATION,
-        requiredDocuments: DEFAULT_REQUIRED_DOCS,
+        requiredDocuments: ROMANIA_REQUIRED_DOCS,
         form: {
-            selectValue: "tabara-de-engleza-poiana-marului-2023",
-            selectLabel: "Tabăra de Engleză - Poiana Mărului 2023",
+            selectValue: "tabara-moinesti-2026",
+            selectLabel: "Tabără de limba engleză și aventură în România – Moinești 2026",
         },
     },
 
@@ -1965,11 +2367,11 @@ visibility: {
         slug: "tabara-de-engleza-valea-oltului-2023",
         year: 2023,
         campName: "Tabăra de Engleză - Valea Oltului",
-        hero: {
+                hero: {
             badge: "2023",
-            title: "Tabăra de Engleză - Valea Oltului",
-            image: heroGrosvenor,
-            imageAlt: "Valea Oltului 2023",
+            title: "Tabăra de limba engleză și aventură English Explorers Camp",
+            image: heroValeaOltului2023,
+            imageAlt: "Tabără Valea Oltului 2023",
         },
         about: {
             title: "Despre Tabără",
@@ -1978,38 +2380,133 @@ visibility: {
                 "Colaborăm cu PGL Travel, care este o companie fondată în anul 1957 și are ca obiect principal de activitate furnizarea de activități sportive, recreative și educaționale pentru copiii britanici și internaționali în centre proprii. De-a lungul anilor, compania a achiziționat numeroase centre, majoritatea în Marea Britanie: 10 în Anglia, 1 în Scoția și 1 în Țara Galilor. În anii 1990 PGL și-a extins activitatea în Franța, intrând chiar și pe piața școlilor de schi pentru copii. Specific fiecărui centru este faptul că se întinde pe domenii uriașe, care cuprind lacuri sau râuri, păduri, plaje sau zone stâncoase, terenuri de sport, piste de biciclete, săli de sport la interior, centre de activități de aventură, mici magazine, săli de clasă și ateliere pe diferite teme.",
             ],
         },
+        sections: [
+            {
+                type: "twoCols",
+                title: "Avantajele participării la tabăra de limba engleză și aventură",
+                left: [
+                    "la nivel personal, copiii vor învăţa să fie mai responsabili, independenți și îşi vor testa limitele într-un mediu controlat şi în siguranţă;",
+                    "la nivel interpersonal, copiii îşi vor face noi prieteni, vor învăţa să se joace tot felul de jocuri noi pe care le vor putea experimenta și cu prietenii de acasă, vor învăţa ce înseamnă munca în echipă şi sprijinul unui grup unit;",
+                    "la nivel lingvistic, copiii îşi vor îmbunătăţi cunoştinţele de limbă engleză cu accent pe receptarea și transmiterea de mesaje, îmbunătățirea fluenței în exprimare și a spontaneității și naturaleții în reacțiile la instrucțiuni primite în limba engleză;",
+                ],
+                right: [
+                    "Prin sistemul de lucru pe echipe (lucrând împreună copiii își dezvoltă sentimentul de apartenența la grup și sentimentul că fiecare contribuie la succesul echipei)",
+                    "Prin programul de limba engleză care se va desfășura pe două coordonate:",
+                    "Cursurile de limba engleză din timpul dimineții bazate pe comunicare (jocuri interactive cu profesor român de limba engleză sau trainer international)",
+                    "Atelierele din cursul după-amiezii și activitățile de seară se desfășoară în limba engleză și sunt susținute de echipe mixte formate din ghizi, profesori români de limba engleză și traineri internationali. Astfel, toți copiii beneficiază de interacțiunea cu animatorii, cu trainerii internaționali si cu monitorii (în special pentru atelierele care implică tehnici de supraviețuire și alte activități specifice muntelui), iar profesorii români de limba engleză acționează ca un liant între cele trei categorii asigurând astfel succesul tuturor activităților.",
+                ],
+            },
+            {
+                type: "gridBullets",
+                title: "Tabăra de limba engleză și aventură – Program zilnic orientativ:",
+                columns: 2,
+                cards: [
+                    {
+                        subtitle: "Ziua 1",
+                        items: [
+                            "8.00 – Plecarea din București cu autocarul (Piata Constitutiei)",
+                            "11.00 – Vizită la Gradina Zoologică din Râmnicu Vâlcea și *Mănăstirea Cozia*, Călimănești;",
+                            "14.30 – Cazare și prânz",
+                            "16.30 -18.30 – Jocuri de cunoaștere/stabilirea echipelor/prezentarea regulilor taberei",
+                            "19.30-20.30 – Cina",
+                            "20.30 – 22.00 – Scavanger Hunt",
+                            "22.30 – Stingerea",
+                        ],
+                    },
+                    {
+                        subtitle: "Ziua 2 - 6",
+                        items: [
+                            "08.00 – Deşteptarea muzicală",
+                            "08.30 – Înviorarea în ritm de dans",
+                            "09.00 – Micul dejun",
+                            "09.45 – 11.00 – Lesson 1 (ateliere interactive de limba engleză)",
+                            "11.15 – 12.45 – Lesson 2 (ateliere interactive de limba engleză)",
+                            "13.00 – Masa de prânz",
+                            "14.00 – 15.00 – Timp liber",
+                            "15.00 – 16.30 – Atelier 1 (activități pe echipe, la alegere)",
+                            "17.00 – 18.30 – Atelier 2 (activități pe echipe, la alegere)",
+                            "19.00 – Cina",
+                            "20.00 – 21.30 – Serata (activități recreative și de divertisment cu tot grupul)",
+                            "21.30 – 22.00 – Dans sau timp liber în camere",
+                            "22.30 – Stingerea",
+                        ],
+                    },
+                    {
+                        subtitle: "Ziua 7",
+                        items: [
+                            "08.00 – Deşteptarea muzicală",
+                            "08.30 – Înviorarea în ritm de dans",
+                            "09.00 – Micul dejun",
+                            "09.45 – 11.00 – Festivitate de premiere si socializare",
+                            "11.30 – Plecare de la pensiune",
+                            "14.00 – Vizită la *Curtea Domnească* și *Mănăstirea Curtea de Argeș*;",
+                            "17.00 – Sosire in Bucuresti",
+                        ],
+                    },
+                ],
+            },
 
+            {
+                type: "richText",
+                title: "Atelierele de după-amiază se vor desfășura pe echipe de 7-9 copii și se vor desfășura în paralel. Iată câteva exemple de activități:",
+                paragraphs: [
+                    "Jocuri de cunoaștere și socializare (Mime, draw or describe, Minute to win it, curse de stafeta, Guess the character!, Photo contests, Charades, Casino Night, Chaos Games, Media Challenges, Beauty Workshop, Fashion Parade etc )",
+                    "Concursuri pe echipe (Treasute Hunt, Team Feuds, Talent Show, Harry Potter Night, Quiz Night, Karaoke etc)",
+                    "Activități artistice (confecționare brățări, pictură în natură, origami, modelare în plastilină)",
+                    "Activități sportive (fotbal, volei, tenis, baschet, dodgeball, Capture the Flag etc.)",
+                ],
+
+            },
+        ]
+        ,
+        visibility: {
+            showAbout: false,
+            showProgramImage: false,
+            showLuggageImage: false,
+            showActivities: false,
+        },
         quickInfo: {
-            location: "Valea Oltului, România (placeholder)",
-            duration: "7 zile / 6 nopți (placeholder)",
-            ageGroup: "10–16 ani (placeholder)",
-            dates: "Vara 2023 (completează exact perioada)",
-            price: "— (completează prețul)",
+            location: "Valea Oltului, Vâlcea",
+            duration: "6 zile / 5 nopți",
+            ageGroup: "7 - 14 ani",
+            dates: "25 – 30 iunie 2023",
+            price: "2.080 Lei",
         },
         highlights: [
-            "Engleză aplicată și conversație",
-            "Activități în natură",
-            "Jocuri & competiții",
-            "Ateliere",
-            "Teamwork",
-            "Coordonare completă",
+            "Engleză aplicată prin joc și proiecte",
+            "Activități de aventură & teamwork",
+            "Ateliere creative",
+            "Drumeții / activități în natură (după caz)",
+            "Dezvoltare personală: încredere & autonomie",
+            "Program structurat și supravegheat",
         ],
         locationDescription: {
-            title: "Valea Oltului – tabără în natură",
+            title: "Locație",
             description:
-                "Tabără cu focus pe engleză și activități în aer liber. Programul urmărește autonomie, colaborare și comunicare în engleză.",
-            image: heroGrosvenor,
-            imageAlt: "Valea Oltului",
+                "Localitatea Brezoi se află în nordul județului Vâlcea, la confluența râului Lotru cu râul Olt, în cea mai mare depresiune intercarpatică din România, cunoscută sub numele de Țara Loviștei. Orașul este înconjurat de păduri de conifere. Brezoi se situează la 35 km nord de Râmnicu Vâlcea și la 66 km sud de Sibiu. De câtiva ani, acest orășel de munte găzduiește diferite festivaluri vara, dintre care cele mai appreciate sunt Bikers For Humanity Rock Fest și Open Air Blues Festival. \n \n Hotelul Class este situat la intrarea în orașul Brezoi când venim dinspre București, pe malul râului Olt, între versanți abrupți acoperiți de nesfârșite păduri.",
+            image: aboutValeaOltului2023,
+            imageAlt: "Poiana Mărului",
         },
         locationFacilities: makeFacilities("romania-mountain"),
-        includedInPrice: ["Cazare", "Mese", "Curs/atelier engleză", "Program activități", "Coordonare"],
-        notIncludedInPrice: ["Transport (dacă nu este inclus)", "Cheltuieli personale"],
+        includedInPrice: [
+            "6 zile (5 nopţi) cazare cu pensiune completă;",
+            "Transport București-Moinești, tur-retur cu autocarul;",
+            "Vizită la Gradina Zoologică din Râmnicu Vâlcea;",
+            "Vizită la Mănăstirea Cozia, Călimănești;",
+            "Vizită la Curtea Domnească și Mănăstirea Curtea de Argeș",
+            "Zilnic program de activități în limba engleză în cursul diminetii, două ateliere pe echipe (artistice, culturale, sportive etc) în cursul după-amiezii si o activitate de seară (cu tot grupul);",
+            "Program de limba engleză susținut de profesori de limba engleză si traineri internaționali de la “Pro Erudio” School of English;",
+            "Diplome, poze, șapca echipei cadou pentru toţi copiii și medalii pentru echipa căștigătoare;",
+        ],
+        notIncludedInPrice: [
+            "Cheltuieli personale",
+            "Excursii opționale (dacă există)",
+        ],
         activitiesDescription:
-            "Jocuri, provocări de echipă, sesiuni de engleză, drumeții (după caz) și seri tematice.",
+            "Activități de echipă, jocuri, mini-proiecte în engleză, provocări de aventură și sesiuni interactive. Programul final depinde de locație și grup.",
         activityImages: IMGSET_DEFAULT,
         discounts: [
-            { type: "Continuitate", value: "—", condition: "Completează dacă se aplică" },
-            { type: "Frați", value: "—", condition: "Completează dacă se aplică" },
+            { type: "Frați/Surori", value: "5%", condition: "Pentru doi copii ai aceleiași familii" },
         ],
         otherCamps: [
             {
@@ -2027,20 +2524,20 @@ visibility: {
                 to: "/tabara-poiana-marului-2026",
             },
             {
-                name: "Tabără de limba engleză și aventură în România – Moinești",
-                location: "România",
-                type: "Aventură",
-                image: heroMoinești,
-                to: "/tabara-moinesti-2026",
+                name: "Școală de vară de limba ENGLEZĂ la Dublin (DCU)",
+                location: "Irlanda de Nord",
+                type: "Internațională",
+                image: heroDublinUniversity,
+                to: "/scoala-de-vara-dublin-2026",
             },
         ],
         luggageImage: { src: kitTabaraImage, alt: "Bagaj recomandat" },
         programImage: { src: programImage, alt: "Program orientativ" },
         registrationInfo: DEFAULT_REGISTRATION,
-        requiredDocuments: DEFAULT_REQUIRED_DOCS,
+        requiredDocuments: ROMANIA_REQUIRED_DOCS,
         form: {
-            selectValue: "tabara-de-engleza-valea-oltului-2023",
-            selectLabel: "Tabăra de Engleză - Valea Oltului 2023",
+            selectValue: "tabara-moinesti-2026",
+            selectLabel: "Tabără de limba engleză și aventură în România – Moinești 2026",
         },
     },
 
@@ -2048,53 +2545,89 @@ visibility: {
         slug: "tabara-de-engleza-marea-britanie-2023",
         year: 2023,
         campName: "Tabăra de Engleză - Marea Britanie",
-        hero: {
+         hero: {
             badge: "2023",
-            title: "Tabăra de Engleză - Marea Britanie",
-            image: heroGrosvenor,
-            imageAlt: "UK 2023",
+            title: "TABĂRĂ educațională de limba ENGLEZĂ în Marea Britanie",
+            image: heroOsmington2023,
+            imageAlt: "Osmington",
         },
-        about: {
-            title: "Despre Tabără",
-            paragraphs: [
-                "Anul acesta vă propunem o tabăra internațională care urmează tipicul unei tabere de aventură adresate copiilor britanici. Singură diferența este includerea în program a cursurilor de limba engleză în timpul dimineții și a excursiilor, săptămânal una de o zi întreagă și una de o jumătate de zi, special concepute pentru elevii străini.",
-                "Colaborăm cu PGL Travel, care este o companie fondată în anul 1957 și are ca obiect principal de activitate furnizarea de activități sportive, recreative și educaționale pentru copiii britanici și internaționali în centre proprii. De-a lungul anilor, compania a achiziționat numeroase centre, majoritatea în Marea Britanie: 10 în Anglia, 1 în Scoția și 1 în Țara Galilor. În anii 1990 PGL și-a extins activitatea în Franța, intrând chiar și pe piața școlilor de schi pentru copii. Specific fiecărui centru este faptul că se întinde pe domenii uriașe, care cuprind lacuri sau râuri, păduri, plaje sau zone stâncoase, terenuri de sport, piste de biciclete, săli de sport la interior, centre de activități de aventură, mici magazine, săli de clasă și ateliere pe diferite teme.",
-            ],
+        visibility: {
+            showPriceDetails: false,
         },
+about: {
+  title: "Despre Tabără",
+  paragraphs: [
+    "Anul acesta vă propunem o tabăra internațională care urmează tipicul unei tabere de aventură adresate copiilor britanici. Singură diferența este includerea în program a cursurilor de limba engleză în timpul dimineții și a excursiilor, săptămânal una de o zi întreagă și una de o jumătate de zi, special concepute pentru elevii străini.",
+  ],
+
+  // 👇 NOU – doar pentru această tabără
+  extraTitle: "Cu cine colaborăm?",
+  extraParagraphs: [
+    "PGL Travel este o companie fondată în anul 1957 și are ca obiect principal de activitate furnizarea de activități sportive, recreative și educaționale pentru copiii britanici și internaționali în centre proprii. De-a lungul anilor, compania a achiziționat numeroase centre, majoritatea în Marea Britanie: 10 în Anglia, 1 în Scoția și 1 în Țara Galilor. În anii 1990 PGL și-a extins activitatea în Franța, intrând chiar și pe piața școlilor de schi pentru copii. Specific fiecărui centru este faptul că se întinde pe domenii uriașe, care cuprind lacuri sau râuri, păduri, plaje sau zone stâncoase, terenuri de sport, piste de biciclete, săli de sport la interior, centre de activități de aventură, mici magazine, săli de clasă și ateliere pe diferite teme.",
+  ],
+},
+        
 
         quickInfo: {
-            location: "Marea Britanie (placeholder)",
-            duration: "8 zile / 7 nopți (placeholder)",
-            ageGroup: "11–16 ani (placeholder)",
-            dates: "Vara 2023 (completează exact perioada)",
-            price: "— (completează prețul)",
+            location: "Osmington Bay Activity Centre",
+            duration: "8 zile / 7 nopți",
+            ageGroup: "11 – 18 ani",
+            dates: "29 iulie – 05 august 2023",
+            price: "730 GBP",
         },
         highlights: [
-            "Engleză + interacțiune internațională",
-            "Program de aventură",
-            "Excursii (după program)",
-            "Teamwork & socializare",
-            "Suport complet",
-            "Experiență internațională",
+            "Cazare în campus",
+            "Pensiune completă",
+            "15 lecții de engleză pe săptămâna în grupuri internaționale, cu profesori vorbitori nativi",
+            "Test inițial de evaluare",
+            "Materiale de studiu",
+            "Certificate de absolvire a cursurilor",
+            "Program zilnic de activități comune",
+            "Program zilnic tematic",
+            "Excursii (una de jumătate de zi și una de o zi întreagă sâptâmânal)",
+            "Un însoțitor de grup de la Pro Erudio pentru fiecare 15 copii",
         ],
         locationDescription: {
-            title: "Marea Britanie – tabără internațională",
+            title: "Centrul de activități Osmington Bay",
             description:
-                "Program tip camp internațional: activități de aventură și interacțiune în engleză. Ideal pentru progres și încredere.",
-            image: heroGrosvenor,
-            imageAlt: "UK",
+                "Centrul educațional în care vom merge anul acesta, Osminton Bay din Dorset, este situat pe coasta de sud a Angliei, cu iesire la Canalul Mânecii, ceea ce îi conferă un specific aparte. Unul dintre cele mai mari centre PGL, are o capacitate de cazare de 1100 de persoane, având o poziție convenabilă pe hartă, la două ore și jumătate de Londra (cu autocarul) și destul de aproape de orasele istorice Salisbury, Bath, dar si de porturi importante, cum ar fi Portsmouth. \n \n Centrul din Osmington Bay cuprinde 24 de zone de aventură (terenuri de sport potrivite tuturor condițiilor meteo, săli de activități la interior (inclusiv sală de jocuri), teren de scrimă, ateliere de construcție plute, zonă de cățărări, zonă de trekking, tir cu arcul, tiroliană, grajduri etc ) întinse pe 42 de hectare de teren, centrul de activitati pe apa de la Portland (care a fost gazdă Olimpiadei sporturilor de apa din 2012) si acces direct la mare si plaja, astfel încât o săptămâna pare scurtă pentru câte vom avea de făcut.",
+            image: aboutOsmington2023,
+            imageAlt: "Osmington Bay",
         },
-        locationFacilities: makeFacilities("uk"),
-        includedInPrice: ["Cazare", "Mese", "Program activități", "Coordonare", "Materiale"],
-        notIncludedInPrice: ["Transport avion", "Transferuri (dacă nu sunt incluse)", "Asigurări", "Cheltuieli personale"],
+        locationFacilities: makeFacilities("liddington"),
+        includedInPrice: [
+            "Cazare în campus",
+            "Pensiune completă",
+            "15 lecții de engleză pe săptămâna în grupuri internaționale, cu profesori vorbitori nativi",
+            "Test inițial de evaluare",
+            "Certificate de absolvire a cursurilor",
+            "Program zilnic de activități comune",
+            "Program zilnic tematic",
+            "Excursii (două de jumătate de zi și una de o zi întreagă)",
+            "Un însoțitor de grup de la Pro Erudio la 10 copii",
+            "Asigurare de călătorie",
+        ],
+        notIncludedInPrice: [
+            "transport avion (aproximativ 350 euro, în funcție de oferta companiei de zbor la momentul rezervării locului)",
+            "Transfer de la/ la aeroport în campus (se calculează în luna iunie în funcție de numărul participanților)",
+            "Asigurare storno (optional)",
+            "Cheltuieli personale",
+        ],
         activitiesDescription:
-            "Activități outdoor & indoor, jocuri de echipă și excursii. Programul final se comunică înainte de plecare.",
-        activityImages: IMGSET_DEFAULT,
+            "Activitățile desfășurate în cadrul taberei sunt numeroase și extrem de variate, fiind concepute pentru a stimula spiritul de aventură, lucrul în echipă și dezvoltarea personală a participanților. După-amiaza, copiii pot lua parte la activități precum Abseiling, Aeroball, Archery, Buggy Building, Canoeing, Challenge Course, Climbing, Crate Challenge, Fencing, Giant Swing, Jacob’s Ladder, Orienteering, Problem Solving, Raft Building, Sensory Trail, Survivor, Trapeze, Vertical Challenge și Zip Wire, fiecare dintre acestea fiind adaptată nivelului de vârstă și desfășurată în condiții de siguranță. Seara este dedicată activităților recreative și de socializare, incluzând jocuri și evenimente precum Ambush, Campfire, Capture the Flag, Disco, Passport to the World, PGL Sports Night, Photo Challenge, Robot Wars, Quiz Show, Snap Shot, Splash și Wacky Races, menite să consolideze relațiile dintre participanți și să creeze experiențe memorabile într-o atmosferă relaxată și distractivă.",
+        activityImages: [activityLiggdington1, activityLiggdington2, activityLiggdington3, activityLiggdington4],
         discounts: [
-            { type: "Continuitate", value: "—", condition: "Completează dacă se aplică" },
-            { type: "Frați", value: "—", condition: "Completează dacă se aplică" },
+            { type: "Continuitate", value: "5%", condition: "Completează dacă se aplică" },
+            { type: "Frați", value: "5%", condition: "Completează dacă se aplică" },
         ],
         otherCamps: [
+            {
+                name: "Școală de vară de limba ENGLEZĂ la Dublin (DCU)",
+                location: "Irlanda de Nord",
+                type: "Internațională",
+                image: heroDublinUniversity,
+                to: "/scoala-de-vara-dublin-2026",
+            },
             {
                 name: "Tabara in Marea Britanie Grosvenor Hall Activity Centre",
                 location: "Marea Britanie",
@@ -2117,13 +2650,29 @@ visibility: {
                 to: "/tabara-moinesti-2026",
             },
         ],
-        luggageImage: { src: kitTabaraImage, alt: "Bagaj recomandat" },
+        sections: [
+        {
+                type: "richText",
+                title: "Posibile destinații de excursii",
+                paragraphs: [
+                    "Stonehenge & Salisbury",
+                    "Weymouth",
+                    "Bath",
+                    "Corfe Castle",
+                    "Dorchester",
+                    "Bournemouth",
+                ],
+
+            },
+    ],       
+        luggageImage: { src: kitTabaraImage, alt: "Bagaj Tabara", title: "Ce trebuie să conțină bagajul copiilor" },
         programImage: { src: programImage, alt: "Program orientativ" },
+        menuImage: { src: meniuLiddington, alt: "Meniu orientativ" },
         registrationInfo: DEFAULT_REGISTRATION,
         requiredDocuments: DEFAULT_REQUIRED_DOCS,
         form: {
-            selectValue: "tabara-de-engleza-marea-britanie-2023",
-            selectLabel: "Tabăra de Engleză - Marea Britanie 2023",
+            selectValue: "tabara-marea-britanie-grosvenor-hall-2026",
+            selectLabel: "Școală de vară de limba engleză în Marea Britanie – Manchester 2025",
         },
     },
 
@@ -2131,53 +2680,90 @@ visibility: {
         slug: "scoala-de-vara-marea-britanie-2023",
         year: 2023,
         campName: "Școală de vară - Marea Britanie",
-        hero: {
+          hero: {
             badge: "2023",
-            title: "Școală de vară - Marea Britanie",
-            image: heroGrosvenor,
-            imageAlt: "Școală de vară UK 2023",
+            title: "TABĂRĂ educațională de limba ENGLEZĂ în Marea Britanie",
+            image: heroPortsmouth2023,
+            imageAlt: "Portsmouth",
         },
-        about: {
-            title: "Despre Tabără",
-            paragraphs: [
-                "Anul acesta vă propunem o tabăra internațională care urmează tipicul unei tabere de aventură adresate copiilor britanici. Singură diferența este includerea în program a cursurilor de limba engleză în timpul dimineții și a excursiilor, săptămânal una de o zi întreagă și una de o jumătate de zi, special concepute pentru elevii străini.",
-                "Colaborăm cu PGL Travel, care este o companie fondată în anul 1957 și are ca obiect principal de activitate furnizarea de activități sportive, recreative și educaționale pentru copiii britanici și internaționali în centre proprii. De-a lungul anilor, compania a achiziționat numeroase centre, majoritatea în Marea Britanie: 10 în Anglia, 1 în Scoția și 1 în Țara Galilor. În anii 1990 PGL și-a extins activitatea în Franța, intrând chiar și pe piața școlilor de schi pentru copii. Specific fiecărui centru este faptul că se întinde pe domenii uriașe, care cuprind lacuri sau râuri, păduri, plaje sau zone stâncoase, terenuri de sport, piste de biciclete, săli de sport la interior, centre de activități de aventură, mici magazine, săli de clasă și ateliere pe diferite teme.",
-            ],
+        visibility: {
+            showPriceDetails: false,
         },
+about: {
+  title: "Despre Tabără",
+  paragraphs: [
+    "Una dintre cele mai frumoase destinații turistice ale Marii Britanii, Portsmouth este un oras pitoresc situat pe coasta de sud a Marii Britanii și este unul dintre cele mai importante porturi ale Regatului Unit, cu o populatie de aproape 250.000 de locuitori si o densitate a populatie pe metru patrat care o depaseste pe cea a Londrei. La aproximativ 100 de kilmotrei distanta de Londra si 30 de Southampton, portul din Portsmouth dateaza de pe vremea romanilor si este incarcat de istori, fiind la inceputul secolului al XIX-lea cel mai fortificat oras din lume. iar centrul orașului păstrează multe clădiri ce datează din epoca victoriană.",
+    "Desi atractia principala pentru vizitatori ramane marea si istoria navala, orarul este incărcat de istorie la tot pasul, un veritabil “muzeu în aer liber”, fiind împânzit de clădiri istorice (este si locul de nastere al lui Charles Dickens) și înconjurat de zidurile vechii cetati, acum transformate in muzee sau sali de spectacole."
+],
+
+  // 👇 NOU – doar pentru această tabără
+  extraTitle: "",
+  extraParagraphs: [
+    "",
+  ],
+},
+        
 
         quickInfo: {
-            location: "Marea Britanie (placeholder)",
-            duration: "8 zile / 7 nopți (placeholder)",
-            ageGroup: "12–17 ani (placeholder)",
-            dates: "Vara 2023 (completează exact perioada)",
-            price: "— (completează prețul)",
+            location: "University of Portsmouth",
+            duration: "8 zile / 7 nopți",
+            ageGroup: "12 – 18 ani",
+            dates: "30 iulie – 06 august 2023",
+            price: "840 GBP",
         },
         highlights: [
-            "Cursuri de engleză + conversație",
-            "Excursii culturale",
-            "Activități de grup",
-            "Program echilibrat",
-            "Suport complet",
-            "Experiență internațională",
+            "Cazare în campus",
+            "Pensiune completă",
+            "15 lecții de engleză pe săptămâna în grupuri internaționale, cu profesori vorbitori nativi",
+            "Test inițial de evaluare",
+            "Materiale de studiu",
+            "Certificate de absolvire a cursurilor",
+            "Program zilnic de activități comune",
+            "Program zilnic tematic",
+            "Excursii (una de jumătate de zi și una de o zi întreagă sâptâmânal)",
+            "Un însoțitor de grup de la Pro Erudio pentru fiecare 15 copii",
         ],
         locationDescription: {
-            title: "Școală de vară în Marea Britanie",
+            title: "Școala",
             description:
-                "Program educațional orientat pe comunicare, cu activități și excursii care pun engleza în practică zilnic.",
-            image: heroGrosvenor,
-            imageAlt: "UK Summer School",
+                "Universitatea din Portsmouth în forma actuală datează din 1992, dar cea mai veche scoala din oras The Portsmouth Grammar School dateaza din anul 1732 si era, desigur, scoala de baieti. Astazi universitatea din Portsmouth numara peste 23.000 students si peste 2.500 de cadre didactice si personal auxiliar si este listata ca fiind printre cele mai bune 100 universitati din lume.",
+            image: aboutPortsmouth2023,
+            imageAlt: "Portsmouth",
         },
-        locationFacilities: makeFacilities("uk"),
-        includedInPrice: ["Cazare", "Mese", "Cursuri engleză", "Materiale", "Activități/excursii", "Coordonare"],
-        notIncludedInPrice: ["Transport avion", "Transferuri (dacă nu sunt incluse)", "Asigurări", "Cheltuieli personale"],
+        locationFacilities: makeFacilities("liddington"),
+        includedInPrice: [
+            "Cazare în campus",
+            "Pensiune completă",
+            "15 lecții de engleză pe săptămâna în grupuri internaționale, cu profesori vorbitori nativi",
+            "Test inițial de evaluare",
+            "Certificate de absolvire a cursurilor",
+            "Program zilnic de activități comune",
+            "Program zilnic tematic",
+            "Excursii (două de jumătate de zi și una de o zi întreagă)",
+            "Un însoțitor de grup de la Pro Erudio la 10 copii",
+            "Asigurare de călătorie",
+        ],
+        notIncludedInPrice: [
+            "transport avion (aproximativ 350 euro, în funcție de oferta companiei de zbor la momentul rezervării locului)",
+            "Transfer de la/ la aeroport în campus (se calculează în luna iunie în funcție de numărul participanților)",
+            "Asigurare storno (optional)",
+            "Cheltuieli personale",
+        ],
         activitiesDescription:
-            "Cursuri + activități culturale, proiecte de grup și conversație. Programul final se comunică înainte de plecare.",
-        activityImages: IMGSET_DEFAULT,
+            "Activitățile desfășurate în cadrul taberei sunt numeroase și foarte variate, oferind participanților o experiență educativă și recreativă completă. Programul include vizitarea orașului, cu activități de shopping și orientare, activități sportive în aer liber și în sala de sport multifuncțională, precum și o gamă diversificată de ateliere interactive, printre care se numără dans, actorie, fotbal, arts & crafts, cluburi de conversație, seminarii pe diferite teme, jocuri de echipă, precum și activități de jurnalism și media. Serile sunt dedicate activităților de socializare și divertisment, incluzând quiz-uri, vizionări de filme, prezentări de modă și seri tematice. De asemenea, programul cuprinde două excursii de o jumătate de zi, cu destinații precum Portsmouth sau Southampton, Catedrala din Chichester sau Castelul Southsea, precum și o excursie de o zi întreagă, cu posibilitate de vizitare a unor obiective importante precum Londra, Brighton sau Salisbury/Stonehenge, toate acestea contribuind la o experiență memorabilă și educativă pentru participanți.",
+        activityImages: [activityPortsmouth1, activityPortsmouth2, activityPortsmouth3, activityPortsmouth4],
         discounts: [
-            { type: "Continuitate", value: "—", condition: "Completează dacă se aplică" },
-            { type: "Frați", value: "—", condition: "Completează dacă se aplică" },
+            { type: "Continuitate", value: "5%", condition: "Completează dacă se aplică" },
+            { type: "Frați", value: "5%", condition: "Completează dacă se aplică" },
         ],
         otherCamps: [
+            {
+                name: "Școală de vară de limba ENGLEZĂ la Dublin (DCU)",
+                location: "Irlanda de Nord",
+                type: "Internațională",
+                image: heroDublinUniversity,
+                to: "/scoala-de-vara-dublin-2026",
+            },
             {
                 name: "Tabara in Marea Britanie Grosvenor Hall Activity Centre",
                 location: "Marea Britanie",
@@ -2200,13 +2786,27 @@ visibility: {
                 to: "/tabara-moinesti-2026",
             },
         ],
-        luggageImage: { src: kitTabaraImage, alt: "Bagaj recomandat" },
-        programImage: { src: programImage, alt: "Program orientativ" },
+        sections: [
+        {
+                type: "richText",
+                title: "Posibile destinații de excursii",
+                paragraphs: [
+                    "Stonehenge & Salisbury",
+                    "Weymouth",
+                    "Bath",
+                    "Corfe Castle",
+                    "Dorchester",
+                    "Bournemouth",
+                ],
+
+            },
+    ],       
+        programImage: { src: programUK, alt: "Program orientativ" },
         registrationInfo: DEFAULT_REGISTRATION,
         requiredDocuments: DEFAULT_REQUIRED_DOCS,
         form: {
-            selectValue: "scoala-de-vara-marea-britanie-2023",
-            selectLabel: "Școală de vară - Marea Britanie 2023",
+            selectValue: "tabara-marea-britanie-grosvenor-hall-2026",
+            selectLabel: "Școală de vară de limba engleză în Marea Britanie – Manchester 2025",
         },
     },
 ];

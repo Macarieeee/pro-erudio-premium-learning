@@ -29,6 +29,8 @@ import {
   Send,
   Luggage,
   ReceiptPoundSterling,
+  Menu,
+  Book,
 } from "lucide-react";
 
 import { useToast } from "@/hooks/use-toast";
@@ -55,7 +57,8 @@ const CampPage = () => {
     showDiscounts: true,
     showActivitiesDescription: true,
     showActivities: true,
-      showPriceDetails: true,
+    showPriceDetails: true,
+    showMenu: true,
     ...(camp.visibility ?? {}),
   };
 
@@ -159,15 +162,28 @@ const renderItalicText = (text: string) => {
     <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-background via-background/40 to-transparent" />
 
     {/* Text */}
-    <div className="absolute bottom-0 left-0 right-0 p-6 lg:p-8">
+    <div className="absolute bottom-[-20px] left-0 right-0 p-6 lg:p-8">
       <div className="container mx-auto px-4 lg:px-8">
         <span className="inline-block bg-accent text-accent-foreground px-4 py-1 rounded-full text-sm font-semibold">
           {camp.hero.badge}
         </span>
 
-        <h1 className="mt-2 text-3xl md:text-5xl font-bold text-foreground">
-          {camp.hero.title}
-        </h1>
+<h1
+  className="
+    mt-2
+    font-bold
+    text-foreground
+    max-w-full
+    break-words
+    whitespace-normal
+    xl:whitespace-nowrap
+    lg:whitespace-nowrap
+    text-[clamp(20px,5vw,40px)]
+  "
+>
+  {camp.hero.title}
+</h1>
+
       </div>
     </div>
   </div>
@@ -222,7 +238,7 @@ const renderItalicText = (text: string) => {
           </div>
           <div>
             <p className="text-sm text-muted-foreground">Perioada</p>
-            <p className="font-semibold text-foreground">
+            <p className="font-semibold text-foreground whitespace-pre-line">
               {camp.quickInfo.dates}
             </p>
           </div>
@@ -255,18 +271,42 @@ const renderItalicText = (text: string) => {
           <div className="container mx-auto px-4 lg:px-8">
             <div className="grid lg:grid-cols-2 gap-12">
               <div>
-                <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">{camp.about.title}</h2>
+  <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
+    {camp.about.title}
+  </h2>
 
-                {camp.about.paragraphs.map((p, idx) => (
-                  <p
-                    key={idx}
-                    className={`text-muted-foreground leading-relaxed ${idx !== camp.about.paragraphs.length - 1 ? "mb-6" : ""
-                      }`}
-                  >
-                    {p}
-                  </p>
-                ))}
-              </div>
+  {camp.about.paragraphs.map((p, idx) => (
+    <p
+      key={idx}
+      className={`text-muted-foreground leading-relaxed ${
+        idx !== camp.about.paragraphs.length - 1 ? "mb-6" : ""
+      }`}
+    >
+      {p}
+    </p>
+  ))}
+
+  {/* 🔹 EXTRA title + paragraph (doar dacă există) */}
+  {camp.about.extraTitle && camp.about.extraParagraphs && (
+    <div className="mt-10">
+      <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
+        {camp.about.extraTitle}
+      </h2>
+
+      {camp.about.extraParagraphs.map((p, idx) => (
+        <p
+          key={idx}
+          className={`text-muted-foreground leading-relaxed ${
+            idx !== camp.about.extraParagraphs.length - 1 ? "mb-6" : ""
+          }`}
+        >
+          {p}
+        </p>
+      ))}
+    </div>
+  )}
+</div>
+
 
               <div>
                 <h3 className="text-2xl font-bold text-foreground mb-6">Ce include tabăra</h3>
@@ -305,7 +345,7 @@ const renderItalicText = (text: string) => {
             <div className="grid lg:grid-cols-2 gap-12 items-start">
               <div>
                 <h3 className="text-2xl font-bold text-foreground mb-4">{camp.locationDescription.title}</h3>
-                <p className="text-muted-foreground mb-8 leading-relaxed">{camp.locationDescription.description}</p>
+                <p className="text-muted-foreground mb-8 leading-relaxed whitespace-pre-line">{camp.locationDescription.description}</p>
               </div>
 
               {camp.locationDescription?.image ? (
@@ -343,15 +383,7 @@ const renderItalicText = (text: string) => {
         </section>
       ) : null}
       {/* Secțiuni extra (Moinești etc.) */}
-      {camp.sections?.length ? (
-        <section>
-          <div className="container mx-auto px-4 lg:px-8">
-            <div className="max-w-6xl mx-auto">
-              <CampSections sections={camp.sections} />
-            </div>
-          </div>
-        </section>
-      ) : null}
+
 
       {/* Ce include tariful / Ce nu include */}
 {v.showPriceDetails && (
@@ -445,6 +477,16 @@ const renderItalicText = (text: string) => {
                   ))}
                 </div>
               ) : null}
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      {camp.sections?.length ? (
+        <section>
+          <div className="container mx-auto px-4 lg:px-8">
+            <div className="max-w-6xl mx-auto">
+              <CampSections sections={camp.sections} />
             </div>
           </div>
         </section>
@@ -582,6 +624,23 @@ const renderItalicText = (text: string) => {
             <div className="max-w-4xl mx-auto">
               <div className="rounded-2xl overflow-hidden shadow-lg">
                 <img src={camp.programImage.src} alt={camp.programImage.alt} className="w-full object-contain" />
+              </div>
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      {v.showMenu && camp.menuImage?.src ? (
+        <section className="py-6 bg-secondary/30">
+          <div className="container mx-auto px-4 lg:px-8">
+            <div className="flex items-center gap-3 mb-12 justify-center">
+              <Book className="h-8 w-8 text-primary" />
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground">Meniu orientativ</h2>
+            </div>
+
+            <div className="max-w-4xl mx-auto">
+              <div className="rounded-2xl overflow-hidden shadow-lg">
+                <img src={camp.menuImage.src} alt={camp.menuImage.alt} className="w-full object-contain" />
               </div>
             </div>
           </div>
