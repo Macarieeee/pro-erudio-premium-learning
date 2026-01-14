@@ -86,6 +86,18 @@ import activityPortsmouth1 from "@/assets/Portsmouth3.jpg";
 import activityPortsmouth2 from "@/assets/portsmouth-3.jpg";
 import activityPortsmouth3 from "@/assets/portsmouth-2.jpg";
 import activityPortsmouth4 from "@/assets/portsmouth-1.jpg";
+import moinesti1 from "@/assets/MoinestiExtra1.jpg";
+import moinesti2 from "@/assets/MoinestiExtra2.jpg";
+import moinesti3 from "@/assets/MoinestiExtra3.jpg";
+import moinesti4 from "@/assets/MoienstiExtra4.jpg";
+import moinesti5 from "@/assets/MoinestiExtra5.jpg";
+import moinesti6 from "@/assets/MoinestiExtra6.jpg";
+import poianaMarului1 from "@/assets/PoianaExtra1.jpg";
+import poianaMarului2 from "@/assets/PoianaExtra2.jpg";
+import poianaMarului3 from "@/assets/PoianaExtra3.jpg";
+import poianaMarului4 from "@/assets/PoianaExtra4.jpg";
+import poianaMarului5 from "@/assets/PoianaExtra5.jpg";
+import poianaMarului6 from "@/assets/PoianaExtra6.jpg";
 
 /* =======================
    DOAR DEFAULT-URI COMUNE
@@ -139,6 +151,8 @@ export type CampFacility = {
     label: string;
 };
 
+
+
 export type CampSection =
     | { type: "richText"; title: string; paragraphs: string[] }
     | { type: "bullets"; title?: string; subtitle?: string; items: string[] }
@@ -155,7 +169,7 @@ export type CampSection =
     }
     | { type: "image"; title?: string; src: string; alt: string };
 
-
+type GalleryImage = { src: string; alt?: string };
 export type CampConfig = {
     slug: string; // ex: "tabara-poiana-marului-2026"
     year: number;
@@ -225,6 +239,16 @@ luggageImage?: {
     };
     sections?: CampSection[];
     visibility?: CampVisibility;
+    galleries?: Partial<Record<
+    | "about"
+    | "facilities"
+    | "includedInPrice"
+    | "notIncludedInPrice"
+    | "activities"
+    | "discounts"
+    | "other",
+    GalleryImage[] | string[]
+  >>;
 };
 
 /* =======================
@@ -817,6 +841,18 @@ visibility: {
             "Cheltuieli personale",
             "Excursii opționale (dacă există)",
         ],
+        galleries: {
+  includedInPrice: [
+    moinesti1,
+    moinesti5,
+    moinesti3,
+  ],
+ other: [
+    moinesti4,
+    moinesti2,
+    moinesti6,
+  ],
+},
         activitiesDescription:
             "Activități de echipă, jocuri, mini-proiecte în engleză, provocări de aventură și sesiuni interactive. Programul final depinde de locație și grup.",
         activityImages: IMGSET_DEFAULT,
@@ -867,6 +903,18 @@ visibility: {
             imageAlt: "Tabără Poiana Mărului 2026",
             objectPosition: "70% 80%",
         },
+        galleries: {
+  includedInPrice: [
+    poianaMarului1,
+    poianaMarului5,
+    poianaMarului3,
+  ],
+ other: [
+    poianaMarului4,
+    poianaMarului2,
+    poianaMarului6,
+  ],
+},
         about: {
             title: "Despre Tabără",
             paragraphs: [

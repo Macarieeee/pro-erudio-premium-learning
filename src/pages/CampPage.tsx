@@ -1,9 +1,11 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useMemo, useState } from "react";
 import { useParams, Navigate, Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import CampSections from "@/components/CampSection"; // ✅ asigură-te că fișierul se numește CampSections.tsx
 import RegistrationForm from "@/components/RegistrationForm";
+import { SectionGallery } from "@/components/SectionGallery";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -410,8 +412,11 @@ const renderItalicText = (text: string) => {
                   <span className="text-foreground">{renderItalicText(item)}</span>
                 </div>
               ))}
+
             </div>
+            
           </div>
+          
         )}
 
         {/* NU INCLUDE */}
@@ -439,6 +444,7 @@ const renderItalicText = (text: string) => {
 
       </div>
     </div>
+    <SectionGallery images={camp.galleries?.includedInPrice} />
   </section>
 )}
 
@@ -489,6 +495,7 @@ const renderItalicText = (text: string) => {
               <CampSections sections={camp.sections} />
             </div>
           </div>
+          <SectionGallery images={camp.galleries?.other} />
         </section>
       ) : null}
 
