@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 
 export default function ReasonsCampSection() {
   return (
-    <section className="py-16">
+    <section className="py-10">
       <div className="container mx-auto px-4 lg:px-8">
         <div className="bg-card p-6 md:p-10">
           <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">

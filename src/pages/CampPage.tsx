@@ -439,6 +439,7 @@ const renderItalicText = (text: string) => {
                 </div>
               ))}
             </div>
+            <SectionGallery images={camp.galleries?.notIncludedInPrice} className="pt-10"/>
           </div>
         )}
 

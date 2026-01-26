@@ -92,12 +92,16 @@ import moinesti3 from "@/assets/MoinestiExtra3.jpg";
 import moinesti4 from "@/assets/MoienstiExtra4.jpg";
 import moinesti5 from "@/assets/MoinestiExtra5.jpg";
 import moinesti6 from "@/assets/MoinestiExtra6.jpg";
+import moinesti7 from "@/assets/Moinesti7.jpg";
+import moinesti8 from "@/assets/Moinesti8.jpg";
 import poianaMarului1 from "@/assets/PoianaExtra1.jpg";
 import poianaMarului2 from "@/assets/PoianaExtra2.jpg";
 import poianaMarului3 from "@/assets/PoianaExtra3.jpg";
 import poianaMarului4 from "@/assets/PoianaExtra4.jpg";
 import poianaMarului5 from "@/assets/PoianaExtra5.jpg";
 import poianaMarului6 from "@/assets/PoianaExtra6.jpg";
+import poianaMarului7 from "@/assets/Poiana7.jpg";
+import poianaMarului8 from "@/assets/Poiana8.jpg";
 
 /* =======================
    DOAR DEFAULT-URI COMUNE
@@ -419,7 +423,7 @@ visibility: {
         quickInfo: {
             location: "Dublin, Irlanda",
             duration: "8 zile / 7 nopți",
-            ageGroup: "12 – 17 ani",
+            ageGroup: "13 – 18 ani",
             dates: "2 – 9 august 2026",
             price: "940 EUR",
         },
@@ -433,9 +437,9 @@ visibility: {
             "1 însoțitor Pro Erudio la 10 copii + transfer aeroport–campus",
         ],
         locationDescription: {
-            title: "Dublin City University (DCU), Dublin",
+            title: "Dublin City University (DCU)",
             description:
-                "Dublin City University (DCU) a fost fondată în 1980, iar de atunci a crescut de la un număr mic de studenți (200 în primul an de funcționare) la peste 19.000 de studenți astăzi. Universitatea dispune de cinci campusuri, trei dintre acestea fiind campusuri academice (Glasnevin, St. Patricks și All Hallows, unde studenții merg la cursuri, învață și socializează), unul sportiv DCU Sports Campus (întinzându-se pe 35 de hectare) și unul dedicat activităților de cercetare și inovație (DCU Alpha). Dublin City University (DCU) este o universitate tânără, dinamică și ambițioasă, care își propune să transforme viețile oamenilor prin educație, cercetare și inovație. Universitatea are o reputație excelentă, clasându-se în top 350 universități din lume, în ciuda faptului că este o universitate relativ tânără.",
+                "Dublin City University (DCU) a fost fondată în 1980, iar de atunci a crescut de la un număr mic de studenți (200 în primul an de funcționare) la peste 19.000 de studenți astăzi. Universitatea dispune de cinci campusuri, trei dintre acestea fiind campusuri academice (Glasnevin, St. Patricks și All Hallows, unde studenții merg la cursuri, învață și socializează), unul sportiv DCU Sports Campus (întinzându-se pe 35 de hectare) și unul dedicat activităților de cercetare și inovație (DCU Alpha). \n \n Dublin City University (DCU) este o universitate tânără, dinamică și ambițioasă, care își propune să transforme viețile oamenilor prin educație, cercetare și inovație. Universitatea are o reputație excelentă, clasându-se în top 350 universități din lume, în ciuda faptului că este o universitate relativ tânără.",
             image: aboutDublin, // schimbă cu o poză DCU când o ai
             imageAlt: "Dublin City University (DCU)",
         },
@@ -470,7 +474,7 @@ visibility: {
             "Asigurare storno (opțional) și de călătorie",
         ],
         activitiesDescription:
-            "Activitățile sunt numeroase și variate: activități sportive în aer liber și în sala de sport multifuncțională, ateliere (actorie, fotbal, arts & crafts), cluburi de conversație, seminarii pe diferite teme și jocuri de echipă (ex: Treasure Hunt, Bingo). Sunt incluse quiz-uri, vizionări de filme, prezentări de modă și seri tematice. Excursiile includ tururi de jumătate de zi în Dublin (plimbări, shopping, vizite la Muzeul Național de Istorie, Grădina Botanică, St Stephen’s Green etc.) și o excursie de o zi întreagă (posibil la Dún Laoghaire & Bray sau Howth).",
+            "Activitățile posibile sunt numeroase și variate: activități sportive în aer liber și în sala de sport multifuncțională, ateliere (actorie, fotbal, arts & crafts), cluburi de conversație, seminarii pe diferite teme și jocuri de echipă (ex: Treasure Hunt, Bingo). Sunt incluse quiz-uri, vizionări de filme, prezentări de modă și seri tematice. \n \n Excursiile includ tururi de jumătate de zi în Dublin (plimbări, shopping, vizite la Muzeul Național de Istorie, Grădina Botanică, St Stephen’s Green etc.) și o excursie de o zi întreagă (posibil la Dún Laoghaire & Bray sau Howth). \n \n Programul zilnic al școlii de vară cuprinde cursuri de limba engleză, ateliere de după-amiază (care pot fi vizite la obiective turistice din orașul Dublin) și serate dupa cină.",
         activityImages: [activityDublin1, activityDublin2, activityDublin3, activityDublin4], // înlocuiește cu poze DCU/cazare/masa când le ai
         registrationInfo: {
             steps: [
@@ -665,7 +669,7 @@ visibility: {
         sections: [
             {
                 type: "note",
-                text: "Pentru rezervările cu avans efectuate până la data de 15 februarie 2026, prețul este de 2.480 lei(totul inclus: pensiune completă, cursuri, excursii, transport din București). După această dată prețul poate suferi modificări.",
+                text: "Pentru rezervările cu avans efectuate până la data de 15 februarie 2026, prețul este de 2.480 lei (totul inclus: pensiune completă, cursuri, excursii, transport din București). După această dată prețul poate suferi modificări.",
             },
             {
                 type: "twoCols",
@@ -822,7 +826,7 @@ visibility: {
         locationDescription: {
             title: "Moinești – tabără activă în România",
             description:
-                "Mario Resort & Event Center Moinești este situat în municipiul Moinești aflat în N-V județului Bacău, în bazinul mijlociu al sistemului de râuri Trotuș-Tazlău, localitate aflata la o distanta de 46 km de Bacău, 8 km de Comănești, 30 km de Tg. Ocna, 44 km de Slănic Moldova și 42 km de Onești. Cazarea se face în camere duble, triple sau de patru locuri, în funcție de disponibilitatea complexului. În funcție de gradul de ocupare, cazarea se va face la Hotel Mario, Hotel Topaz sau Pensiunea Mario. Momentan, noi am rezervat 50 de locuri, dar complexul are o capacitate de peste 200 de locuri.",
+                "Mario Resort & Event Center Moinești este situat în municipiul Moinești aflat în N-V județului Bacău, în bazinul mijlociu al sistemului de râuri Trotuș-Tazlău, localitate aflata la o distanta de 46 km de Bacău, 8 km de Comănești, 30 km de Tg. Ocna, 44 km de Slănic Moldova și 42 km de Onești.\n \n Cazarea se face în camere duble, triple sau de patru locuri, în funcție de disponibilitatea complexului. În funcție de gradul de ocupare, cazarea se va face la Hotel Mario, Hotel Topaz sau Hotel Safir. Momentan, noi am rezervat 50 de locuri, dar complexul are o capacitate de peste 200 de locuri.",
             image: moinestiAbout,
             imageAlt: "Moinești",
         },
@@ -846,6 +850,10 @@ visibility: {
     moinesti1,
     moinesti5,
     moinesti3,
+  ],
+  notIncludedInPrice: [
+    moinesti7,
+    moinesti8,
   ],
  other: [
     moinesti4,
@@ -908,6 +916,10 @@ visibility: {
     poianaMarului1,
     poianaMarului5,
     poianaMarului3,
+  ],
+  notIncludedInPrice: [
+    poianaMarului7,
+    poianaMarului8,
   ],
  other: [
     poianaMarului4,

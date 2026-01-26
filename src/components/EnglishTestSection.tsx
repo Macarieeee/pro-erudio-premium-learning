@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const EnglishTestSection = () => {
   return (
-    <section className="py-20 bg-secondary/30">
+    <section className="py-10 bg-secondary/30">
       <div className="container mx-auto px-4 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>

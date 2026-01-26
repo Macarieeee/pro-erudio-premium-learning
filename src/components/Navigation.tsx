@@ -80,7 +80,7 @@ const Navigation = () => {
               to="/"
               className="text-secondary-foreground/90 hover:text-secondary-foreground transition-colors font-medium font-large"
             >
-              Acasă
+              Despre Tabere
             </Link>
 
             {/* Tabere 2026 dropdown */}
@@ -190,7 +190,7 @@ const Navigation = () => {
               className="block text-secondary-foreground/90 hover:text-secondary-foreground transition-colors font-medium py-2"
               onClick={() => setIsOpen(false)}
             >
-              Acasă
+              Despre Tabere
             </Link>
 
             {/* Tabere 2026 */}
