@@ -1,60 +1,91 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
-import { Users, Award, BookOpen, Heart, Globe, Target, CheckCircle, Mail, Phone, MapPin } from "lucide-react";
+import {
+  Users,
+  Award,
+  BookOpen,
+  Heart,
+  Globe,
+  Target,
+  CheckCircle,
+  Mail,
+  Phone,
+  MapPin,
+} from "lucide-react";
 import RegistrationForm from "@/components/RegistrationForm";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 import aboutClassroomImage from "@/assets/about-classroom.jpg";
 import summerCampImage from "@/assets/summer-camp.jpg";
+import { Head } from "vite-react-ssg";
 
 const AboutPage = () => {
+  // IMPORTANT: pentru OG tags, folosește URL absolut + imagine publică accesibilă
+  // Recomandat: pune o imagine OG în /public/og/despre-noi.jpg (1200x630)
+  const canonicalUrl = "https://tabere.proerudio.ro/despre-noi";
+  const ogImage = aboutClassroomImage;
+
   const teamMembers = [
     {
       name: "Maria Popescu",
       role: "Director & Fondator",
-      description: "Fondator Pro Erudio, cu peste 14 ani de experiență în organizarea taberelor de engleză.",
+      description:
+        "Fondator Pro Erudio, cu peste 14 ani de experiență în organizarea taberelor de engleză.",
       image: summerCampImage,
     },
     {
       name: "Andrei Ionescu",
       role: "Coordonator Tabere Internaționale",
-      description: "Responsabil pentru taberele din UK și Irlanda, expert în logistică internațională.",
+      description:
+        "Responsabil pentru taberele din UK și Irlanda, expert în logistică internațională.",
       image: summerCampImage,
     },
     {
       name: "Elena Dumitrescu",
       role: "Director Academic",
-      description: "Certificată Cambridge CELTA, coordonează programele de engleză din toate taberele.",
+      description:
+        "Certificată Cambridge CELTA, coordonează programele de engleză din toate taberele.",
       image: summerCampImage,
     },
     {
       name: "Alexandru Radu",
       role: "Coordonator Activități & Animație",
-      description: "15 ani experiență în animație, creatorul programelor de activități din tabere.",
+      description:
+        "15 ani experiență în animație, creatorul programelor de activități din tabere.",
       image: summerCampImage,
     },
     {
       name: "Cristina Munteanu",
       role: "Profesor Engleză Senior",
-      description: "Specializată în metode interactive de predare pentru copii și adolescenți.",
+      description:
+        "Specializată în metode interactive de predare pentru copii și adolescenți.",
       image: summerCampImage,
     },
     {
       name: "Dan Georgescu",
       role: "Animator Principal",
-      description: "Expert în team building și jocuri educative, adorat de copii în fiecare tabără.",
+      description:
+        "Expert în team building și jocuri educative, adorat de copii în fiecare tabără.",
       image: summerCampImage,
     },
     {
       name: "Ioana Stanciu",
       role: "Profesor Engleză",
-      description: "Specializată în pregătire Cambridge, participă la taberele internaționale.",
+      description:
+        "Specializată în pregătire Cambridge, participă la taberele internaționale.",
       image: summerCampImage,
     },
     {
       name: "Mihai Popa",
       role: "Coordonator Sport & Outdoor",
-      description: "Instructor de drumeții și sporturi, responsabil pentru activitățile outdoor.",
+      description:
+        "Instructor de drumeții și sporturi, responsabil pentru activitățile outdoor.",
       image: summerCampImage,
     },
   ];
@@ -63,22 +94,26 @@ const AboutPage = () => {
     {
       icon: Heart,
       title: "Învățare prin Aventură",
-      description: "Credem că engleza se învață cel mai bine prin experiențe memorabile și activități captivante.",
+      description:
+        "Credem că engleza se învață cel mai bine prin experiențe memorabile și activități captivante.",
     },
     {
       icon: Users,
       title: "Siguranță pe Primul Loc",
-      description: "Supraveghere 24/7, protocoale stricte și echipă dedicată pentru siguranța fiecărui copil.",
+      description:
+        "Supraveghere 24/7, protocoale stricte și echipă dedicată pentru siguranța fiecărui copil.",
     },
     {
       icon: Award,
       title: "Excelență în Educație",
-      description: "Profesori certificați Cambridge și metode dovedite pentru progres real în engleză.",
+      description:
+        "Profesori certificați Cambridge și metode dovedite pentru progres real în engleză.",
     },
     {
       icon: Globe,
       title: "Experiențe Internaționale",
-      description: "Tabere în UK, Irlanda și România pentru imersie culturală autentică.",
+      description:
+        "Tabere în UK, Irlanda și România pentru imersie culturală autentică.",
     },
   ];
 
@@ -93,13 +128,44 @@ const AboutPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* ✅ SEO + Open Graph (Facebook/WhatsApp) */}
+      <Head>
+        <title>Despre noi – Tabere de Engleză Pro Erudio</title>
+
+        <meta
+          name="description"
+          content="Află povestea Pro Erudio: peste 14 ani de experiență în tabere de engleză în România și în străinătate, cu profesori dedicați și activități memorabile."
+        />
+
+        <link rel="canonical" href={canonicalUrl} />
+
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:title" content="Despre noi – Tabere de Engleză Pro Erudio" />
+        <meta
+          property="og:description"
+          content="Peste 14 ani de experiență în tabere de engleză în România, UK și Irlanda. Profesori dedicați, siguranță și experiențe memorabile."
+        />
+        <meta property="og:image" content={ogImage} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Despre noi – Tabere de Engleză Pro Erudio" />
+        <meta
+          name="twitter:description"
+          content="Povestea Pro Erudio, echipa și valorile noastre. Tabere de engleză în România și în străinătate."
+        />
+        <meta name="twitter:image" content={ogImage} />
+      </Head>
+
       <Navigation />
-      
+
       {/* Hero Section */}
       <section className="relative pt-16">
         <div className="h-[50vh] relative overflow-hidden">
-          <img 
-            src={aboutClassroomImage} 
+          <img
+            src={aboutClassroomImage}
             alt="Despre Pro Erudio"
             className="w-full h-full object-cover"
           />
@@ -132,33 +198,39 @@ const AboutPage = () => {
                 </h2>
               </div>
               <p className="text-muted-foreground mb-6 leading-relaxed">
-                Pro Erudio organizează tabere de limbă engleză din 2010, cu convingerea că cea mai bună 
-                modalitate de a învăța o limbă străină este prin imersie și experiențe de neuitat. 
+                Pro Erudio organizează tabere de limbă engleză din 2010, cu convingerea că cea mai bună
+                modalitate de a învăța o limbă străină este prin imersie și experiențe de neuitat.
                 Taberele noastre combină cursuri intensive de engleză cu aventură, sport și cultură.
               </p>
               <p className="text-muted-foreground mb-6 leading-relaxed">
-                Misiunea noastră este să oferim copiilor și adolescenților oportunitatea de a învăța 
-                engleza într-un mediu internațional, sigur și distractiv, unde fac prieteni din toată 
+                Misiunea noastră este să oferim copiilor și adolescenților oportunitatea de a învăța
+                engleza într-un mediu internațional, sigur și distractiv, unde fac prieteni din toată
                 lumea și creează amintiri pentru o viață.
               </p>
               <div className="space-y-3">
                 <div className="flex items-center gap-3">
                   <CheckCircle className="h-5 w-5 text-accent flex-shrink-0" />
-                  <span className="text-foreground">Peste 50 de ediții de tabere organizate</span>
+                  <span className="text-foreground">
+                    Peste 50 de ediții de tabere organizate
+                  </span>
                 </div>
                 <div className="flex items-center gap-3">
                   <CheckCircle className="h-5 w-5 text-accent flex-shrink-0" />
-                  <span className="text-foreground">Destinații în România, UK și Irlanda</span>
+                  <span className="text-foreground">
+                    Destinații în România, UK și Irlanda
+                  </span>
                 </div>
                 <div className="flex items-center gap-3">
                   <CheckCircle className="h-5 w-5 text-accent flex-shrink-0" />
-                  <span className="text-foreground">Profesori certificați Cambridge și echipă dedicată</span>
+                  <span className="text-foreground">
+                    Profesori certificați Cambridge și echipă dedicată
+                  </span>
                 </div>
               </div>
             </div>
             <div className="rounded-2xl overflow-hidden shadow-lg">
-              <img 
-                src={summerCampImage} 
+              <img
+                src={summerCampImage}
                 alt="Misiunea Pro Erudio"
                 className="w-full h-[400px] object-cover"
               />
@@ -180,12 +252,17 @@ const AboutPage = () => {
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {values.map((value, index) => (
-              <Card key={index} className="bg-card border-border text-center hover:shadow-lg transition-shadow">
+              <Card
+                key={index}
+                className="bg-card border-border text-center hover:shadow-lg transition-shadow"
+              >
                 <CardContent className="pt-8 pb-6">
                   <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
                     <value.icon className="h-8 w-8 text-primary" />
                   </div>
-                  <h3 className="text-xl font-bold text-foreground mb-2">{value.title}</h3>
+                  <h3 className="text-xl font-bold text-foreground mb-2">
+                    {value.title}
+                  </h3>
                   <p className="text-muted-foreground">{value.description}</p>
                 </CardContent>
               </Card>
@@ -247,19 +324,28 @@ const AboutPage = () => {
           >
             <CarouselContent className="-ml-4">
               {teamMembers.map((member, index) => (
-                <CarouselItem key={index} className="pl-4 basis-full sm:basis-1/2 lg:basis-1/4">
+                <CarouselItem
+                  key={index}
+                  className="pl-4 basis-full sm:basis-1/2 lg:basis-1/4"
+                >
                   <Card className="bg-card border-border overflow-hidden hover:shadow-lg transition-shadow h-full">
                     <div className="h-48 overflow-hidden">
-                      <img 
-                        src={member.image} 
+                      <img
+                        src={member.image}
                         alt={member.name}
                         className="w-full h-full object-cover"
                       />
                     </div>
                     <CardContent className="pt-4">
-                      <h3 className="text-lg font-bold text-foreground">{member.name}</h3>
-                      <p className="text-primary font-medium text-sm mb-2">{member.role}</p>
-                      <p className="text-muted-foreground text-sm">{member.description}</p>
+                      <h3 className="text-lg font-bold text-foreground">
+                        {member.name}
+                      </h3>
+                      <p className="text-primary font-medium text-sm mb-2">
+                        {member.role}
+                      </p>
+                      <p className="text-muted-foreground text-sm">
+                        {member.description}
+                      </p>
                     </CardContent>
                   </Card>
                 </CarouselItem>
@@ -276,16 +362,16 @@ const AboutPage = () => {
       {/* Contact Section */}
       <section className="py-20">
         <div className="container mx-auto px-4 lg:px-8">
-        <div className="text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-            Întrebări despre Tabere?
-          </h2>
-          <p className="text-muted-foreground mb-8 leading-relaxed max-w-2xl mx-auto">
-            Vrei să afli mai multe despre taberele noastre? Suntem aici să răspundem la toate 
-            întrebările tale despre program, locații, prețuri și înscrieri.
-          </p>
-        </div>
-        <div className="flex flex-wrap gap-8 justify-center">
+          <div className="text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
+              Întrebări despre Tabere?
+            </h2>
+            <p className="text-muted-foreground mb-8 leading-relaxed max-w-2xl mx-auto">
+              Vrei să afli mai multe despre taberele noastre? Suntem aici să răspundem la toate
+              întrebările tale despre program, locații, prețuri și înscrieri.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-8 justify-center">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
                 <Phone className="h-6 w-6 text-primary" />

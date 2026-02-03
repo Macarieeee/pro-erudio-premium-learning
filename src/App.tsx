@@ -2,7 +2,8 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Routes, Route } from "react-router-dom";
+import type { RouteRecord } from "vite-react-ssg";
+import { Outlet } from "react-router-dom";
 
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
@@ -17,26 +18,47 @@ import JurnaleTabara from "@/pages/JurnaleTabara";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <ScrollToTop />
+/**
+ * Layout comun (wrapper)
+ * – păstrează EXACT ce aveai înainte
+ */
+function Layout() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <ScrollToTop />
+        <Outlet />
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+}
 
-      <Routes>
-        <Route path="/" element={<Index />} />
-        <Route path="/despre-noi" element={<AboutPage />} />
-        <Route path="/:slug" element={<CampPage />} />
-        <Route path="/jurnal/:slug" element={<JournalPage />} />
-        <Route path="/test-de-plasare" element={<TesteAmplasament />} />
-        <Route path="*" element={<NotFound />} />
-        <Route path="/declaratie-consimtamant" element={<DeclaratieConsimtamant />} />
-        <Route path="/regulament" element={<RegulamentFunctionare />} />
-        <Route path="/jurnale" element={<JurnaleTabara />} />
-      </Routes>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+/**
+ * RUTE SSG
+ * IMPORTANT:
+ * - rutele statice sunt OK pentru OG tags
+ * - rutele dinamice rămân funcționale, dar NU sunt prerender-uite
+ */
+export const routes: RouteRecord[] = [
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      { index: true, element: <Index /> },
 
-export default App;
+      { path: "despre-noi", element: <AboutPage /> },
+      { path: "test-de-plasare", element: <TesteAmplasament /> },
+      { path: "declaratie-consimtamant", element: <DeclaratieConsimtamant /> },
+      { path: "regulament", element: <RegulamentFunctionare /> },
+      { path: "jurnale", element: <JurnaleTabara /> },
+
+      // ⚠️ dinamice (NU SSG by default)
+      { path: ":slug", element: <CampPage /> },
+      { path: "jurnal/:slug", element: <JournalPage /> },
+
+      { path: "*", element: <NotFound /> },
+    ],
+  },
+];
