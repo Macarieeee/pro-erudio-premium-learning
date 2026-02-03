@@ -807,6 +807,7 @@ visibility: {
             showProgramImage: false,
             showLuggageImage: false,
             showActivities: false,
+            showDiscounts: false,
         },
         quickInfo: {
             location: "Moinești, Județul Bacău",
@@ -1025,6 +1026,7 @@ visibility: {
             showProgramImage: false,
             showLuggageImage: false,
             showActivities: false,
+            showDiscounts: false,
         },
         quickInfo: {
             location: "Poiana Mărului, Județul Brașov",
@@ -1314,6 +1316,7 @@ visibility: {
             showProgramImage: false,
             showLuggageImage: false,
             showActivities: false,
+            showDiscounts: false,
         },
         quickInfo: {
             location: "Poiana Mărului, Județul Brașov",
@@ -1551,6 +1554,7 @@ visibility: {
             showProgramImage: false,
             showLuggageImage: false,
             showActivities: false,
+            showDiscounts: false,
         },
         quickInfo: {
             location: "Moinești, Județul Bacău",
@@ -1733,6 +1737,7 @@ visibility: {
             showProgramImage: false,
             showLuggageImage: false,
             showActivities: false,
+            showDiscounts: false,
         },
         quickInfo: {
             location: "Predeal, Județul Prahova",
@@ -1914,6 +1919,7 @@ visibility: {
             showProgramImage: false,
             showLuggageImage: false,
             showActivities: false,
+            showDiscounts: false,
         },
         quickInfo: {
             location: "Poiana Mărului, Județul Brașov",
@@ -2346,6 +2352,7 @@ about: {
             showProgramImage: false,
             showLuggageImage: false,
             showActivities: false,
+            showDiscounts: false,
         },
         quickInfo: {
             location: "Poiana Mărului, Județul Brașov",
@@ -2524,6 +2531,7 @@ about: {
             showProgramImage: false,
             showLuggageImage: false,
             showActivities: false,
+            showDiscounts: false,
         },
         quickInfo: {
             location: "Valea Oltului, Vâlcea",
