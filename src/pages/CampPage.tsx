@@ -37,7 +37,7 @@ import {
 
 import { useToast } from "@/hooks/use-toast";
 import { getCampBySlug, getCampSEO } from "@/data/campsData";
-
+import { Helmet } from "react-helmet-async"; // ✅ IMPORT NOU
 
 type CampPageProps = {
   slugOverride?: string;
@@ -56,7 +56,7 @@ const CampPage = ({ slugOverride }: CampPageProps) => {
   if (!camp) return <Navigate to="/" replace />;
 
   const seo = getCampSEO(camp);
-
+const currentUrl = window.location.href; // sau construiește-l manual dacă e SSG
   // ✅ Visibility defaults + override per tabără
   const v = {
     showAbout: true,
@@ -153,7 +153,24 @@ const CampPage = ({ slugOverride }: CampPageProps) => {
 
   return (
     <div className="min-h-screen bg-background">
+<Helmet>
+        {/* Titlul Paginii */}
+        <title>{seo.title}</title>
+        <meta name="description" content={seo.description} />
 
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={currentUrl} />
+        <meta property="og:title" content={seo.title} />
+        <meta property="og:description" content={seo.description} />
+        <meta property="og:image" content={seo.image} />
+        
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={seo.title} />
+        <meta name="twitter:description" content={seo.description} />
+        <meta name="twitter:image" content={seo.image} />
+      </Helmet>
 
       <Navigation />
 

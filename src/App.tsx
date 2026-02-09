@@ -15,6 +15,7 @@ import DeclaratieConsimtamant from "@/pages/DeclaratieConsimtamant";
 import RegulamentFunctionare from "@/pages/RegulamentFunctionare";
 import JurnaleTabara from "@/pages/JurnaleTabara";
 import { campsData } from "@/data/campsData";
+import { HelmetProvider } from 'react-helmet-async';
 const queryClient = new QueryClient();
 /**
  * Layout comun (wrapper)
@@ -22,14 +23,14 @@ const queryClient = new QueryClient();
  */
 function Layout() {
   return (
-    <QueryClientProvider client={queryClient}>
+  <HelmetProvider>
       <TooltipProvider>
         <Toaster />
         <Sonner />
         <ScrollToTop />
         <Outlet />
       </TooltipProvider>
-    </QueryClientProvider>
+    </HelmetProvider>
   );
 }
 
