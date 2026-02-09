@@ -22,19 +22,29 @@ function escapeHtml(str) {
 }
 
 function injectHead(html, { title, description, image, url }) {
-  // scoate title/og/twitter existente
   let out = html
-    .replace(/<title>.*?<\/title>/g, "")
-    .replace(/<meta[^>]+property="og:[^"]+"[^>]*>/g, "")
-    .replace(/<meta[^>]+name="twitter:[^"]+"[^>]*>/g, "");
+    // scoate toate <title> existente
+    .replace(/<title[^>]*>.*?<\/title>/gis, "")
+    // scoate OG / Twitter existente
+    .replace(/<meta[^>]+property="og:[^"]+"[^>]*>/gis, "")
+    .replace(/<meta[^>]+name="twitter:[^"]+"[^>]*>/gis, "")
+    // scoate canonical existent (ASTA îți lipsea!)
+    .replace(/<link[^>]+rel="canonical"[^>]*>/gis, "")
+    // scoate description existent (optional dar recomandat)
+    .replace(/<meta[^>]+name="description"[^>]*>/gis, "");
 
   const t = escapeHtml(title);
   const d = escapeHtml(description);
 
-  const img = image.startsWith("http") ? image : SITE_URL + (image.startsWith("/") ? image : "/" + image);
+  const img = image.startsWith("http")
+    ? image
+    : SITE_URL + (image.startsWith("/") ? image : "/" + image);
 
   const tags = `
 <title>${t}</title>
+<meta name="description" content="${d}" />
+<link rel="canonical" href="${url}" />
+
 <meta property="og:type" content="website" />
 <meta property="og:title" content="${t}" />
 <meta property="og:description" content="${d}" />
@@ -47,7 +57,6 @@ function injectHead(html, { title, description, image, url }) {
 <meta name="twitter:image" content="${img}" />
 `;
 
-  // inject înainte de </head>
   out = out.replace("</head>", `${tags}\n</head>`);
   return out;
 }
