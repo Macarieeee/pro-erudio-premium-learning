@@ -37,7 +37,8 @@ import {
 
 import { useToast } from "@/hooks/use-toast";
 import { getCampBySlug, getCampSEO } from "@/data/campsData";
-import { Helmet } from "react-helmet-async";
+import * as HelmetAsync from "react-helmet-async";
+const { Helmet } = HelmetAsync;
 
 type CampPageProps = {
   slugOverride?: string;

@@ -4,7 +4,6 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { RouteRecord } from "vite-react-ssg";
 import { Outlet } from "react-router-dom";
-import { HelmetProvider } from "react-helmet-async";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import CampPage from "./pages/CampPage";
@@ -17,7 +16,8 @@ import RegulamentFunctionare from "@/pages/RegulamentFunctionare";
 import JurnaleTabara from "@/pages/JurnaleTabara";
 import { campsData } from "@/data/campsData";
 const queryClient = new QueryClient();
-
+import * as HelmetAsync from "react-helmet-async";
+const { HelmetProvider } = HelmetAsync;
 /**
  * Layout comun (wrapper)
  * – păstrează EXACT ce aveai înainte
