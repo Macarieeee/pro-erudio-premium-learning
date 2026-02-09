@@ -56,7 +56,12 @@ const CampPage = ({ slugOverride }: CampPageProps) => {
   if (!camp) return <Navigate to="/" replace />;
 
   const seo = getCampSEO(camp);
-const currentUrl = window.location.href; // sau construiește-l manual dacă e SSG
+// --- FIX START ---
+  const baseUrl = "https://tabere.proerudio.ro";
+  const currentUrl = typeof window !== 'undefined' 
+      ? window.location.href 
+      : `${baseUrl}/${slug}`;
+  // --- FIX END ---
   // ✅ Visibility defaults + override per tabără
   const v = {
     showAbout: true,
