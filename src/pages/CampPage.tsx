@@ -37,8 +37,7 @@ import {
 
 import { useToast } from "@/hooks/use-toast";
 import { getCampBySlug, getCampSEO } from "@/data/campsData";
-import * as HelmetAsync from "react-helmet-async";
-const { Helmet } = HelmetAsync;
+
 
 type CampPageProps = {
   slugOverride?: string;
@@ -154,20 +153,7 @@ const CampPage = ({ slugOverride }: CampPageProps) => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Helmet>
-        <title>{seo.title}</title>
 
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content={seo.title} />
-        <meta property="og:description" content={seo.description} />
-        <meta property="og:image" content={seo.image} />
-        <meta property="og:url" content={`https://tabere.proerudio.ro/${camp.slug}`} />
-
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={seo.title} />
-        <meta name="twitter:description" content={seo.description} />
-        <meta name="twitter:image" content={seo.image} />
-      </Helmet>
 
       <Navigation />
 

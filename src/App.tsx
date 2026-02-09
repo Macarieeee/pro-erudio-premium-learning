@@ -16,24 +16,20 @@ import RegulamentFunctionare from "@/pages/RegulamentFunctionare";
 import JurnaleTabara from "@/pages/JurnaleTabara";
 import { campsData } from "@/data/campsData";
 const queryClient = new QueryClient();
-import * as HelmetAsync from "react-helmet-async";
-const { HelmetProvider } = HelmetAsync;
 /**
  * Layout comun (wrapper)
  * – păstrează EXACT ce aveai înainte
  */
 function Layout() {
   return (
-    <HelmetProvider>
-      <QueryClientProvider client={queryClient}>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <ScrollToTop />
-          <Outlet />
-        </TooltipProvider>
-      </QueryClientProvider>
-    </HelmetProvider>
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <ScrollToTop />
+        <Outlet />
+      </TooltipProvider>
+    </QueryClientProvider>
   );
 }
 
