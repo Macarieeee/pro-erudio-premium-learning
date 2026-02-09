@@ -22,16 +22,13 @@ function escapeHtml(str) {
 }
 
 function injectHead(html, { title, description, image, url }) {
-  let out = html
-    // scoate toate <title> existente
-    .replace(/<title[^>]*>.*?<\/title>/gis, "")
-    // scoate OG / Twitter existente
-    .replace(/<meta[^>]+property="og:[^"]+"[^>]*>/gis, "")
-    .replace(/<meta[^>]+name="twitter:[^"]+"[^>]*>/gis, "")
-    // scoate canonical existent (ASTA îți lipsea!)
-    .replace(/<link[^>]+rel="canonical"[^>]*>/gis, "")
-    // scoate description existent (optional dar recomandat)
-    .replace(/<meta[^>]+name="description"[^>]*>/gis, "");
+let out = html
+  .replace(/<title[^>]*>.*?<\/title>/gs, "")
+  .replace(/<meta[^>]+name="description"[^>]*>/g, "")
+  .replace(/<link[^>]+rel="canonical"[^>]*>/g, "")
+  .replace(/<meta[^>]+property="og:[^"]+"[^>]*>/g, "")
+  .replace(/<meta[^>]+name="twitter:[^"]+"[^>]*>/g, "");
+
 
   const t = escapeHtml(title);
   const d = escapeHtml(description);

@@ -37,7 +37,7 @@ const Index = () => {
           property="og:description"
           content="Peste 15 ani de experiență în tabere de engleză în România, UK și Irlanda. Profesori dedicați, siguranță și experiențe memorabile."
         />
-        <meta property="og:image" content={ogImage} />
+        <meta property="og:image" content="https://tabere.proerudio.ro/og/herohome.jpeg" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
 
@@ -47,7 +47,7 @@ const Index = () => {
           name="twitter:description"
           content="Povestea Pro Erudio, echipa și valorile noastre. Tabere de engleză în România și în străinătate."
         />
-        <meta name="twitter:image" content={ogImage} />
+        <meta name="twitter:image" content="https://tabere.proerudio.ro/og/herohome.jpeg"  />
       </Head>
       <Navigation />
       <main>
