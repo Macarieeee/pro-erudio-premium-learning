@@ -107,6 +107,27 @@ import poianaMarului8 from "@/assets/Poiana8.jpg";
    DOAR DEFAULT-URI COMUNE
 ======================= */
 
+export type CampSEO = {
+  title: string;
+  description: string;
+  image: string; // URL absolut
+};
+
+const SITE_URL = "https://tabere.proerudio.ro";
+
+export function getCampSEO(camp: any): CampSEO {
+  const title = `${camp.campName} | Pro Erudio`;
+
+  // încearcă să ia o descriere scurtă dacă ai ceva similar; altfel fallback
+  const description =
+    camp?.shortDescription ||
+    camp?.description ||
+    "Descoperă tabăra Pro Erudio: program, locație, activități și înscriere.";
+
+  const image = `${SITE_URL}/og/${camp.slug}.jpg`;
+
+  return { title, description, image };
+}
 
 
 export const DEFAULT_REGISTRATION = {
