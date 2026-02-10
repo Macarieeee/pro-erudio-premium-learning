@@ -24,19 +24,23 @@ export default function WritingPage() {
   const [taskIndex, setTaskIndex] = useState(0);
   const [finished, setFinished] = useState(false);
 
-  const [state, setState] = useState<DraftsState>(() => {
-    const raw = localStorage.getItem(LS_KEY);
-    if (raw) {
-      try {
-        return JSON.parse(raw) as DraftsState;
-      } catch {}
-    }
-    return { drafts: {}, chosenPart2TaskId: null };
-  });
+const [state, setState] = useState<DraftsState>(() => ({ drafts: {}, chosenPart2TaskId: null }));
 
-  useEffect(() => {
-    localStorage.setItem(LS_KEY, JSON.stringify(state));
-  }, [state]);
+useEffect(() => {
+  if (typeof window === "undefined") return;
+
+  const raw = window.localStorage.getItem(LS_KEY);
+  if (!raw) return;
+
+  try {
+    setState(JSON.parse(raw) as DraftsState);
+  } catch {}
+}, []);
+
+useEffect(() => {
+  if (typeof window === "undefined") return;
+  window.localStorage.setItem(LS_KEY, JSON.stringify(state));
+}, [state]);
 
   const tasksInPart = useMemo(() => getTasksForPart(part), [part]);
   const task: WritingTask | undefined = tasksInPart[taskIndex];

@@ -45,21 +45,28 @@ export default function ListeningPage() {
   const [indexInPart, setIndexInPart] = useState(0);
   const [finished, setFinished] = useState(false);
 
-  const [answers, setAnswers] = useState<AnswersState>(() => {
-    const raw = localStorage.getItem(LS_KEY);
-    if (!raw) return buildInitialState();
-    try {
-      const parsed = JSON.parse(raw) as AnswersState;
-      return { ...buildInitialState(), ...parsed };
-    } catch {
-      return buildInitialState();
-    }
-  });
+const [answers, setAnswers] = useState<AnswersState>(() => buildInitialState());
+
+useEffect(() => {
+  // read from localStorage ONLY in browser
+  if (typeof window === "undefined") return;
+
+  const raw = window.localStorage.getItem(LS_KEY);
+  if (!raw) return;
+
+  try {
+    const parsed = JSON.parse(raw) as AnswersState;
+    setAnswers({ ...buildInitialState(), ...parsed });
+  } catch {
+    // ignore
+  }
+}, []);
 
   // Persist progress
-  useEffect(() => {
-    localStorage.setItem(LS_KEY, JSON.stringify(answers));
-  }, [answers]);
+useEffect(() => {
+  if (typeof window === "undefined") return;
+  window.localStorage.setItem(LS_KEY, JSON.stringify(answers));
+}, [answers]);
 
   // Audio handling (single track for whole exam)
   const audioRef = useRef<HTMLAudioElement | null>(null);
