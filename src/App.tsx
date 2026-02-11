@@ -16,6 +16,7 @@ import RegulamentFunctionare from "@/pages/RegulamentFunctionare";
 import JurnaleTabara from "@/pages/JurnaleTabara";
 import ListeningPage from "@/pages/FCE/Listening/ListeningPage";
 import WritingPage from "./pages/FCE/Writing/WritingPage";
+import ReadingPage from "./pages/FCE/Reading/ReadingPage";
 import { campsData } from "@/data/campsData";
 import { HelmetProvider } from 'react-helmet-async';
 const queryClient = new QueryClient();
@@ -63,6 +64,7 @@ export const routes: RouteRecord[] = [
       { path: "jurnal/:slug", element: <JournalPage /> },
       { path: "/fce/listening", element: <ListeningPage /> },
       { path: "/fce/writing", element: <WritingPage /> },
+      { path: "/fce/reading", element: <ReadingPage />},
       { path: "*", element: <NotFound /> },
     ],
   },
