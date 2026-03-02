@@ -71,7 +71,7 @@ useEffect(() => {
     }));
   };
 
-  const Header = () => (
+  const renderHeader = () => (
     <div className="sticky top-0 z-50 w-full border-b bg-white">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
         <div className="flex items-center gap-3">
@@ -94,7 +94,7 @@ useEffect(() => {
     </div>
   );
 
-  const LeftPrompt = () => {
+  const renderLeftPrompt = () => {
     if (!task) return null;
 
     return (
@@ -176,7 +176,7 @@ useEffect(() => {
     );
   };
 
-  const RightEditor = () => {
+  const renderRightEditor = () => {
     if (!task) return null;
 
     return (
@@ -226,7 +226,7 @@ useEffect(() => {
     );
   };
 
-  const Nav = () => (
+  const renderNav = () => (
     <div className="fixed bottom-0 left-0 right-0 z-40 border-t bg-white">
       <div className="mx-auto max-w-6xl px-4 py-3">
         <div className="flex flex-wrap items-center gap-2">
@@ -369,18 +369,18 @@ useEffect(() => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
+      {renderHeader()}
 
       {finished ? (
         <Finish />
       ) : (
         <div className="mx-auto grid max-w-6xl grid-cols-1 gap-4 px-4 pb-24 pt-6 lg:grid-cols-2">
-          <LeftPrompt />
-          <RightEditor />
+          {renderLeftPrompt()}
+          {renderRightEditor()}
         </div>
       )}
 
-      <Nav />
+      {renderNav()}
     </div>
   );
 }

@@ -77,6 +77,14 @@ function tokenizeGaps(input: string) {
   return out;
 }
 
+// IMPORTANT (focus fix): keep wrapper components OUTSIDE the page component,
+// otherwise they get re-created on every keystroke and can cause input remount/focus loss.
+const CardShell = ({ children }: { children: React.ReactNode }) => (
+  <div className="mx-auto w-full max-w-6xl px-4 pb-28 pt-6">
+    <div className="rounded-xl border bg-white shadow-sm">{children}</div>
+  </div>
+);
+
 export default function ReadingPage() {
   const [part, setPart] = useState<Part>(1);
   const [finished, setFinished] = useState(false);
@@ -84,6 +92,11 @@ export default function ReadingPage() {
 
   // Part 1 dropdown (gap menu)
   const [openGap, setOpenGap] = useState<number | null>(null);
+
+  // Part 6 drag and drop
+  const [p6Dragging, setP6Dragging] = useState<string | null>(null);
+  const [p6DragOver, setP6DragOver] = useState<number | null>(null);
+  const p6ScrollRef = useRef<HTMLDivElement>(null);
 
   // SSR-safe load
   useEffect(() => {
@@ -550,11 +563,6 @@ So I called my editor to warn him, took the shots, then rolled up the film, labe
   // UI Helpers
   // ---------------------------
 
-  const CardShell = ({ children }: { children: React.ReactNode }) => (
-    <div className="mx-auto w-full max-w-6xl px-4 pb-28 pt-6">
-      <div className="rounded-xl border bg-white shadow-sm">{children}</div>
-    </div>
-  );
 
   const Header = () => (
     <div className="sticky top-0 z-50 w-full border-b bg-white">
@@ -644,16 +652,16 @@ So I called my editor to warn him, took the shots, then rolled up the film, labe
     </button>
   );
 
-  const InlineInput = ({ id, placeholder = "..." }: { id: number; placeholder?: string }) => (
-    <input
-      value={answers.text[id] ?? ""}
-      onChange={(e) => setText(id, e.target.value)}
-      placeholder={placeholder}
-      className="inline-flex min-w-[140px] rounded-md border px-3 py-2 text-sm font-semibold outline-none transition duration-300 ease-in-out focus:border-primary"
-    />
-  );
+  const renderInlineInput = (id: number, placeholder = "...") => (
+  <input
+    value={answers.text[id] ?? ""}
+    onChange={(e) => setText(id, e.target.value)}
+    placeholder={placeholder}
+    className="inline-flex min-w-[140px] rounded-md border px-3 py-2 text-sm font-semibold outline-none transition duration-300 ease-in-out focus:border-primary"
+  />
+);
 
-  // ---------------------------
+// ---------------------------
   // PART RENDERS
   // ---------------------------
 
@@ -662,7 +670,7 @@ So I called my editor to warn him, took the shots, then rolled up the film, labe
 
     return (
       <CardShell>
-        <TopInstruction />
+        {TopInstruction()}
         <div className="px-6 py-6">
           <div className="mb-4 flex items-center justify-between gap-3">
             <div>
@@ -750,7 +758,7 @@ So I called my editor to warn him, took the shots, then rolled up the film, labe
 
     return (
       <CardShell>
-        <TopInstruction />
+        {TopInstruction()}
         <div className="px-6 py-6">
           <div className="text-2xl font-bold text-gray-900">{part2Title}</div>
           <div className="mt-2 text-sm text-gray-600">Use only one word in each gap.</div>
@@ -772,7 +780,7 @@ So I called my editor to warn him, took the shots, then rolled up the film, labe
                 return (
                   <span key={idx} className="mx-1">
                     <span className="mr-1 text-xs font-bold text-gray-500 align-middle">{id}</span>
-                    <InlineInput id={id} placeholder="one word" />
+                    {renderInlineInput(id, "one word")}
                   </span>
                 );
               })}
@@ -788,7 +796,7 @@ So I called my editor to warn him, took the shots, then rolled up the film, labe
 
     return (
       <CardShell>
-        <TopInstruction />
+        {TopInstruction()}
         <div className="px-6 py-6">
           <div className="text-2xl font-bold text-gray-900">{part3Title}</div>
           <div className="mt-2 text-sm text-gray-600">
@@ -813,7 +821,7 @@ So I called my editor to warn him, took the shots, then rolled up the film, labe
                   return (
                     <span key={idx} className="mx-1">
                       <span className="mr-1 text-xs font-bold text-gray-500 align-middle">{id}</span>
-                      <InlineInput id={id} placeholder="word" />
+                      {renderInlineInput(id, "word")}
                     </span>
                   );
                 })}
@@ -840,7 +848,7 @@ So I called my editor to warn him, took the shots, then rolled up the film, labe
 const Part4 = () => {
   return (
     <CardShell>
-      <TopInstruction />
+      {TopInstruction()}
       <div className="px-6 py-6">
         <div className="text-2xl font-bold text-gray-900">Key word transformations</div>
         <div className="mt-2 text-sm text-gray-600">
@@ -883,7 +891,7 @@ const Part4 = () => {
 
               <div className="mt-4 text-sm text-gray-900 leading-7">
                 <span className="font-semibold">{it.secondStart} </span>
-                <InlineInput id={it.id} placeholder="2–5 words" />
+                {renderInlineInput(it.id, "2–5 words")}
                 <span className="font-semibold"> {it.secondEnd}</span>
               </div>
             </div>
@@ -899,7 +907,7 @@ const Part4 = () => {
   const Part5 = () => {
     return (
       <CardShell>
-        <TopInstruction />
+        {TopInstruction()}
         <div className="px-6 py-6">
           <div className="text-2xl font-bold text-gray-900">{part5Title}</div>
 
@@ -940,14 +948,67 @@ const Part4 = () => {
     const tokens = tokenizeGaps(part6Passage);
     const letters = ["A", "B", "C", "D", "E", "F", "G"];
 
+    // Which letters are already used in gaps
+    const usedLetters = new Set(
+      Object.entries(answers.letter)
+        .filter(([k]) => Number(k) >= 37 && Number(k) <= 42)
+        .map(([, v]) => v)
+        .filter(Boolean) as string[]
+    );
+
+    const handleDragStart = (letter: string) => {
+      setP6Dragging(letter);
+    };
+
+    const handleDropOnGap = (gapId: number) => {
+      if (!p6Dragging) return;
+      // If this letter was already placed in another gap, clear it first
+      for (let i = 37; i <= 42; i++) {
+        if (answers.letter[i] === p6Dragging && i !== gapId) {
+          setLetter(i, "");
+        }
+      }
+      setLetter(gapId, p6Dragging);
+      setP6Dragging(null);
+      setP6DragOver(null);
+    };
+
+    const handleDropOnBank = () => {
+      setP6Dragging(null);
+      setP6DragOver(null);
+    };
+
+    const handleRemoveFromGap = (gapId: number) => {
+      setLetter(gapId, "");
+    };
+
     return (
       <CardShell>
-        <TopInstruction />
+        {TopInstruction()}
         <div className="px-6 py-6">
           <div className="text-2xl font-bold text-gray-900">{part6Title}</div>
+          <div className="mt-1 text-sm text-gray-500">Trage literele din dreapta în goluri sau apasă ✕ pentru a elimina un răspuns.</div>
 
           <div className="mt-5 grid gap-4 lg:grid-cols-[1fr_340px]">
-            <div className="rounded-xl border bg-white p-5">
+            {/* Passage with drop zones */}
+            <div
+              ref={p6ScrollRef}
+              className="rounded-xl border bg-white p-5 overflow-y-auto"
+              style={{ maxHeight: "70vh" }}
+              onDragOver={(e) => {
+                const el = p6ScrollRef.current;
+                if (!el) return;
+                const rect = el.getBoundingClientRect();
+                const threshold = 80;
+                const speed = 8;
+                const y = e.clientY;
+                if (y - rect.top < threshold) {
+                  el.scrollTop -= speed;
+                } else if (rect.bottom - y < threshold) {
+                  el.scrollTop += speed;
+                }
+              }}
+            >
               <div className="whitespace-pre-wrap text-sm leading-7 text-gray-900">
                 {tokens.map((t, idx) => {
                   if (t.type === "text") return <span key={idx}>{t.value}</span>;
@@ -955,36 +1016,88 @@ const Part4 = () => {
 
                   if (id < 37 || id > 42) return <span key={idx} />;
 
+                  const placed = (answers.letter[id] || "").toUpperCase();
+                  const isOver = p6DragOver === id;
+
                   return (
-                    <span key={idx} className="mx-1 inline-flex items-center gap-2 align-baseline">
-                      <span className="text-xs font-bold text-gray-500">{id}</span>
-                      <select
-                        value={(answers.letter[id] || "").toUpperCase()}
-                        onChange={(e) => setLetter(id, e.target.value)}
-                        className="rounded-md border px-3 py-2 text-sm font-semibold outline-none transition duration-300 ease-in-out focus:border-primary"
+                    <span
+                      key={idx}
+                      className="mx-1 inline-flex items-center gap-1 align-baseline"
+                    >
+                      <span className="text-xs font-bold text-gray-400">{id}</span>
+                      {/* Drop zone */}
+                      <span
+                        onDragOver={(e) => { e.preventDefault(); setP6DragOver(id); }}
+                        onDragLeave={() => setP6DragOver(null)}
+                        onDrop={(e) => { e.preventDefault(); handleDropOnGap(id); }}
+                        className={[
+                          "inline-flex min-w-[52px] h-9 items-center justify-center rounded-md border-2 border-dashed text-sm font-bold transition-colors cursor-pointer select-none",
+                          placed
+                            ? "border-primary bg-primary/10 text-primary"
+                            : isOver
+                            ? "border-primary bg-primary/5 text-primary"
+                            : "border-gray-300 bg-gray-50 text-gray-400",
+                        ].join(" ")}
                       >
-                        <option value="">—</option>
-                        {letters.map((l) => (
-                          <option key={l} value={l}>
-                            {l}
-                          </option>
-                        ))}
-                      </select>
+                        {placed ? (
+                          <span className="flex items-center gap-1">
+                            {placed}
+                            <button
+                              onMouseDown={(e) => { e.stopPropagation(); handleRemoveFromGap(id); }}
+                              className="ml-0.5 text-gray-400 hover:text-red-500 text-xs leading-none"
+                              title="Elimină"
+                            >✕</button>
+                          </span>
+                        ) : (
+                          <span className="text-gray-300">?</span>
+                        )}
+                      </span>
                     </span>
                   );
                 })}
               </div>
             </div>
 
-            <div className="rounded-xl border bg-gray-50 p-5">
+            {/* Letter bank */}
+            <div
+              className="rounded-xl border bg-gray-50 p-5"
+              onDragOver={(e) => e.preventDefault()}
+              onDrop={(e) => { e.preventDefault(); handleDropOnBank(); }}
+            >
               <div className="text-sm font-bold text-gray-900">Sentences A–G</div>
               <div className="mt-3 space-y-2">
-                {letters.map((L) => (
-                  <div key={L} className="rounded-lg border bg-white p-3">
-                    <div className="text-xs font-bold text-gray-700">{L}</div>
-                    <div className="mt-1 text-sm text-gray-900">{part6Options[L as keyof typeof part6Options]}</div>
-                  </div>
-                ))}
+                {letters.map((L) => {
+                  const isUsed = usedLetters.has(L);
+                  const isDraggingThis = p6Dragging === L;
+                  return (
+                    <div
+                      key={L}
+                      draggable={!isUsed}
+                      onDragStart={() => handleDragStart(L)}
+                      onDragEnd={() => { setP6Dragging(null); setP6DragOver(null); }}
+                      className={[
+                        "rounded-lg border p-3 transition-all select-none",
+                        isUsed
+                          ? "bg-gray-100 opacity-40 cursor-not-allowed border-dashed"
+                          : isDraggingThis
+                          ? "bg-primary/10 border-primary opacity-60 cursor-grabbing"
+                          : "bg-white cursor-grab hover:border-primary hover:shadow-sm",
+                      ].join(" ")}
+                    >
+                      <div className="flex items-center gap-2">
+                        <span
+                          className={[
+                            "flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-xs font-black",
+                            isUsed ? "bg-gray-200 text-gray-400" : "bg-gray-100 text-gray-800",
+                          ].join(" ")}
+                        >
+                          {L}
+                        </span>
+                        <div className="text-sm text-gray-900">{part6Options[L as keyof typeof part6Options]}</div>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -998,7 +1111,7 @@ const Part4 = () => {
 
     return (
       <CardShell>
-        <TopInstruction />
+        {TopInstruction()}
         <div className="px-6 py-6">
           <div className="text-2xl font-bold text-gray-900">{part7Title}</div>
           <div className="mt-2 text-sm text-gray-600">We asked five people for their opinions.</div>
@@ -1110,14 +1223,14 @@ const Part4 = () => {
     </div>
   );
 
-  const RenderCurrentPart = () => {
-    if (part === 1) return <Part1 />;
-    if (part === 2) return <Part2 />;
-    if (part === 3) return <Part3 />;
-    if (part === 4) return <Part4 />;
-    if (part === 5) return <Part5 />;
-    if (part === 6) return <Part6 />;
-    return <Part7 />;
+  const renderCurrentPart = () => {
+    if (part === 1) return Part1();
+    if (part === 2) return Part2();
+    if (part === 3) return Part3();
+    if (part === 4) return Part4();
+    if (part === 5) return Part5();
+    if (part === 6) return Part6();
+    return Part7();
   };
 
   // Close gap menu on outside click / Esc
@@ -1131,9 +1244,9 @@ const Part4 = () => {
 
   return (
     <div className="min-h-screen bg-gray-50" onClick={() => openGap && setOpenGap(null)}>
-      <Header />
-      {finished ? <FinishScreen /> : <RenderCurrentPart />}
-      <PartNav />
+      {Header()}
+      {finished ? FinishScreen() : renderCurrentPart()}
+      {PartNav()}
     </div>
   );
 }
