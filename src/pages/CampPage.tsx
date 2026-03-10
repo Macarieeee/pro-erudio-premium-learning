@@ -37,7 +37,7 @@ import {
 
 import { useToast } from "@/hooks/use-toast";
 import { getCampBySlug, getCampSEO } from "@/data/campsData";
-import { Helmet } from "react-helmet-async"; // ✅ IMPORT NOU
+import { Head } from "vite-react-ssg";
 
 type CampPageProps = {
   slugOverride?: string;
@@ -45,33 +45,29 @@ type CampPageProps = {
 
 const CampPage = ({ slugOverride }: CampPageProps) => {
   const { toast } = useToast();
-  const params = useParams();
-const location = useLocation(); // ✅ Hook pentru URL curent
-  // ✅ important: pe rutele statice SSG, params.slug e undefined
-  const slug = params.slug ?? slugOverride ?? "";
-
-  const camp = useMemo(() => getCampBySlug(slug), [slug]);
-// ✅ FIX 1: Calculăm URL-ul exact pe baza rutei curente, nu manual
-  // Astfel, chiar dacă slug-ul e gol, URL-ul va fi cel corect al paginii
-  const canonicalUrl = `https://tabere.proerudio.ro${location.pathname}`;
+const params = useParams();
+const location = useLocation();
+const slug = params.slug ?? slugOverride ?? "";
+const camp = useMemo(() => getCampBySlug(slug), [slug]);
+const canonicalUrl = `https://tabere.proerudio.ro${location.pathname}`;
 
   // ✅ FIX 2: Debugging pentru Build
   // Dacă nu găsim camp-ul în timpul build-ului, NU facem redirect la Home imediat,
   // pentru că asta strică SEO-ul (scrie pagina Home peste pagina Taberei).
-  if (!camp) {
-    console.error(`❌ EROARE BUILD: Nu am găsit tabăra pentru slug-ul: "${slug}"`);
-    return (
-      <div className="p-10 text-center">
-        <Helmet>
-            <title>Eroare - Tabără negăsită</title>
-            <meta name="robots" content="noindex" />
-        </Helmet>
-        <h1 className="text-xl font-bold text-red-600">Eroare: Tabăra nu a fost găsită</h1>
-        <p>Slug primit: {slug ? slug : "(gol)"}</p>
-        <p>Verifică `campsData.ts` sau definiția rutei în App.tsx</p>
-      </div>
-    );
-  }
+if (!camp) {
+  console.error(`❌ EROARE BUILD: Nu am găsit tabăra pentru slug-ul: "${slug}"`);
+  return (
+    <div className="p-10 text-center">
+      <Head>
+        <title>Eroare - Tabără negăsită</title>
+        <meta name="robots" content="noindex" />
+      </Head>
+      <h1 className="text-xl font-bold text-red-600">Eroare: Tabăra nu a fost găsită</h1>
+      <p>Slug primit: {slug ? slug : "(gol)"}</p>
+      <p>Verifică `campsData.ts` sau definiția rutei în App.tsx</p>
+    </div>
+  );
+}
   const seo = getCampSEO(camp);
 // --- FIX START ---
   const baseUrl = "https://tabere.proerudio.ro";
@@ -175,22 +171,27 @@ const location = useLocation(); // ✅ Hook pentru URL curent
 
   return (
     <div className="min-h-screen bg-background">
-<Helmet>
-        <title>{seo.title}</title>
-        <meta name="description" content={seo.description} />
-        
-        {/* ✅ Folosim canonicalUrl calculat corect */}
-        <link rel="canonical" href={canonicalUrl} />
-        <meta property="og:url" content={canonicalUrl} />
-        
-        <meta property="og:title" content={seo.title} />
-        <meta property="og:description" content={seo.description} />
-        <meta property="og:image" content={seo.image} />
-        <meta property="og:type" content="website" />
-        
-        {/* Important pentru Facebook debug */}
-        <meta property="fb:app_id" content="" /> 
-      </Helmet>
+<Head>
+  <title>{seo.title}</title>
+
+  <meta name="description" content={seo.description} />
+  <link rel="canonical" href={canonicalUrl} />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonicalUrl} />
+  <meta property="og:title" content={seo.title} />
+  <meta property="og:description" content={seo.description} />
+  <meta property="og:image" content={seo.image} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:site_name" content="Pro Erudio" />
+  <meta property="og:locale" content="ro_RO" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={seo.title} />
+  <meta name="twitter:description" content={seo.description} />
+  <meta name="twitter:image" content={seo.image} />
+</Head>
 
       <Navigation />
 

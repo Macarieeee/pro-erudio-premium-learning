@@ -102,7 +102,7 @@ import poianaMarului5 from "@/assets/PoianaExtra5.jpg";
 import poianaMarului6 from "@/assets/PoianaExtra6.jpg";
 import poianaMarului7 from "@/assets/Poiana7.jpg";
 import poianaMarului8 from "@/assets/Poiana8.jpg";
-
+import campsSeo from "./campsSeo.json";
 /* =======================
    DOAR DEFAULT-URI COMUNE
 ======================= */
@@ -110,25 +110,41 @@ import poianaMarului8 from "@/assets/Poiana8.jpg";
 export type CampSEO = {
   title: string;
   description: string;
-  image: string; // URL absolut
+  image: string;
 };
 
 const SITE_URL = "https://tabere.proerudio.ro";
 
-export function getCampSEO(camp: any): CampSEO {
-  const title = `${camp.campName} | Pro Erudio`;
+type CampSeoEntry = {
+  slug: string;
+  title: string;
+  description: string;
+  image: string;
+};
 
-  // încearcă să ia o descriere scurtă dacă ai ceva similar; altfel fallback
-  const description =
+const campsSeoMap = new Map(
+  (campsSeo as CampSeoEntry[]).map((entry) => [entry.slug, entry])
+);
+
+export function getCampSEO(camp: any): CampSEO {
+  const explicitSeo = campsSeoMap.get(camp.slug);
+
+  if (explicitSeo) {
+    return explicitSeo;
+  }
+
+  const fallbackDescription =
     camp?.shortDescription ||
-    camp?.description ||
+    camp?.about?.paragraphs?.[0] ||
+    camp?.activitiesDescription ||
     "Descoperă tabăra Pro Erudio: program, locație, activități și înscriere.";
 
-  const image = `${SITE_URL}/og/${camp.slug}.jpg`;
-
-  return { title, description, image };
+  return {
+    title: `${camp.campName} | Pro Erudio`,
+    description: fallbackDescription,
+    image: `${SITE_URL}/og/${camp.slug}.jpg`,
+  };
 }
-
 
 export const DEFAULT_REGISTRATION = {
     steps: [
