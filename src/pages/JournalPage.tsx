@@ -7,12 +7,17 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ExternalLink, Building, MapPin, Clock, Users } from "lucide-react";
 import { journalList, getJournalBySlug, getJournalSEO } from "@/data/journals";
 
-const JournalPage = () => {
+type JournalPageProps = {
+  slugOverride?: string;
+};
+
+const JournalPage = ({ slugOverride }: JournalPageProps) => {
   const { slug } = useParams();
   const location = useLocation();
 
-  const journalSlug = slug ?? "";
+  const journalSlug = slugOverride ?? slug ?? "";
   const journal = useMemo(() => getJournalBySlug(journalSlug), [journalSlug]);
+
   const canonicalUrl = `https://tabere.proerudio.ro${location.pathname}`;
 
   if (!journal) {
@@ -57,23 +62,46 @@ const JournalPage = () => {
 
       <Navigation />
 
-      {/* Intro */}
-      <section className="py-16 mt-10">
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-              {journal.title}
-            </h2>
-            {journal.subtitle && (
-              <p className="text-xl text-muted-foreground mb-2">{journal.subtitle}</p>
-            )}
-            {journal.campus && (
-              <p className="text-lg text-foreground font-medium">{journal.campus}</p>
-            )}
-            <p className="text-lg text-primary font-semibold">{journal.dates}</p>
-          </div>
-        </div>
-      </section>
+      {/* Hero jurnal */}
+<section className="relative mt-10 min-h-[420px] md:min-h-[520px] flex items-center justify-center overflow-hidden">
+  {/* Background image */}
+  <img
+    src={journal.heroImage}
+    alt={journal.heroAlt || journal.title}
+    className="absolute inset-0 w-full h-full object-cover"
+  />
+
+  {/* Dark overlay */}
+  <div className="absolute inset-0 bg-black/45" />
+
+  {/* Soft gradient for nicer transition */}
+  <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/35 to-background" />
+
+  {/* Content */}
+  <div className="relative z-10 container mx-auto px-4 lg:px-8">
+    <div className="max-w-4xl mx-auto text-center text-white">
+      <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 drop-shadow-lg">
+        {journal.title}
+      </h1>
+
+      {journal.subtitle && (
+        <p className="text-xl md:text-2xl text-white/90 mb-3 drop-shadow-md">
+          {journal.subtitle}
+        </p>
+      )}
+
+      {journal.campus && (
+        <p className="text-lg md:text-xl font-medium text-white/95 mb-2 drop-shadow-md">
+          {journal.campus}
+        </p>
+      )}
+
+      <p className="text-lg md:text-2xl font-semibold text-primary-foreground drop-shadow-md">
+        {journal.dates}
+      </p>
+    </div>
+  </div>
+</section>
 
       {/* Quick Info (opțional) */}
       {/* {journal.quickInfo && (

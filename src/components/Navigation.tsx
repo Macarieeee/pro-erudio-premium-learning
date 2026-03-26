@@ -45,6 +45,7 @@ const campsByYear = [
 const journalItems = [
   { label: "Jurnal Manchester 2025", slug: "manchester-2025" },
   { label: "Jurnal Moinești 2025", slug: "moinesti-2025" },
+  { label: "Jurnal Poiana Mărului 2025", slug: "poiana-marului-2025" },
   { label: "Jurnal Predeal 2024", slug: "predeal-2024" },
 ];
 
