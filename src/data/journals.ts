@@ -82,6 +82,32 @@ import predeal61 from "@/assets/Predeal61.jpg";
 import predeal62 from "@/assets/Predeal62.jpg";
 import predeal63 from "@/assets/Predeal63.jpg";
 import predeal64 from "@/assets/Predeal64.jpg";
+import marului11 from "@/assets/marului11.jpg"
+import marului12 from "@/assets/marului12.jpg"
+import marului13 from "@/assets/marului13.jpg"
+import marului14 from "@/assets/marului14.jpg"
+import marului21 from "@/assets/marului21.jpg"
+import marului22 from "@/assets/marului22.jpg"
+import marului23 from "@/assets/marului23.jpg"
+import marului24 from "@/assets/marului24.jpg"
+import marului31 from "@/assets/marului31.jpg"
+import marului32 from "@/assets/marului32.jpg"
+import marului33 from "@/assets/marului33.jpg"
+import marului34 from "@/assets/marului34.jpg"
+import marului41 from "@/assets/marului41.jpg"
+import marului42 from "@/assets/marului42.jpg"
+import marului43 from "@/assets/marului43.jpg"
+import marului44 from "@/assets/marului44.jpg"
+import marului51 from "@/assets/marului51.jpg"
+import marului52 from "@/assets/marului52.jpg"
+import marului53 from "@/assets/marului53.jpg"
+import marului54 from "@/assets/marului54.jpg"
+import marului61 from "@/assets/marului61.jpg"
+import marului62 from "@/assets/marului62.jpg"
+import marului63 from "@/assets/marului63.jpg"
+import marului64 from "@/assets/marului64.jpg"
+
+
 
 export type JournalEntry = {
   day: string;
@@ -110,6 +136,95 @@ export type Journal = {
 };
 
 export const journals: Record<string, Journal> = {
+  "poiana-marului-2025": {
+  slug: "poiana-marului-2025",
+  navbarLabel: "JURNAL EXPLORER CAMPS POIANA MĂRULUI 2025",
+  title: "Tabără de limba engleză și aventură în România",
+  subtitle: "Jurnal de tabără",
+  campus: "Poiana Mărului, Jud. Brașov",
+  dates: "14-19 iulie 2025",
+  heroImage: marului14,
+  heroAlt: "Poiana Mărului 2025",
+  quickInfo: {
+    location: "Poiana Mărului, Brașov",
+    duration: "6 zile / 5 nopți",
+    ageGroup: "—",
+  },
+  entries: [
+    {
+      day: "Ziua 1",
+      content: `La ora 8.00 dimineața ne-am adunat în Piața Constituției pentru a ne îmbarca spre a doua aventură din vara aceasta, veseli și pregătiți de noi provocări pe echipe.
+
+Ca de obicei, profităm de drumul cu autocarul pentru a vizita și obiective turistice din țară. Nu prea multe și mereu altele, pentru că noi știm că, din perspectiva copiilor, vizitele sunt frumoase doar dacă sunt puține, scurte și ghidate, adică presărate cu povești interesante. De data aceasta, am mers la Mănăstirea Rupestră de la Șinca Veche, un loc plin de mister și frumusețe.
+
+În timpul mersului cu autocarul, am participat la multe concursuri cu întrebări ca să îmbinăm plăcutul cu utilul, învățăm și adunăm puncte pentru echipe, așa că timpul a trecut pe nesimțite. Am răspuns și la întrebări despre ce am aflat în timpul vizitei, ca informația să se consolideze și să rămânem cu amintiri vii peste ani despre cele văzute acolo.
+
+La ora 14.30 am ajuns la pensiune, am mâncat și ne-am cazat repede, astfel încât în jurul orei 17.00 ne-am adunat pe terenul de fotbal pentru prima serie de activități. După ce am ascultat cu atenție regulile taberei, am format un cerc și, prin joc, am aflat câte ceva unii despre alții, ca să pregătim terenul pentru formarea echipelor. Odată echipele stabilite și fișele completate cu informații despre fiecare membru, ne-am strâns pentru prima provocare pe echipe: prezentarea Regatului, cu toate titlurile nobiliare acordate membrilor echipei, blazon și, desigur, confecționarea coroanei regulamentare. A fost distracție mare întrucât fiecare echipă a încercat să surprindă prin originalitate și creativitate.
+
+După cină, ne-am adunat din nou în curtea din fața hotelului pentru o cursă cu întrebări, un fel de scavenger hunt reinterpretat. Seara s-a terminat cu primele puncte acordate echipelor. Bravo, copii!`,
+      galleryLink: "https://www.facebook.com/media/set/?set=a.1316219186622110&type=3",
+      images: [marului11, marului12, marului13, marului14],
+    },
+    {
+      day: "Ziua 2 - Explore Life!",
+      content: `În prima dimineață din tabără ne-am trezit foarte devreme, curioși să descoperim ce vom face. Am aflat repede întrucât prima activitate începe chiar înainte de micul dejun. Și ce altceva putem face dis-de-dimineață decât să ne dezmorțim la gimnastică și dans.
+
+După micul dejun bufet suedez, am început cursurile interactive de limba engleză. Și cum tema zilei este Explore Life!, am discutat, în funcție de vârstă și nivel, despre diferite aspecte ale vieții: de la alimentație sănătoasă până la activități de timp liber și divertisment. Am realizat proiecte în echipe, am făcut prezentări și am participat la competiții, așa că cele aproape trei ore au trecut cât ai clipi.
+
+După masa de prânz și ora de telefon, la ora 15.00 a început primul atelier din după-amiază, „Vacation on a budget”. Copiii au trebuit să organizeze o vacanță de cinci zile pentru o familie cu doi copii. Surpriza a fost că fiecare echipă a avut alt buget în care să se încadreze. Au verificat prețuri la cazare și masă, au stabilit itinerarii și au proiectat activități pentru timpul liber. Au ales destinații exotice sau nu, conform bugetului. Felicitări, copii! V-ați descurcat de minune.
+
+La al doilea set de ateliere de după-amiază, am avut treabă multă într-o bucătărie improvizată pe terasa pensiunii. Împărțiți în două serii, mai întâi am făcut sandvișuri cu design special, demne de domnițele și cavalerii din regat, pe care le-am și mâncat apoi cu mare poftă. La a doua serie, am făcut aluat pentru clătite cu mâinile noastre, le-am copt, umplut cu Nutella și le-am mâncat pe nerăsuflate. Totul este delicios atunci când lucrezi cu echipa.
+
+Atelierele de seară au fost jocuri în echipă, „60 Second Challenges”. Provocările au fost diverse și ne-am testat diferite abilități: coordonarea, când a trebuit să cărăm un pahar de apă cu ajutorul unei parașute, ținta, atât la una fixă, cât și la una mobilă, dexteritatea la un joc de ștafetă și multe altele.`,
+      galleryLink: "https://www.facebook.com/media/set/?set=a.1316974459879916&type=3",
+      images: [marului21, marului22, marului23, marului24],
+    },
+    {
+      day: "Ziua 3 - Explore the Past!",
+      content: `Cea de-a treia zi de tabără a început cu ploaie, așa că exercițiile de stretching s-au întâmplat la interior, în sala de conferințe. Dar, spre bucuria noastră, treptat s-a înseninat și am putut face dansurile în curte.
+
+La atelierele de limba engleză am explorat trecutul. La unele grupe am explorat Egiptul Antic și am creat o bandă desenată în care copiii au fost protagoniști. Copiii au călătorit cu mașina timpului, au vizitat piramidele și s-au întâlnit cu Cleopatra. La altele s-a discutat despre marii exploratori ai lumii și despre pirați faimoși. Indiferent ce au ales profesoarele pentru elevii lor, activitățile au fost interactive și temele de discuție interesante.
+
+În ciuda vremii schimbătoare, am reușit să mergem la o scurtă drumeție în pădure ca să construim adăposturi din crengi și frunze. Și nu orice fel de adăposturi, ci castelul Regatului, cu grădini regale, dormitoare, mese împărătești și toate acareturile necesare unui trai la curtea regelui.
+
+A urmat cina și activitatea de seară „Team Feuds”, o adaptare a celebrului show „Ce spun românii?”. Echipele noastre s-au duelat amical în cuvinte și idei, desigur în limba engleză, deci toată lumea a ieșit câștigătoare. Bravo, copii! Ați demonstrat că lucrul în echipă face orice posibil.`,
+      galleryLink: "https://www.facebook.com/media/set/?set=a.1318826139694748&type=3",
+      images: [marului31, marului32, marului33, marului34],
+    },
+    {
+      day: "Ziua 4 - Explore Art!",
+      content: `În a patra zi de tabără tema a fost legată de arte. La cursurile de limbă engleză de dimineață am discutat despre diferite feluri de arte frumoase: arhitectura, dansul, literatura, pictura, sculptura, muzica și cinematografia. În funcție de vârstă și interese, ne-am și încercat talentul la diferite forme de artă: s-a pictat, s-a cântat, s-au inventat scenarii și chiar s-au pus în scenă, s-a dansat. Pe scurt, a fost super interesant.
+
+La primul atelier de după-amiază am creat o reclamă la o invenție care să ne schimbe viața în bine. Am avut tot felul de idei: memoratoare, cititoare de minți, schimbătoare de haine, dispozitive care traduc limbajul animalelor, brățări care te avertizează dacă te apropii de răufăcători și multe altele. Desigur, ideea era ca celelalte echipe să fie convinse să cumpere invenția noastră. A fost haz mare la prezentarea proiectelor, cu întrebări din public și argumente care mai de care mai convingătoare.
+
+Al doilea atelier a fost „Photo Challenge”. La prima categorie echipele au ilustrat în imagini expresii idiomatice precum break a leg, hold your horses sau have butterflies in the stomach, iar la cea de-a doua echipele au trebuit să ilustreze într-o fotografie un concept abstract, cum ar fi curaj, echilibru sau empatie. Creativitate, compoziție artistică, abilități fotografice, cunoștințe de limba engleză și prezentări argumentate — activitatea a pus la încercare diverse abilități ale copiilor.
+
+La activitatea de seară, echipele au confecționat un copac din hârtie reciclată. Dar nu orice copac, ci unul năzdrăvan, care să spună povestea regatului lor. Sarcina a părut ușoară, dar nu a fost deloc simplă. Copacul trebuia să aibă cel puțin 30 de centimetri înălțime, să stea în picioare nesprijinit și să fie frumos decorat, astfel încât povestea care îl însoțește să capete viață și credibilitate. Bravo, echipe! Ați făcut o treabă excelentă.`,
+      galleryLink: "https://www.facebook.com/media/set/?set=a.1319427499634612&type=3",
+      images: [marului41, marului42, marului43, marului44],
+    },
+    {
+      day: "Ziua 5 – Explore your Skills!",
+      content: `După cursurile de limbă engleză, în cea de-a cincea zi de tabără, am avut atelierele „Trainer for 15 minutes”, ateliere la care copiii au ocazia să îi învețe pe prietenii lor ceva ce lor le iese foarte bine. Și am avut de toate: de la sporturi, precum fotbal, baschet, dansuri, judo și karate, la activități artistice, precum origami și desen, activități muzicale, dezlegare de cuburi Rubik și multe altele.
+
+Al doilea atelier a fost format din șase stații cu jocuri, la care echipele au participat câte două sau individual. Am avut jocuri de coordonare în echipă, dexteritate, creativitate și strategie. Bravo, echipe! Ați fost la înălțime.
+
+Seara s-a încheiat cu spectacolul „Kids Got Talent” organizat de tinerii noștri talentați și cu petrecere cu muzică, dans, tort și mesaje emoționante pe șepci, pentru că este ultima seară petrecută împreună, iar până vara viitoare este vreme multă. O să ne fie dor.`,
+      galleryLink: "https://www.facebook.com/media/set/?set=a.1324125122498183&type=3",
+      images: [marului51, marului52, marului53, marului54],
+    },
+    {
+      day: "Ziua 6",
+      content: `Ultima zi de tabără este plină de emoție. Echipele primesc ultimele puncte, se stabilește clasamentul distracției, se primesc diplomele, se fac ultimele poze înainte de plecarea de la pensiune, se primesc telefoanele și se fac ultimele schimburi de conturi de Instagram, cu promisiunea că vor ține legătura și se vor revedea și vara viitoare.
+
+Pe drumul de întoarcere facem un popas la Casa Memorială Nicolae Grigorescu, unde domnul ghid ne povestește despre viața și activitatea marelui pictor român, ca să încheiem tabăra pe o notă de mândrie națională.
+
+La revedere, tabără dragă! Pe vara viitoare!`,
+      galleryLink: "https://www.facebook.com/media/set/?set=a.1321030106141018&type=3",
+      images: [marului61, marului62, marului63, marului64],
+    },
+  ],
+},
   "manchester-2025": {
     slug: "manchester-2025",
     navbarLabel: "JURNAL ȘCOALĂ INTERNAȚIONALĂ 2025",
@@ -450,3 +565,29 @@ Ultima vizita a fost la Casa de Târgoveț "Hagi Prodan”, unde domnul muzeogra
 };
 
 export const journalList = Object.values(journals);
+export type JournalSEO = {
+  title: string;
+  description: string;
+  image: string;
+};
+
+export const getJournalBySlug = (slug: string) => journals[slug];
+
+export const getJournalSEO = (journal: Journal): JournalSEO => {
+  const title = `${journal.navbarLabel} | Pro Erudio`;
+
+  const description =
+    journal.campus && journal.dates
+      ? `${journal.title}. Descoperă jurnalul de tabără din ${journal.campus}, desfășurat în perioada ${journal.dates}.`
+      : `${journal.title}. Descoperă activități, experiențe și momente reale din jurnalul de tabără Pro Erudio.`;
+
+  const image = journal.heroImage
+    ? `https://tabere.proerudio.ro${journal.heroImage}`
+    : "https://tabere.proerudio.ro/og/herohome.jpeg";
+
+  return {
+    title,
+    description,
+    image,
+  };
+};

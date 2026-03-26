@@ -1,22 +1,60 @@
 import { useMemo } from "react";
-import { useParams, Navigate } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
+import { Head } from "vite-react-ssg";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { ExternalLink, Building, MapPin, Clock, Users } from "lucide-react";
-import { journals, journalList } from "@/data/journals";
+import { journalList, getJournalBySlug, getJournalSEO } from "@/data/journals";
 
 const JournalPage = () => {
   const { slug } = useParams();
+  const location = useLocation();
 
-  const journal = useMemo(() => (slug ? journals[slug] : undefined), [slug]);
+  const journalSlug = slug ?? "";
+  const journal = useMemo(() => getJournalBySlug(journalSlug), [journalSlug]);
+  const canonicalUrl = `https://tabere.proerudio.ro${location.pathname}`;
 
   if (!journal) {
-    return <Navigate to="/" replace />;
+    return (
+      <div className="p-10 text-center">
+        <Head>
+          <title>Eroare - Jurnal negăsit</title>
+          <meta name="robots" content="noindex" />
+        </Head>
+        <h1 className="text-xl font-bold text-red-600">Eroare: Jurnalul nu a fost găsit</h1>
+        <p>Slug primit: {journalSlug ? journalSlug : "(gol)"}</p>
+        <p>Verifică `journals.ts` sau definiția rutei în App.tsx</p>
+      </div>
+    );
   }
+
+  const seo = getJournalSEO(journal);
 
   return (
     <div className="min-h-screen bg-background">
+      <Head>
+        <title>{seo.title}</title>
+
+        <meta name="description" content={seo.description} />
+        <link rel="canonical" href={canonicalUrl} />
+
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:title" content={seo.title} />
+        <meta property="og:description" content={seo.description} />
+        <meta property="og:image" content={seo.image} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:site_name" content="Pro Erudio" />
+        <meta property="og:locale" content="ro_RO" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={seo.title} />
+        <meta name="twitter:description" content={seo.description} />
+        <meta name="twitter:image" content={seo.image} />
+      </Head>
+
       <Navigation />
 
       {/* Intro */}
@@ -135,7 +173,7 @@ const JournalPage = () => {
         </div>
       </section>
 
-      {/* Alte jurnale (din data) */}
+      {/* Alte jurnale */}
       <section className="py-20 bg-secondary/30">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="flex items-center gap-3 mb-12 justify-center">
@@ -149,11 +187,7 @@ const JournalPage = () => {
             {journalList
               .filter((j) => j.slug !== journal.slug)
               .map((j) => (
-                <a
-                  key={j.slug}
-                  href={`/jurnal/${j.slug}`}
-                  className="block"
-                >
+                <a key={j.slug} href={`/jurnal/${j.slug}`} className="block">
                   <Card className="bg-card border-border hover:shadow-lg transition-shadow cursor-pointer group overflow-hidden">
                     <div className="h-40 overflow-hidden">
                       <img
