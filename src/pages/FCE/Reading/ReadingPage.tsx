@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import logo from "@/assets/logo.svg"; // <-- ajustează path-ul dacă e altul
+import emailjs from "@emailjs/browser";
 
 type Part = 1 | 2 | 3 | 4 | 5 | 6 | 7;
 
@@ -89,7 +90,11 @@ export default function ReadingPage() {
   const [part, setPart] = useState<Part>(1);
   const [finished, setFinished] = useState(false);
   const [answers, setAnswers] = useState<AnswersState>(() => buildInitialState());
-
+const [studentName, setStudentName] = useState("");
+const [studentEmail, setStudentEmail] = useState("");
+const [isSending, setIsSending] = useState(false);
+const [sendSuccess, setSendSuccess] = useState(false);
+const [sendError, setSendError] = useState("");
   // Part 1 dropdown (gap menu)
   const [openGap, setOpenGap] = useState<number | null>(null);
 
@@ -456,7 +461,7 @@ So I called my editor to warn him, took the shots, then rolled up the film, labe
     } as const;
   }, []);
 
-  const TOTAL = 52;
+  const TOTAL = 70;
 
   // ---------------------------
   // SETTERS
@@ -477,79 +482,109 @@ So I called my editor to warn him, took the shots, then rolled up the film, labe
   // ---------------------------
   // SCORE
   // ---------------------------
+const getPart4Points = (
+  typedRaw: string,
+  correctAnswers: readonly string[],
+  partialAnswers?: readonly string[]
+) => {
+  const typed = normalize(typedRaw || "");
+  if (!typed) return 0;
 
-  const score = useMemo(() => {
-    let s = 0;
+  const exact = correctAnswers.some((a) => normalize(a) === typed);
+  if (exact) return 2;
 
-    // Part1
-    for (let i = 1; i <= 8; i++) {
-      if (answers.mcq[i] && answers.mcq[i] === part1Correct[i]) s++;
-    }
+  const partial = partialAnswers?.some((a) => normalize(a) === typed);
+  if (partial) return 1;
 
-    // Part2
-    for (let i = 9; i <= 16; i++) {
-      const typed = normalize(answers.text[i] || "");
-      const ok = part2Correct[i].some((a) => normalize(a) === typed);
-      if (typed && ok) s++;
-    }
+  return 0;
+};
+const score = useMemo(() => {
+  let s = 0;
 
-    // Part3
-    for (let i = 17; i <= 24; i++) {
-      const typed = normalize(answers.text[i] || "");
-      if (typed && typed === normalize(part3Correct[i])) s++;
-    }
+  // Part 1: 8 x 1
+  for (let i = 1; i <= 8; i++) {
+    if (answers.mcq[i] && answers.mcq[i] === part1Correct[i]) s += 1;
+  }
 
-    // Part4
-    for (const item of part4Items) {
-      const typed = normalize(answers.text[item.id] || "");
-      const ok = item.correct.some((v) => normalize(v) === typed);
-      if (typed && ok) s++;
-    }
+  // Part 2: 8 x 1
+  for (let i = 9; i <= 16; i++) {
+    const typed = normalize(answers.text[i] || "");
+    const ok = part2Correct[i].some((a) => normalize(a) === typed);
+    if (typed && ok) s += 1;
+  }
 
-    // Part5
-    for (const q of part5Questions) {
-      if (answers.mcq[q.id] && answers.mcq[q.id] === q.correct) s++;
-    }
+  // Part 3: 8 x 1
+  for (let i = 17; i <= 24; i++) {
+    const typed = normalize(answers.text[i] || "");
+    if (typed && typed === normalize(part3Correct[i])) s += 1;
+  }
 
-    // Part6
-    for (let i = 37; i <= 42; i++) {
-      const chosen = (answers.letter[i] || "").toUpperCase();
-      if (chosen && chosen === part6Correct[i]) s++;
-    }
-
-    // Part7
-    for (let i = 43; i <= 52; i++) {
-      const chosen = (answers.letter[i] || "").toUpperCase();
-      if (chosen && chosen === part7Correct[i]) s++;
-    }
-
-    return s;
-  }, [answers, part1Correct, part2Correct, part3Correct, part4Items, part5Questions, part6Correct, part7Correct]);
-
-  const breakdown = useMemo(() => {
-    const p1 = Array.from({ length: 8 }, (_, k) => k + 1).reduce((acc, i) => acc + (answers.mcq[i] === part1Correct[i] ? 1 : 0), 0);
-    const p2 = Array.from({ length: 8 }, (_, k) => k + 9).reduce((acc, i) => {
-      const typed = normalize(answers.text[i] || "");
-      const ok = part2Correct[i].some((a) => normalize(a) === typed);
-      return acc + (typed && ok ? 1 : 0);
-    }, 0);
-    const p3 = Array.from({ length: 8 }, (_, k) => k + 17).reduce((acc, i) => acc + (normalize(answers.text[i] || "") === normalize(part3Correct[i]) ? 1 : 0), 0);
-    const p4 = part4Items.reduce((acc, it) => {
-      const typed = normalize(answers.text[it.id] || "");
-      const ok = it.correct.some((v) => normalize(v) === typed);
-      return acc + (typed && ok ? 1 : 0);
-    }, 0);
-    const p5 = part5Questions.reduce((acc, q) => acc + (answers.mcq[q.id] === q.correct ? 1 : 0), 0);
-    const p6 = Array.from({ length: 6 }, (_, k) => k + 37).reduce(
-      (acc, i) => acc + (((answers.letter[i] || "").toUpperCase() === part6Correct[i]) ? 1 : 0),
-      0
+  // Part 4: 6 x 2 (sau 1 punct partial)
+  for (const item of part4Items) {
+    s += getPart4Points(
+      answers.text[item.id] || "",
+      item.correct,
+      (item as any).partialAnswers
     );
-    const p7 = Array.from({ length: 10 }, (_, k) => k + 43).reduce(
-      (acc, i) => acc + (((answers.letter[i] || "").toUpperCase() === part7Correct[i]) ? 1 : 0),
-      0
+  }
+
+  // Part 5: 6 x 2
+  for (const q of part5Questions) {
+    if (answers.mcq[q.id] && answers.mcq[q.id] === q.correct) s += 2;
+  }
+
+  // Part 6: 6 x 2
+  for (let i = 37; i <= 42; i++) {
+    const chosen = (answers.letter[i] || "").toUpperCase();
+    if (chosen && chosen === part6Correct[i]) s += 2;
+  }
+
+  // Part 7: 10 x 1
+  for (let i = 43; i <= 52; i++) {
+    const chosen = (answers.letter[i] || "").toUpperCase();
+    if (chosen && chosen === part7Correct[i]) s += 1;
+  }
+
+  return s;
+}, [answers, part1Correct, part2Correct, part3Correct, part4Items, part5Questions, part6Correct, part7Correct]);
+
+const breakdown = useMemo(() => {
+  const p1 = Array.from({ length: 8 }, (_, k) => k + 1).reduce((acc, i) => {
+    return acc + (answers.mcq[i] === part1Correct[i] ? 1 : 0);
+  }, 0);
+
+  const p2 = Array.from({ length: 8 }, (_, k) => k + 9).reduce((acc, i) => {
+    const typed = normalize(answers.text[i] || "");
+    const ok = part2Correct[i].some((a) => normalize(a) === typed);
+    return acc + (typed && ok ? 1 : 0);
+  }, 0);
+
+  const p3 = Array.from({ length: 8 }, (_, k) => k + 17).reduce((acc, i) => {
+    return acc + (normalize(answers.text[i] || "") === normalize(part3Correct[i]) ? 1 : 0);
+  }, 0);
+
+  const p4 = part4Items.reduce((acc, item) => {
+    return acc + getPart4Points(
+      answers.text[item.id] || "",
+      item.correct,
+      (item as any).partialAnswers
     );
-    return { p1, p2, p3, p4, p5, p6, p7 };
-  }, [answers, part1Correct, part2Correct, part3Correct, part4Items, part5Questions, part6Correct, part7Correct]);
+  }, 0);
+
+  const p5 = part5Questions.reduce((acc, q) => {
+    return acc + (answers.mcq[q.id] === q.correct ? 2 : 0);
+  }, 0);
+
+  const p6 = Array.from({ length: 6 }, (_, k) => k + 37).reduce((acc, i) => {
+    return acc + (((answers.letter[i] || "").toUpperCase() === part6Correct[i]) ? 2 : 0);
+  }, 0);
+
+  const p7 = Array.from({ length: 10 }, (_, k) => k + 43).reduce((acc, i) => {
+    return acc + (((answers.letter[i] || "").toUpperCase() === part7Correct[i]) ? 1 : 0);
+  }, 0);
+
+  return { p1, p2, p3, p4, p5, p6, p7 };
+}, [answers, part1Correct, part2Correct, part3Correct, part4Items, part5Questions, part6Correct, part7Correct]);
 
   const resetAll = () => {
     if (typeof window !== "undefined") window.localStorage.removeItem(LS_KEY);
@@ -558,7 +593,45 @@ So I called my editor to warn him, took the shots, then rolled up the film, labe
     setPart(1);
     setOpenGap(null);
   };
+const resultPayload = useMemo(() => {
+  return {
+    totalScore: score,
+    maxScore: TOTAL,
+    percentage: Math.round((score / TOTAL) * 100),
+    breakdown: {
+      part1: breakdown.p1,
+      part2: breakdown.p2,
+      part3: breakdown.p3,
+      part4: breakdown.p4,
+      part5: breakdown.p5,
+      part6: breakdown.p6,
+      part7: breakdown.p7,
+    },
+    submittedAnswers: answers,
+  };
+}, [score, TOTAL, breakdown, answers]);
+const resultEmailParams = {
+  student_name: studentName || "Elev",
+  student_email: studentEmail || "—",
+  total_score: score,
+  max_score: TOTAL,
+  percentage: Math.round((score / TOTAL) * 100),
 
+  part1_score: breakdown.p1,
+  part2_score: breakdown.p2,
+  part3_score: breakdown.p3,
+  part4_score: breakdown.p4,
+  part5_score: breakdown.p5,
+  part6_score: breakdown.p6,
+  part7_score: breakdown.p7,
+
+  result_message:
+    score >= 56
+      ? "Rezultat foarte bun."
+      : score >= 42
+      ? "Rezultat bun, dar mai există loc de îmbunătățire."
+      : "Rezultat care indică nevoia de mai mult exercițiu.",
+};
   // ---------------------------
   // UI Helpers
   // ---------------------------
@@ -1165,63 +1238,183 @@ const Part4 = () => {
       </CardShell>
     );
   };
+const percentage = Math.round((score / TOTAL) * 100);
 
-  const FinishScreen = () => (
-    <div className="mx-auto max-w-6xl px-4 pb-28 pt-6">
-      <div className="rounded-xl border bg-white p-6 shadow-sm">
-        <div className="text-xl font-bold text-gray-900">Test finished</div>
-        <div className="mt-1 text-sm text-gray-600">
-          Your score: <span className="font-semibold text-gray-900">{score}</span> / {TOTAL}
+const resultMessage =
+  percentage >= 80
+    ? "Excellent result."
+    : percentage >= 60
+    ? "Good result."
+    : "Needs more practice.";
+
+    const sendResultEmail = async () => {
+  setSendError("");
+  setSendSuccess(false);
+
+  if (!studentName.trim()) {
+    setSendError("Please enter the student name.");
+    return;
+  }
+
+  if (!studentEmail.trim()) {
+    setSendError("Please enter the student email.");
+    return;
+  }
+
+  setIsSending(true);
+
+  try {
+    await emailjs.send(
+  import.meta.env.VITE_EMAILJS_SERVICE_ID,
+  import.meta.env.VITE_EMAILJS_RESULTS_TEMPLATE_ID,
+  {
+    student_name: studentName,
+    student_email: studentEmail,
+    total_score: score,
+    max_score: TOTAL,
+    percentage,
+    part1_score: breakdown.p1,
+    part2_score: breakdown.p2,
+    part3_score: breakdown.p3,
+    part4_score: breakdown.p4,
+    part5_score: breakdown.p5,
+    part6_score: breakdown.p6,
+    part7_score: breakdown.p7,
+    result_message: resultMessage,
+  },
+  {
+    publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+  }
+);
+
+    setSendSuccess(true);
+  } catch (error) {
+    console.error(error);
+    setSendError("The email could not be sent. Please try again.");
+  } finally {
+    setIsSending(false);
+  }
+};
+const FinishScreen = () => (
+  <div className="mx-auto max-w-6xl px-4 pb-28 pt-6">
+    <div className="rounded-xl border bg-white p-6 shadow-sm">
+      <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+        <div>
+          <div className="text-xl font-bold text-gray-900">Test finished</div>
+          <div className="mt-1 text-sm text-gray-600">
+            Here is the student’s final result.
+          </div>
         </div>
 
-        <div className="mt-6 grid gap-3 md:grid-cols-4">
-          <div className="rounded-xl border bg-gray-50 p-4">
-            <div className="text-xs font-semibold text-gray-700">Part 1</div>
-            <div className="mt-1 text-2xl font-bold text-gray-900">{breakdown.p1}/8</div>
+        <div className="rounded-xl bg-gray-50 px-4 py-3 text-right">
+          <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+            Final score
           </div>
-          <div className="rounded-xl border bg-gray-50 p-4">
-            <div className="text-xs font-semibold text-gray-700">Part 2</div>
-            <div className="mt-1 text-2xl font-bold text-gray-900">{breakdown.p2}/8</div>
+          <div className="text-3xl font-bold text-gray-900">
+            {score} / {TOTAL}
           </div>
-          <div className="rounded-xl border bg-gray-50 p-4">
-            <div className="text-xs font-semibold text-gray-700">Part 3</div>
-            <div className="mt-1 text-2xl font-bold text-gray-900">{breakdown.p3}/8</div>
-          </div>
-          <div className="rounded-xl border bg-gray-50 p-4">
-            <div className="text-xs font-semibold text-gray-700">Part 4</div>
-            <div className="mt-1 text-2xl font-bold text-gray-900">{breakdown.p4}/6</div>
-          </div>
-          <div className="rounded-xl border bg-gray-50 p-4">
-            <div className="text-xs font-semibold text-gray-700">Part 5</div>
-            <div className="mt-1 text-2xl font-bold text-gray-900">{breakdown.p5}/6</div>
-          </div>
-          <div className="rounded-xl border bg-gray-50 p-4">
-            <div className="text-xs font-semibold text-gray-700">Part 6</div>
-            <div className="mt-1 text-2xl font-bold text-gray-900">{breakdown.p6}/6</div>
-          </div>
-          <div className="rounded-xl border bg-gray-50 p-4">
-            <div className="text-xs font-semibold text-gray-700">Part 7</div>
-            <div className="mt-1 text-2xl font-bold text-gray-900">{breakdown.p7}/10</div>
-          </div>
-        </div>
-
-        <div className="mt-6 flex flex-wrap gap-2">
-          <button
-            onClick={() => setFinished(false)}
-            className="rounded-lg border px-4 py-2 text-sm font-semibold text-gray-900 transition duration-300 ease-in-out hover:bg-gray-50"
-          >
-            Back to test
-          </button>
-          <button
-            onClick={resetAll}
-            className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white transition duration-300 ease-in-out hover:brightness-110"
-          >
-            Reset test
-          </button>
+          <div className="text-sm text-gray-600">{percentage}%</div>
         </div>
       </div>
+
+      <div className="mt-4 rounded-xl border bg-primary/5 px-4 py-3">
+        <div className="text-sm font-semibold text-gray-900">{resultMessage}</div>
+      </div>
+
+      <div className="mt-6 grid gap-3 md:grid-cols-4">
+        <div className="rounded-xl border bg-gray-50 p-4">
+          <div className="text-xs font-semibold text-gray-700">Part 1</div>
+          <div className="mt-1 text-2xl font-bold text-gray-900">{breakdown.p1}/8</div>
+        </div>
+        <div className="rounded-xl border bg-gray-50 p-4">
+          <div className="text-xs font-semibold text-gray-700">Part 2</div>
+          <div className="mt-1 text-2xl font-bold text-gray-900">{breakdown.p2}/8</div>
+        </div>
+        <div className="rounded-xl border bg-gray-50 p-4">
+          <div className="text-xs font-semibold text-gray-700">Part 3</div>
+          <div className="mt-1 text-2xl font-bold text-gray-900">{breakdown.p3}/8</div>
+        </div>
+        <div className="rounded-xl border bg-gray-50 p-4">
+          <div className="text-xs font-semibold text-gray-700">Part 4</div>
+          <div className="mt-1 text-2xl font-bold text-gray-900">{breakdown.p4}/12</div>
+        </div>
+        <div className="rounded-xl border bg-gray-50 p-4">
+          <div className="text-xs font-semibold text-gray-700">Part 5</div>
+          <div className="mt-1 text-2xl font-bold text-gray-900">{breakdown.p5}/12</div>
+        </div>
+        <div className="rounded-xl border bg-gray-50 p-4">
+          <div className="text-xs font-semibold text-gray-700">Part 6</div>
+          <div className="mt-1 text-2xl font-bold text-gray-900">{breakdown.p6}/12</div>
+        </div>
+        <div className="rounded-xl border bg-gray-50 p-4">
+          <div className="text-xs font-semibold text-gray-700">Part 7</div>
+          <div className="mt-1 text-2xl font-bold text-gray-900">{breakdown.p7}/10</div>
+        </div>
+      </div>
+
+      <div className="mt-8 rounded-xl border bg-gray-50 p-5">
+        <div className="text-sm font-bold text-gray-900">Send result by email</div>
+        <div className="mt-1 text-sm text-gray-600">
+          Add the student details below and send the final result.
+        </div>
+
+        <div className="mt-4 grid gap-3 md:grid-cols-2">
+          <input
+            type="text"
+            placeholder="Student name"
+            value={studentName}
+            onChange={(e) => setStudentName(e.target.value)}
+            className="rounded-lg border bg-white px-4 py-3 text-sm outline-none transition duration-300 ease-in-out focus:border-primary"
+          />
+
+          <input
+            type="email"
+            placeholder="Student email"
+            value={studentEmail}
+            onChange={(e) => setStudentEmail(e.target.value)}
+            className="rounded-lg border bg-white px-4 py-3 text-sm outline-none transition duration-300 ease-in-out focus:border-primary"
+          />
+        </div>
+
+        {sendSuccess && (
+          <div className="mt-4 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
+            Result sent successfully.
+          </div>
+        )}
+
+        {sendError && (
+          <div className="mt-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+            {sendError}
+          </div>
+        )}
+      </div>
+
+      <div className="mt-6 flex flex-wrap gap-2">
+        <button
+          onClick={() => setFinished(false)}
+          className="rounded-lg border px-4 py-2 text-sm font-semibold text-gray-900 transition duration-300 ease-in-out hover:bg-gray-50"
+        >
+          Back to test
+        </button>
+
+        <button
+          onClick={resetAll}
+          className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white transition duration-300 ease-in-out hover:brightness-110"
+        >
+          Reset test
+        </button>
+
+        <button
+          onClick={sendResultEmail}
+          disabled={isSending}
+          className="rounded-lg bg-gray-900 px-4 py-2 text-sm font-semibold text-white transition duration-300 ease-in-out hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          {isSending ? "Sending..." : "Send result"}
+        </button>
+      </div>
     </div>
-  );
+  </div>
+);
 
   const renderCurrentPart = () => {
     if (part === 1) return Part1();
