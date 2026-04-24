@@ -21,6 +21,17 @@ type AnswersState = {
   matches: Record<number, string | null>; // qId -> selectedLetter
 };
 
+type DetailedAnswer = {
+  part: string;
+  questionId: number;
+  questionText: string;
+  studentAnswer: string;
+  correctAnswer: string;
+  isCorrect: boolean;
+  points: number;
+  maxPoints: number;
+};
+
 const LS_KEY = "proerudio_fce_listening_v1";
 
 const normalize = (s: string) =>
@@ -49,6 +60,12 @@ export default function ListeningPage() {
   const [finished, setFinished] = useState(false);
 
   const [answers, setAnswers] = useState<AnswersState>(() => buildInitialState());
+
+  const [studentName, setStudentName] = useState("");
+  const [studentEmail, setStudentEmail] = useState("");
+  const [isSending, setIsSending] = useState(false);
+  const [sendSuccess, setSendSuccess] = useState(false);
+  const [sendError, setSendError] = useState("");
 
   useEffect(() => {
     // read from localStorage ONLY in browser
@@ -182,6 +199,145 @@ export default function ListeningPage() {
     return { p1, p2, p3, p4 };
   }, [answers]);
 
+
+  const percentage = useMemo(() => Math.round((score / TOTAL_QUESTIONS) * 100), [score]);
+
+  const resultMessage = useMemo(() => {
+    if (percentage >= 80) return "Excellent result. Keep up the strong work.";
+    if (percentage >= 60) return "Good result. There is still room to improve.";
+    if (percentage >= 40) return "Fair result. More practice is recommended.";
+    return "More practice is recommended before the next test.";
+  }, [percentage]);
+
+  const detailedAnswers = useMemo<DetailedAnswer[]>(() => {
+    const part1 = part1MCQ.map((q) => {
+      const selectedIndex = answers.mcq[q.id];
+      const isCorrect = selectedIndex === q.correctIndex;
+      return {
+        part: "Part 1",
+        questionId: q.id,
+        questionText: [q.questionHeader, q.question].filter(Boolean).join(" — "),
+        studentAnswer: selectedIndex === null || selectedIndex === undefined ? "No answer" : q.options[selectedIndex],
+        correctAnswer: q.options[q.correctIndex],
+        isCorrect,
+        points: isCorrect ? 1 : 0,
+        maxPoints: 1,
+      };
+    });
+
+    const part2 = part2Gaps.map((q) => {
+      const value = answers.gaps[q.id] || "";
+      const normalizedValue = normalize(value);
+      const isCorrect = Boolean(normalizedValue) && q.correctAnswers.some((c) => normalize(c) === normalizedValue);
+      return {
+        part: "Part 2",
+        questionId: q.id,
+        questionText: q.prompt,
+        studentAnswer: value.trim() || "No answer",
+        correctAnswer: q.correctAnswers.join(" / "),
+        isCorrect,
+        points: isCorrect ? 1 : 0,
+        maxPoints: 1,
+      };
+    });
+
+    const part3 = part3Matches.map((q) => {
+      const selectedLetter = (answers.matches[q.id] || "").toUpperCase();
+      const correctLetter = q.correctLetter.toUpperCase();
+      const selectedOption = part3Options.find((opt) => opt.letter === selectedLetter);
+      const correctOption = part3Options.find((opt) => opt.letter === correctLetter);
+      const isCorrect = Boolean(selectedLetter) && selectedLetter === correctLetter;
+      return {
+        part: "Part 3",
+        questionId: q.id,
+        questionText: q.speakerLabel,
+        studentAnswer: selectedOption ? `${selectedOption.letter} — ${selectedOption.text}` : "No answer",
+        correctAnswer: correctOption ? `${correctOption.letter} — ${correctOption.text}` : correctLetter,
+        isCorrect,
+        points: isCorrect ? 1 : 0,
+        maxPoints: 1,
+      };
+    });
+
+    const part4 = part4MCQ.map((q) => {
+      const selectedIndex = answers.mcq[q.id];
+      const isCorrect = selectedIndex === q.correctIndex;
+      return {
+        part: "Part 4",
+        questionId: q.id,
+        questionText: [q.questionHeader, q.question].filter(Boolean).join(" — "),
+        studentAnswer: selectedIndex === null || selectedIndex === undefined ? "No answer" : q.options[selectedIndex],
+        correctAnswer: q.options[q.correctIndex],
+        isCorrect,
+        points: isCorrect ? 1 : 0,
+        maxPoints: 1,
+      };
+    });
+
+    return [...part1, ...part2, ...part3, ...part4];
+  }, [answers]);
+
+  const sendResultEmail = async () => {
+    setSendError("");
+    setSendSuccess(false);
+
+    if (!studentName.trim()) {
+      setSendError("Please enter the student name.");
+      return;
+    }
+
+    if (!studentEmail.trim()) {
+      setSendError("Please enter the student email.");
+      return;
+    }
+
+    const endpoint = import.meta.env.VITE_LISTENING_RESULTS_API_URL;
+
+    if (!endpoint) {
+      setSendError("Missing VITE_LISTENING_RESULTS_API_URL in the environment file.");
+      return;
+    }
+
+    setIsSending(true);
+
+    try {
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          studentName: studentName.trim(),
+          studentEmail: studentEmail.trim(),
+          totalScore: score,
+          maxScore: TOTAL_QUESTIONS,
+          percentage,
+          resultMessage,
+          breakdown,
+          detailedAnswers,
+        }),
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(data?.error || "The email could not be sent.");
+      }
+
+      if (data?.partial) {
+        setSendError(data?.message || "Teacher email was sent, but student email could not be sent.");
+        return;
+      }
+
+      setSendSuccess(true);
+    } catch (error) {
+      console.error(error);
+      setSendError(error instanceof Error ? error.message : "The email could not be sent. Please try again.");
+    } finally {
+      setIsSending(false);
+    }
+  };
+
   // Used letters in Part 3 (single-use enforcement)
   const usedLetters = useMemo(() => {
     const used = new Set<string>();
@@ -314,7 +470,7 @@ export default function ListeningPage() {
         <div className="px-6 py-6">
           <div className="text-xl font-bold text-gray-900">Test finished</div>
           <div className="mt-1 text-sm text-gray-600">
-            Your score: <span className="font-semibold text-gray-900">{score}</span> / {TOTAL_QUESTIONS}
+            Your score: <span className="font-semibold text-gray-900">{score}</span> / {TOTAL_QUESTIONS} ({percentage}%)
           </div>
 
           <div className="mt-6 grid gap-3 md:grid-cols-4">
@@ -334,6 +490,47 @@ export default function ListeningPage() {
               <div className="text-xs font-semibold text-gray-700">Part 4</div>
               <div className="mt-1 text-2xl font-bold text-gray-900">{breakdown.p4}/7</div>
             </div>
+          </div>
+
+          <div className="mt-6 rounded-xl border bg-white p-5">
+            <div className="text-base font-bold text-gray-900">Send result by email</div>
+            <div className="mt-1 text-sm text-gray-600">
+              The student receives the score summary. The teacher receives the full report with correct and incorrect answers.
+            </div>
+
+            <div className="mt-4 grid gap-3 md:grid-cols-2">
+              <input
+                value={studentName}
+                onChange={(e) => setStudentName(e.target.value)}
+                placeholder="Student name"
+                className="w-full rounded-lg border px-4 py-3 text-sm outline-none transition duration-300 ease-in-out focus:border-[#2094F3]"
+              />
+              <input
+                type="email"
+                value={studentEmail}
+                onChange={(e) => setStudentEmail(e.target.value)}
+                placeholder="Student email"
+                className="w-full rounded-lg border px-4 py-3 text-sm outline-none transition duration-300 ease-in-out focus:border-[#2094F3]"
+              />
+            </div>
+
+            {sendError ? (
+              <div className="mt-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{sendError}</div>
+            ) : null}
+
+            {sendSuccess ? (
+              <div className="mt-4 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
+                The listening result was sent successfully.
+              </div>
+            ) : null}
+
+            <button
+              onClick={sendResultEmail}
+              disabled={isSending}
+              className="mt-4 rounded-lg bg-[#2094F3] px-4 py-2 text-sm font-semibold text-white transition duration-300 ease-in-out hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {isSending ? "Sending..." : "Send result"}
+            </button>
           </div>
 
           <div className="mt-6 flex flex-wrap gap-2">

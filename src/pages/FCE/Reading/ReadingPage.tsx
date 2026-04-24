@@ -1,10 +1,9 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import logo from "@/assets/logo.svg"; // <-- ajustează path-ul dacă e altul
-import emailjs from "@emailjs/browser";
 
 type Part = 1 | 2 | 3 | 4 | 5 | 6 | 7;
 
-const LS_KEY = "proerudio_fce_reading_v1";
+const LS_KEY = "proerudio_fce_reading_v2";
 
 type AnswersState = {
   // Part 1 & 5: A-D
@@ -1247,6 +1246,72 @@ const resultMessage =
     ? "Good result."
     : "Needs more practice.";
 
+const detailedAnswers = useMemo(() => {
+  const rows: Array<{
+    questionId: number;
+    part: string;
+    studentAnswer: string;
+    correctAnswer: string;
+    isCorrect: boolean;
+    points: number;
+    maxPoints: number;
+  }> = [];
+
+  for (let i = 1; i <= 8; i++) {
+    const studentAnswer = answers.mcq[i] || "—";
+    const correctAnswer = part1Correct[i];
+    rows.push({
+      questionId: i,
+      part: "Part 1",
+      studentAnswer,
+      correctAnswer,
+      isCorrect: studentAnswer === correctAnswer,
+      points: studentAnswer === correctAnswer ? 1 : 0,
+      maxPoints: 1,
+    });
+  }
+
+  for (let i = 9; i <= 16; i++) {
+    const studentAnswer = answers.text[i] || "—";
+    const typed = normalize(studentAnswer);
+    const ok = !!typed && part2Correct[i].some((a) => normalize(a) === typed);
+    rows.push({ questionId: i, part: "Part 2", studentAnswer, correctAnswer: part2Correct[i].join(" / "), isCorrect: ok, points: ok ? 1 : 0, maxPoints: 1 });
+  }
+
+  for (let i = 17; i <= 24; i++) {
+    const studentAnswer = answers.text[i] || "—";
+    const ok = normalize(studentAnswer) === normalize(part3Correct[i]);
+    rows.push({ questionId: i, part: "Part 3", studentAnswer, correctAnswer: part3Correct[i], isCorrect: ok, points: ok ? 1 : 0, maxPoints: 1 });
+  }
+
+  for (const item of part4Items) {
+    const studentAnswer = answers.text[item.id] || "—";
+    const points = getPart4Points(studentAnswer, item.correct, (item as any).partialAnswers);
+    rows.push({ questionId: item.id, part: "Part 4", studentAnswer, correctAnswer: item.correct.join(" / "), isCorrect: points === 2, points, maxPoints: 2 });
+  }
+
+  for (const q of part5Questions) {
+    const studentAnswer = answers.mcq[q.id] || "—";
+    const correctAnswer = q.correct;
+    rows.push({ questionId: q.id, part: "Part 5", studentAnswer, correctAnswer, isCorrect: studentAnswer === correctAnswer, points: studentAnswer === correctAnswer ? 2 : 0, maxPoints: 2 });
+  }
+
+  for (let i = 37; i <= 42; i++) {
+    const studentAnswer = (answers.letter[i] || "—").toUpperCase();
+    const correctAnswer = part6Correct[i];
+    rows.push({ questionId: i, part: "Part 6", studentAnswer, correctAnswer, isCorrect: studentAnswer === correctAnswer, points: studentAnswer === correctAnswer ? 2 : 0, maxPoints: 2 });
+  }
+
+  for (let i = 43; i <= 52; i++) {
+    const studentAnswer = (answers.letter[i] || "—").toUpperCase();
+    const correctAnswer = part7Correct[i];
+    rows.push({ questionId: i, part: "Part 7", studentAnswer, correctAnswer, isCorrect: studentAnswer === correctAnswer, points: studentAnswer === correctAnswer ? 1 : 0, maxPoints: 1 });
+  }
+
+  return rows;
+}, [answers, part1Correct, part2Correct, part3Correct, part4Items, part5Questions, part6Correct, part7Correct]);
+
+
     const sendResultEmail = async () => {
   setSendError("");
   setSendSuccess(false);
@@ -1261,31 +1326,46 @@ const resultMessage =
     return;
   }
 
+  const apiUrl = import.meta.env.VITE_READING_RESULTS_API_URL;
+
+  if (!apiUrl) {
+    setSendError("Missing VITE_READING_RESULTS_API_URL. Please set the API URL in your .env file.");
+    return;
+  }
+
   setIsSending(true);
 
   try {
-    await emailjs.send(
-  import.meta.env.VITE_EMAILJS_SERVICE_ID,
-  import.meta.env.VITE_EMAILJS_RESULTS_TEMPLATE_ID,
-  {
-    student_name: studentName,
-    student_email: studentEmail,
-    total_score: score,
-    max_score: TOTAL,
-    percentage,
-    part1_score: breakdown.p1,
-    part2_score: breakdown.p2,
-    part3_score: breakdown.p3,
-    part4_score: breakdown.p4,
-    part5_score: breakdown.p5,
-    part6_score: breakdown.p6,
-    part7_score: breakdown.p7,
-    result_message: resultMessage,
-  },
-  {
-    publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
-  }
-);
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        studentName: studentName.trim(),
+        studentEmail: studentEmail.trim(),
+        totalScore: score,
+        maxScore: TOTAL,
+        percentage,
+        resultMessage,
+        breakdown: {
+          p1: breakdown.p1,
+          p2: breakdown.p2,
+          p3: breakdown.p3,
+          p4: breakdown.p4,
+          p5: breakdown.p5,
+          p6: breakdown.p6,
+          p7: breakdown.p7,
+        },
+        detailedAnswers,
+      }),
+    });
+
+    const data = await response.json().catch(() => null);
+
+    if (!response.ok) {
+      throw new Error(data?.error || "The email could not be sent.");
+    }
 
     setSendSuccess(true);
   } catch (error) {

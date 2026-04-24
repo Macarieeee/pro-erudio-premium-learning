@@ -5,7 +5,9 @@ import logo from "@/assets/logo.svg"; // ajustează path-ul
 
 type Part = 1 | 2;
 
-const LS_KEY = "proerudio_fce_writing_v1";
+const LS_KEY = "proerudio_fce_writing_v2";
+
+const WRITING_RESULTS_API_URL = import.meta.env.VITE_WRITING_RESULTS_API_URL;
 
 type DraftsState = {
   // păstrăm text separat pentru fiecare task, ca să nu pierzi ce ai scris
@@ -23,6 +25,11 @@ export default function WritingPage() {
   const [part, setPart] = useState<Part>(1);
   const [taskIndex, setTaskIndex] = useState(0);
   const [finished, setFinished] = useState(false);
+  const [studentName, setStudentName] = useState("");
+  const [studentEmail, setStudentEmail] = useState("");
+  const [isSending, setIsSending] = useState(false);
+  const [sendError, setSendError] = useState("");
+  const [sendSuccess, setSendSuccess] = useState(false);
 
 const [state, setState] = useState<DraftsState>(() => ({ drafts: {}, chosenPart2TaskId: null }));
 
@@ -295,6 +302,109 @@ useEffect(() => {
     </div>
   );
 
+  const sendWritingEmail = async () => {
+    setSendError("");
+    setSendSuccess(false);
+
+    if (!studentName.trim()) {
+      setSendError("Please enter the student name.");
+      return;
+    }
+
+    if (!studentEmail.trim()) {
+      setSendError("Please enter the student email.");
+      return;
+    }
+
+    if (!WRITING_RESULTS_API_URL) {
+      setSendError("Missing VITE_WRITING_RESULTS_API_URL. Please check the .env file.");
+      return;
+    }
+
+    const p1Task = tasks.find((t) => t.id === 1)!;
+    const chosenTask = state.chosenPart2TaskId ? tasks.find((t) => t.id === state.chosenPart2TaskId) : null;
+
+    if (!chosenTask) {
+      setSendError("Please choose one task in Part 2 before sending the writing test.");
+      return;
+    }
+
+    const p1Text = state.drafts[p1Task.id] ?? "";
+    const chosenText = state.drafts[chosenTask.id] ?? "";
+
+    if (!p1Text.trim()) {
+      setSendError("Please complete Part 1 before sending the writing test.");
+      return;
+    }
+
+    if (!chosenText.trim()) {
+      setSendError("Please complete the selected Part 2 task before sending the writing test.");
+      return;
+    }
+
+    const submittedTasks = [
+      {
+        id: p1Task.id,
+        part: p1Task.part,
+        title: p1Task.title,
+        instructionTop: p1Task.instructionTop,
+        mainPrompt: p1Task.mainPrompt,
+        notes: p1Task.notes ?? [],
+        extraBoxLines: p1Task.extraBoxLines ?? [],
+        styleHint: p1Task.constraints?.styleHint ?? "",
+        minWords: p1Task.constraints?.minWords ?? 140,
+        maxWords: p1Task.constraints?.maxWords ?? 190,
+        answer: p1Text,
+        wordCount: countWords(p1Text),
+      },
+      {
+        id: chosenTask.id,
+        part: chosenTask.part,
+        title: chosenTask.title,
+        instructionTop: chosenTask.instructionTop,
+        mainPrompt: chosenTask.mainPrompt,
+        notes: chosenTask.notes ?? [],
+        extraBoxLines: chosenTask.extraBoxLines ?? [],
+        styleHint: chosenTask.constraints?.styleHint ?? "",
+        minWords: chosenTask.constraints?.minWords ?? 140,
+        maxWords: chosenTask.constraints?.maxWords ?? 190,
+        answer: chosenText,
+        wordCount: countWords(chosenText),
+      },
+    ];
+
+    setIsSending(true);
+
+    try {
+      const response = await fetch(WRITING_RESULTS_API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          studentName: studentName.trim(),
+          studentEmail: studentEmail.trim(),
+          submittedTasks,
+        }),
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok && response.status !== 207) {
+        throw new Error(data?.error || "The writing test could not be sent.");
+      }
+
+      setSendSuccess(true);
+
+      if (data?.partial) {
+        setSendError(data?.message || "The teacher received the writing test, but the student confirmation email could not be sent.");
+      }
+    } catch (error) {
+      console.error(error);
+      setSendError(error instanceof Error ? error.message : "The writing test could not be sent. Please try again.");
+    } finally {
+      setIsSending(false);
+    }
+  };
+
   const Finish = () => {
     // Pentru writing nu e “scor” automat (depinde de evaluare),
     // dar putem valida word count + dacă la Part 2 ai ales una.
@@ -341,6 +451,50 @@ useEffect(() => {
             </div>
           </div>
 
+          <div className="mt-6 rounded-xl border bg-white p-5">
+            <div className="text-lg font-bold text-gray-900">Send writing test by email</div>
+            <p className="mt-1 text-sm text-gray-600">
+              The student receives a confirmation email. The teacher receives the full writing submission for review.
+            </p>
+
+            <div className="mt-5 grid gap-3 md:grid-cols-2">
+              <input
+                value={studentName}
+                onChange={(e) => setStudentName(e.target.value)}
+                placeholder="Student name"
+                className="w-full rounded-lg border px-4 py-3 text-sm outline-none transition duration-300 ease-in-out focus:border-primary"
+              />
+
+              <input
+                type="email"
+                value={studentEmail}
+                onChange={(e) => setStudentEmail(e.target.value)}
+                placeholder="Student email"
+                className="w-full rounded-lg border px-4 py-3 text-sm outline-none transition duration-300 ease-in-out focus:border-primary"
+              />
+            </div>
+
+            {sendError ? (
+              <div className="mt-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                {sendError}
+              </div>
+            ) : null}
+
+            {sendSuccess ? (
+              <div className="mt-4 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+                Writing test sent successfully.
+              </div>
+            ) : null}
+
+            <button
+              onClick={sendWritingEmail}
+              disabled={isSending}
+              className="mt-4 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white transition duration-300 ease-in-out hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {isSending ? "Sending..." : "Send writing test"}
+            </button>
+          </div>
+
           <div className="mt-6 flex flex-wrap gap-2">
             <button
               onClick={() => setFinished(false)}
@@ -353,6 +507,10 @@ useEffect(() => {
               onClick={() => {
                 localStorage.removeItem(LS_KEY);
                 setState({ drafts: {}, chosenPart2TaskId: null });
+                setStudentName("");
+                setStudentEmail("");
+                setSendError("");
+                setSendSuccess(false);
                 setPart(1);
                 setTaskIndex(0);
                 setFinished(false);
@@ -372,13 +530,13 @@ useEffect(() => {
       {renderHeader()}
 
       {finished ? (
-        <Finish />
-      ) : (
-        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-4 px-4 pb-24 pt-6 lg:grid-cols-2">
-          {renderLeftPrompt()}
-          {renderRightEditor()}
-        </div>
-      )}
+  Finish()
+) : (
+  <div className="mx-auto grid max-w-6xl grid-cols-1 gap-4 px-4 pb-24 pt-6 lg:grid-cols-2">
+    {renderLeftPrompt()}
+    {renderRightEditor()}
+  </div>
+)}
 
       {renderNav()}
     </div>
