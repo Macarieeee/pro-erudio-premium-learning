@@ -22,6 +22,11 @@ type DetailedAnswer = {
   maxPoints: number;
 };
 
+type TimeSpent = {
+  timeSpentSeconds: number;
+  timeSpentFormatted: string;
+};
+
 type ReadingResultPayload = {
   studentName: string;
   studentEmail: string;
@@ -31,6 +36,9 @@ type ReadingResultPayload = {
   resultMessage: string;
   breakdown: ScoreBreakdown;
   detailedAnswers?: DetailedAnswer[];
+  timeSpent?: TimeSpent;
+  timeSpentSeconds?: number;
+  timeSpentFormatted?: string;
 };
 
 const allowedOrigins = [
@@ -65,6 +73,33 @@ function escapeHtml(value: unknown) {
 
 function isValidEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function formatSeconds(seconds: number) {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const remainingSeconds = seconds % 60;
+
+  if (hours > 0) return `${hours}h ${minutes}m ${remainingSeconds}s`;
+  if (minutes > 0) return `${minutes}m ${remainingSeconds}s`;
+  return `${remainingSeconds}s`;
+}
+
+function getTimeSpentFormatted(data: {
+  timeSpent?: TimeSpent;
+  timeSpentSeconds?: number;
+  timeSpentFormatted?: string;
+}) {
+  if (data.timeSpentFormatted) return data.timeSpentFormatted;
+  if (data.timeSpent?.timeSpentFormatted) return data.timeSpent.timeSpentFormatted;
+
+  const seconds = data.timeSpentSeconds ?? data.timeSpent?.timeSpentSeconds;
+
+  if (typeof seconds !== "number" || Number.isNaN(seconds)) {
+    return "Not available";
+  }
+
+  return formatSeconds(seconds);
 }
 
 function buildBreakdownRows(breakdown: ScoreBreakdown) {
@@ -119,6 +154,7 @@ function buildStudentHtml(data: {
 function buildTeacherHtml(data: {
   safeStudentName: string;
   safeStudentEmail: string;
+  safeTimeSpentFormatted: string;
   totalScore: number;
   maxScore: number;
   percentage: number;
@@ -151,7 +187,8 @@ function buildTeacherHtml(data: {
       <div style="padding: 24px; border: 1px solid #e5e7eb; border-radius: 14px; background: #ffffff;">
         <h2 style="margin: 0 0 16px; color: #111827;">Detailed FCE Reading Result — Teacher Report</h2>
         <p style="margin: 0 0 6px;"><strong>Student:</strong> ${data.safeStudentName}</p>
-        <p style="margin: 0 0 18px;"><strong>Student email:</strong> ${data.safeStudentEmail}</p>
+        <p style="margin: 0 0 6px;"><strong>Student email:</strong> ${data.safeStudentEmail}</p>
+        <p style="margin: 0 0 18px;"><strong>Time spent on Reading:</strong> ${data.safeTimeSpentFormatted}</p>
 
         <div style="padding: 18px; border-radius: 12px; background: #f9fafb; margin: 20px 0;">
           <p style="margin: 0; font-size: 14px; color: #6b7280;">Final score</p>
@@ -210,6 +247,9 @@ export default async function handler(req: any, res: any) {
       resultMessage,
       breakdown,
       detailedAnswers = [],
+      timeSpent,
+      timeSpentSeconds,
+      timeSpentFormatted,
     } = req.body as ReadingResultPayload;
 
     if (!studentName || !studentEmail) {
@@ -238,6 +278,9 @@ export default async function handler(req: any, res: any) {
     const safeStudentName = escapeHtml(studentName.trim());
     const safeStudentEmail = escapeHtml(studentEmail.trim());
     const safeResultMessage = escapeHtml(resultMessage || "");
+    const safeTimeSpentFormatted = escapeHtml(
+      getTimeSpentFormatted({ timeSpent, timeSpentSeconds, timeSpentFormatted })
+    );
 
     const studentHtml = buildStudentHtml({
       safeStudentName,
@@ -252,6 +295,7 @@ export default async function handler(req: any, res: any) {
     const teacherHtml = buildTeacherHtml({
       safeStudentName,
       safeStudentEmail,
+      safeTimeSpentFormatted,
       totalScore,
       maxScore,
       percentage,

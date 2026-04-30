@@ -1,13 +1,26 @@
 // src/pages/Preliminary/Writing/PreliminaryWritingPage.tsx
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { getTasksForPart, tasks, WritingTask } from "./data/preliminaryWritingData";
 import logo from "@/assets/logo.svg"; // ajustează path-ul
 
 type Part = 1 | 2;
 
 const LS_KEY = "proerudio_preliminary_writing_v1";
+const STUDENT_INFO_KEY = "proerudio_preliminary_student_info";
+const PRELIMINARY_LANDING_PATH = "/preliminary-mock-test";
 
-const WRITING_RESULTS_API_URL = import.meta.env.VITE_WRITING_RESULTS_API_URL;
+const formatTimeSpent = (totalSeconds: number) => {
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  if (hours > 0) return `${hours}h ${minutes}m ${seconds}s`;
+  if (minutes > 0) return `${minutes}m ${seconds}s`;
+  return `${seconds}s`;
+};
+
+const WRITING_RESULTS_API_URL = import.meta.env.VITE_PRELIMINARY_WRITING_RESULTS_API_URL || import.meta.env.VITE_WRITING_RESULTS_API_URL;
 
 type DraftsState = {
   // păstrăm text separat pentru fiecare task, ca să nu pierzi ce ai scris
@@ -31,10 +44,32 @@ export default function WritingPage() {
   const [sendError, setSendError] = useState("");
   const [sendSuccess, setSendSuccess] = useState(false);
 
+  const testStartTimeRef = useRef<number>(Date.now());
+
+  const getTimeSpent = () => {
+    const totalSeconds = Math.round((Date.now() - testStartTimeRef.current) / 1000);
+
+    return {
+      timeSpentSeconds: totalSeconds,
+      timeSpentFormatted: formatTimeSpent(totalSeconds),
+    };
+  };
+
 const [state, setState] = useState<DraftsState>(() => ({ drafts: {}, chosenPart2TaskId: null }));
 
 useEffect(() => {
   if (typeof window === "undefined") return;
+
+  const studentInfoRaw = window.localStorage.getItem(STUDENT_INFO_KEY);
+  if (studentInfoRaw) {
+    try {
+      const parsed = JSON.parse(studentInfoRaw);
+      setStudentName(parsed.studentName || "");
+      setStudentEmail(parsed.studentEmail || "");
+    } catch {
+      // ignore corrupted localStorage
+    }
+  }
 
   const raw = window.localStorage.getItem(LS_KEY);
   if (!raw) return;
@@ -321,7 +356,7 @@ useEffect(() => {
     }
 
     if (!WRITING_RESULTS_API_URL) {
-      setSendError("Missing VITE_WRITING_RESULTS_API_URL. Please check the .env file.");
+      setSendError("Missing VITE_PRELIMINARY_WRITING_RESULTS_API_URL or VITE_WRITING_RESULTS_API_URL. Please check the .env file.");
       return;
     }
 
@@ -345,6 +380,18 @@ useEffect(() => {
       setSendError("Please complete the selected Part 2 task before sending the writing test.");
       return;
     }
+
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem(
+        STUDENT_INFO_KEY,
+        JSON.stringify({
+          studentName: studentName.trim(),
+          studentEmail: studentEmail.trim(),
+        })
+      );
+    }
+
+    const timeSpent = getTimeSpent();
 
     const submittedTasks = [
       {
@@ -387,6 +434,9 @@ useEffect(() => {
           studentName: studentName.trim(),
           studentEmail: studentEmail.trim(),
           submittedTasks,
+          timeSpent,
+          timeSpentSeconds: timeSpent.timeSpentSeconds,
+          timeSpentFormatted: timeSpent.timeSpentFormatted,
         }),
       });
 
@@ -485,8 +535,17 @@ useEffect(() => {
             ) : null}
 
             {sendSuccess ? (
-              <div className="mt-4 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
-                Writing test sent successfully.
+              <div className="mt-4 space-y-3">
+                <div className="rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+                  Writing test sent successfully. The Preliminary mock test has been completed.
+                </div>
+
+                <Link
+                  to={PRELIMINARY_LANDING_PATH}
+                  className="inline-flex rounded-lg border px-4 py-2 text-sm font-semibold text-gray-900 transition duration-300 ease-in-out hover:bg-gray-50"
+                >
+                  Back to Preliminary overview
+                </Link>
               </div>
             ) : null}
 

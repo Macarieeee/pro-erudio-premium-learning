@@ -20,6 +20,11 @@ type DetailedAnswer = {
   maxPoints: number;
 };
 
+type TimeSpent = {
+  timeSpentSeconds: number;
+  timeSpentFormatted: string;
+};
+
 type ListeningResultPayload = {
   studentName: string;
   studentEmail: string;
@@ -29,6 +34,9 @@ type ListeningResultPayload = {
   resultMessage: string;
   breakdown: Breakdown;
   detailedAnswers: DetailedAnswer[];
+  timeSpent?: TimeSpent;
+  timeSpentSeconds?: number;
+  timeSpentFormatted?: string;
 };
 
 const escapeHtml = (value: unknown) =>
@@ -44,6 +52,29 @@ const splitEmails = (value: string) =>
     .split(",")
     .map((email) => email.trim())
     .filter(Boolean);
+
+const getTimeSpentFormatted = (data: {
+  timeSpent?: TimeSpent;
+  timeSpentSeconds?: number;
+  timeSpentFormatted?: string;
+}) => {
+  if (data.timeSpentFormatted) return data.timeSpentFormatted;
+  if (data.timeSpent?.timeSpentFormatted) return data.timeSpent.timeSpentFormatted;
+
+  const seconds = data.timeSpentSeconds ?? data.timeSpent?.timeSpentSeconds;
+
+  if (typeof seconds !== "number" || Number.isNaN(seconds)) {
+    return "Not available";
+  }
+
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const remainingSeconds = seconds % 60;
+
+  if (hours > 0) return `${hours}h ${minutes}m ${remainingSeconds}s`;
+  if (minutes > 0) return `${minutes}m ${remainingSeconds}s`;
+  return `${remainingSeconds}s`;
+};
 
 const scoreCard = (label: string, value: string) => `
   <td style="padding: 12px; border: 1px solid #e5e7eb; border-radius: 10px; background: #f9fafb;">
@@ -109,6 +140,7 @@ const buildTeacherHtml = (data: ListeningResultPayload) => {
       <div style="padding: 16px; border: 1px solid #e5e7eb; border-radius: 14px; background: #f9fafb; margin: 20px 0;">
         <p style="margin: 0;"><strong>Student:</strong> ${escapeHtml(data.studentName)}</p>
         <p style="margin: 4px 0 0;"><strong>Email:</strong> ${escapeHtml(data.studentEmail)}</p>
+        <p style="margin: 4px 0 0;"><strong>Time spent on Listening:</strong> ${escapeHtml(getTimeSpentFormatted(data))}</p>
         <p style="margin: 12px 0 0; font-size: 20px;"><strong>Final score:</strong> ${escapeHtml(data.totalScore)} / ${escapeHtml(data.maxScore)} (${escapeHtml(data.percentage)}%)</p>
       </div>
 

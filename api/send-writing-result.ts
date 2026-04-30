@@ -17,10 +17,18 @@ type SubmittedWritingTask = {
   wordCount: number;
 };
 
+type TimeSpent = {
+  timeSpentSeconds: number;
+  timeSpentFormatted: string;
+};
+
 type WritingResultPayload = {
   studentName: string;
   studentEmail: string;
   submittedTasks: SubmittedWritingTask[];
+  timeSpent?: TimeSpent;
+  timeSpentSeconds?: number;
+  timeSpentFormatted?: string;
 };
 
 const escapeHtml = (value: unknown) =>
@@ -40,6 +48,29 @@ const splitEmails = (value: string) =>
     .filter(Boolean);
 
 const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+const getTimeSpentFormatted = (data: {
+  timeSpent?: TimeSpent;
+  timeSpentSeconds?: number;
+  timeSpentFormatted?: string;
+}) => {
+  if (data.timeSpentFormatted) return data.timeSpentFormatted;
+  if (data.timeSpent?.timeSpentFormatted) return data.timeSpent.timeSpentFormatted;
+
+  const seconds = data.timeSpentSeconds ?? data.timeSpent?.timeSpentSeconds;
+
+  if (typeof seconds !== "number" || Number.isNaN(seconds)) {
+    return "Not available";
+  }
+
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const remainingSeconds = seconds % 60;
+
+  if (hours > 0) return `${hours}h ${minutes}m ${remainingSeconds}s`;
+  if (minutes > 0) return `${minutes}m ${remainingSeconds}s`;
+  return `${remainingSeconds}s`;
+};
 
 const wordStatus = (task: SubmittedWritingTask) => {
   if (task.wordCount < task.minWords) return "Below limit";
@@ -163,6 +194,7 @@ const buildTeacherHtml = (data: WritingResultPayload) => {
       <div style="padding: 16px; border: 1px solid #e5e7eb; border-radius: 14px; background: #f9fafb; margin: 20px 0;">
         <p style="margin: 0;"><strong>Student:</strong> ${escapeHtml(data.studentName)}</p>
         <p style="margin: 4px 0 0;"><strong>Email:</strong> ${escapeHtml(data.studentEmail)}</p>
+        <p style="margin: 4px 0 0;"><strong>Time spent on Writing:</strong> ${escapeHtml(getTimeSpentFormatted(data))}</p>
         <p style="margin: 4px 0 0;"><strong>Submitted tasks:</strong> ${escapeHtml(data.submittedTasks.length)}</p>
       </div>
 

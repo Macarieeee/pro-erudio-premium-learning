@@ -1,4 +1,5 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import logo from "@/assets/logo.svg";
 import {
   Letter,
@@ -34,6 +35,18 @@ type AnswersState = {
 };
 
 const LS_KEY = "proerudio_preliminary_reading_v1";
+const STUDENT_INFO_KEY = "proerudio_preliminary_student_info";
+const NEXT_WRITING_PATH = "/preliminary/writing";
+
+const formatTimeSpent = (totalSeconds: number) => {
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  if (hours > 0) return `${hours}h ${minutes}m ${seconds}s`;
+  if (minutes > 0) return `${minutes}m ${seconds}s`;
+  return `${seconds}s`;
+};
 
 const normalize = (value: string) =>
   value
@@ -89,8 +102,29 @@ export default function PreliminaryReadingPage() {
   const [openPart5Gap, setOpenPart5Gap] = useState<number | null>(null);
   const [openPart4Gap, setOpenPart4Gap] = useState<number | null>(null);
 
+  const testStartTimeRef = useRef<number>(Date.now());
+
+  const getTimeSpent = () => {
+    const totalSeconds = Math.round((Date.now() - testStartTimeRef.current) / 1000);
+
+    return {
+      timeSpentSeconds: totalSeconds,
+      timeSpentFormatted: formatTimeSpent(totalSeconds),
+    };
+  };
+
   useEffect(() => {
     if (typeof window === "undefined") return;
+
+    const studentInfo = safeParse<{ studentName?: string; studentEmail?: string }>(
+      window.localStorage.getItem(STUDENT_INFO_KEY)
+    );
+
+    if (studentInfo) {
+      setStudentName(studentInfo.studentName || "");
+      setStudentEmail(studentInfo.studentEmail || "");
+    }
+
     const parsed = safeParse<AnswersState>(window.localStorage.getItem(LS_KEY));
     if (parsed) {
       const initial = buildInitialState();
@@ -249,10 +283,22 @@ export default function PreliminaryReadingPage() {
       return;
     }
 
-    const apiUrl = import.meta.env.VITE_READING_RESULTS_API_URL;
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem(
+        STUDENT_INFO_KEY,
+        JSON.stringify({
+          studentName: studentName.trim(),
+          studentEmail: studentEmail.trim(),
+        })
+      );
+    }
+
+    const timeSpent = getTimeSpent();
+
+    const apiUrl = import.meta.env.VITE_PRELIMINARY_READING_RESULTS_API_URL || import.meta.env.VITE_READING_RESULTS_API_URL;
 
     if (!apiUrl) {
-      setSendError("Missing VITE_READING_RESULTS_API_URL. Please set the API URL in your .env file.");
+      setSendError("Missing VITE_PRELIMINARY_READING_RESULTS_API_URL or VITE_READING_RESULTS_API_URL. Please set the API URL in your .env file.");
       return;
     }
 
@@ -272,6 +318,9 @@ export default function PreliminaryReadingPage() {
           resultMessage,
           breakdown,
           detailedAnswers,
+          timeSpent,
+          timeSpentSeconds: timeSpent.timeSpentSeconds,
+          timeSpentFormatted: timeSpent.timeSpentFormatted,
         }),
       });
 
@@ -742,7 +791,20 @@ const Part4 = () => (
             />
           </div>
 
-          {sendSuccess && <div className="mt-4 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">Result sent successfully.</div>}
+          {sendSuccess && (
+            <div className="mt-4 space-y-3">
+              <div className="rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
+                Result sent successfully.
+              </div>
+
+              <Link
+                to={NEXT_WRITING_PATH}
+                className="inline-flex rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white transition duration-300 ease-in-out hover:brightness-110"
+              >
+                Continue to Writing
+              </Link>
+            </div>
+          )}
           {sendError && <div className="mt-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{sendError}</div>}
         </div>
 

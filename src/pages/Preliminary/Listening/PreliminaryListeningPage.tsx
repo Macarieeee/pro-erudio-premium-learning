@@ -1,6 +1,7 @@
 // src/pages/Preliminary/Listening/PreliminaryListeningPage.tsx
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import logo from "@/assets/logo.svg";
 import {
   audioByPart,
@@ -30,6 +31,18 @@ type DetailedAnswer = {
 };
 
 const LS_KEY = "proerudio_preliminary_listening_v1";
+const STUDENT_INFO_KEY = "proerudio_preliminary_student_info";
+const NEXT_READING_PATH = "/preliminary/reading";
+
+const formatTimeSpent = (totalSeconds: number) => {
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  if (hours > 0) return `${hours}h ${minutes}m ${seconds}s`;
+  if (minutes > 0) return `${minutes}m ${seconds}s`;
+  return `${seconds}s`;
+};
 
 const normalize = (s: string) =>
   s
@@ -65,8 +78,30 @@ export default function PreliminaryListeningPage() {
   const [audioEnabled, setAudioEnabled] = useState(false);
   const [audioPlaying, setAudioPlaying] = useState(false);
 
+  const testStartTimeRef = useRef<number>(Date.now());
+
+  const getTimeSpent = () => {
+    const totalSeconds = Math.round((Date.now() - testStartTimeRef.current) / 1000);
+
+    return {
+      timeSpentSeconds: totalSeconds,
+      timeSpentFormatted: formatTimeSpent(totalSeconds),
+    };
+  };
+
   useEffect(() => {
     if (typeof window === "undefined") return;
+
+    const studentInfoRaw = window.localStorage.getItem(STUDENT_INFO_KEY);
+    if (studentInfoRaw) {
+      try {
+        const parsed = JSON.parse(studentInfoRaw);
+        setStudentName(parsed.studentName || "");
+        setStudentEmail(parsed.studentEmail || "");
+      } catch {
+        // ignore corrupted localStorage
+      }
+    }
 
     const raw = window.localStorage.getItem(LS_KEY);
     if (!raw) return;
@@ -261,6 +296,18 @@ export default function PreliminaryListeningPage() {
       return;
     }
 
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem(
+        STUDENT_INFO_KEY,
+        JSON.stringify({
+          studentName: studentName.trim(),
+          studentEmail: studentEmail.trim(),
+        })
+      );
+    }
+
+    const timeSpent = getTimeSpent();
+
     const endpoint = import.meta.env.VITE_PRELIMINARY_LISTENING_RESULTS_API_URL || import.meta.env.VITE_LISTENING_RESULTS_API_URL;
 
     if (!endpoint) {
@@ -284,6 +331,9 @@ export default function PreliminaryListeningPage() {
           resultMessage,
           breakdown,
           detailedAnswers,
+          timeSpent,
+          timeSpentSeconds: timeSpent.timeSpentSeconds,
+          timeSpentFormatted: timeSpent.timeSpentFormatted,
         }),
       });
 
@@ -558,8 +608,17 @@ export default function PreliminaryListeningPage() {
 
           {sendError ? <div className="mt-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{sendError}</div> : null}
           {sendSuccess ? (
-            <div className="mt-4 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
-              The listening result was sent successfully.
+            <div className="mt-4 space-y-3">
+              <div className="rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
+                The listening result was sent successfully.
+              </div>
+
+              <Link
+                to={NEXT_READING_PATH}
+                className="inline-flex rounded-lg bg-[#2094F3] px-4 py-2 text-sm font-semibold text-white transition duration-300 ease-in-out hover:brightness-110"
+              >
+                Continue to Reading
+              </Link>
             </div>
           ) : null}
 
