@@ -21,6 +21,7 @@ import ReadingPage from "./pages/FCE/Reading/ReadingPage";
 import PreliminaryListeningPage from "@/pages/Preliminary/Listening/PreliminaryListeningPage";
 import PreliminaryReadingPage from "@/pages/Preliminary/Reading/PreliminaryReadingPage";
 import PreliminaryWritingPage from "@/pages/Preliminary/Writing/PreliminaryWritingPage";
+import FceLandingPage from "./pages/FceLandingPage";
 
 import { campsData } from "@/data/campsData";
 import { journalList } from "@/data/journals";
@@ -81,7 +82,7 @@ export const routes: RouteRecord[] = [
       // fallback dinamic
       { path: ":slug", element: <CampPage /> },
       { path: "jurnal/:slug", element: <JournalPage /> },
-
+{ path: "fce-mock-test", element: <FceLandingPage /> },
       { path: "fce/listening", element: <ListeningPage /> },
       { path: "fce/writing", element: <WritingPage /> },
       { path: "fce/reading", element: <ReadingPage /> },

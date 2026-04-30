@@ -4,6 +4,8 @@ import logo from "@/assets/logo.svg"; // <-- ajustează path-ul dacă e altul
 type Part = 1 | 2 | 3 | 4 | 5 | 6 | 7;
 
 const LS_KEY = "proerudio_fce_reading_v2";
+const STUDENT_INFO_KEY = "proerudio_fce_student_info";
+const NEXT_WRITING_PATH = "/fce/writing";
 
 type AnswersState = {
   // Part 1 & 5: A-D
@@ -76,7 +78,21 @@ function tokenizeGaps(input: string) {
   if (last < input.length) out.push({ type: "text", value: input.slice(last) });
   return out;
 }
+const formatTimeSpent = (totalSeconds: number) => {
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
 
+  if (hours > 0) {
+    return `${hours}h ${minutes}m ${seconds}s`;
+  }
+
+  if (minutes > 0) {
+    return `${minutes}m ${seconds}s`;
+  }
+
+  return `${seconds}s`;
+};
 // IMPORTANT (focus fix): keep wrapper components OUTSIDE the page component,
 // otherwise they get re-created on every keystroke and can cause input remount/focus loss.
 const CardShell = ({ children }: { children: React.ReactNode }) => (
@@ -94,6 +110,16 @@ const [studentEmail, setStudentEmail] = useState("");
 const [isSending, setIsSending] = useState(false);
 const [sendSuccess, setSendSuccess] = useState(false);
 const [sendError, setSendError] = useState("");
+  const testStartTimeRef = useRef<number>(Date.now());
+
+  const getTimeSpent = () => {
+    const totalSeconds = Math.round((Date.now() - testStartTimeRef.current) / 1000);
+
+    return {
+      timeSpentSeconds: totalSeconds,
+      timeSpentFormatted: formatTimeSpent(totalSeconds),
+    };
+  };
   // Part 1 dropdown (gap menu)
   const [openGap, setOpenGap] = useState<number | null>(null);
 
@@ -108,6 +134,22 @@ const [sendError, setSendError] = useState("");
     const parsed = safeParse<AnswersState>(window.localStorage.getItem(LS_KEY));
     if (parsed) setAnswers({ ...buildInitialState(), ...parsed });
   }, []);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const raw = window.localStorage.getItem(STUDENT_INFO_KEY);
+    if (!raw) return;
+
+    try {
+      const parsed = JSON.parse(raw) as { studentName?: string; studentEmail?: string };
+      setStudentName(parsed.studentName || "");
+      setStudentEmail(parsed.studentEmail || "");
+    } catch {
+      // ignore
+    }
+  }, []);
+
+
 
   // SSR-safe save
   useEffect(() => {
@@ -1333,7 +1375,41 @@ const detailedAnswers = useMemo(() => {
     return;
   }
 
+  const timeSpent = getTimeSpent();
+
+
+
+  if (typeof window !== "undefined") {
+
+
+    window.localStorage.setItem(
+
+
+      STUDENT_INFO_KEY,
+
+
+      JSON.stringify({
+
+
+        studentName: studentName.trim(),
+
+
+        studentEmail: studentEmail.trim(),
+
+
+      })
+
+
+    );
+
+
+  }
+
+
+
   setIsSending(true);
+
+
 
   try {
     const response = await fetch(apiUrl, {
@@ -1358,6 +1434,9 @@ const detailedAnswers = useMemo(() => {
           p7: breakdown.p7,
         },
         detailedAnswers,
+        timeSpent,
+        timeSpentSeconds: timeSpent.timeSpentSeconds,
+        timeSpentFormatted: timeSpent.timeSpentFormatted,
       }),
     });
 
@@ -1457,8 +1536,17 @@ const FinishScreen = () => (
         </div>
 
         {sendSuccess && (
-          <div className="mt-4 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
-            Result sent successfully.
+          <div className="mt-4 space-y-3">
+            <div className="rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
+              Result sent successfully. You can now continue to the Writing test.
+            </div>
+
+            <a
+              href={NEXT_WRITING_PATH}
+              className="inline-flex rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white transition duration-300 ease-in-out hover:brightness-110"
+            >
+              Continue to Writing
+            </a>
           </div>
         )}
 

@@ -1,11 +1,12 @@
 // src/pages/fce/writing/WritingPage.tsx
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { getTasksForPart, tasks, WritingTask } from "./data/writingData";
 import logo from "@/assets/logo.svg"; // ajustează path-ul
 
 type Part = 1 | 2;
 
 const LS_KEY = "proerudio_fce_writing_v2";
+const STUDENT_INFO_KEY = "proerudio_fce_student_info";
 
 const WRITING_RESULTS_API_URL = import.meta.env.VITE_WRITING_RESULTS_API_URL;
 
@@ -14,7 +15,21 @@ type DraftsState = {
   drafts: Record<number, string>;
   chosenPart2TaskId: number | null; // 2/3/4 (în mod examen alegi una)
 };
+const formatTimeSpent = (totalSeconds: number) => {
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
 
+  if (hours > 0) {
+    return `${hours}h ${minutes}m ${seconds}s`;
+  }
+
+  if (minutes > 0) {
+    return `${minutes}m ${seconds}s`;
+  }
+
+  return `${seconds}s`;
+};
 const countWords = (text: string) => {
   const cleaned = text.trim().replace(/\s+/g, " ");
   if (!cleaned) return 0;
@@ -30,6 +45,16 @@ export default function WritingPage() {
   const [isSending, setIsSending] = useState(false);
   const [sendError, setSendError] = useState("");
   const [sendSuccess, setSendSuccess] = useState(false);
+  const testStartTimeRef = useRef<number>(Date.now());
+
+  const getTimeSpent = () => {
+    const totalSeconds = Math.round((Date.now() - testStartTimeRef.current) / 1000);
+
+    return {
+      timeSpentSeconds: totalSeconds,
+      timeSpentFormatted: formatTimeSpent(totalSeconds),
+    };
+  };
 
 const [state, setState] = useState<DraftsState>(() => ({ drafts: {}, chosenPart2TaskId: null }));
 
@@ -48,6 +73,21 @@ useEffect(() => {
   if (typeof window === "undefined") return;
   window.localStorage.setItem(LS_KEY, JSON.stringify(state));
 }, [state]);
+
+useEffect(() => {
+  if (typeof window === "undefined") return;
+
+  const raw = window.localStorage.getItem(STUDENT_INFO_KEY);
+  if (!raw) return;
+
+  try {
+    const parsed = JSON.parse(raw) as { studentName?: string; studentEmail?: string };
+    setStudentName(parsed.studentName || "");
+    setStudentEmail(parsed.studentEmail || "");
+  } catch {
+    // ignore
+  }
+}, []);
 
   const tasksInPart = useMemo(() => getTasksForPart(part), [part]);
   const task: WritingTask | undefined = tasksInPart[taskIndex];
@@ -373,7 +413,41 @@ useEffect(() => {
       },
     ];
 
+    const timeSpent = getTimeSpent();
+
+
+
+    if (typeof window !== "undefined") {
+
+
+      window.localStorage.setItem(
+
+
+        STUDENT_INFO_KEY,
+
+
+        JSON.stringify({
+
+
+          studentName: studentName.trim(),
+
+
+          studentEmail: studentEmail.trim(),
+
+
+        })
+
+
+      );
+
+
+    }
+
+
+
     setIsSending(true);
+
+
 
     try {
       const response = await fetch(WRITING_RESULTS_API_URL, {
@@ -383,6 +457,9 @@ useEffect(() => {
           studentName: studentName.trim(),
           studentEmail: studentEmail.trim(),
           submittedTasks,
+          timeSpent,
+          timeSpentSeconds: timeSpent.timeSpentSeconds,
+          timeSpentFormatted: timeSpent.timeSpentFormatted,
         }),
       });
 

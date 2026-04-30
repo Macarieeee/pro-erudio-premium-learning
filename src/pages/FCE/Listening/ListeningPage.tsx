@@ -31,8 +31,24 @@ type DetailedAnswer = {
   points: number;
   maxPoints: number;
 };
+const formatTimeSpent = (totalSeconds: number) => {
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
 
+  if (hours > 0) {
+    return `${hours}h ${minutes}m ${seconds}s`;
+  }
+
+  if (minutes > 0) {
+    return `${minutes}m ${seconds}s`;
+  }
+
+  return `${seconds}s`;
+};
 const LS_KEY = "proerudio_fce_listening_v1";
+const STUDENT_INFO_KEY = "proerudio_fce_student_info";
+const NEXT_READING_PATH = "/fce/reading";
 
 const normalize = (s: string) =>
   s
@@ -81,6 +97,22 @@ export default function ListeningPage() {
       // ignore
     }
   }, []);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const raw = window.localStorage.getItem(STUDENT_INFO_KEY);
+    if (!raw) return;
+
+    try {
+      const parsed = JSON.parse(raw) as { studentName?: string; studentEmail?: string };
+      setStudentName(parsed.studentName || "");
+      setStudentEmail(parsed.studentEmail || "");
+    } catch {
+      // ignore
+    }
+  }, []);
+
+
 
   // Persist progress
   useEffect(() => {
@@ -147,7 +179,16 @@ export default function ListeningPage() {
   const currentTotalInPart = partMeta[part].count;
   const goPrev = () => setIndexInPart((i) => Math.max(0, i - 1));
   const goNext = () => setIndexInPart((i) => Math.min(currentTotalInPart - 1, i + 1));
+const testStartTimeRef = useRef<number>(Date.now());
 
+const getTimeSpent = () => {
+  const totalSeconds = Math.round((Date.now() - testStartTimeRef.current) / 1000);
+
+  return {
+    timeSpentSeconds: totalSeconds,
+    timeSpentFormatted: formatTimeSpent(totalSeconds),
+  };
+};
   const resetAll = () => {
     setAnswers(buildInitialState());
     setPart(1);
@@ -298,7 +339,41 @@ export default function ListeningPage() {
       return;
     }
 
+    const timeSpent = getTimeSpent();
+
+
+
+    if (typeof window !== "undefined") {
+
+
+      window.localStorage.setItem(
+
+
+        STUDENT_INFO_KEY,
+
+
+        JSON.stringify({
+
+
+          studentName: studentName.trim(),
+
+
+          studentEmail: studentEmail.trim(),
+
+
+        })
+
+
+      );
+
+
+    }
+
+
+
     setIsSending(true);
+
+
 
     try {
       const response = await fetch(endpoint, {
@@ -315,6 +390,9 @@ export default function ListeningPage() {
           resultMessage,
           breakdown,
           detailedAnswers,
+          timeSpent,
+          timeSpentSeconds: timeSpent.timeSpentSeconds,
+          timeSpentFormatted: timeSpent.timeSpentFormatted,
         }),
       });
 
@@ -519,8 +597,17 @@ export default function ListeningPage() {
             ) : null}
 
             {sendSuccess ? (
-              <div className="mt-4 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
-                The listening result was sent successfully.
+              <div className="mt-4 space-y-3">
+                <div className="rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
+                  The listening result was sent successfully. You can now continue to the Reading test.
+                </div>
+
+                <a
+                  href={NEXT_READING_PATH}
+                  className="inline-flex rounded-lg bg-[#2094F3] px-4 py-2 text-sm font-semibold text-white transition duration-300 ease-in-out hover:brightness-110"
+                >
+                  Continue to Reading
+                </a>
               </div>
             ) : null}
 
