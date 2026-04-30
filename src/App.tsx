@@ -18,6 +18,9 @@ import JurnaleTabara from "@/pages/JurnaleTabara";
 import ListeningPage from "@/pages/FCE/Listening/ListeningPage";
 import WritingPage from "./pages/FCE/Writing/WritingPage";
 import ReadingPage from "./pages/FCE/Reading/ReadingPage";
+import PreliminaryListeningPage from "@/pages/Preliminary/Listening/PreliminaryListeningPage";
+import PreliminaryReadingPage from "@/pages/Preliminary/Reading/PreliminaryReadingPage";
+import PreliminaryWritingPage from "@/pages/Preliminary/Writing/PreliminaryWritingPage";
 
 import { campsData } from "@/data/campsData";
 import { journalList } from "@/data/journals";
@@ -82,6 +85,9 @@ export const routes: RouteRecord[] = [
       { path: "fce/listening", element: <ListeningPage /> },
       { path: "fce/writing", element: <WritingPage /> },
       { path: "fce/reading", element: <ReadingPage /> },
+      { path: "preliminary/listening", element: <PreliminaryListeningPage /> },
+      { path: "preliminary/reading", element: <PreliminaryReadingPage /> },
+      { path: "preliminary/writing", element: <PreliminaryWritingPage /> },
 
       { path: "*", element: <NotFound /> },
     ],
