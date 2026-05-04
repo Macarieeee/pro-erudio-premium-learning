@@ -21,8 +21,12 @@ import ReadingPage from "./pages/FCE/Reading/ReadingPage";
 import PreliminaryListeningPage from "@/pages/Preliminary/Listening/PreliminaryListeningPage";
 import PreliminaryReadingPage from "@/pages/Preliminary/Reading/PreliminaryReadingPage";
 import PreliminaryWritingPage from "@/pages/Preliminary/Writing/PreliminaryWritingPage";
+import CAEReadingPage from "./pages/CAE/Reading/CAEReadingPage";
+import CAEWritingPage from "./pages/CAE/Writing/CAEWritingPage";
+import CAEListeningPage from "./pages/CAE/Listening/CAEListeningPage";
 import FceLandingPage from "./pages/FceLandingPage";
 import PreliminaryLandingPage from "./pages/PreliminaryLandingPage";
+import CAELandingPage from "./pages/CAELandingPage";
 
 import { campsData } from "@/data/campsData";
 import { journalList } from "@/data/journals";
@@ -80,19 +84,26 @@ export const routes: RouteRecord[] = [
         element: <JournalPage slugOverride={j.slug} />,
       })),
 
-      // fallback dinamic
-      { path: ":slug", element: <CampPage /> },
-      { path: "jurnal/:slug", element: <JournalPage /> },
+    
       { path: "fce-mock-test", element: <FceLandingPage /> },
-      { path: "fce/listening", element: <ListeningPage /> },
-      { path: "fce/writing", element: <WritingPage /> },
-      { path: "fce/reading", element: <ReadingPage /> },
-      { path: "preliminary-mock-test", element: <PreliminaryLandingPage /> },
-      { path: "preliminary/listening", element: <PreliminaryListeningPage /> },
-      { path: "preliminary/reading", element: <PreliminaryReadingPage /> },
-      { path: "preliminary/writing", element: <PreliminaryWritingPage /> },
+{ path: "fce/listening", element: <ListeningPage /> },
+{ path: "fce/writing", element: <WritingPage /> },
+{ path: "fce/reading", element: <ReadingPage /> },
 
-      { path: "*", element: <NotFound /> },
+{ path: "preliminary-mock-test", element: <PreliminaryLandingPage /> },
+{ path: "preliminary/listening", element: <PreliminaryListeningPage /> },
+{ path: "preliminary/reading", element: <PreliminaryReadingPage /> },
+{ path: "preliminary/writing", element: <PreliminaryWritingPage /> },
+
+{ path: "cae-mock-test", element: <CAELandingPage /> },
+{ path: "cae/reading", element: <CAEReadingPage /> },
+{ path: "cae/writing", element: <CAEWritingPage /> },
+{ path: "cae/listening", element: <CAEListeningPage /> },
+
+// fallback dinamic — la final
+{ path: "jurnal/:slug", element: <JournalPage /> },
+{ path: ":slug", element: <CampPage /> },
+{ path: "*", element: <NotFound /> },
     ],
   },
 ];
