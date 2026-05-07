@@ -37,27 +37,10 @@ export type AudioTrack = {
 };
 
 export const audioTracks: Record<Part, AudioTrack[]> = {
-  1: [
-    { label: "Part 1 audio 1", src: "/audio/cae/Part 1 (0).mp3" },
-    { label: "Part 1 audio 2", src: "/audio/cae/Part 1 (1).mp3" },
-    { label: "Part 1 audio 3", src: "/audio/cae/Part 1 (2).mp3" },
-    { label: "Part 1 audio 4", src: "/audio/cae/Part 1 (3).mp3" },
-    { label: "Part 1 audio 5", src: "/audio/cae/Part 1 (4).mp3" },
-    { label: "Part 1 audio 6", src: "/audio/cae/Part 1 (5).mp3" },
-    { label: "Part 1 audio 7", src: "/audio/cae/Part 1 (6).mp3" },
-  ],
-  2: [
-    { label: "Part 2 audio 1", src: "/audio/cae/Part 2 (1).mp3" },
-    { label: "Part 2 audio 2", src: "/audio/cae/Part 2 (2).mp3" },
-  ],
-  3: [
-    { label: "Part 3 audio 1", src: "/audio/cae/Part 3 (1).mp3" },
-    { label: "Part 3 audio 2", src: "/audio/cae/Part 3 (2).mp3" },
-  ],
-  4: [
-    { label: "Part 4 audio 1", src: "/audio/cae/Part 4 (1).mp3" },
-    { label: "Part 4 audio 2", src: "/audio/cae/Part 4 (2).mp3" },
-  ],
+  1: [{ label: "Part 1 audio", src: "/audio/cae/CAE_Listening_Part_1_combined.mp3" }],
+  2: [{ label: "Part 2 audio", src: "/audio/cae/CAE_Listening_Part_2_combined.mp3" }],
+  3: [{ label: "Part 3 audio", src: "/audio/cae/CAE_Listening_Part_3_combined.mp3" }],
+  4: [{ label: "Part 4 audio", src: "/audio/cae/CAE_Listening_Part_4_combined.mp3" }],
 };
 
 export const part1MCQ: MCQ[] = [

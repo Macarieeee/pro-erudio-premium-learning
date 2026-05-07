@@ -37,6 +37,25 @@ type AnswersState = {
 const LS_KEY = "proerudio_preliminary_reading_v1";
 const STUDENT_INFO_KEY = "proerudio_preliminary_student_info";
 const NEXT_WRITING_PATH = "/preliminary/writing";
+const TIMER_DURATION_SECONDS = 45 * 60; // 45min
+const TIMER_WARNING_SECONDS = 10 * 60; // warning at 10min left
+
+const formatCountdown = (totalSeconds: number) => {
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+};
+
+const preliminaryReadingPartInfo: Record<Part, { exam: string; level: string; section: string; task: string }> = {
+  1: { exam: "B1 Preliminary (PET)", level: "Level B1", section: "Reading — Part 1", task: "Multiple choice" },
+  2: { exam: "B1 Preliminary (PET)", level: "Level B1", section: "Reading — Part 2", task: "Matching" },
+  3: { exam: "B1 Preliminary (PET)", level: "Level B1", section: "Reading — Part 3", task: "Multiple choice" },
+  4: { exam: "B1 Preliminary (PET)", level: "Level B1", section: "Reading — Part 4", task: "Gapped text" },
+  5: { exam: "B1 Preliminary (PET)", level: "Level B1", section: "Reading — Part 5", task: "Multiple-choice cloze" },
+  6: { exam: "B1 Preliminary (PET)", level: "Level B1", section: "Reading — Part 6", task: "Open cloze" },
+};
 
 const formatTimeSpent = (totalSeconds: number) => {
   const hours = Math.floor(totalSeconds / 3600);
@@ -93,6 +112,9 @@ const CardShell = ({ children }: { children: React.ReactNode }) => (
 export default function PreliminaryReadingPage() {
   const [part, setPart] = useState<Part>(1);
   const [finished, setFinished] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(TIMER_DURATION_SECONDS);
+  const [showTimeWarning, setShowTimeWarning] = useState(false);
+  const [hasShownTimeWarning, setHasShownTimeWarning] = useState(false);
   const [answers, setAnswers] = useState<AnswersState>(() => buildInitialState());
   const [studentName, setStudentName] = useState("");
   const [studentEmail, setStudentEmail] = useState("");
@@ -141,6 +163,31 @@ export default function PreliminaryReadingPage() {
     window.localStorage.setItem(LS_KEY, JSON.stringify(answers));
   }, [answers]);
 
+  useEffect(() => {
+    if (finished) return;
+
+    const interval = window.setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          window.clearInterval(interval);
+          setFinished(true);
+          return 0;
+        }
+
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => window.clearInterval(interval);
+  }, [finished]);
+
+  useEffect(() => {
+    if (!finished && timeLeft === TIMER_WARNING_SECONDS && !hasShownTimeWarning) {
+      setShowTimeWarning(true);
+      setHasShownTimeWarning(true);
+    }
+  }, [timeLeft, finished, hasShownTimeWarning]);
+
   const setMCQ = (id: number, value: Letter) => {
     setAnswers((prev) => ({ ...prev, mcq: { ...prev.mcq, [id]: value } }));
   };
@@ -157,11 +204,15 @@ export default function PreliminaryReadingPage() {
     const initial = buildInitialState();
     setAnswers(initial);
     setFinished(false);
+    setTimeLeft(TIMER_DURATION_SECONDS);
+    setShowTimeWarning(false);
+    setHasShownTimeWarning(false);
     setPart(1);
     setStudentName("");
     setStudentEmail("");
     setSendSuccess(false);
     setSendError("");
+    testStartTimeRef.current = Date.now();
     if (typeof window !== "undefined") {
       window.localStorage.setItem(LS_KEY, JSON.stringify(initial));
     }
@@ -337,16 +388,27 @@ export default function PreliminaryReadingPage() {
 
   const Header = () => (
     <div className="sticky top-0 z-40 border-b bg-white/95 backdrop-blur">
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4">
+      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-6 py-4">
         <div className="flex items-center gap-4">
           <img src={logo} alt="Pro Erudio" className="h-12 w-auto" />
           <div>
             <div className="text-lg font-bold text-gray-900">Pro Erudio</div>
-            <div className="text-sm text-gray-600">Preliminary Reading</div>
+            <div className="text-sm text-gray-600">B1 Preliminary Reading</div>
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
+          <div
+            className={[
+              "rounded-lg border px-4 py-2 text-sm font-bold tabular-nums",
+              timeLeft <= TIMER_WARNING_SECONDS
+                ? "border-red-200 bg-red-50 text-red-700"
+                : "border-gray-200 bg-gray-50 text-gray-900",
+            ].join(" ")}
+          >
+            {formatCountdown(timeLeft)}
+          </div>
+
           <button
             onClick={() => setFinished(true)}
             className="rounded-lg bg-primary px-4 py-2 text-xs font-semibold text-white transition duration-300 ease-in-out hover:brightness-110"
@@ -358,11 +420,33 @@ export default function PreliminaryReadingPage() {
     </div>
   );
 
+  const ExamInfo = () => {
+    const info = preliminaryReadingPartInfo[part];
+
+    return (
+      <div className="border-b bg-primary/5 px-6 py-5">
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="rounded-full bg-primary px-3 py-1 text-xs font-bold uppercase tracking-wide text-white">
+            {info.exam}
+          </span>
+          <span className="rounded-full border border-primary/20 bg-white px-3 py-1 text-xs font-semibold text-primary">
+            {info.level}
+          </span>
+        </div>
+        <div className="mt-3 text-2xl font-bold text-gray-900">{info.section}</div>
+        <div className="mt-1 text-sm font-semibold text-gray-600">{info.task}</div>
+      </div>
+    );
+  };
+
   const TopInstruction = () => (
-    <div className="border-b px-6 py-5">
+    <>
+      <ExamInfo />
+      <div className="border-b px-6 py-5">
       <div className="text-sm font-semibold text-gray-900">{meta[part].range}</div>
       <div className="mt-1 text-sm text-gray-600">{meta[part].instruction}</div>
-    </div>
+      </div>
+    </>
   );
 
   const PartNav = () => (
@@ -845,6 +929,23 @@ const Part4 = () => (
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900">
       <Header />
+      {showTimeWarning && !finished && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/40 px-4">
+          <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl">
+            <div className="text-xl font-bold text-gray-900">10 minutes left</div>
+            <p className="mt-2 text-sm leading-6 text-gray-600">
+              You have 10 minutes remaining to complete this part of the B1 Preliminary test.
+            </p>
+            <button
+              type="button"
+              onClick={() => setShowTimeWarning(false)}
+              className="mt-5 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white transition duration-300 ease-in-out hover:brightness-110"
+            >
+              Continue test
+            </button>
+          </div>
+        </div>
+      )}
       {finished ? <FinishScreen /> : renderCurrentPart()}
       {!finished && <PartNav />}
     </div>

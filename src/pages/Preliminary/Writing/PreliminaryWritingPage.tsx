@@ -9,6 +9,23 @@ type Part = 1 | 2;
 const LS_KEY = "proerudio_preliminary_writing_v1";
 const STUDENT_INFO_KEY = "proerudio_preliminary_student_info";
 const PRELIMINARY_LANDING_PATH = "/preliminary-mock-test";
+const TIMER_DURATION_SECONDS = 45 * 60; // 45min
+const TIMER_WARNING_SECONDS = 10 * 60; // warning at 10min left
+
+const formatCountdown = (totalSeconds: number) => {
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+};
+
+const getPreliminaryWritingPartInfo = (part: Part) => ({
+  exam: "B1 Preliminary (PET)",
+  level: "Level B1",
+  section: `Writing — Part ${part}`,
+  task: part === 1 ? "Email" : "Choose one writing task",
+});
 
 const formatTimeSpent = (totalSeconds: number) => {
   const hours = Math.floor(totalSeconds / 3600);
@@ -38,6 +55,9 @@ export default function WritingPage() {
   const [part, setPart] = useState<Part>(1);
   const [taskIndex, setTaskIndex] = useState(0);
   const [finished, setFinished] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(TIMER_DURATION_SECONDS);
+  const [showTimeWarning, setShowTimeWarning] = useState(false);
+  const [hasShownTimeWarning, setHasShownTimeWarning] = useState(false);
   const [studentName, setStudentName] = useState("");
   const [studentEmail, setStudentEmail] = useState("");
   const [isSending, setIsSending] = useState(false);
@@ -84,6 +104,31 @@ useEffect(() => {
   window.localStorage.setItem(LS_KEY, JSON.stringify(state));
 }, [state]);
 
+useEffect(() => {
+  if (finished) return;
+
+  const interval = window.setInterval(() => {
+    setTimeLeft((prev) => {
+      if (prev <= 1) {
+        window.clearInterval(interval);
+        setFinished(true);
+        return 0;
+      }
+
+      return prev - 1;
+    });
+  }, 1000);
+
+  return () => window.clearInterval(interval);
+}, [finished]);
+
+useEffect(() => {
+  if (!finished && timeLeft === TIMER_WARNING_SECONDS && !hasShownTimeWarning) {
+    setShowTimeWarning(true);
+    setHasShownTimeWarning(true);
+  }
+}, [timeLeft, finished, hasShownTimeWarning]);
+
   const tasksInPart = useMemo(() => getTasksForPart(part), [part]);
   const task: WritingTask | undefined = tasksInPart[taskIndex];
 
@@ -115,16 +160,27 @@ useEffect(() => {
 
   const renderHeader = () => (
     <div className="sticky top-0 z-50 w-full border-b bg-white">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-4 py-3">
         <div className="flex items-center gap-3">
           <img src={logo} alt="Pro Erudio Logo" className="h-9 w-auto object-contain" />
           <div className="leading-tight">
             <div className="text-sm font-semibold text-gray-900">Pro Erudio</div>
-            <div className="text-xs text-gray-500">Preliminary Writing</div>
+            <div className="text-xs text-gray-500">B1 Preliminary Writing</div>
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
+          <div
+            className={[
+              "rounded-lg border px-4 py-2 text-sm font-bold tabular-nums",
+              timeLeft <= TIMER_WARNING_SECONDS
+                ? "border-red-200 bg-red-50 text-red-700"
+                : "border-gray-200 bg-gray-50 text-gray-900",
+            ].join(" ")}
+          >
+            {formatCountdown(timeLeft)}
+          </div>
+
           <button
             onClick={() => setFinished(true)}
             className="rounded-lg border px-3 py-2 text-xs font-semibold text-gray-900 transition duration-300 ease-in-out hover:bg-gray-50"
@@ -135,6 +191,27 @@ useEffect(() => {
       </div>
     </div>
   );
+
+  const renderExamInfo = () => {
+    const info = getPreliminaryWritingPartInfo(part);
+
+    return (
+      <div className="mx-auto max-w-6xl px-4 pt-6">
+        <div className="rounded-xl border bg-primary/5 px-6 py-5 shadow-sm">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="rounded-full bg-primary px-3 py-1 text-xs font-bold uppercase tracking-wide text-white">
+              {info.exam}
+            </span>
+            <span className="rounded-full border border-primary/20 bg-white px-3 py-1 text-xs font-semibold text-primary">
+              {info.level}
+            </span>
+          </div>
+          <div className="mt-3 text-2xl font-bold text-gray-900">{info.section}</div>
+          <div className="mt-1 text-sm font-semibold text-gray-600">{info.task}</div>
+        </div>
+      </div>
+    );
+  };
 
   const renderLeftPrompt = () => {
     if (!task) return null;
@@ -574,9 +651,13 @@ useEffect(() => {
                 setStudentEmail("");
                 setSendError("");
                 setSendSuccess(false);
+                setTimeLeft(TIMER_DURATION_SECONDS);
+                setShowTimeWarning(false);
+                setHasShownTimeWarning(false);
                 setPart(1);
                 setTaskIndex(0);
                 setFinished(false);
+                testStartTimeRef.current = Date.now();
               }}
               className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white transition duration-300 ease-in-out hover:brightness-110"
             >
@@ -592,16 +673,37 @@ useEffect(() => {
     <div className="min-h-screen bg-gray-50">
       {renderHeader()}
 
+      {showTimeWarning && !finished && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/40 px-4">
+          <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl">
+            <div className="text-xl font-bold text-gray-900">10 minutes left</div>
+            <p className="mt-2 text-sm leading-6 text-gray-600">
+              You have 10 minutes remaining to complete this part of the B1 Preliminary test.
+            </p>
+            <button
+              type="button"
+              onClick={() => setShowTimeWarning(false)}
+              className="mt-5 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white transition duration-300 ease-in-out hover:brightness-110"
+            >
+              Continue test
+            </button>
+          </div>
+        </div>
+      )}
+
       {finished ? (
   Finish()
 ) : (
-  <div className="mx-auto grid max-w-6xl grid-cols-1 gap-4 px-4 pb-24 pt-6 lg:grid-cols-2">
-    {renderLeftPrompt()}
-    {renderRightEditor()}
-  </div>
+  <>
+    {renderExamInfo()}
+    <div className="mx-auto grid max-w-6xl grid-cols-1 gap-4 px-4 pb-24 pt-6 lg:grid-cols-2">
+      {renderLeftPrompt()}
+      {renderRightEditor()}
+    </div>
+  </>
 )}
 
-      {renderNav()}
+      {!finished && renderNav()}
     </div>
   );
 }

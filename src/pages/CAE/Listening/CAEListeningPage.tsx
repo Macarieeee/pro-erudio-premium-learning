@@ -38,6 +38,7 @@ type DetailedAnswer = {
 
 const LS_KEY = "proerudio_cae_listening_v1";
 const STUDENT_INFO_KEY = "proerudio_cae_student_info";
+const AUDIO_PLAYED_KEY = "proerudio_cae_listening_audio_played_parts";
 const NEXT_READING_PATH = "/cae/reading";
 const normalize = (s: string) =>
   s
@@ -81,8 +82,20 @@ export default function CAEListeningPage() {
   const [sendSuccess, setSendSuccess] = useState(false);
   const [sendError, setSendError] = useState("");
 
-  const [selectedAudioIndex, setSelectedAudioIndex] = useState(0);
+  const [playedAudioParts, setPlayedAudioParts] = useState<Part[]>(() => {
+    if (typeof window === "undefined") return [];
+
+    try {
+      const parsed = JSON.parse(window.localStorage.getItem(AUDIO_PLAYED_KEY) || "[]");
+      return Array.isArray(parsed) ? parsed.filter((item): item is Part => [1, 2, 3, 4].includes(item)) : [];
+    } catch {
+      return [];
+    }
+  });
+  const [audioStatus, setAudioStatus] = useState<"idle" | "playing" | "ended" | "error">("idle");
+  const [audioError, setAudioError] = useState("");
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const audioShouldKeepPlayingRef = useRef(false);
   const testStartTimeRef = useRef<number>(Date.now());
 
   useEffect(() => {
@@ -124,13 +137,22 @@ export default function CAEListeningPage() {
   }, [answers]);
 
   useEffect(() => {
-    setSelectedAudioIndex(0);
-    audioRef.current?.pause();
+    setAudioStatus("idle");
+    setAudioError("");
+
+    audioShouldKeepPlayingRef.current = false;
+
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    audio.pause();
+    audio.currentTime = 0;
+    audio.load();
   }, [part]);
 
   const partMeta = useMemo(() => {
     return {
-      1: { label: "Part 1", range: "Questions 1–6", count: part1MCQ.length },
+      1: { label: "Part 1", range: "Questions 1–6", count: Math.ceil(part1MCQ.length / 2) },
       2: { label: "Part 2", range: "Questions 7–14", count: part2Gaps.length },
       3: { label: "Part 3", range: "Questions 15–20", count: part3MCQ.length },
       4: { label: "Part 4", range: "Questions 21–30", count: 5 },
@@ -144,8 +166,8 @@ export default function CAEListeningPage() {
     });
   }, [part, partMeta]);
 
-  const currentTracks = audioTracks[part] || [];
-  const currentTrack = currentTracks[selectedAudioIndex] || currentTracks[0];
+  const currentTrack = audioTracks[part]?.[0];
+  const hasAudioAlreadyStarted = playedAudioParts.includes(part);
   const currentTotalInPart = partMeta[part].count;
 
   const getTimeSpent = () => {
@@ -160,6 +182,37 @@ export default function CAEListeningPage() {
   const goPrev = () => setIndexInPart((i) => Math.max(0, i - 1));
   const goNext = () => setIndexInPart((i) => Math.min(currentTotalInPart - 1, i + 1));
 
+  const markAudioPartAsStarted = (audioPart: Part) => {
+    setPlayedAudioParts((prev) => {
+      if (prev.includes(audioPart)) return prev;
+
+      const next = [...prev, audioPart];
+      if (typeof window !== "undefined") {
+        window.localStorage.setItem(AUDIO_PLAYED_KEY, JSON.stringify(next));
+      }
+
+      return next;
+    });
+  };
+
+  const startCurrentPartAudio = async () => {
+    const audio = audioRef.current;
+    if (!audio || !currentTrack || hasAudioAlreadyStarted) return;
+
+    try {
+      setAudioError("");
+      audio.controls = false;
+      audio.currentTime = 0;
+      await audio.play();
+      audioShouldKeepPlayingRef.current = true;
+      setAudioStatus("playing");
+      markAudioPartAsStarted(part);
+    } catch {
+      setAudioStatus("error");
+      setAudioError("Audio could not start. Please press Start audio again.");
+    }
+  };
+
   const resetAll = () => {
     setAnswers(buildInitialState());
     setPart(1);
@@ -167,8 +220,17 @@ export default function CAEListeningPage() {
     setFinished(false);
     setSendSuccess(false);
     setSendError("");
+    setPlayedAudioParts([]);
+    setAudioStatus("idle");
+    setAudioError("");
+    audioShouldKeepPlayingRef.current = false;
+    audioRef.current?.pause();
+    if (audioRef.current) audioRef.current.currentTime = 0;
     testStartTimeRef.current = Date.now();
-    if (typeof window !== "undefined") window.localStorage.removeItem(LS_KEY);
+    if (typeof window !== "undefined") {
+      window.localStorage.removeItem(LS_KEY);
+      window.localStorage.removeItem(AUDIO_PLAYED_KEY);
+    }
   };
 
   const usedTask1Letters = useMemo(() => {
@@ -413,34 +475,52 @@ export default function CAEListeningPage() {
 
   const renderAudioPanel = () => (
     <div className="border-b bg-gray-50 px-6 py-4">
+      {currentTrack ? (
+        <audio
+          ref={audioRef}
+          src={encodeURI(currentTrack.src)}
+          preload="auto"
+          controls={false}
+          controlsList="nodownload noplaybackrate noremoteplayback"
+          onEnded={() => {
+            audioShouldKeepPlayingRef.current = false;
+            setAudioStatus("ended");
+          }}
+          onPause={() => {
+            const audio = audioRef.current;
+            if (!audio || audio.ended || !audioShouldKeepPlayingRef.current) return;
+            audio.play().catch(() => undefined);
+          }}
+          className="hidden"
+        />
+      ) : null}
+
       <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
         <div>
           <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">Audio</div>
           <div className="text-sm font-semibold text-gray-900">{currentTrack?.label || "No audio selected"}</div>
+          <div className="mt-1 text-xs text-gray-500">
+            One continuous audio track for this part. The player is hidden and the audio can be started only once.
+          </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2">
-          {currentTracks.map((track, idx) => (
-            <button
-              key={track.src}
-              onClick={() => {
-                setSelectedAudioIndex(idx);
-                setTimeout(() => audioRef.current?.load(), 0);
-              }}
-              className={[
-                "rounded-md px-3 py-2 text-xs font-semibold transition duration-300 ease-in-out",
-                selectedAudioIndex === idx ? "bg-[#2094F3] text-white" : "border bg-white text-gray-700 hover:bg-gray-50",
-              ].join(" ")}
-            >
-              {idx + 1}
-            </button>
-          ))}
-        </div>
+        {hasAudioAlreadyStarted ? (
+          <div className="rounded-lg bg-gray-100 px-4 py-2 text-sm font-semibold text-gray-600">
+            {audioStatus === "playing" ? "Audio is playing" : "Audio already started"}
+          </div>
+        ) : (
+          <button
+            type="button"
+            onClick={startCurrentPartAudio}
+            disabled={!currentTrack}
+            className="rounded-lg bg-[#2094F3] px-4 py-2 text-sm font-semibold text-white transition duration-300 ease-in-out hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            Start audio
+          </button>
+        )}
       </div>
 
-      {currentTrack ? (
-        <audio ref={audioRef} controls preload="metadata" className="mt-3 w-full" src={encodeURI(currentTrack.src)} />
-      ) : null}
+      {audioError ? <div className="mt-3 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{audioError}</div> : null}
     </div>
   );
 
@@ -596,47 +676,83 @@ export default function CAEListeningPage() {
       </>
     );
 
-  const renderMCQ = (mcqs: typeof part1MCQ) => {
-    const q = mcqs[indexInPart];
-    const chosen = answers.mcq[q.id];
+const renderMCQ = (mcqs: typeof part1MCQ) => {
+  const questions =
+    part === 1
+      ? mcqs.slice(indexInPart * 2, indexInPart * 2 + 2)
+      : [mcqs[indexInPart]];
 
-    return renderCardShell(
-      <>
-        {renderAudioPanel()}
-        {renderTopInstruction()}
-        <div className="px-6 py-6">
-          <div className="flex items-start gap-3">
-            <div className="flex h-7 w-7 items-center justify-center rounded-md border text-sm font-bold text-gray-900">{q.id}</div>
-            <div className="flex-1">
-              {q.extract ? <div className="mb-2 text-xs font-bold uppercase tracking-wide text-[#2094F3]">{q.extract}</div> : null}
-              <div className="text-sm font-semibold text-gray-900">{q.questionHeader}</div>
-              <div className="mt-2 text-sm text-gray-700">{q.question}</div>
-            </div>
-          </div>
+  return renderCardShell(
+    <>
+      {renderAudioPanel()}
+      {renderTopInstruction()}
 
-          <div className="mt-6 space-y-2">
-            {q.options.map((option, idx) => (
-              <label key={idx} className="flex cursor-pointer items-start gap-3 rounded-lg border px-4 py-3 transition duration-300 ease-in-out hover:bg-gray-50">
-                <input
-                  type="radio"
-                  name={`q_${q.id}`}
-                  className="mt-1"
-                  checked={chosen === idx}
-                  onChange={() =>
-                    setAnswers((prev) => ({
-                      ...prev,
-                      mcq: { ...prev.mcq, [q.id]: idx },
-                    }))
-                  }
-                />
-                <span className="text-sm text-gray-800">{option}</span>
-              </label>
-            ))}
+      <div className="px-6 py-6">
+        {questions[0]?.extract || questions[0]?.questionHeader ? (
+          <div className="mb-8">
+            {questions[0]?.extract ? (
+              <div className="mb-4 text-base font-bold text-gray-900">
+                {questions[0].extract}
+              </div>
+            ) : null}
+
+            {questions[0]?.questionHeader ? (
+              <div className="text-base font-bold text-gray-900">
+                {questions[0].questionHeader}
+              </div>
+            ) : null}
           </div>
+        ) : null}
+
+        <div className="space-y-10">
+          {questions.map((q) => {
+            const chosen = answers.mcq[q.id];
+
+            return (
+              <div key={q.id}>
+                <div className="flex items-start gap-3">
+                  <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border text-sm font-bold text-gray-900">
+                    {q.id}
+                  </div>
+
+                  <div className="flex-1">
+                    <div className="text-sm font-semibold text-gray-900">
+                      {q.question}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-5 space-y-3">
+                  {q.options.map((option, idx) => (
+                    <label
+                      key={idx}
+                      className="flex cursor-pointer items-start gap-3 rounded-lg border px-4 py-3 transition duration-300 ease-in-out hover:bg-gray-50"
+                    >
+                      <input
+                        type="radio"
+                        name={`q_${q.id}`}
+                        className="mt-1"
+                        checked={chosen === idx}
+                        onChange={() =>
+                          setAnswers((prev) => ({
+                            ...prev,
+                            mcq: { ...prev.mcq, [q.id]: idx },
+                          }))
+                        }
+                      />
+
+                      <span className="text-sm text-gray-800">{option}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
         </div>
-      </>
-    );
-  };
+      </div>
+    </>
+  );
+};
 
   const renderPart2 = () => {
     const q = part2Gaps[indexInPart];

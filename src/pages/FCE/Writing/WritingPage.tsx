@@ -8,6 +8,18 @@ type Part = 1 | 2;
 const LS_KEY = "proerudio_fce_writing_v2";
 const STUDENT_INFO_KEY = "proerudio_fce_student_info";
 
+// Timer settings: change these values for other tests if needed.
+const TIMER_DURATION_SECONDS = 80 * 60; // 1h 20min
+const TIMER_WARNING_SECONDS = 10 * 60; // warning when 10 minutes remain
+
+const formatCountdown = (totalSeconds: number) => {
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+};
+
 const WRITING_RESULTS_API_URL = import.meta.env.VITE_WRITING_RESULTS_API_URL;
 
 type DraftsState = {
@@ -40,6 +52,9 @@ export default function WritingPage() {
   const [part, setPart] = useState<Part>(1);
   const [taskIndex, setTaskIndex] = useState(0);
   const [finished, setFinished] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(TIMER_DURATION_SECONDS);
+  const [showTimeWarning, setShowTimeWarning] = useState(false);
+  const [hasShownTimeWarning, setHasShownTimeWarning] = useState(false);
   const [studentName, setStudentName] = useState("");
   const [studentEmail, setStudentEmail] = useState("");
   const [isSending, setIsSending] = useState(false);
@@ -89,8 +104,42 @@ useEffect(() => {
   }
 }, []);
 
+  useEffect(() => {
+    if (finished) return;
+
+    const interval = window.setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          window.clearInterval(interval);
+          setFinished(true);
+          return 0;
+        }
+
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => window.clearInterval(interval);
+  }, [finished]);
+
+  useEffect(() => {
+    if (finished) return;
+    if (hasShownTimeWarning) return;
+    if (timeLeft > 0 && timeLeft <= TIMER_WARNING_SECONDS) {
+      setShowTimeWarning(true);
+      setHasShownTimeWarning(true);
+    }
+  }, [timeLeft, finished, hasShownTimeWarning]);
+
   const tasksInPart = useMemo(() => getTasksForPart(part), [part]);
   const task: WritingTask | undefined = tasksInPart[taskIndex];
+
+  const currentExamPartInfo = {
+    examTitle: "B2 First (FCE)",
+    level: "Level B2",
+    section: `Writing — Part ${part}`,
+    taskType: part === 1 ? "Essay" : "Choose one writing task",
+  };
 
   // safety
   useEffect(() => {
@@ -120,16 +169,27 @@ useEffect(() => {
 
   const renderHeader = () => (
     <div className="sticky top-0 z-50 w-full border-b bg-white">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-3">
         <div className="flex items-center gap-3">
           <img src={logo} alt="Pro Erudio Logo" className="h-9 w-auto object-contain" />
           <div className="leading-tight">
             <div className="text-sm font-semibold text-gray-900">Pro Erudio</div>
-            <div className="text-xs text-gray-500">FCE Writing</div>
+            <div className="text-xs text-gray-500">B2 First (FCE) Writing</div>
           </div>
         </div>
 
         <div className="flex items-center gap-2">
+          <div
+            className={[
+              "rounded-lg border px-4 py-2 text-sm font-bold tabular-nums",
+              timeLeft <= TIMER_WARNING_SECONDS
+                ? "border-red-200 bg-red-50 text-red-700"
+                : "border-gray-200 bg-gray-50 text-gray-900",
+            ].join(" ")}
+          >
+            {formatCountdown(timeLeft)}
+          </div>
+
           <button
             onClick={() => setFinished(true)}
             className="rounded-lg border px-3 py-2 text-xs font-semibold text-gray-900 transition duration-300 ease-in-out hover:bg-gray-50"
@@ -147,6 +207,14 @@ useEffect(() => {
     return (
       <div className="rounded-xl border bg-white">
         <div className="border-b px-5 py-4">
+          <div className="mb-4 rounded-xl border bg-gray-50 p-4">
+            <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+              {currentExamPartInfo.examTitle} • {currentExamPartInfo.level}
+            </div>
+            <div className="mt-1 text-lg font-bold text-gray-900">{currentExamPartInfo.section}</div>
+            <div className="mt-1 text-sm text-gray-600">{currentExamPartInfo.taskType}</div>
+          </div>
+
           <div className="text-sm font-semibold text-gray-900">{task.title}</div>
           <div className="mt-1 text-sm text-gray-600">{task.instructionTop}</div>
         </div>
@@ -588,6 +656,10 @@ useEffect(() => {
                 setStudentEmail("");
                 setSendError("");
                 setSendSuccess(false);
+                setTimeLeft(TIMER_DURATION_SECONDS);
+                setShowTimeWarning(false);
+                setHasShownTimeWarning(false);
+                testStartTimeRef.current = Date.now();
                 setPart(1);
                 setTaskIndex(0);
                 setFinished(false);
@@ -605,6 +677,23 @@ useEffect(() => {
   return (
     <div className="min-h-screen bg-gray-50">
       {renderHeader()}
+
+      {showTimeWarning && !finished ? (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/40 px-4">
+          <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl">
+            <div className="text-lg font-bold text-gray-900">10 minutes remaining</div>
+            <p className="mt-2 text-sm leading-6 text-gray-600">
+              You have 10 minutes left to complete the writing test. Please review your answers and submit when you are ready.
+            </p>
+            <button
+              onClick={() => setShowTimeWarning(false)}
+              className="mt-5 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white transition duration-300 ease-in-out hover:brightness-110"
+            >
+              Continue test
+            </button>
+          </div>
+        </div>
+      ) : null}
 
       {finished ? (
   Finish()

@@ -15,6 +15,22 @@ const LS_KEY = "proerudio_cae_reading_v1";
 const STUDENT_INFO_KEY = "proerudio_cae_student_info";
 const NEXT_WRITING_PATH = "/cae/writing";
 
+// Modify this value when you need a different duration for another test.
+// Examples:
+// 60 * 60 = 1h
+// 75 * 60 = 1h 15min
+// 90 * 60 = 1h 30min
+const TIMER_DURATION_SECONDS = 90 * 60;
+const TIMER_WARNING_SECONDS = 10 * 60; // Warning appears when 10 minutes are left
+
+const formatCountdown = (totalSeconds: number) => {
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+};
+
 const normalize = (value: string) =>
   value
     .toLowerCase()
@@ -89,6 +105,8 @@ const getPart4Points = (typedRaw: string, correctAnswers: readonly string[], par
 export default function CAEReadingPage() {
   const [part, setPart] = useState<Part>(1);
   const [finished, setFinished] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(TIMER_DURATION_SECONDS);
+  const [showTimeWarning, setShowTimeWarning] = useState(false);
   const [answers, setAnswers] = useState<AnswersState>(() => buildInitialState());
   const [openGap, setOpenGap] = useState<number | null>(null);
   const [studentName, setStudentName] = useState("");
@@ -97,6 +115,7 @@ export default function CAEReadingPage() {
   const [sendSuccess, setSendSuccess] = useState(false);
   const [sendError, setSendError] = useState("");
   const testStartTimeRef = useRef<number>(Date.now());
+  const timeWarningShownRef = useRef(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -126,6 +145,31 @@ export default function CAEReadingPage() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
+  useEffect(() => {
+    if (finished) return;
+
+    const interval = window.setInterval(() => {
+      setTimeLeft((prev) => {
+        const nextTime = prev - 1;
+
+        if (nextTime === TIMER_WARNING_SECONDS && !timeWarningShownRef.current) {
+          timeWarningShownRef.current = true;
+          setShowTimeWarning(true);
+        }
+
+        if (prev <= 1) {
+          window.clearInterval(interval);
+          setFinished(true);
+          return 0;
+        }
+
+        return nextTime;
+      });
+    }, 1000);
+
+    return () => window.clearInterval(interval);
+  }, [finished]);
+
   const getTimeSpent = () => {
     const totalSeconds = Math.round((Date.now() - testStartTimeRef.current) / 1000);
     return {
@@ -137,14 +181,70 @@ export default function CAEReadingPage() {
   const meta = useMemo(
     () =>
       ({
-        1: { range: "Questions 1–8", instruction: "For each question, choose the correct answer for each gap." },
-        2: { range: "Questions 9–16", instruction: "For each question, write one word in each gap." },
-        3: { range: "Questions 17–24", instruction: "Use the word in capitals to form a word that fits in the gap." },
-        4: { range: "Questions 25–30", instruction: "Use between three and six words, including the word given. Do not change the word given." },
-        5: { range: "Questions 31–36", instruction: "Read the article and choose the correct answer." },
-        6: { range: "Questions 37–40", instruction: "Read the four extracts. Each writer may be chosen more than once." },
-        7: { range: "Questions 41–46", instruction: "Choose from paragraphs A–G. There is one extra paragraph which you do not need to use." },
-        8: { range: "Questions 47–56", instruction: "Choose the correct section. Each section may be chosen more than once." },
+        1: {
+          exam: "C1 Advanced (CAE)",
+          paper: "Reading & Use of English",
+          partLabel: "Part 1",
+          taskType: "Multiple-choice cloze",
+          range: "Questions 1–8",
+          instruction: "For each question, choose the correct answer for each gap.",
+        },
+        2: {
+          exam: "C1 Advanced (CAE)",
+          paper: "Reading & Use of English",
+          partLabel: "Part 2",
+          taskType: "Open cloze",
+          range: "Questions 9–16",
+          instruction: "For each question, write one word in each gap.",
+        },
+        3: {
+          exam: "C1 Advanced (CAE)",
+          paper: "Reading & Use of English",
+          partLabel: "Part 3",
+          taskType: "Word formation",
+          range: "Questions 17–24",
+          instruction: "Use the word in capitals to form a word that fits in the gap.",
+        },
+        4: {
+          exam: "C1 Advanced (CAE)",
+          paper: "Reading & Use of English",
+          partLabel: "Part 4",
+          taskType: "Key word transformations",
+          range: "Questions 25–30",
+          instruction: "Use between three and six words, including the word given. Do not change the word given.",
+        },
+        5: {
+          exam: "C1 Advanced (CAE)",
+          paper: "Reading & Use of English",
+          partLabel: "Part 5",
+          taskType: "Multiple choice",
+          range: "Questions 31–36",
+          instruction: "Read the article and choose the correct answer.",
+        },
+        6: {
+          exam: "C1 Advanced (CAE)",
+          paper: "Reading & Use of English",
+          partLabel: "Part 6",
+          taskType: "Cross-text multiple matching",
+          range: "Questions 37–40",
+          instruction: "Read the four extracts. Each writer may be chosen more than once.",
+        },
+        7: {
+          exam: "C1 Advanced (CAE)",
+          paper: "Reading & Use of English",
+          partLabel: "Part 7",
+          taskType: "Gapped text",
+          range: "Questions 41–46",
+          instruction: "Choose from paragraphs A–G. There is one extra paragraph which you do not need to use.",
+        },
+        8: {
+          exam: "C1 Advanced (CAE)",
+          paper: "Reading & Use of English",
+          partLabel: "Part 8",
+          taskType: "Multiple matching",
+          range: "Questions 47–56",
+          instruction: "Choose the correct section. Each section may be chosen more than once.",
+        },
       }) as const,
     []
   );
@@ -268,6 +368,9 @@ export default function CAEReadingPage() {
     if (typeof window !== "undefined") window.localStorage.removeItem(LS_KEY);
     setAnswers(buildInitialState());
     setFinished(false);
+    setTimeLeft(TIMER_DURATION_SECONDS);
+    setShowTimeWarning(false);
+    timeWarningShownRef.current = false;
     setPart(1);
     setOpenGap(null);
     testStartTimeRef.current = Date.now();
@@ -335,7 +438,7 @@ export default function CAEReadingPage() {
 
   const Header = () => (
     <div className="sticky top-0 z-50 w-full border-b bg-white">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-3">
         <div className="flex items-center gap-3">
           <img src={logo} alt="Pro Erudio Logo" className="h-9 w-auto object-contain" />
           <div className="leading-tight">
@@ -344,19 +447,46 @@ export default function CAEReadingPage() {
           </div>
         </div>
 
-        <button
-          onClick={() => setFinished(true)}
-          className="rounded-lg bg-primary px-4 py-2 text-xs font-semibold text-white transition duration-300 ease-in-out hover:brightness-110"
-        >
-          Finish test
-        </button>
+        <div className="flex items-center gap-3">
+          <div
+            className={[
+              "rounded-lg border px-4 py-2 text-sm font-bold tabular-nums",
+              timeLeft <= TIMER_WARNING_SECONDS
+                ? "border-red-200 bg-red-50 text-red-700"
+                : "border-gray-200 bg-gray-50 text-gray-900",
+            ].join(" ")}
+          >
+            {formatCountdown(timeLeft)}
+          </div>
+
+          <button
+            onClick={() => setFinished(true)}
+            className="rounded-lg bg-primary px-4 py-2 text-xs font-semibold text-white transition duration-300 ease-in-out hover:brightness-110"
+          >
+            Finish test
+          </button>
+        </div>
       </div>
     </div>
   );
 
   const TopInstruction = () => (
     <div className="border-b px-6 py-5">
-      <div className="text-sm font-semibold text-gray-900">{meta[part].range}</div>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+        <div>
+          <div className="text-xs font-bold uppercase tracking-wide text-primary">{meta[part].exam}</div>
+          <div className="mt-1 text-lg font-bold text-gray-900">
+            {meta[part].paper} — {meta[part].partLabel}
+          </div>
+          <div className="mt-1 text-sm font-semibold text-gray-700">{meta[part].taskType}</div>
+        </div>
+
+        <div className="inline-flex w-fit rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs font-bold text-primary">
+          Level C1
+        </div>
+      </div>
+
+      <div className="mt-5 text-sm font-semibold text-gray-900">{meta[part].range}</div>
       <div className="mt-1 text-sm text-gray-600">{meta[part].instruction}</div>
     </div>
   );
@@ -754,22 +884,43 @@ export default function CAEReadingPage() {
     </div>
   );
 
-const renderCurrentPart = () => {
-  if (part === 1) return Part1();
-  if (part === 2) return Part2();
-  if (part === 3) return Part3();
-  if (part === 4) return Part4();
-  if (part === 5) return Part5();
-  if (part === 6) return Part6();
-  if (part === 7) return Part7();
-  return Part8();
-};
+  const TimeWarningModal = () => (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 px-4">
+      <div className="w-full max-w-md rounded-2xl bg-white p-6 text-center shadow-xl">
+        <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-red-50 text-xl font-bold text-red-700">
+          !
+        </div>
+        <div className="text-xl font-bold text-gray-900">10 minutes left</div>
+        <div className="mt-2 text-sm text-gray-600">
+          Please check your answers and make sure you submit the test in time.
+        </div>
+        <button
+          onClick={() => setShowTimeWarning(false)}
+          className="mt-5 rounded-lg bg-primary px-5 py-2 text-sm font-semibold text-white transition duration-300 ease-in-out hover:brightness-110"
+        >
+          Continue test
+        </button>
+      </div>
+    </div>
+  );
+
+  const renderCurrentPart = () => {
+    if (part === 1) return <Part1 />;
+    if (part === 2) return <Part2 />;
+    if (part === 3) return <Part3 />;
+    if (part === 4) return <Part4 />;
+    if (part === 5) return <Part5 />;
+    if (part === 6) return <Part6 />;
+    if (part === 7) return <Part7 />;
+    return <Part8 />;
+  };
 
   return (
-  <div className="min-h-screen bg-gray-50" onClick={() => openGap && setOpenGap(null)}>
-    {Header()}
-    {finished ? FinishScreen() : renderCurrentPart()}
-    {PartNav()}
-  </div>
-);
+    <div className="min-h-screen bg-gray-50" onClick={() => openGap && setOpenGap(null)}>
+      <Header />
+      {showTimeWarning && !finished && <TimeWarningModal />}
+      {finished ? <FinishScreen /> : renderCurrentPart()}
+      <PartNav />
+    </div>
+  );
 }

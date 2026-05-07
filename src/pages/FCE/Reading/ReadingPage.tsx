@@ -7,6 +7,19 @@ const LS_KEY = "proerudio_fce_reading_v2";
 const STUDENT_INFO_KEY = "proerudio_fce_student_info";
 const NEXT_WRITING_PATH = "/fce/writing";
 
+// Timer FCE Reading & Use of English: 1h 15min
+// Pentru alte probe, modifici doar valorile de mai jos.
+const TIMER_DURATION_SECONDS = 75 * 60;
+const TIMER_WARNING_SECONDS = 10 * 60;
+
+const formatCountdown = (totalSeconds: number) => {
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+};
+
 type AnswersState = {
   // Part 1 & 5: A-D
   mcq: Record<number, "A" | "B" | "C" | "D" | null>;
@@ -104,6 +117,9 @@ const CardShell = ({ children }: { children: React.ReactNode }) => (
 export default function ReadingPage() {
   const [part, setPart] = useState<Part>(1);
   const [finished, setFinished] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(TIMER_DURATION_SECONDS);
+  const [showTimeWarning, setShowTimeWarning] = useState(false);
+  const [hasShownTimeWarning, setHasShownTimeWarning] = useState(false);
   const [answers, setAnswers] = useState<AnswersState>(() => buildInitialState());
 const [studentName, setStudentName] = useState("");
 const [studentEmail, setStudentEmail] = useState("");
@@ -156,6 +172,31 @@ const [sendError, setSendError] = useState("");
     if (typeof window === "undefined") return;
     window.localStorage.setItem(LS_KEY, JSON.stringify(answers));
   }, [answers]);
+
+  useEffect(() => {
+    if (finished) return;
+
+    const interval = window.setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          window.clearInterval(interval);
+          setFinished(true);
+          return 0;
+        }
+
+        const next = prev - 1;
+
+        if (next <= TIMER_WARNING_SECONDS && !hasShownTimeWarning) {
+          setShowTimeWarning(true);
+          setHasShownTimeWarning(true);
+        }
+
+        return next;
+      });
+    }, 1000);
+
+    return () => window.clearInterval(interval);
+  }, [finished, hasShownTimeWarning]);
 
   // ---------------------------
   // DATA (100% din Word)
@@ -492,13 +533,62 @@ So I called my editor to warn him, took the shots, then rolled up the film, labe
 
   const meta = useMemo(() => {
     return {
-      1: { range: "Questions 1–8", instruction: "For each question, choose the correct answer for each gap." },
-      2: { range: "Questions 9–16", instruction: "Use only one word in each gap." },
-      3: { range: "Questions 17–24", instruction: "Use the words in capitals to form a word that fits in the gap." },
-      4: { range: "Questions 25–30", instruction: "Use 2–5 words, including the given word. Do not change it." },
-      5: { range: "Questions 31–36", instruction: "Choose the best answer (A, B, C or D)." },
-      6: { range: "Questions 37–42", instruction: "Choose from sentences A–G the one which fits each gap." },
-      7: { range: "Questions 43–52", instruction: "Choose from people (A–E). People may be chosen more than once." },
+      1: {
+        range: "Questions 1–8",
+        exam: "B2 First (FCE)",
+        level: "Level B2",
+        partLabel: "Reading & Use of English — Part 1",
+        taskType: "Multiple-choice cloze",
+        instruction: "For each question, choose the correct answer for each gap.",
+      },
+      2: {
+        range: "Questions 9–16",
+        exam: "B2 First (FCE)",
+        level: "Level B2",
+        partLabel: "Reading & Use of English — Part 2",
+        taskType: "Open cloze",
+        instruction: "Use only one word in each gap.",
+      },
+      3: {
+        range: "Questions 17–24",
+        exam: "B2 First (FCE)",
+        level: "Level B2",
+        partLabel: "Reading & Use of English — Part 3",
+        taskType: "Word formation",
+        instruction: "Use the words in capitals to form a word that fits in the gap.",
+      },
+      4: {
+        range: "Questions 25–30",
+        exam: "B2 First (FCE)",
+        level: "Level B2",
+        partLabel: "Reading & Use of English — Part 4",
+        taskType: "Key word transformations",
+        instruction: "Use 2–5 words, including the given word. Do not change it.",
+      },
+      5: {
+        range: "Questions 31–36",
+        exam: "B2 First (FCE)",
+        level: "Level B2",
+        partLabel: "Reading & Use of English — Part 5",
+        taskType: "Multiple choice",
+        instruction: "Choose the best answer (A, B, C or D).",
+      },
+      6: {
+        range: "Questions 37–42",
+        exam: "B2 First (FCE)",
+        level: "Level B2",
+        partLabel: "Reading & Use of English — Part 6",
+        taskType: "Gapped text",
+        instruction: "Choose from sentences A–G the one which fits each gap.",
+      },
+      7: {
+        range: "Questions 43–52",
+        exam: "B2 First (FCE)",
+        level: "Level B2",
+        partLabel: "Reading & Use of English — Part 7",
+        taskType: "Multiple matching",
+        instruction: "Choose from people (A–E). People may be chosen more than once.",
+      },
     } as const;
   }, []);
 
@@ -631,8 +721,12 @@ const breakdown = useMemo(() => {
     if (typeof window !== "undefined") window.localStorage.removeItem(LS_KEY);
     setAnswers(buildInitialState());
     setFinished(false);
+    setTimeLeft(TIMER_DURATION_SECONDS);
+    setShowTimeWarning(false);
+    setHasShownTimeWarning(false);
     setPart(1);
     setOpenGap(null);
+    testStartTimeRef.current = Date.now();
   };
 const resultPayload = useMemo(() => {
   return {
@@ -680,16 +774,27 @@ const resultEmailParams = {
 
   const Header = () => (
     <div className="sticky top-0 z-50 w-full border-b bg-white">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-3">
         <div className="flex items-center gap-3">
           <img src={logo} alt="Pro Erudio Logo" className="h-9 w-auto object-contain" />
           <div className="leading-tight">
             <div className="text-sm font-semibold text-gray-900">Pro Erudio</div>
-            <div className="text-xs text-gray-500">FCE Reading & Use of English</div>
+            <div className="text-xs text-gray-500">B2 First (FCE) Reading & Use of English</div>
           </div>
         </div>
 
         <div className="flex items-center gap-2">
+          <div
+            className={[
+              "rounded-lg border px-4 py-2 text-sm font-bold tabular-nums",
+              timeLeft <= TIMER_WARNING_SECONDS
+                ? "border-red-200 bg-red-50 text-red-700"
+                : "border-gray-200 bg-gray-50 text-gray-900",
+            ].join(" ")}
+          >
+            {formatCountdown(timeLeft)}
+          </div>
+
           <button
             onClick={() => setFinished(true)}
             className="rounded-lg bg-primary px-4 py-2 text-xs font-semibold text-white transition duration-300 ease-in-out hover:brightness-110"
@@ -703,7 +808,14 @@ const resultEmailParams = {
 
   const TopInstruction = () => (
     <div className="border-b px-6 py-5">
-      <div className="text-sm font-semibold text-gray-900">{meta[part].range}</div>
+      <div className="flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-wide text-primary">
+        <span>{meta[part].exam}</span>
+        <span className="text-gray-300">•</span>
+        <span>{meta[part].level}</span>
+      </div>
+      <div className="mt-2 text-base font-bold text-gray-900">{meta[part].partLabel}</div>
+      <div className="mt-1 text-sm font-semibold text-gray-700">{meta[part].taskType}</div>
+      <div className="mt-4 text-sm font-semibold text-gray-900">{meta[part].range}</div>
       <div className="mt-1 text-sm text-gray-600">{meta[part].instruction}</div>
     </div>
   );
@@ -1584,6 +1696,25 @@ const FinishScreen = () => (
   </div>
 );
 
+  const TimeWarningModal = () => (
+    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/40 px-4">
+      <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl">
+        <div className="text-sm font-semibold uppercase tracking-wide text-red-600">Time warning</div>
+        <h2 className="mt-2 text-2xl font-bold text-gray-900">10 minutes remaining</h2>
+        <p className="mt-3 text-sm leading-6 text-gray-600">
+          You have 10 minutes left to complete the test. Please check your answers and finish the remaining questions.
+        </p>
+        <button
+          type="button"
+          onClick={() => setShowTimeWarning(false)}
+          className="mt-5 w-full rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white transition duration-300 ease-in-out hover:brightness-110"
+        >
+          Continue test
+        </button>
+      </div>
+    </div>
+  );
+
   const renderCurrentPart = () => {
     if (part === 1) return Part1();
     if (part === 2) return Part2();
@@ -1608,6 +1739,7 @@ const FinishScreen = () => (
       {Header()}
       {finished ? FinishScreen() : renderCurrentPart()}
       {PartNav()}
+      {showTimeWarning && !finished ? TimeWarningModal() : null}
     </div>
   );
 }

@@ -10,6 +10,38 @@ const STUDENT_INFO_KEY = "proerudio_fce_student_info";
 
 const WRITING_RESULTS_API_URL = import.meta.env.VITE_CAE_WRITING_RESULTS_API_URL || import.meta.env.VITE_WRITING_RESULTS_API_URL;
 
+// Modify these values when you need a different duration/warning for another test.
+// 90 * 60 = 1h 30min
+const TIMER_DURATION_SECONDS = 90 * 60;
+const TIMER_WARNING_SECONDS = 10 * 60;
+
+const formatCountdown = (totalSeconds: number) => {
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+};
+
+const writingPartMeta: Record<Part, { exam: string; level: string; paper: string; partLabel: string; taskType: string; instruction: string }> = {
+  1: {
+    exam: "C1 Advanced (CAE)",
+    level: "Level C1",
+    paper: "Writing",
+    partLabel: "Part 1",
+    taskType: "Essay",
+    instruction: "Read the input material and write an essay using the notes provided.",
+  },
+  2: {
+    exam: "C1 Advanced (CAE)",
+    level: "Level C1",
+    paper: "Writing",
+    partLabel: "Part 2",
+    taskType: "Choose one writing task",
+    instruction: "Choose one question from Part 2 and write your answer in the appropriate style.",
+  },
+};
+
 type DraftsState = {
   // păstrăm text separat pentru fiecare task, ca să nu pierzi ce ai scris
   drafts: Record<number, string>;
@@ -40,12 +72,15 @@ export default function CAEWritingPage() {
   const [part, setPart] = useState<Part>(1);
   const [taskIndex, setTaskIndex] = useState(0);
   const [finished, setFinished] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(TIMER_DURATION_SECONDS);
+  const [showTimeWarning, setShowTimeWarning] = useState(false);
   const [studentName, setStudentName] = useState("");
   const [studentEmail, setStudentEmail] = useState("");
   const [isSending, setIsSending] = useState(false);
   const [sendError, setSendError] = useState("");
   const [sendSuccess, setSendSuccess] = useState(false);
   const testStartTimeRef = useRef<number>(Date.now());
+  const timeWarningShownRef = useRef(false);
 
   const getTimeSpent = () => {
     const totalSeconds = Math.round((Date.now() - testStartTimeRef.current) / 1000);
@@ -89,6 +124,31 @@ useEffect(() => {
   }
 }, []);
 
+useEffect(() => {
+  if (finished) return;
+
+  const interval = window.setInterval(() => {
+    setTimeLeft((prev) => {
+      const nextTime = prev - 1;
+
+      if (nextTime === TIMER_WARNING_SECONDS && !timeWarningShownRef.current) {
+        timeWarningShownRef.current = true;
+        setShowTimeWarning(true);
+      }
+
+      if (prev <= 1) {
+        window.clearInterval(interval);
+        setFinished(true);
+        return 0;
+      }
+
+      return nextTime;
+    });
+  }, 1000);
+
+  return () => window.clearInterval(interval);
+}, [finished]);
+
   const tasksInPart = useMemo(() => getTasksForPart(part), [part]);
   const task: WritingTask | undefined = tasksInPart[taskIndex];
 
@@ -120,7 +180,7 @@ useEffect(() => {
 
   const renderHeader = () => (
     <div className="sticky top-0 z-50 w-full border-b bg-white">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-3">
         <div className="flex items-center gap-3">
           <img src={logo} alt="Pro Erudio Logo" className="h-9 w-auto object-contain" />
           <div className="leading-tight">
@@ -129,10 +189,21 @@ useEffect(() => {
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
+          <div
+            className={[
+              "rounded-lg border px-4 py-2 text-sm font-bold tabular-nums",
+              timeLeft <= TIMER_WARNING_SECONDS
+                ? "border-red-200 bg-red-50 text-red-700"
+                : "border-gray-200 bg-gray-50 text-gray-900",
+            ].join(" ")}
+          >
+            {formatCountdown(timeLeft)}
+          </div>
+
           <button
             onClick={() => setFinished(true)}
-            className="rounded-lg border px-3 py-2 text-xs font-semibold text-gray-900 transition duration-300 ease-in-out hover:bg-gray-50"
+            className="rounded-lg bg-primary px-4 py-2 text-xs font-semibold text-white transition duration-300 ease-in-out hover:brightness-110"
           >
             Finish test
           </button>
@@ -141,14 +212,56 @@ useEffect(() => {
     </div>
   );
 
+  const TimeWarningModal = () => (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 px-4">
+      <div className="w-full max-w-md rounded-2xl bg-white p-6 text-center shadow-xl">
+        <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-red-50 text-xl font-bold text-red-700">
+          !
+        </div>
+        <div className="text-xl font-bold text-gray-900">10 minutes left</div>
+        <div className="mt-2 text-sm text-gray-600">
+          Please finish your writing answers and make sure you submit the test in time.
+        </div>
+        <button
+          onClick={() => setShowTimeWarning(false)}
+          className="mt-5 rounded-lg bg-primary px-5 py-2 text-sm font-semibold text-white transition duration-300 ease-in-out hover:brightness-110"
+        >
+          Continue test
+        </button>
+      </div>
+    </div>
+  );
+
   const renderLeftPrompt = () => {
     if (!task) return null;
+
+    const meta = writingPartMeta[part];
 
     return (
       <div className="rounded-xl border bg-white">
         <div className="border-b px-5 py-4">
-          <div className="text-sm font-semibold text-gray-900">{task.title}</div>
-          <div className="mt-1 text-sm text-gray-600">{task.instructionTop}</div>
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+            <div>
+              <div className="text-xs font-bold uppercase tracking-wide text-primary">{meta.exam}</div>
+              <div className="mt-1 text-lg font-bold text-gray-900">
+                {meta.paper} — {meta.partLabel}
+              </div>
+              <div className="mt-2 flex flex-wrap gap-2 text-xs font-semibold">
+                <span className="rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-primary">{meta.level}</span>
+                <span className="rounded-full border bg-gray-50 px-3 py-1 text-gray-700">{meta.taskType}</span>
+              </div>
+            </div>
+
+            <div className="rounded-lg border bg-gray-50 px-3 py-2 text-xs font-semibold text-gray-700">
+              Question {task.id}
+            </div>
+          </div>
+
+          <div className="mt-4 rounded-lg border bg-white p-4">
+            <div className="text-sm font-semibold text-gray-900">{task.title}</div>
+            <div className="mt-1 text-sm text-gray-600">{task.instructionTop}</div>
+            <div className="mt-2 text-xs text-gray-500">{meta.instruction}</div>
+          </div>
         </div>
 
         <div className="px-5 py-5 text-sm text-gray-800">
@@ -610,6 +723,10 @@ useEffect(() => {
                 setStudentEmail("");
                 setSendError("");
                 setSendSuccess(false);
+                setTimeLeft(TIMER_DURATION_SECONDS);
+                setShowTimeWarning(false);
+                timeWarningShownRef.current = false;
+                testStartTimeRef.current = Date.now();
                 setPart(1);
                 setTaskIndex(0);
                 setFinished(false);
@@ -627,6 +744,7 @@ useEffect(() => {
   return (
     <div className="min-h-screen bg-gray-50">
       {renderHeader()}
+      {showTimeWarning && !finished && <TimeWarningModal />}
 
       {finished ? (
   Finish()
