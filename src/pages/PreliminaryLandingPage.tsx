@@ -10,7 +10,7 @@ import {
   UserCheck,
 } from "lucide-react";
 import logo from "@/assets/logo.svg";
-
+import preliminaryMockImage from "@/assets/Preliminary-Mock-Test-ProErudio.jpg";
 const PRELIMINARY_LISTENING_PATH = "/preliminary/listening";
 const PRELIMINARY_READING_PATH = "/preliminary/reading";
 const PRELIMINARY_WRITING_PATH = "/preliminary/writing";
@@ -83,77 +83,88 @@ export default function PreliminaryLandingPage() {
       <main className="mx-auto w-full max-w-6xl px-4 pb-14 pt-6">
         <section className="rounded-xl border bg-white shadow-sm">
           <div className="border-b px-6 py-8 sm:px-8 sm:py-10">
-            <div className="inline-flex rounded-full border bg-gray-50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-gray-600">
-              Cambridge Mock Test
+  <div className="overflow-hidden rounded-2xl bg-gradient-to-br from-white via-cyan-50 to-white shadow-sm ring-1 ring-gray-100">
+    <div className="grid gap-8 p-6 sm:p-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+      <div>
+        <div className="inline-flex rounded-full bg-primary/10 px-4 py-2 text-xs font-bold uppercase tracking-wide text-primary">
+          Cambridge Mock Test
+        </div>
+
+        <h1 className="mt-5 text-4xl font-bold leading-tight text-gray-900 sm:text-5xl">
+          Preliminary / B1 Mock Test
+        </h1>
+
+        <p className="mt-5 max-w-2xl text-base leading-7 text-gray-600 sm:text-lg">
+          Parcurge o simulare digitală pentru examenul Cambridge Preliminary /
+          B1 Preliminary, organizată pe probele principale: Listening, Reading
+          și Writing.
+        </p>
+
+        <p className="mt-3 max-w-2xl text-base leading-7 text-gray-600">
+          Testul ajută elevul să înțeleagă mai bine structura examenului, să
+          lucreze într-un ritm organizat și să trimită rezultatele către
+          profesor pentru feedback.
+        </p>
+
+        <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+          <Link
+            to={PRELIMINARY_LISTENING_PATH}
+            className="inline-flex items-center justify-center rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-white shadow-sm transition duration-300 ease-in-out hover:brightness-110"
+          >
+            Start examen
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </Link>
+
+          <a
+            href="#probe"
+            className="inline-flex items-center justify-center rounded-xl border bg-white px-6 py-3 text-sm font-semibold text-gray-900 transition duration-300 ease-in-out hover:bg-gray-50"
+          >
+            Vezi probele incluse
+          </a>
+        </div>
+      </div>
+
+      <div className="relative">
+        <div className="overflow-hidden rounded-2xl shadow-md ring-1 ring-gray-200">
+          <img
+            src={preliminaryMockImage}
+            alt="Preliminary B1 Mock Test"
+            className="h-[300px] w-full object-cover sm:h-[360px]"
+          />
+        </div>
+
+        {/* <div className="mt-4 rounded-2xl border bg-white/95 p-5 shadow-sm backdrop-blur lg:absolute lg:-bottom-6 lg:left-6 lg:right-6 lg:mt-0">
+          <div className="text-sm font-bold text-gray-900">
+            Ordinea recomandată
+          </div>
+
+          <div className="mt-4 grid gap-3 text-sm text-gray-700 sm:grid-cols-3 lg:grid-cols-1">
+            <div className="flex items-center gap-3">
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-xs font-bold text-white">
+                1
+              </span>
+              <span>Listening</span>
             </div>
 
-            <div className="mt-5 grid gap-8 lg:grid-cols-[1.45fr_0.55fr] lg:items-end">
-              <div>
-                <h1 className="text-3xl font-bold leading-tight text-gray-900 sm:text-4xl">
-                  Preliminary / B1 Preliminary Mock Test
-                </h1>
-
-                <p className="mt-4 max-w-3xl text-base leading-7 text-gray-600">
-                  Parcurge o simulare digitală pentru examenul Cambridge
-                  Preliminary / B1 Preliminary, organizată pe probele principale:
-                  Listening, Reading și Writing.
-                </p>
-
-                <p className="mt-3 max-w-3xl text-base leading-7 text-gray-600">
-                  Testul este gândit pentru a ajuta elevul să înțeleagă mai bine
-                  structura examenului, să lucreze într-un ritm organizat și să
-                  trimită rezultatele către profesor pentru verificare și
-                  feedback.
-                </p>
-              </div>
-
-              <div className="rounded-xl border bg-gray-50 p-5">
-                <div className="text-sm font-semibold text-gray-900">
-                  Ordinea recomandată
-                </div>
-
-                <div className="mt-4 space-y-3 text-sm text-gray-700">
-                  <div className="flex items-center gap-3">
-                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-xs font-bold text-white">
-                      1
-                    </span>
-                    <span>Listening</span>
-                  </div>
-
-                  <div className="flex items-center gap-3">
-                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-xs font-bold text-white">
-                      2
-                    </span>
-                    <span>Reading</span>
-                  </div>
-
-                  <div className="flex items-center gap-3">
-                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-xs font-bold text-white">
-                      3
-                    </span>
-                    <span>Writing</span>
-                  </div>
-                </div>
-              </div>
+            <div className="flex items-center gap-3">
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-xs font-bold text-white">
+                2
+              </span>
+              <span>Reading</span>
             </div>
 
-            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-              <Link
-                to={PRELIMINARY_LISTENING_PATH}
-                className="inline-flex items-center justify-center rounded-lg bg-primary px-5 py-3 text-sm font-semibold text-white transition duration-300 ease-in-out hover:brightness-110"
-              >
-                Start examen
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-
-              <a
-                href="#probe"
-                className="inline-flex items-center justify-center rounded-lg border px-5 py-3 text-sm font-semibold text-gray-900 transition duration-300 ease-in-out hover:bg-gray-50"
-              >
-                Vezi probele incluse
-              </a>
+            <div className="flex items-center gap-3">
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-xs font-bold text-white">
+                3
+              </span>
+              <span>Writing</span>
             </div>
           </div>
+        </div> */}
+      </div>
+    </div>
+  </div>
+</div>
 
           <div className="grid gap-4 border-b px-6 py-6 sm:px-8 md:grid-cols-3">
             <div className="rounded-xl border bg-white p-5">
