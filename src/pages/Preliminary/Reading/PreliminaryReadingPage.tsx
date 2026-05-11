@@ -443,8 +443,8 @@ export default function PreliminaryReadingPage() {
     <>
       <ExamInfo />
       <div className="border-b px-6 py-5">
-      <div className="text-sm font-semibold text-gray-900">{meta[part].range}</div>
-      <div className="mt-1 text-sm text-gray-600">{meta[part].instruction}</div>
+        <div className="text-sm font-semibold text-gray-900">{meta[part].range}</div>
+        <div className="mt-1 text-sm text-gray-600">{meta[part].instruction}</div>
       </div>
     </>
   );
@@ -458,10 +458,10 @@ export default function PreliminaryReadingPage() {
             <button
               key={p}
               onClick={() => {
-  setPart(p);
-  setOpenPart4Gap(null);
-  setOpenPart5Gap(null);
-}}
+                setPart(p);
+                setOpenPart4Gap(null);
+                setOpenPart5Gap(null);
+              }}
               className={[
                 "rounded-md px-3 py-2 text-xs font-semibold transition duration-300 ease-in-out",
                 part === p ? "bg-primary text-white" : "border text-gray-700 hover:bg-gray-50",
@@ -550,150 +550,150 @@ export default function PreliminaryReadingPage() {
       const id = Number(match[1]);
 
       if (kind === "mcq") {
-  const q = part5MCQ.find((item) => item.id === id);
-  const selectedLetter = answers.mcq[id];
-  const chosen = q && selectedLetter
-    ? q.options.find((opt) => opt.label === selectedLetter)?.text
-    : "";
+        const q = part5MCQ.find((item) => item.id === id);
+        const selectedLetter = answers.mcq[id];
+        const chosen = q && selectedLetter
+          ? q.options.find((opt) => opt.label === selectedLetter)?.text
+          : "";
 
-  return (
-    <span key={index} className="relative mx-1 inline-flex align-baseline">
-      <button
-        type="button"
-        onClick={() => setOpenPart5Gap((prev) => (prev === id ? null : id))}
-        className={[
-          "inline-flex min-w-[94px] items-center justify-center rounded-xl border px-3 py-1 text-sm font-semibold transition duration-300 ease-in-out",
-          selectedLetter
-            ? "border-primary bg-primary/10 text-primary"
-            : "border-gray-200 bg-gray-50 text-gray-700 hover:border-primary/60",
-        ].join(" ")}
-      >
-        <span className="mr-2 text-xs font-bold text-gray-500">{id}</span>
-        {chosen || "—"}
-      </button>
+        return (
+          <span key={index} className="relative mx-1 inline-flex align-baseline">
+            <button
+              type="button"
+              onClick={() => setOpenPart5Gap((prev) => (prev === id ? null : id))}
+              className={[
+                "inline-flex min-w-[94px] items-center justify-center rounded-xl border px-3 py-1 text-sm font-semibold transition duration-300 ease-in-out",
+                selectedLetter
+                  ? "border-primary bg-primary/10 text-primary"
+                  : "border-gray-200 bg-gray-50 text-gray-700 hover:border-primary/60",
+              ].join(" ")}
+            >
+              <span className="mr-2 text-xs font-bold text-gray-500">{id}</span>
+              {chosen || "—"}
+            </button>
 
-      {openPart5Gap === id && q && (
-        <div className="absolute left-0 top-full z-50 mt-2 min-w-[260px] rounded-xl border bg-white p-2 shadow-xl">
-          <div className="mb-2 px-2 text-xs font-bold text-gray-500">
-            Choose answer {id}
-          </div>
+            {openPart5Gap === id && q && (
+              <div className="absolute left-0 top-full z-50 mt-2 min-w-[260px] rounded-xl border bg-white p-2 shadow-xl">
+                <div className="mb-2 px-2 text-xs font-bold text-gray-500">
+                  Choose answer {id}
+                </div>
 
-          <div className="grid gap-2">
-            {q.options.map((option) => {
-              const active = selectedLetter === option.label;
+                <div className="grid gap-2">
+                  {q.options.map((option) => {
+                    const active = selectedLetter === option.label;
 
-              return (
-                <button
-                  key={option.label}
-                  type="button"
-                  onClick={() => {
-                    setMCQ(id, option.label);
-                    setOpenPart5Gap(null);
-                  }}
-                  className={[
-                    "flex items-center gap-3 rounded-lg border px-3 py-2 text-left text-sm transition duration-300 ease-in-out",
-                    active
-                      ? "border-primary bg-primary/10 text-primary"
-                      : "border-gray-200 bg-white text-gray-800 hover:bg-gray-50",
-                  ].join(" ")}
-                >
-                  <span
-                    className={[
-                      "flex h-7 w-7 shrink-0 items-center justify-center rounded-full border text-xs font-bold",
-                      active
-                        ? "border-primary bg-primary text-white"
-                        : "bg-gray-50 text-gray-800",
-                    ].join(" ")}
-                  >
-                    {option.label}
-                  </span>
+                    return (
+                      <button
+                        key={option.label}
+                        type="button"
+                        onClick={() => {
+                          setMCQ(id, option.label);
+                          setOpenPart5Gap(null);
+                        }}
+                        className={[
+                          "flex items-center gap-3 rounded-lg border px-3 py-2 text-left text-sm transition duration-300 ease-in-out",
+                          active
+                            ? "border-primary bg-primary/10 text-primary"
+                            : "border-gray-200 bg-white text-gray-800 hover:bg-gray-50",
+                        ].join(" ")}
+                      >
+                        <span
+                          className={[
+                            "flex h-7 w-7 shrink-0 items-center justify-center rounded-full border text-xs font-bold",
+                            active
+                              ? "border-primary bg-primary text-white"
+                              : "bg-gray-50 text-gray-800",
+                          ].join(" ")}
+                        >
+                          {option.label}
+                        </span>
 
-                  <span className="leading-5">{option.text}</span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      )}
-    </span>
-  );
-}
+                        <span className="leading-5">{option.text}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </span>
+        );
+      }
 
       if (kind === "matching") {
-  const selectedLetter = answers.matching[id] || "";
+        const selectedLetter = answers.matching[id] || "";
 
-  const usedLetters = new Set(
-    [16, 17, 18, 19, 20]
-      .map((questionId) => answers.matching[questionId])
-      .filter(Boolean)
-  );
+        const usedLetters = new Set(
+          [16, 17, 18, 19, 20]
+            .map((questionId) => answers.matching[questionId])
+            .filter(Boolean)
+        );
 
-  const availableOptions = part4Options.filter((option) => {
-    return option.label === selectedLetter || !usedLetters.has(option.label);
-  });
+        const availableOptions = part4Options.filter((option) => {
+          return option.label === selectedLetter || !usedLetters.has(option.label);
+        });
 
-  return (
-    <span key={index} className="relative mx-1 inline-flex align-baseline">
-      <button
-        type="button"
-        onClick={() => setOpenPart4Gap((prev) => (prev === id ? null : id))}
-        className={[
-          "inline-flex min-w-[74px] items-center justify-center rounded-xl border px-3 py-1 text-sm font-semibold transition duration-300 ease-in-out",
-          selectedLetter
-            ? "border-primary bg-primary/10 text-primary"
-            : "border-gray-200 bg-gray-50 text-gray-700 hover:border-primary/60",
-        ].join(" ")}
-      >
-        <span className="mr-2 text-xs font-bold text-gray-500">{id}</span>
-        {selectedLetter || "—"}
-      </button>
+        return (
+          <span key={index} className="relative mx-1 inline-flex align-baseline">
+            <button
+              type="button"
+              onClick={() => setOpenPart4Gap((prev) => (prev === id ? null : id))}
+              className={[
+                "inline-flex min-w-[74px] items-center justify-center rounded-xl border px-3 py-1 text-sm font-semibold transition duration-300 ease-in-out",
+                selectedLetter
+                  ? "border-primary bg-primary/10 text-primary"
+                  : "border-gray-200 bg-gray-50 text-gray-700 hover:border-primary/60",
+              ].join(" ")}
+            >
+              <span className="mr-2 text-xs font-bold text-gray-500">{id}</span>
+              {selectedLetter || "—"}
+            </button>
 
-      {openPart4Gap === id && (
-        <div className="absolute left-0 top-full z-50 mt-2 w-[420px] max-w-[80vw] rounded-xl border bg-white p-2 shadow-xl">
-          <div className="mb-2 px-2 text-xs font-bold text-gray-500">
-            Choose sentence {id}
-          </div>
+            {openPart4Gap === id && (
+              <div className="absolute left-0 top-full z-50 mt-2 w-[420px] max-w-[80vw] rounded-xl border bg-white p-2 shadow-xl">
+                <div className="mb-2 px-2 text-xs font-bold text-gray-500">
+                  Choose sentence {id}
+                </div>
 
-          <div className="grid max-h-[360px] gap-2 overflow-y-auto pr-1">
-            {availableOptions.map((option) => {
-              const active = selectedLetter === option.label;
+                <div className="grid max-h-[360px] gap-2 overflow-y-auto pr-1">
+                  {availableOptions.map((option) => {
+                    const active = selectedLetter === option.label;
 
-              return (
-                <button
-                  key={option.label}
-                  type="button"
-                  onClick={() => {
-                    setMatching(id, option.label);
-                    setOpenPart4Gap(null);
-                  }}
-                  className={[
-                    "flex items-start gap-3 rounded-lg border px-3 py-2 text-left text-sm transition duration-300 ease-in-out",
-                    active
-                      ? "border-primary bg-primary/10 text-primary"
-                      : "border-gray-200 bg-white text-gray-800 hover:bg-gray-50",
-                  ].join(" ")}
-                >
-                  <span
-                    className={[
-                      "flex h-7 w-7 shrink-0 items-center justify-center rounded-full border text-xs font-bold",
-                      active
-                        ? "border-primary bg-primary text-white"
-                        : "bg-gray-50 text-gray-800",
-                    ].join(" ")}
-                  >
-                    {option.label}
-                  </span>
+                    return (
+                      <button
+                        key={option.label}
+                        type="button"
+                        onClick={() => {
+                          setMatching(id, option.label);
+                          setOpenPart4Gap(null);
+                        }}
+                        className={[
+                          "flex items-start gap-3 rounded-lg border px-3 py-2 text-left text-sm transition duration-300 ease-in-out",
+                          active
+                            ? "border-primary bg-primary/10 text-primary"
+                            : "border-gray-200 bg-white text-gray-800 hover:bg-gray-50",
+                        ].join(" ")}
+                      >
+                        <span
+                          className={[
+                            "flex h-7 w-7 shrink-0 items-center justify-center rounded-full border text-xs font-bold",
+                            active
+                              ? "border-primary bg-primary text-white"
+                              : "bg-gray-50 text-gray-800",
+                          ].join(" ")}
+                        >
+                          {option.label}
+                        </span>
 
-                  <span className="leading-5">{option.text}</span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      )}
-    </span>
-  );
-}
+                        <span className="leading-5">{option.text}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </span>
+        );
+      }
 
       return (
         <span key={index} className="mx-1 inline-flex items-center gap-1 align-baseline">
@@ -728,11 +728,11 @@ export default function PreliminaryReadingPage() {
             <article key={person.id} className="rounded-xl border bg-white p-4">
               <div className="mb-3 flex items-center justify-between gap-3">
                 <div className="text-sm font-bold text-gray-900">{person.id}.</div>
-                <SelectLetter
-                  value={answers.matching[person.id]}
-                  onChange={(value) => setMatching(person.id, value)}
-                  letters={["A", "B", "C", "D", "E", "F", "G", "H"]}
-                />
+                {SelectLetter({
+                  value: answers.matching[person.id],
+                  onChange: (value) => setMatching(person.id, value),
+                  letters: ["A", "B", "C", "D", "E", "F", "G", "H"],
+                })}
               </div>
               <p className="text-sm leading-6 text-gray-700">{person.text}</p>
             </article>
@@ -769,47 +769,47 @@ export default function PreliminaryReadingPage() {
     </CardShell>
   );
 
-const Part4 = () => (
-  <CardShell>
-    {TopInstruction()}
+  const Part4 = () => (
+    <CardShell>
+      {TopInstruction()}
 
-    <div className="px-6 py-6">
-      <div className="rounded-xl border bg-white p-5">
-        <div className="text-2xl font-bold text-gray-900">{part4Title}</div>
+      <div className="px-6 py-6">
+        <div className="rounded-xl border bg-white p-5">
+          <div className="text-2xl font-bold text-gray-900">{part4Title}</div>
 
-        <div className="mt-2 text-sm text-gray-600">
-          Click on a gap to choose the correct sentence. Each sentence can be used only once.
-        </div>
+          <div className="mt-2 text-sm text-gray-600">
+            Click on a gap to choose the correct sentence. Each sentence can be used only once.
+          </div>
 
-        <div className="mt-5 space-y-5 text-base leading-9 text-gray-900">
-          {part4Paragraphs.map((paragraph, index) => (
-            <p key={index}>{renderTextWithGaps(paragraph, "matching")}</p>
-          ))}
+          <div className="mt-5 space-y-5 text-base leading-9 text-gray-900">
+            {part4Paragraphs.map((paragraph, index) => (
+              <p key={index}>{renderTextWithGaps(paragraph, "matching")}</p>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
-  </CardShell>
-);
+    </CardShell>
+  );
 
   const Part5 = () => (
-  <CardShell>
-    {TopInstruction()}
+    <CardShell>
+      {TopInstruction()}
 
-    <div className="px-6 py-6">
-      <div className="rounded-xl border bg-white p-5">
-        <div className="text-2xl font-bold text-gray-900">{part5Title}</div>
+      <div className="px-6 py-6">
+        <div className="rounded-xl border bg-white p-5">
+          <div className="text-2xl font-bold text-gray-900">{part5Title}</div>
 
-        <div className="mt-2 text-sm text-gray-600">
-          Click on a gap to choose the correct answer.
-        </div>
+          <div className="mt-2 text-sm text-gray-600">
+            Click on a gap to choose the correct answer.
+          </div>
 
-        <div className="mt-5 whitespace-pre-wrap text-base leading-9 text-gray-900">
-          {renderTextWithGaps(part5Text, "mcq")}
+          <div className="mt-5 whitespace-pre-wrap text-base leading-9 text-gray-900">
+            {renderTextWithGaps(part5Text, "mcq")}
+          </div>
         </div>
       </div>
-    </div>
-  </CardShell>
-);
+    </CardShell>
+  );
 
   const Part6 = () => (
     <CardShell>
@@ -918,11 +918,11 @@ const Part4 = () => (
   );
 
   const renderCurrentPart = () => {
-    if (part === 1) return <Part1 />;
-    if (part === 2) return <Part2 />;
-    if (part === 3) return <Part3 />;
-    if (part === 4) return <Part4 />;
-    if (part === 5) return <Part5 />;
+    if (part === 1) return Part1();
+    if (part === 2) return Part2();
+    if (part === 3) return Part3();
+    if (part === 4) return Part4();
+    if (part === 5) return Part5();
     return Part6();
   };
 

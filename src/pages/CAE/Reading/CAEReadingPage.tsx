@@ -904,16 +904,16 @@ export default function CAEReadingPage() {
     </div>
   );
 
-  const renderCurrentPart = () => {
-    if (part === 1) return <Part1 />;
-    if (part === 2) return <Part2 />;
-    if (part === 3) return <Part3 />;
-    if (part === 4) return <Part4 />;
-    if (part === 5) return <Part5 />;
-    if (part === 6) return <Part6 />;
-    if (part === 7) return <Part7 />;
-    return <Part8 />;
-  };
+const renderCurrentPart = () => {
+  if (part === 1) return Part1();
+  if (part === 2) return Part2();
+  if (part === 3) return Part3();
+  if (part === 4) return Part4();
+  if (part === 5) return Part5();
+  if (part === 6) return Part6();
+  if (part === 7) return Part7();
+  return Part8();
+};
 
   return (
     <div className="min-h-screen bg-gray-50" onClick={() => openGap && setOpenGap(null)}>
