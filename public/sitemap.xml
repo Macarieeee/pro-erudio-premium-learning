@@ -1,16 +1,153 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset 
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+>
 
   <url>
     <loc>https://tabere.proerudio.ro/</loc>
+    <image:image><image:loc>https://tabere.proerudio.ro/og/herohome.jpeg</image:loc></image:image>
   </url>
 
   <url>
+    <loc>https://tabere.proerudio.ro/despre-noi</loc>
+    <image:image><image:loc>https://tabere.proerudio.ro/og/herohome.jpeg</image:loc></image:image>
+  </url>
+
+  <url>
+    <loc>https://tabere.proerudio.ro/test-de-plasare</loc>
+    <image:image><image:loc>https://tabere.proerudio.ro/og/herohome.jpeg</image:loc></image:image>
+  </url>
+
+  <url>
+    <loc>https://tabere.proerudio.ro/declaratie-consimtamant</loc>
+    <image:image><image:loc>https://tabere.proerudio.ro/og/herohome.jpeg</image:loc></image:image>
+  </url>
+
+  <url>
+    <loc>https://tabere.proerudio.ro/regulament</loc>
+    <image:image><image:loc>https://tabere.proerudio.ro/og/herohome.jpeg</image:loc></image:image>
+  </url>
+
+  <url>
+    <loc>https://tabere.proerudio.ro/jurnale</loc>
+    <image:image><image:loc>https://tabere.proerudio.ro/og/herohome.jpeg</image:loc></image:image>
+  </url>
+
+  <url>
+    <loc>https://tabere.proerudio.ro/fce-mock-test</loc>
+    <image:image><image:loc>https://tabere.proerudio.ro/og/herohome.jpeg</image:loc></image:image>
+  </url>
+
+  <url>
+    <loc>https://tabere.proerudio.ro/preliminary-mock-test</loc>
+    <image:image><image:loc>https://tabere.proerudio.ro/og/herohome.jpeg</image:loc></image:image>
+  </url>
+
+  <url>
+    <loc>https://tabere.proerudio.ro/cae-mock-test</loc>
+    <image:image><image:loc>https://tabere.proerudio.ro/og/herohome.jpeg</image:loc></image:image>
+  </url>
+
+  <!-- TABERE 2026 -->
+
+  <url>
     <loc>https://tabere.proerudio.ro/scoala-de-vara-dublin-2026</loc>
+    <image:image><image:loc>https://tabere.proerudio.ro/og/scoala-de-vara-dublin-2026.jpg</image:loc></image:image>
   </url>
 
   <url>
     <loc>https://tabere.proerudio.ro/tabara-marea-britanie-grosvenor-hall-2026</loc>
+    <image:image><image:loc>https://tabere.proerudio.ro/og/tabara-marea-britanie-grosvenor-hall-2026.jpg</image:loc></image:image>
+  </url>
+
+  <url>
+    <loc>https://tabere.proerudio.ro/tabara-moinesti-2026</loc>
+    <image:image><image:loc>https://tabere.proerudio.ro/og/tabara-moinesti-2026.jpg</image:loc></image:image>
+  </url>
+
+  <url>
+    <loc>https://tabere.proerudio.ro/tabara-poiana-marului-2026</loc>
+    <image:image><image:loc>https://tabere.proerudio.ro/og/tabara-poiana-marului-2026.jpg</image:loc></image:image>
+  </url>
+
+  <!-- TABERE VECHI - folosesc pozele locațiilor actuale -->
+
+  <url>
+    <loc>https://tabere.proerudio.ro/tabara-marea-britanie-manchester-2025</loc>
+    <image:image><image:loc>https://tabere.proerudio.ro/og/tabara-marea-britanie-grosvenor-hall-2026.jpg</image:loc></image:image>
+  </url>
+
+  <url>
+    <loc>https://tabere.proerudio.ro/tabara-poiana-marului-2025</loc>
+    <image:image><image:loc>https://tabere.proerudio.ro/og/tabara-poiana-marului-2026.jpg</image:loc></image:image>
+  </url>
+
+  <url>
+    <loc>https://tabere.proerudio.ro/tabara-moinesti-2025</loc>
+    <image:image><image:loc>https://tabere.proerudio.ro/og/tabara-moinesti-2026.jpg</image:loc></image:image>
+  </url>
+
+  <url>
+    <loc>https://tabere.proerudio.ro/tabara-predeal-2024</loc>
+    <image:image><image:loc>https://tabere.proerudio.ro/og/herohome.jpeg</image:loc></image:image>
+  </url>
+
+  <url>
+    <loc>https://tabere.proerudio.ro/tabara-poiana-marului-2024</loc>
+    <image:image><image:loc>https://tabere.proerudio.ro/og/tabara-poiana-marului-2026.jpg</image:loc></image:image>
+  </url>
+
+  <url>
+    <loc>https://tabere.proerudio.ro/tabara-marea-britanie-2024</loc>
+    <image:image><image:loc>https://tabere.proerudio.ro/og/tabara-marea-britanie-grosvenor-hall-2026.jpg</image:loc></image:image>
+  </url>
+
+  <url>
+    <loc>https://tabere.proerudio.ro/scoala-de-vara-marea-britanie-2024</loc>
+    <image:image><image:loc>https://tabere.proerudio.ro/og/tabara-marea-britanie-grosvenor-hall-2026.jpg</image:loc></image:image>
+  </url>
+
+  <url>
+    <loc>https://tabere.proerudio.ro/tabara-de-engleza-poiana-marului-2023</loc>
+    <image:image><image:loc>https://tabere.proerudio.ro/og/tabara-poiana-marului-2026.jpg</image:loc></image:image>
+  </url>
+
+  <url>
+    <loc>https://tabere.proerudio.ro/tabara-de-engleza-valea-oltului-2023</loc>
+    <image:image><image:loc>https://tabere.proerudio.ro/og/herohome.jpeg</image:loc></image:image>
+  </url>
+
+  <url>
+    <loc>https://tabere.proerudio.ro/tabara-de-engleza-marea-britanie-2023</loc>
+    <image:image><image:loc>https://tabere.proerudio.ro/og/tabara-marea-britanie-grosvenor-hall-2026.jpg</image:loc></image:image>
+  </url>
+
+  <url>
+    <loc>https://tabere.proerudio.ro/scoala-de-vara-marea-britanie-2023</loc>
+    <image:image><image:loc>https://tabere.proerudio.ro/og/tabara-marea-britanie-grosvenor-hall-2026.jpg</image:loc></image:image>
+  </url>
+
+  <!-- JURNALE -->
+
+  <url>
+    <loc>https://tabere.proerudio.ro/jurnal/poiana-marului-2025</loc>
+    <image:image><image:loc>https://tabere.proerudio.ro/og/tabara-poiana-marului-2026.jpg</image:loc></image:image>
+  </url>
+
+  <url>
+    <loc>https://tabere.proerudio.ro/jurnal/manchester-2025</loc>
+    <image:image><image:loc>https://tabere.proerudio.ro/og/tabara-marea-britanie-grosvenor-hall-2026.jpg</image:loc></image:image>
+  </url>
+
+  <url>
+    <loc>https://tabere.proerudio.ro/jurnal/moinesti-2025</loc>
+    <image:image><image:loc>https://tabere.proerudio.ro/og/tabara-moinesti-2026.jpg</image:loc></image:image>
+  </url>
+
+  <url>
+    <loc>https://tabere.proerudio.ro/jurnal/predeal-2024</loc>
+    <image:image><image:loc>https://tabere.proerudio.ro/og/herohome.jpeg</image:loc></image:image>
   </url>
 
 </urlset>
