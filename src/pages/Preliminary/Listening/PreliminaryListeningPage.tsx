@@ -4,7 +4,6 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "@/assets/logo.svg";
 import {
-  audioByPart,
   part1MCQ,
   part2MCQ,
   part3Gaps,
@@ -29,7 +28,7 @@ type DetailedAnswer = {
   points: number;
   maxPoints: number;
 };
-
+const PRELIMINARY_AUDIO_SRC = "/audio/preliminary-listening/PET.mp3";
 const LS_KEY = "proerudio_preliminary_listening_v1";
 const STUDENT_INFO_KEY = "proerudio_preliminary_student_info";
 const NEXT_READING_PATH = "/preliminary/reading";
@@ -77,6 +76,7 @@ export default function PreliminaryListeningPage() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [audioEnabled, setAudioEnabled] = useState(false);
   const [audioPlaying, setAudioPlaying] = useState(false);
+const audioShouldKeepPlayingRef = useRef(false);
 
   const testStartTimeRef = useRef<number>(Date.now());
 
@@ -132,56 +132,78 @@ export default function PreliminaryListeningPage() {
     setIndexInPart((i) => Math.min(i, Math.max(0, partMeta[part].count - 1)));
   }, [part, partMeta]);
 
-  useEffect(() => {
-    const el = audioRef.current;
-    if (!el) return;
 
-    el.pause();
-    el.currentTime = 0;
+useEffect(() => {
+  const el = audioRef.current;
+  if (!el) return;
+
+  const onPlay = () => setAudioPlaying(true);
+
+  const onPause = () => {
     setAudioPlaying(false);
-  }, [part]);
 
-  useEffect(() => {
-    const el = audioRef.current;
-    if (!el) return;
-
-    const onPlay = () => setAudioPlaying(true);
-    const onPause = () => setAudioPlaying(false);
-
-    el.addEventListener("play", onPlay);
-    el.addEventListener("pause", onPause);
-
-    return () => {
-      el.removeEventListener("play", onPlay);
-      el.removeEventListener("pause", onPause);
-    };
-  }, []);
-
-  const enableAudio = async () => {
-    const el = audioRef.current;
-    if (!el) return;
-
-    try {
-      await el.play();
-      setAudioEnabled(true);
-      setAudioPlaying(true);
-    } catch {
-      setAudioEnabled(false);
+    if (!el.ended && audioShouldKeepPlayingRef.current) {
+      el.play().catch(() => undefined);
     }
   };
+
+  const onEnded = () => {
+    audioShouldKeepPlayingRef.current = false;
+    setAudioPlaying(false);
+  };
+
+  el.addEventListener("play", onPlay);
+  el.addEventListener("pause", onPause);
+  el.addEventListener("ended", onEnded);
+
+  return () => {
+    el.removeEventListener("play", onPlay);
+    el.removeEventListener("pause", onPause);
+    el.removeEventListener("ended", onEnded);
+  };
+}, []);
+
+const enableAudio = async () => {
+  const el = audioRef.current;
+  if (!el) return;
+
+  try {
+    el.controls = false;
+    audioShouldKeepPlayingRef.current = true;
+
+    await el.play();
+
+    setAudioEnabled(true);
+    setAudioPlaying(true);
+  } catch {
+    audioShouldKeepPlayingRef.current = false;
+    setAudioEnabled(false);
+    setAudioPlaying(false);
+  }
+};
 
   const currentTotalInPart = partMeta[part].count;
   const goPrev = () => setIndexInPart((i) => Math.max(0, i - 1));
   const goNext = () => setIndexInPart((i) => Math.min(currentTotalInPart - 1, i + 1));
 
-  const resetAll = () => {
-    setAnswers(buildInitialState());
-    setPart(1);
-    setIndexInPart(0);
-    setFinished(false);
-    setSendSuccess(false);
-    setSendError("");
-  };
+const resetAll = () => {
+  setAnswers(buildInitialState());
+  setPart(1);
+  setIndexInPart(0);
+  setFinished(false);
+  setSendSuccess(false);
+  setSendError("");
+
+  audioShouldKeepPlayingRef.current = false;
+
+  if (audioRef.current) {
+    audioRef.current.pause();
+    audioRef.current.currentTime = 0;
+  }
+
+  setAudioEnabled(false);
+  setAudioPlaying(false);
+};
 
   const score = useMemo(() => {
     let s = 0;
@@ -378,12 +400,18 @@ export default function PreliminaryListeningPage() {
             <div className="text-gray-500">{audioPlaying ? "Audio is playing" : "Audio is paused"}</div>
           </div>
 
-          <button
-            onClick={enableAudio}
-            className="rounded-lg bg-[#2094F3] px-3 py-2 text-xs font-semibold text-white transition duration-300 ease-in-out hover:brightness-110"
-          >
-            {audioEnabled ? "Play audio" : "Enable audio"}
-          </button>
+{!audioEnabled ? (
+  <button
+    onClick={enableAudio}
+    className="rounded-lg bg-[#2094F3] px-3 py-2 text-xs font-semibold text-white transition duration-300 ease-in-out hover:brightness-110"
+  >
+    Start audio
+  </button>
+) : (
+  <div className="rounded-lg bg-gray-100 px-3 py-2 text-xs font-semibold text-gray-600">
+    {audioPlaying ? "Audio is playing" : "Audio started"}
+  </div>
+)}
 
           <button
             onClick={() => setFinished(true)}
@@ -394,12 +422,14 @@ export default function PreliminaryListeningPage() {
         </div>
 
         <div className="flex items-center gap-2 md:hidden">
-          <button
-            onClick={enableAudio}
-            className="rounded-lg bg-[#2094F3] px-3 py-2 text-xs font-semibold text-white transition duration-300 ease-in-out hover:brightness-110"
-          >
-            Audio
-          </button>
+          {!audioEnabled ? (
+  <button
+    onClick={enableAudio}
+    className="rounded-lg bg-[#2094F3] px-3 py-2 text-xs font-semibold text-white transition duration-300 ease-in-out hover:brightness-110"
+  >
+    Audio
+  </button>
+) : null}
           <button
             onClick={() => setFinished(true)}
             className="rounded-lg border px-3 py-2 text-xs font-semibold text-gray-900 transition duration-300 ease-in-out hover:bg-gray-50"
@@ -429,24 +459,27 @@ export default function PreliminaryListeningPage() {
             </button>
           ))}
 
-          <div className="ml-auto flex items-center gap-2">
-            <button
-              onClick={goPrev}
-              disabled={indexInPart === 0}
-              className="rounded-lg border px-3 py-2 text-sm font-semibold text-gray-900 transition duration-300 ease-in-out hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
-              aria-label="Previous"
-            >
-              ←
-            </button>
-            <button
-              onClick={goNext}
-              disabled={indexInPart === currentTotalInPart - 1}
-              className="rounded-lg bg-[#2094F3] px-4 py-2 text-sm font-semibold text-white transition duration-300 ease-in-out hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
-              aria-label="Next"
-            >
-              →
-            </button>
-          </div>
+          {part === 1 || part === 2 ? (
+            <div className="ml-auto flex items-center gap-2">
+              <button
+                onClick={goPrev}
+                disabled={indexInPart === 0}
+                className="rounded-lg border px-3 py-2 text-sm font-semibold text-gray-900 transition duration-300 ease-in-out hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+                aria-label="Previous"
+              >
+                ←
+              </button>
+
+              <button
+                onClick={goNext}
+                disabled={indexInPart === currentTotalInPart - 1}
+                className="rounded-lg bg-[#2094F3] px-4 py-2 text-sm font-semibold text-white transition duration-300 ease-in-out hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
+                aria-label="Next"
+              >
+                →
+              </button>
+            </div>
+          ) : null}
         </div>
       </div>
     </div>
@@ -517,40 +550,117 @@ export default function PreliminaryListeningPage() {
       </>
     );
   };
-
-  const renderPart3 = () => {
-    const q = part3Gaps[indexInPart];
-    const value = answers.gaps[q.id] ?? "";
-
+  const renderPart4 = () => {
     return renderCardShell(
       <>
         {renderTopInstruction()}
+
+        <div className="px-6 py-6">
+          <div className="grid gap-4 md:grid-cols-2">
+            {part4MCQ.map((q) => {
+              const chosen = answers.mcq[q.id];
+
+              return (
+                <div key={q.id} className="rounded-xl border bg-white p-4">
+                  <div className="flex items-start gap-3">
+                    <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border text-sm font-bold text-gray-900">
+                      {q.id}
+                    </div>
+
+                    <div className="flex-1">
+                      <div className="text-sm font-semibold text-gray-900">
+                        {q.questionHeader}
+                      </div>
+
+                      {q.question ? (
+                        <div className="mt-2 text-sm text-gray-700">{q.question}</div>
+                      ) : null}
+
+                      <div className="mt-4 space-y-2">
+                        {q.options.map((opt) => (
+                          <label
+                            key={opt.label}
+                            className="flex cursor-pointer items-start gap-3 rounded-lg border px-4 py-3 transition duration-300 ease-in-out hover:bg-gray-50"
+                          >
+                            <input
+                              type="radio"
+                              name={`q_${q.id}`}
+                              className="mt-1"
+                              checked={chosen === opt.label}
+                              onChange={() =>
+                                setAnswers((prev) => ({
+                                  ...prev,
+                                  mcq: { ...prev.mcq, [q.id]: opt.label },
+                                }))
+                              }
+                            />
+
+                            <span className="text-sm text-gray-800">
+                              <span className="font-bold">{opt.label}.</span>{" "}
+                              {opt.text}
+                            </span>
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </>
+    );
+  };
+  const renderPart3 = () => {
+    return renderCardShell(
+      <>
+        {renderTopInstruction()}
+
         <div className="px-6 py-6">
           <div className="mb-6 rounded-xl border bg-gray-50 p-4">
             <div className="text-sm font-semibold text-gray-900">Mini Olympic Games</div>
-            <div className="mt-2 text-sm text-gray-700">Location: Greenford Primary School</div>
+            <div className="mt-2 text-sm text-gray-700">
+              Location: Greenford Primary School
+            </div>
           </div>
 
-          <div className="flex items-start gap-3">
-            <div className="flex h-7 w-7 items-center justify-center rounded-md border text-sm font-bold text-gray-900">{q.id}</div>
-            <div className="flex-1">
-              <div className="text-sm text-gray-700">{q.prompt}</div>
+          <div className="grid gap-4 md:grid-cols-2">
+            {part3Gaps.map((q) => {
+              const value = answers.gaps[q.id] ?? "";
 
-              <div className="mt-5">
-                <input
-                  value={value}
-                  onChange={(e) =>
-                    setAnswers((prev) => ({
-                      ...prev,
-                      gaps: { ...prev.gaps, [q.id]: e.target.value },
-                    }))
-                  }
-                  placeholder="Type your answer"
-                  className="w-full rounded-lg border px-4 py-3 text-sm outline-none transition duration-300 ease-in-out focus:border-[#2094F3]"
-                />
-                <div className="mt-2 text-xs text-gray-500">Tip: one or two words, a number, a date or a time.</div>
-              </div>
-            </div>
+              return (
+                <div key={q.id} className="rounded-xl border bg-white p-4">
+                  <div className="flex items-start gap-3">
+                    <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border text-sm font-bold text-gray-900">
+                      {q.id}
+                    </div>
+
+                    <div className="flex-1">
+                      <div className="text-sm text-gray-700">{q.prompt}</div>
+
+                      <div className="mt-4">
+                        <input
+                          value={value}
+                          onChange={(e) =>
+                            setAnswers((prev) => ({
+                              ...prev,
+                              gaps: { ...prev.gaps, [q.id]: e.target.value },
+                            }))
+                          }
+                          placeholder="Type your answer"
+                          className="w-full rounded-lg border px-4 py-3 text-sm outline-none transition duration-300 ease-in-out focus:border-[#2094F3]"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="mt-4 text-xs text-gray-500">
+            Tip: one or two words, a number, a date or a time.
           </div>
         </div>
       </>
@@ -653,14 +763,21 @@ export default function PreliminaryListeningPage() {
     if (part === 1) return renderMCQPart(part1MCQ);
     if (part === 2) return renderMCQPart(part2MCQ);
     if (part === 3) return renderPart3();
-    return renderMCQPart(part4MCQ);
+    return renderPart4();
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
       {renderHeader()}
 
-      <audio ref={audioRef} key={part} src={audioByPart[part]} preload="auto" controls className="mx-auto mt-4 block w-full max-w-5xl px-4" />
+      <audio
+  ref={audioRef}
+  src={PRELIMINARY_AUDIO_SRC}
+  preload="auto"
+  controls={false}
+  controlsList="nodownload noplaybackrate noremoteplayback"
+  className="hidden"
+/>
 
       {renderCurrent()}
       {renderPartNav()}

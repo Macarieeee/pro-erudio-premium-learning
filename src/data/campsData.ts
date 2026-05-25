@@ -108,42 +108,42 @@ import campsSeo from "./campsSeo.json";
 ======================= */
 
 export type CampSEO = {
-  title: string;
-  description: string;
-  image: string;
+    title: string;
+    description: string;
+    image: string;
 };
 
 const SITE_URL = "https://tabere.proerudio.ro";
 
 type CampSeoEntry = {
-  slug: string;
-  title: string;
-  description: string;
-  image: string;
+    slug: string;
+    title: string;
+    description: string;
+    image: string;
 };
 
 const campsSeoMap = new Map(
-  (campsSeo as CampSeoEntry[]).map((entry) => [entry.slug, entry])
+    (campsSeo as CampSeoEntry[]).map((entry) => [entry.slug, entry])
 );
 
 export function getCampSEO(camp: any): CampSEO {
-  const explicitSeo = campsSeoMap.get(camp.slug);
+    const explicitSeo = campsSeoMap.get(camp.slug);
 
-  if (explicitSeo) {
-    return explicitSeo;
-  }
+    if (explicitSeo) {
+        return explicitSeo;
+    }
 
-  const fallbackDescription =
-    camp?.shortDescription ||
-    camp?.about?.paragraphs?.[0] ||
-    camp?.activitiesDescription ||
-    "Descoperă tabăra Pro Erudio: program, locație, activități și înscriere.";
+    const fallbackDescription =
+        camp?.shortDescription ||
+        camp?.about?.paragraphs?.[0] ||
+        camp?.activitiesDescription ||
+        "Descoperă tabăra Pro Erudio: program, locație, activități și înscriere.";
 
-  return {
-    title: `${camp.campName} | Pro Erudio`,
-    description: fallbackDescription,
-    image: `${SITE_URL}/og/${camp.slug}.jpg`,
-  };
+    return {
+        title: `${camp.campName} | Pro Erudio`,
+        description: fallbackDescription,
+        image: `${SITE_URL}/og/${camp.slug}.jpg`,
+    };
 }
 
 export const DEFAULT_REGISTRATION = {
@@ -217,18 +217,18 @@ export type CampConfig = {
     campName: string;
 
     hero: {
-  badge: string;
-  title: string;
-  image: string;
-  imageAlt: string;
-  objectPosition?: string; // ex: "center", "bottom", "50% 80%"
-};
+        badge: string;
+        title: string;
+        image: string;
+        imageAlt: string;
+        objectPosition?: string; // ex: "center", "bottom", "50% 80%"
+    };
 
     about: {
         title: string;
         paragraphs: string[];
         extraTitle?: string;
-  extraParagraphs?: string[];
+        extraParagraphs?: string[];
     };
 
     quickInfo: {
@@ -261,11 +261,11 @@ export type CampConfig = {
     otherCamps: { name: string; location: string; type: string; image?: string; to: string }[];
 
 
-luggageImage?: {
-  src: string;
-  alt: string;
-  title?: string; // <-- nou
-};
+    luggageImage?: {
+        src: string;
+        alt: string;
+        title?: string; // <-- nou
+    };
     programImage: { src: string; alt: string };
 
     menuImage?: { src: string; alt: string };
@@ -281,15 +281,15 @@ luggageImage?: {
     sections?: CampSection[];
     visibility?: CampVisibility;
     galleries?: Partial<Record<
-    | "about"
-    | "facilities"
-    | "includedInPrice"
-    | "notIncludedInPrice"
-    | "activities"
-    | "discounts"
-    | "other",
-    GalleryImage[] | string[]
-  >>;
+        | "about"
+        | "facilities"
+        | "includedInPrice"
+        | "notIncludedInPrice"
+        | "activities"
+        | "discounts"
+        | "other",
+        GalleryImage[] | string[]
+    >>;
 };
 
 /* =======================
@@ -323,38 +323,38 @@ function makeFacilities(kind: "uk" | "dublin" | "romania-mountain" | "romania-ci
             { icon: Store, label: "Magazine" },
         ];
     }
-if (kind === "winchester") {
-  return [
-    { icon: School, label: "Săli de clasă bine echipate, inclusiv săli multimedia" },
-    { icon: Dumbbell, label: "Centre sportive" },
-    { icon: FlaskConical, label: "Laboratoare de științe și limbi străine" },
-    { icon: Circle, label: "Terenuri de sport (fotbal, baschet, volei, badminton etc.)" },
-    { icon: Home, label: "Sală de festivități" },
+    if (kind === "winchester") {
+        return [
+            { icon: School, label: "Săli de clasă bine echipate, inclusiv săli multimedia" },
+            { icon: Dumbbell, label: "Centre sportive" },
+            { icon: FlaskConical, label: "Laboratoare de științe și limbi străine" },
+            { icon: Circle, label: "Terenuri de sport (fotbal, baschet, volei, badminton etc.)" },
+            { icon: Home, label: "Sală de festivități" },
 
-    { icon: Users, label: "Spații comune" },
-    { icon: Sofa, label: "IP Ocean Lounge (spațiu de socializare deschis toată ziua)" },
-    { icon: Utensils, label: "Cantină" },
-    { icon: Coffee, label: "Cafenea" },
-    { icon: Store, label: "Magazine" },
-  ];
-}
+            { icon: Users, label: "Spații comune" },
+            { icon: Sofa, label: "IP Ocean Lounge (spațiu de socializare deschis toată ziua)" },
+            { icon: Utensils, label: "Cantină" },
+            { icon: Coffee, label: "Cafenea" },
+            { icon: Store, label: "Magazine" },
+        ];
+    }
 
     if (kind === "liddington") {
-  return [
-    { icon: School, label: "Săli de clase bine echipate, inclusiv săli multimedia" },
-    { icon: Dumbbell, label: "Sală de sport" },
-    { icon: FlaskConical, label: "Laboratoare de științe și limbi străine" },
-    { icon: Circle, label: "Terenuri de sport" },
-    { icon: Home, label: "Sală de festivități" },
+        return [
+            { icon: School, label: "Săli de clase bine echipate, inclusiv săli multimedia" },
+            { icon: Dumbbell, label: "Sală de sport" },
+            { icon: FlaskConical, label: "Laboratoare de științe și limbi străine" },
+            { icon: Circle, label: "Terenuri de sport" },
+            { icon: Home, label: "Sală de festivități" },
 
-    { icon: Utensils, label: "Cantină" },
-    { icon: Coffee, label: "Cafenea" },
-    { icon: Store, label: "Minimarket" },
-    { icon: Users, label: "Zone de divertisment și socializare" },
-    { icon: Waves, label: "Acces privat la pârâul Wootton" },
-    { icon: Trees, label: "Zone de plimbare" },
-  ];
-}
+            { icon: Utensils, label: "Cantină" },
+            { icon: Coffee, label: "Cafenea" },
+            { icon: Store, label: "Minimarket" },
+            { icon: Users, label: "Zone de divertisment și socializare" },
+            { icon: Waves, label: "Acces privat la pârâul Wootton" },
+            { icon: Trees, label: "Zone de plimbare" },
+        ];
+    }
 
     if (kind === "dublin") {
         return [
@@ -366,35 +366,35 @@ if (kind === "winchester") {
             { icon: Users, label: "Grup organizat + însoțitori" },
         ];
     }
-  if (kind === "romania-mountain") {
-  return [
-    { icon: BedDouble, label: "60 de locuri în 16 camere" },
-    { icon: Bath, label: "Fiecare cameră are baie proprie" },
-    { icon: Utensils, label: "Restaurant" },
-    { icon: Presentation, label: "Sală de conferință" },
-    { icon: Trophy, label: "Teren de sport multifuncțional" },
+    if (kind === "romania-mountain") {
+        return [
+            { icon: BedDouble, label: "60 de locuri în 16 camere" },
+            { icon: Bath, label: "Fiecare cameră are baie proprie" },
+            { icon: Utensils, label: "Restaurant" },
+            { icon: Presentation, label: "Sală de conferință" },
+            { icon: Trophy, label: "Teren de sport multifuncțional" },
 
-    { icon: TentTree, label: "Terasă cu capacitate de 60 de locuri" },
-    { icon: Gamepad2, label: "Loc de joacă pentru copii la exterior" },
-    { icon: Trees, label: "Curte interioară cu peisaj mirific" },
-    { icon: PawPrint, label: "Mică fermă de animale" },
-    { icon: ParkingCircle, label: "Parcare proprie" },
-  ];
-}
-if (kind === "predeal") {
-  return [
-    { icon: BedDouble, label: "24 de spații de cazare (apartamente și garsoniere)" },
-    { icon: Bath, label: "Fiecare apartament/garsonieră are baie proprie" },
-    { icon: Waves, label: "Piscină interioară" },
-    { icon: Utensils, label: "Restaurant cu bucătărie românească" },
-    { icon: TentTree, label: "Terasă cu deschidere spre pădure" },
+            { icon: TentTree, label: "Terasă cu capacitate de 60 de locuri" },
+            { icon: Gamepad2, label: "Loc de joacă pentru copii la exterior" },
+            { icon: Trees, label: "Curte interioară cu peisaj mirific" },
+            { icon: PawPrint, label: "Mică fermă de animale" },
+            { icon: ParkingCircle, label: "Parcare proprie" },
+        ];
+    }
+    if (kind === "predeal") {
+        return [
+            { icon: BedDouble, label: "24 de spații de cazare (apartamente și garsoniere)" },
+            { icon: Bath, label: "Fiecare apartament/garsonieră are baie proprie" },
+            { icon: Waves, label: "Piscină interioară" },
+            { icon: Utensils, label: "Restaurant cu bucătărie românească" },
+            { icon: TentTree, label: "Terasă cu deschidere spre pădure" },
 
-    { icon: Presentation, label: "Sală de conferință (70 persoane) cu videoproiector și ecran" },
-    { icon: Gamepad2, label: "Loc de joacă pentru copii la exterior" },
-    { icon: Trees, label: "Curte interioară cu peisaj mirific" },
-    { icon: ParkingCircle, label: "Parcare proprie" },
-  ];
-}
+            { icon: Presentation, label: "Sală de conferință (70 persoane) cu videoproiector și ecran" },
+            { icon: Gamepad2, label: "Loc de joacă pentru copii la exterior" },
+            { icon: Trees, label: "Curte interioară cu peisaj mirific" },
+            { icon: ParkingCircle, label: "Parcare proprie" },
+        ];
+    }
     return [
         {
             icon: Home,
@@ -454,9 +454,9 @@ export const campsData: CampConfig[] = [
                 "Dublin este un important centru cultural irlandez, remarcându-se prin recunoașterea ca Oraș UNESCO al Literaturii în 2010. Orașul abundă în muzee, galerii de artă, instituții culturale și o scenă literară activă, influențată de mari scriitori și muzicieni. Dublinul dispune de o infrastructură culturală bogată, incluzând nu mai puțin de 62 de muzee, 51 de biblioteci publice, trei universități și 53 de galerii de artă.",
             ],
         },
-visibility: {
-  showPriceDetails: false,
-},
+        visibility: {
+            showPriceDetails: false,
+        },
         quickInfo: {
             location: "Dublin, Irlanda",
             duration: "8 zile / 7 nopți",
@@ -589,8 +589,8 @@ visibility: {
             objectPosition: "50% 80%",
         },
         visibility: {
-  showPriceDetails: false,
-},
+            showPriceDetails: false,
+        },
         about: {
             title: "Despre tabără",
             paragraphs: [
@@ -767,7 +767,8 @@ visibility: {
                             "09.45 – 11.00 – Lesson 1 (ateliere interactive de limba engleză)",
                             "11.15 – 12.45 – Lesson 2 (ateliere interactive de limba engleză)",
                             "13.00 – Masa de prânz",
-                            "14.30 – Vizită la *Cetatea Neamț*",
+                            "14.00 – Vizită la *Casa Memorială Ion Creangă*",
+                            "15.30 – Vizită la *Curtea Domnească* de la Târgul Neamț",
                             "17.00 – Bălăceală în piscină",
                             "19.00 – Cina",
                             "20.00 – 21.30 – Serata (activități recreative și de divertisment cu tot grupul)",
@@ -802,8 +803,8 @@ visibility: {
                             "09.45 – 11.00 – Lesson 1 (ateliere interactive de limba engleză)",
                             "11.15 – 12.45 – Lesson 2 (ateliere interactive de limba engleză)",
                             "13.00 – Masa de prânz",
-                            "14.00 – Vizită la *Casa Memorială Ion Creangă*",
-                            "15.30 – Vizită la *Curtea Domnească* de la Piatra Nemți",
+                            "14.00 – 15.00 – Timp liber",
+                            "15.00 – 16.30 – Atelier 1 (activități pe echipe, la alegere)",
                             "17.00 – Bălăceală în piscină",
                             "19.00 – Cina",
                             "20.00 – 21.30 – Serata (activități recreative și de divertisment cu tot grupul)",
@@ -830,10 +831,10 @@ visibility: {
                 type: "richText",
                 title: "Atelierele de după-amiază sunt creative, sportive, artistice și culturale și se vor desfășura pe echipe de 7-9 copii. Iată câteva exemple:",
                 paragraphs: [
-                    "Jocuri de cunoaștere și socializare (Mime, draw or describe, Minute to win it, curse de stafeta, Guess the character!, Photo contests, Charades, Casino Night, Chaos Games, Media Challenges, Beauty Workshop, Fashion Parade etc )",
-                    "Concursuri pe echipe (Treasute Hunt, Team Feuds, Talent Show, Harry Potter Night, Quiz Night, Karaoke etc)",
-                    "Activități artistice (confecționare brățări, pictură în natură, origami, modelare în plastilină)",
-                    "Activități sportive (fotbal, volei, tenis, baschet, dodgeball, Capture the Flag etc.)",
+                    "🎭 Jocuri de cunoaștere și socializare (Mime, Draw or Describe, Minute to Win It, curse de ștafetă, Guess the Character!, Photo Contests, Charades, Casino Night, Chaos Games, Media Challenges, Beauty Workshop, Fashion Parade etc.)",
+                    "🏆 Concursuri pe echipe (Treasure Hunt, Team Feuds, Talent Show, Harry Potter Night, Quiz Night, Karaoke etc.)",
+                    "🎨 Activități artistice (confecționare brățări, pictură în natură, origami, modelare în plastilină)",
+                    "⚽ Activități sportive (fotbal, volei, tenis, baschet, dodgeball, Capture the Flag etc.)",
                 ],
 
             },
@@ -872,8 +873,7 @@ visibility: {
         includedInPrice: [
             "6 zile (5 nopţi) cazare cu pensiune completă;",
             "Transport București-Moinești, tur-retur cu autocarul;",
-            "Vizită la *Curtea Domnească* din Piatra Neamț;",
-            "Vizită la *Cetatea Neamț*;",
+            "Vizită la *Cetatea Neamț* din Târgul Neamț;",
             "Vizită la *Casa Memorială Ion Creangă*;",
             "Zilnic program de activități în limba engleză în cursul diminetii, două ateliere pe echipe (artistice, culturale, sportive etc) în cursul după-amiezii si o activitate de seară (cu tot grupul);",
             "Program de limba engleză susținut de profesori de limba engleză si traineri internaționali de la “Pro Erudio” School of English;",
@@ -881,24 +881,23 @@ visibility: {
         ],
         notIncludedInPrice: [
             "Cheltuieli personale",
-            "Excursii opționale (dacă există)",
         ],
         galleries: {
-  includedInPrice: [
-    moinesti1,
-    moinesti5,
-    moinesti3,
-  ],
-  notIncludedInPrice: [
-    moinesti7,
-    moinesti8,
-  ],
- other: [
-    moinesti4,
-    moinesti2,
-    moinesti6,
-  ],
-},
+            includedInPrice: [
+                moinesti1,
+                moinesti5,
+                moinesti3,
+            ],
+            notIncludedInPrice: [
+                moinesti7,
+                moinesti8,
+            ],
+            other: [
+                moinesti4,
+                moinesti2,
+                moinesti6,
+            ],
+        },
         activitiesDescription:
             "Activități de echipă, jocuri, mini-proiecte în engleză, provocări de aventură și sesiuni interactive. Programul final depinde de locație și grup.",
         activityImages: IMGSET_DEFAULT,
@@ -950,21 +949,21 @@ visibility: {
             objectPosition: "70% 80%",
         },
         galleries: {
-  includedInPrice: [
-    poianaMarului1,
-    poianaMarului5,
-    poianaMarului3,
-  ],
-  notIncludedInPrice: [
-    poianaMarului7,
-    poianaMarului8,
-  ],
- other: [
-    poianaMarului4,
-    poianaMarului2,
-    poianaMarului6,
-  ],
-},
+            includedInPrice: [
+                poianaMarului1,
+                poianaMarului5,
+                poianaMarului3,
+            ],
+            notIncludedInPrice: [
+                poianaMarului7,
+                poianaMarului8,
+            ],
+            other: [
+                poianaMarului4,
+                poianaMarului2,
+                poianaMarului6,
+            ],
+        },
         about: {
             title: "Despre Tabără",
             paragraphs: [
@@ -1002,7 +1001,6 @@ visibility: {
                         items: [
                             "8.00 – Plecarea din București cu autocarul (Piata Constitutiei)",
                             "11.00 – Vizită la *Cetățile Hărman* și *Prejmer*",
-                            "12.00 – Vizită la *Casa Memorială George Enescu* din Sinaia",
                             "14.30 – Cazare și prânz",
                             "16.30 -18.30 – Jocuri de cunoaștere/stabilirea echipelor/prezentarea regulilor",
                             "19.30-20.30 – Cina",
@@ -1028,7 +1026,7 @@ visibility: {
                             "22.30 – Stingerea",
                         ],
                     },
-                    
+
                     {
                         subtitle: "Ziua 6",
                         items: [
@@ -1037,6 +1035,7 @@ visibility: {
                             "09.00 – Micul dejun",
                             "09.45 – 11.00 – Festivitate de premiere si socializare",
                             "11.30 – Plecare de la pensiune",
+                            "12.00 – Vizită la *Peștera Valea Cetății*",
                             "14.00 – Oprire la benzinărie pentru o gustare",
                             "18.00 – Sosire in Bucuresti",
                         ],
@@ -1048,11 +1047,11 @@ visibility: {
                 type: "richText",
                 title: "Atelierele de după-amiază se vor desfășura pe echipe de 7-9 copii și se vor desfășura în paralel. Iată câteva exemple de activități:",
                 paragraphs: [
-                    "Jocuri de cunoaștere și socializare (Mime, draw or describe, Minute to win it, curse de stafeta, Guess the character!, Photo contests, Charades, Casino Night, Chaos Games, Media Challenges, Beauty Workshop, Fashion Parade etc )",
-                    "Concursuri pe echipe (Treasute Hunt, Team Feuds, Talent Show, Harry Potter Night, Quiz Night, Karaoke etc)",
-                    "Activități artistice (confecționare brățări, pictură în natură, origami, modelare în plastilină)",
-                    "Activități sportive (fotbal, volei, tenis, baschet, dodgeball, Capture the Flag etc.)",
-                    "Seratele se organizează cu tot grupul pentru a le da copiilor ocazia să se împrietenească și cu alți copii, nu doar cu colegii de la activități. Seratele sunt interactive și distractive pentru a consumă și ultimele fărâme de energie ale copiilor și a le asigura un somn adânc toată noaptea."
+                    "🎭 Jocuri de cunoaștere și socializare (Mime, Draw or Describe, Minute to Win It, curse de ștafetă, Guess the Character!, Photo Contests, Charades, Casino Night, Chaos Games, Media Challenges, Beauty Workshop, Fashion Parade etc.)",
+                    "🏆 Concursuri pe echipe (Treasure Hunt, Team Feuds, Talent Show, Harry Potter Night, Quiz Night, Karaoke etc.)",
+                    "🎨 Activități artistice (confecționare brățări, pictură în natură, origami, modelare în plastilină)",
+                    "⚽ Activități sportive (fotbal, volei, tenis, baschet, dodgeball, Capture the Flag etc.)",
+                    "🌙 Seratele se organizează cu tot grupul pentru a le da copiilor ocazia să se împrietenească și cu alți copii, nu doar cu colegii de la activități. Seratele sunt interactive și distractive pentru a consuma și ultimele fărâme de energie ale copiilor și a le asigura un somn adânc toată noaptea."
                 ],
 
             },
@@ -1101,7 +1100,6 @@ visibility: {
         ],
         notIncludedInPrice: [
             "Cheltuieli personale",
-            "Excursii opționale (dacă există)",
         ],
         activitiesDescription:
             "Activități de echipă, jocuri, mini-proiecte în engleză, provocări de aventură și sesiuni interactive. Programul final depinde de locație și grup.",
@@ -1859,7 +1857,7 @@ visibility: {
         slug: "tabara-poiana-marului-2024",
         year: 2024,
         campName: "Tabără de limba engleză și aventură în România – Poiana Mărului",
-                hero: {
+        hero: {
             badge: "2024",
             title: "Tabăra de limba engleză și aventură English Explorers Camp",
             image: heroPoianaMarului2025,
@@ -2038,7 +2036,7 @@ visibility: {
         slug: "tabara-marea-britanie-2024",
         year: 2024,
         campName: "Tabără în Marea Britanie – Little Canada Activity Centre",
-          hero: {
+        hero: {
             badge: "2024",
             title: "TABĂRĂ educațională de limba ENGLEZĂ în Marea Britanie",
             image: liddingtonHero,
@@ -2047,19 +2045,19 @@ visibility: {
         visibility: {
             showPriceDetails: false,
         },
-about: {
-  title: "Despre Tabără",
-  paragraphs: [
-    "Anul acesta vă propunem o tabără internațională care urmează tipicul unei tabere de aventură adresate copiilor britanici. Singura diferență este includerea în program a cursurilor de limba engleză în timpul dimineții și a excursiilor, săptămânal una de o zi întreagă și una de o jumătate de zi.",
-  ],
+        about: {
+            title: "Despre Tabără",
+            paragraphs: [
+                "Anul acesta vă propunem o tabără internațională care urmează tipicul unei tabere de aventură adresate copiilor britanici. Singura diferență este includerea în program a cursurilor de limba engleză în timpul dimineții și a excursiilor, săptămânal una de o zi întreagă și una de o jumătate de zi.",
+            ],
 
-  // 👇 NOU – doar pentru această tabără
-  extraTitle: "Cu cine colaborăm?",
-  extraParagraphs: [
-    "PGL Travel este o companie fondată în anul 1957 și are ca obiect principal de activitate furnizarea de activități sportive, recreative și educaționale pentru copiii britanici și internaționali în centre proprii. De-a lungul anilor, compania a achiziționat numeroase centre, majoritatea în Marea Britanie: 10 în Anglia, 1 în Scoția și 1 în Țara Galilor. În anii 1990 PGL și-a extins activitatea în Franța, intrând chiar și pe piața școlilor de schi pentru copii. Specific fiecărui centru este faptul că se întinde pe domenii uriașe, care cuprind lacuri sau râuri, păduri, plaje sau zone stâncoase, terenuri de sport, piste de biciclete, săli de sport la interior, centre de activități de aventură, mici magazine, săli de clasă și ateliere pe diferite teme.",
-  ],
-},
-        
+            // 👇 NOU – doar pentru această tabără
+            extraTitle: "Cu cine colaborăm?",
+            extraParagraphs: [
+                "PGL Travel este o companie fondată în anul 1957 și are ca obiect principal de activitate furnizarea de activități sportive, recreative și educaționale pentru copiii britanici și internaționali în centre proprii. De-a lungul anilor, compania a achiziționat numeroase centre, majoritatea în Marea Britanie: 10 în Anglia, 1 în Scoția și 1 în Țara Galilor. În anii 1990 PGL și-a extins activitatea în Franța, intrând chiar și pe piața școlilor de schi pentru copii. Specific fiecărui centru este faptul că se întinde pe domenii uriașe, care cuprind lacuri sau râuri, păduri, plaje sau zone stâncoase, terenuri de sport, piste de biciclete, săli de sport la interior, centre de activități de aventură, mici magazine, săli de clasă și ateliere pe diferite teme.",
+            ],
+        },
+
 
         quickInfo: {
             location: "Little Canada Activity Centre",
@@ -2144,7 +2142,7 @@ about: {
             },
         ],
         sections: [
-        {
+            {
                 type: "richText",
                 title: "Posibile destinații de excursii",
                 paragraphs: [
@@ -2156,7 +2154,7 @@ about: {
                 ],
 
             },
-    ],       
+        ],
         luggageImage: { src: kitTabaraImage, alt: "Bagaj Tabara", title: "Ce trebuie să conțină bagajul copiilor" },
         programImage: { src: programImage, alt: "Program orientativ" },
         menuImage: { src: meniuLiddington, alt: "Meniu orientativ" },
@@ -2172,7 +2170,7 @@ about: {
         slug: "scoala-de-vara-marea-britanie-2024",
         year: 2024,
         campName: "Școală de vară de limba engleză în Marea Britanie – Winchester",
-          hero: {
+        hero: {
             badge: "2024",
             title: "TABĂRĂ educațională de limba ENGLEZĂ în Marea Britanie",
             image: heroWinchester2024,
@@ -2181,20 +2179,20 @@ about: {
         visibility: {
             showPriceDetails: false,
         },
-about: {
-  title: "Despre Tabără",
-  paragraphs: [
-    "Una dintre cele mai frumoase destinații turistice ale Marii Britanii, Winchester este un oraș pitoresc situat pe malurile râului Itchen și cunoscut ca centru istoric și cultural al ținutul Hampshire. Orașul este faimos pentru catedrala Winchester, care are cel mai lung naos medieval din Europa, si pentru Colegiul Winchester, una dintre cele mai vechi instituții de învățământ din Marea Britanie, fondat de Episcopul William de Wykeham în 1382 ca școală de baieți.",
-    "La mai puțin de 100 de kilometri distanta de Londra, orașul Winchester este locul în care a trăit și scris Jane Austen, una dintre cele mai importante scriitoare ale secolului al XIX-lea. Tot aici găsim și The Great House sau Chawton House, un conac englezesc vechi de peste 400 ani, locul preferat de Jane Austen ca spațiul de desfășurare a acțiunii în romanele sale"
-],
+        about: {
+            title: "Despre Tabără",
+            paragraphs: [
+                "Una dintre cele mai frumoase destinații turistice ale Marii Britanii, Winchester este un oraș pitoresc situat pe malurile râului Itchen și cunoscut ca centru istoric și cultural al ținutul Hampshire. Orașul este faimos pentru catedrala Winchester, care are cel mai lung naos medieval din Europa, si pentru Colegiul Winchester, una dintre cele mai vechi instituții de învățământ din Marea Britanie, fondat de Episcopul William de Wykeham în 1382 ca școală de baieți.",
+                "La mai puțin de 100 de kilometri distanta de Londra, orașul Winchester este locul în care a trăit și scris Jane Austen, una dintre cele mai importante scriitoare ale secolului al XIX-lea. Tot aici găsim și The Great House sau Chawton House, un conac englezesc vechi de peste 400 ani, locul preferat de Jane Austen ca spațiul de desfășurare a acțiunii în romanele sale"
+            ],
 
-  // 👇 NOU – doar pentru această tabără
-  extraTitle: "",
-  extraParagraphs: [
-    "",
-  ],
-},
-        
+            // 👇 NOU – doar pentru această tabără
+            extraTitle: "",
+            extraParagraphs: [
+                "",
+            ],
+        },
+
 
         quickInfo: {
             location: "University of Winchester",
@@ -2277,7 +2275,7 @@ about: {
                 image: heroMoinești,
                 to: "/tabara-moinesti-2026",
             },
-        ],    
+        ],
         programImage: { src: programWinchesterImage, alt: "Program orientativ" },
         registrationInfo: DEFAULT_REGISTRATION,
         requiredDocuments: DEFAULT_REQUIRED_DOCS,
@@ -2292,7 +2290,7 @@ about: {
         slug: "tabara-de-engleza-poiana-marului-2023",
         year: 2023,
         campName: "Tabăra de Engleză - Poiana Mărului",
-                hero: {
+        hero: {
             badge: "2023",
             title: "Tabăra de limba engleză și aventură English Explorers Camp",
             image: heroPoianaMarului2025,
@@ -2471,7 +2469,7 @@ about: {
         slug: "tabara-de-engleza-valea-oltului-2023",
         year: 2023,
         campName: "Tabăra de Engleză - Valea Oltului",
-                hero: {
+        hero: {
             badge: "2023",
             title: "Tabăra de limba engleză și aventură English Explorers Camp",
             image: heroValeaOltului2023,
@@ -2650,7 +2648,7 @@ about: {
         slug: "tabara-de-engleza-marea-britanie-2023",
         year: 2023,
         campName: "Tabăra de Engleză - Marea Britanie",
-         hero: {
+        hero: {
             badge: "2023",
             title: "TABĂRĂ educațională de limba ENGLEZĂ în Marea Britanie",
             image: heroOsmington2023,
@@ -2659,19 +2657,19 @@ about: {
         visibility: {
             showPriceDetails: false,
         },
-about: {
-  title: "Despre Tabără",
-  paragraphs: [
-    "Anul acesta vă propunem o tabăra internațională care urmează tipicul unei tabere de aventură adresate copiilor britanici. Singură diferența este includerea în program a cursurilor de limba engleză în timpul dimineții și a excursiilor, săptămânal una de o zi întreagă și una de o jumătate de zi, special concepute pentru elevii străini.",
-  ],
+        about: {
+            title: "Despre Tabără",
+            paragraphs: [
+                "Anul acesta vă propunem o tabăra internațională care urmează tipicul unei tabere de aventură adresate copiilor britanici. Singură diferența este includerea în program a cursurilor de limba engleză în timpul dimineții și a excursiilor, săptămânal una de o zi întreagă și una de o jumătate de zi, special concepute pentru elevii străini.",
+            ],
 
-  // 👇 NOU – doar pentru această tabără
-  extraTitle: "Cu cine colaborăm?",
-  extraParagraphs: [
-    "PGL Travel este o companie fondată în anul 1957 și are ca obiect principal de activitate furnizarea de activități sportive, recreative și educaționale pentru copiii britanici și internaționali în centre proprii. De-a lungul anilor, compania a achiziționat numeroase centre, majoritatea în Marea Britanie: 10 în Anglia, 1 în Scoția și 1 în Țara Galilor. În anii 1990 PGL și-a extins activitatea în Franța, intrând chiar și pe piața școlilor de schi pentru copii. Specific fiecărui centru este faptul că se întinde pe domenii uriașe, care cuprind lacuri sau râuri, păduri, plaje sau zone stâncoase, terenuri de sport, piste de biciclete, săli de sport la interior, centre de activități de aventură, mici magazine, săli de clasă și ateliere pe diferite teme.",
-  ],
-},
-        
+            // 👇 NOU – doar pentru această tabără
+            extraTitle: "Cu cine colaborăm?",
+            extraParagraphs: [
+                "PGL Travel este o companie fondată în anul 1957 și are ca obiect principal de activitate furnizarea de activități sportive, recreative și educaționale pentru copiii britanici și internaționali în centre proprii. De-a lungul anilor, compania a achiziționat numeroase centre, majoritatea în Marea Britanie: 10 în Anglia, 1 în Scoția și 1 în Țara Galilor. În anii 1990 PGL și-a extins activitatea în Franța, intrând chiar și pe piața școlilor de schi pentru copii. Specific fiecărui centru este faptul că se întinde pe domenii uriașe, care cuprind lacuri sau râuri, păduri, plaje sau zone stâncoase, terenuri de sport, piste de biciclete, săli de sport la interior, centre de activități de aventură, mici magazine, săli de clasă și ateliere pe diferite teme.",
+            ],
+        },
+
 
         quickInfo: {
             location: "Osmington Bay Activity Centre",
@@ -2756,7 +2754,7 @@ about: {
             },
         ],
         sections: [
-        {
+            {
                 type: "richText",
                 title: "Posibile destinații de excursii",
                 paragraphs: [
@@ -2769,7 +2767,7 @@ about: {
                 ],
 
             },
-    ],       
+        ],
         luggageImage: { src: kitTabaraImage, alt: "Bagaj Tabara", title: "Ce trebuie să conțină bagajul copiilor" },
         programImage: { src: programImage, alt: "Program orientativ" },
         menuImage: { src: meniuLiddington, alt: "Meniu orientativ" },
@@ -2785,7 +2783,7 @@ about: {
         slug: "scoala-de-vara-marea-britanie-2023",
         year: 2023,
         campName: "Școală de vară - Marea Britanie",
-          hero: {
+        hero: {
             badge: "2023",
             title: "TABĂRĂ educațională de limba ENGLEZĂ în Marea Britanie",
             image: heroPortsmouth2023,
@@ -2794,20 +2792,20 @@ about: {
         visibility: {
             showPriceDetails: false,
         },
-about: {
-  title: "Despre Tabără",
-  paragraphs: [
-    "Una dintre cele mai frumoase destinații turistice ale Marii Britanii, Portsmouth este un oras pitoresc situat pe coasta de sud a Marii Britanii și este unul dintre cele mai importante porturi ale Regatului Unit, cu o populatie de aproape 250.000 de locuitori si o densitate a populatie pe metru patrat care o depaseste pe cea a Londrei. La aproximativ 100 de kilmotrei distanta de Londra si 30 de Southampton, portul din Portsmouth dateaza de pe vremea romanilor si este incarcat de istori, fiind la inceputul secolului al XIX-lea cel mai fortificat oras din lume. iar centrul orașului păstrează multe clădiri ce datează din epoca victoriană.",
-    "Desi atractia principala pentru vizitatori ramane marea si istoria navala, orarul este incărcat de istorie la tot pasul, un veritabil “muzeu în aer liber”, fiind împânzit de clădiri istorice (este si locul de nastere al lui Charles Dickens) și înconjurat de zidurile vechii cetati, acum transformate in muzee sau sali de spectacole."
-],
+        about: {
+            title: "Despre Tabără",
+            paragraphs: [
+                "Una dintre cele mai frumoase destinații turistice ale Marii Britanii, Portsmouth este un oras pitoresc situat pe coasta de sud a Marii Britanii și este unul dintre cele mai importante porturi ale Regatului Unit, cu o populatie de aproape 250.000 de locuitori si o densitate a populatie pe metru patrat care o depaseste pe cea a Londrei. La aproximativ 100 de kilmotrei distanta de Londra si 30 de Southampton, portul din Portsmouth dateaza de pe vremea romanilor si este incarcat de istori, fiind la inceputul secolului al XIX-lea cel mai fortificat oras din lume. iar centrul orașului păstrează multe clădiri ce datează din epoca victoriană.",
+                "Desi atractia principala pentru vizitatori ramane marea si istoria navala, orarul este incărcat de istorie la tot pasul, un veritabil “muzeu în aer liber”, fiind împânzit de clădiri istorice (este si locul de nastere al lui Charles Dickens) și înconjurat de zidurile vechii cetati, acum transformate in muzee sau sali de spectacole."
+            ],
 
-  // 👇 NOU – doar pentru această tabără
-  extraTitle: "",
-  extraParagraphs: [
-    "",
-  ],
-},
-        
+            // 👇 NOU – doar pentru această tabără
+            extraTitle: "",
+            extraParagraphs: [
+                "",
+            ],
+        },
+
 
         quickInfo: {
             location: "University of Portsmouth",
@@ -2892,7 +2890,7 @@ about: {
             },
         ],
         sections: [
-        {
+            {
                 type: "richText",
                 title: "Posibile destinații de excursii",
                 paragraphs: [
@@ -2905,7 +2903,7 @@ about: {
                 ],
 
             },
-    ],       
+        ],
         programImage: { src: programUK, alt: "Program orientativ" },
         registrationInfo: DEFAULT_REGISTRATION,
         requiredDocuments: DEFAULT_REQUIRED_DOCS,

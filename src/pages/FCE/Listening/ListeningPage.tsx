@@ -506,24 +506,27 @@ const getTimeSpent = () => {
             </button>
           ))}
 
-          <div className="ml-auto flex items-center gap-2">
-            <button
-              onClick={goPrev}
-              disabled={indexInPart === 0}
-              className="rounded-lg border px-3 py-2 text-sm font-semibold text-gray-900 transition duration-300 ease-in-out hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
-              aria-label="Previous"
-            >
-              ←
-            </button>
-            <button
-              onClick={goNext}
-              disabled={indexInPart === currentTotalInPart - 1}
-              className="rounded-lg bg-[#2094F3] px-4 py-2 text-sm font-semibold text-white transition duration-300 ease-in-out hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
-              aria-label="Next"
-            >
-              →
-            </button>
-          </div>
+          {part === 1 ? (
+  <div className="ml-auto flex items-center gap-2">
+    <button
+      onClick={goPrev}
+      disabled={indexInPart === 0}
+      className="rounded-lg border px-3 py-2 text-sm font-semibold text-gray-900 transition duration-300 ease-in-out hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+      aria-label="Previous"
+    >
+      ←
+    </button>
+
+    <button
+      onClick={goNext}
+      disabled={indexInPart === currentTotalInPart - 1}
+      className="rounded-lg bg-[#2094F3] px-4 py-2 text-sm font-semibold text-white transition duration-300 ease-in-out hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
+      aria-label="Next"
+    >
+      →
+    </button>
+  </div>
+) : null}
         </div>
       </div>
     </div>
@@ -683,128 +686,234 @@ const getTimeSpent = () => {
     );
   };
 
-  const renderPart2 = () => {
-    const q = part2Gaps[indexInPart];
-    const value = answers.gaps[q.id] ?? "";
+const renderPart4 = () => {
+  return renderCardShell(
+    <>
+      {renderTopInstruction()}
 
-    return renderCardShell(
-      <>
-        {renderTopInstruction()}
-        <div className="px-6 py-6">
-          <div className="flex items-start gap-3">
-            <div className="flex h-7 w-7 items-center justify-center rounded-md border text-sm font-bold text-gray-900">
-              {q.id}
-            </div>
-            <div className="flex-1">
-              <div className="text-sm font-semibold text-gray-900">The Albuquerque Balloon Festival</div>
-              <div className="mt-2 text-sm text-gray-700">{q.prompt}</div>
+      <div className="px-6 py-6">
+        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-2">
+          {part4MCQ.map((q) => {
+            const chosen = answers.mcq[q.id];
 
-              <div className="mt-5">
-                <input
-                  value={value}
-                  onChange={(e) =>
-                    setAnswers((prev) => ({
-                      ...prev,
-                      gaps: { ...prev.gaps, [q.id]: e.target.value },
-                    }))
-                  }
-                  placeholder="Type your answer"
-                  className="w-full rounded-lg border px-4 py-3 text-sm outline-none transition duration-300 ease-in-out focus:border-[#2094F3]"
-                />
-                <div className="mt-2 text-xs text-gray-500">Tip: one word or a short phrase.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </>
-    );
-  };
-
-  const renderPart3 = () => {
-    const q = part3Matches[indexInPart];
-    if (!q) {
-      return renderCardShell(
-        <>
-          {renderTopInstruction()}
-          <div className="px-6 py-6 text-sm text-gray-700">Something went wrong. Please select a question again.</div>
-        </>
-      );
-    }
-    const selected = (answers.matches[q.id] || "").toUpperCase();
-
-    return renderCardShell(
-      <>
-        {renderTopInstruction()}
-        <div className="px-6 py-6">
-          <div className="grid gap-6 md:grid-cols-2">
-            <div className="rounded-xl border bg-gray-50 p-4">
-              <div className="text-sm font-semibold text-gray-900">Options (A–H)</div>
-              <div className="mt-3 space-y-2">
-                {part3Options.map((opt) => (
-                  <div key={opt.letter} className="flex items-start gap-3 text-sm text-gray-800">
-                    <span className="mt-[2px] inline-flex h-6 w-6 items-center justify-center rounded-md border bg-white text-xs font-bold">
-                      {opt.letter}
-                    </span>
-                    <span>{opt.text}</span>
+            return (
+              <div key={q.id} className="rounded-xl border bg-white p-3">
+                <div className="flex items-start gap-3">
+                  <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border text-sm font-bold text-gray-900">
+                    {q.id}
                   </div>
-                ))}
-              </div>
-              <div className="mt-4 text-xs text-gray-500">Letters can only be used once.</div>
-            </div>
 
-            <div>
-              <div className="flex items-start gap-3">
-                <div className="flex h-7 w-7 items-center justify-center rounded-md border text-sm font-bold text-gray-900">
-                  {q.id}
-                </div>
-                <div className="flex-1">
-                  <div className="text-sm font-semibold text-gray-900">{q.speakerLabel}</div>
-                  <div className="mt-2 text-sm text-gray-700">Choose the letter (A–H) that matches how the speaker felt.</div>
+                  <div className="flex-1">
+                    <div className="text-sm font-semibold text-gray-900">
+                      {q.questionHeader}
+                    </div>
 
-                  <div className="mt-5">
-                    <select
-                      value={selected}
-                      onChange={(e) => {
-                        const v = e.target.value.toUpperCase();
-                        setAnswers((prev) => ({
-                          ...prev,
-                          matches: { ...prev.matches, [q.id]: v || null },
-                        }));
-                      }}
-                      className="w-full rounded-lg border px-4 py-3 text-sm outline-none transition duration-300 ease-in-out focus:border-[#2094F3]"
-                    >
-                      <option value="">Select a letter</option>
-                      {part3Options.map((opt) => {
-                        const isUsedElsewhere = usedLetters.has(opt.letter) && opt.letter !== selected;
-                        return (
-                          <option key={opt.letter} value={opt.letter} disabled={isUsedElsewhere}>
-                            {opt.letter} {isUsedElsewhere ? "(used)" : ""}
-                          </option>
-                        );
-                      })}
-                    </select>
+                    {q.question ? (
+                      <div className="mt-2 text-sm text-gray-700">
+                        {q.question}
+                      </div>
+                    ) : null}
 
-                    <div className="mt-2 text-xs text-gray-500">
-                      Selected: <span className="font-semibold text-gray-800">{selected || "—"}</span>
+                    <div className="mt-3 space-y-2">
+                      {q.options.map((opt, idx) => (
+                        <label
+                          key={idx}
+                          className="flex cursor-pointer items-start gap-2 rounded-lg border px-3 py-2 transition duration-300 ease-in-out hover:bg-gray-50"
+                        >
+                          <input
+                            type="radio"
+                            name={`q_${q.id}`}
+                            className="mt-1"
+                            checked={chosen === idx}
+                            onChange={() =>
+                              setAnswers((prev) => ({
+                                ...prev,
+                                mcq: { ...prev.mcq, [q.id]: idx },
+                              }))
+                            }
+                          />
+
+                          <span className="text-sm text-gray-800">{opt}</span>
+                        </label>
+                      ))}
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
+            );
+          })}
+        </div>
+      </div>
+    </>
+  );
+};
+
+const renderPart2 = () => {
+  return renderCardShell(
+    <>
+      {renderTopInstruction()}
+
+      <div className="px-6 py-6">
+        <div className="mb-5 rounded-xl border bg-gray-50 p-4">
+          <div className="text-sm font-semibold text-gray-900">
+            The Albuquerque Balloon Festival
+          </div>
+          <div className="mt-1 text-xs text-gray-500">
+            Complete all questions while the audio is playing.
           </div>
         </div>
-      </>
-    );
-  };
+
+        <div className="grid gap-4 md:grid-cols-2">
+          {part2Gaps.map((q) => {
+            const value = answers.gaps[q.id] ?? "";
+
+            return (
+              <div key={q.id} className="rounded-xl border bg-white p-4">
+                <div className="flex items-start gap-3">
+                  <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border text-sm font-bold text-gray-900">
+                    {q.id}
+                  </div>
+
+                  <div className="flex-1">
+                    <div className="text-sm text-gray-700">{q.prompt}</div>
+
+                    <div className="mt-4">
+                      <input
+                        value={value}
+                        onChange={(e) =>
+                          setAnswers((prev) => ({
+                            ...prev,
+                            gaps: { ...prev.gaps, [q.id]: e.target.value },
+                          }))
+                        }
+                        placeholder="Type your answer"
+                        className="w-full rounded-lg border px-4 py-3 text-sm outline-none transition duration-300 ease-in-out focus:border-[#2094F3]"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="mt-4 text-xs text-gray-500">
+          Tip: one word or a short phrase.
+        </div>
+      </div>
+    </>
+  );
+};
+
+const renderPart3 = () => {
+  return renderCardShell(
+    <>
+      {renderTopInstruction()}
+
+      <div className="px-6 py-6">
+        <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+          <div className="rounded-xl border bg-gray-50 p-4">
+            <div className="text-sm font-semibold text-gray-900">
+              Options (A–H)
+            </div>
+
+            <div className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-1">
+              {part3Options.map((opt) => (
+                <div
+                  key={opt.letter}
+                  className="flex items-start gap-3 text-sm text-gray-800"
+                >
+                  <span className="mt-[2px] inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md border bg-white text-xs font-bold">
+                    {opt.letter}
+                  </span>
+                  <span>{opt.text}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-4 text-xs text-gray-500">
+              Letters can only be used once.
+            </div>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-2">
+            {part3Matches.map((q) => {
+              const selected = (answers.matches[q.id] || "").toUpperCase();
+
+              return (
+                <div key={q.id} className="rounded-xl border bg-white p-4">
+                  <div className="flex items-start gap-3">
+                    <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border text-sm font-bold text-gray-900">
+                      {q.id}
+                    </div>
+
+                    <div className="flex-1">
+                      <div className="text-sm font-semibold text-gray-900">
+                        {q.speakerLabel}
+                      </div>
+
+                      <div className="mt-2 text-sm text-gray-700">
+                        Choose the letter (A–H) that matches how the speaker felt.
+                      </div>
+
+                      <div className="mt-4">
+                        <select
+                          value={selected}
+                          onChange={(e) => {
+                            const v = e.target.value.toUpperCase();
+
+                            setAnswers((prev) => ({
+                              ...prev,
+                              matches: { ...prev.matches, [q.id]: v || null },
+                            }));
+                          }}
+                          className="w-full rounded-lg border px-4 py-3 text-sm outline-none transition duration-300 ease-in-out focus:border-[#2094F3]"
+                        >
+                          <option value="">Select a letter</option>
+
+                          {part3Options.map((opt) => {
+                            const isUsedElsewhere =
+                              usedLetters.has(opt.letter) && opt.letter !== selected;
+
+                            return (
+                              <option
+                                key={opt.letter}
+                                value={opt.letter}
+                                disabled={isUsedElsewhere}
+                              >
+                                {opt.letter} {isUsedElsewhere ? "(used)" : ""}
+                              </option>
+                            );
+                          })}
+                        </select>
+
+                        <div className="mt-2 text-xs text-gray-500">
+                          Selected:{" "}
+                          <span className="font-semibold text-gray-800">
+                            {selected || "—"}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
 
   // Part renderer
-  const renderCurrent = () => {
-    if (finished) return renderFinishScreen();
-    if (part === 1) return renderPart1or4(part1MCQ);
-    if (part === 2) return renderPart2();
-    if (part === 3) return renderPart3();
-    return renderPart1or4(part4MCQ);
-  };
+const renderCurrent = () => {
+  if (finished) return renderFinishScreen();
+  if (part === 1) return renderPart1or4(part1MCQ);
+  if (part === 2) return renderPart2();
+  if (part === 3) return renderPart3();
+  return renderPart4();
+};
 
   return (
     <div className="min-h-screen bg-gray-50">

@@ -38,7 +38,6 @@ type DetailedAnswer = {
 
 const LS_KEY = "proerudio_cae_listening_v1";
 const STUDENT_INFO_KEY = "proerudio_cae_student_info";
-const AUDIO_PLAYED_KEY = "proerudio_cae_listening_audio_played_parts";
 const NEXT_READING_PATH = "/cae/reading";
 const normalize = (s: string) =>
   s
@@ -82,16 +81,7 @@ export default function CAEListeningPage() {
   const [sendSuccess, setSendSuccess] = useState(false);
   const [sendError, setSendError] = useState("");
 
-  const [playedAudioParts, setPlayedAudioParts] = useState<Part[]>(() => {
-    if (typeof window === "undefined") return [];
-
-    try {
-      const parsed = JSON.parse(window.localStorage.getItem(AUDIO_PLAYED_KEY) || "[]");
-      return Array.isArray(parsed) ? parsed.filter((item): item is Part => [1, 2, 3, 4].includes(item)) : [];
-    } catch {
-      return [];
-    }
-  });
+const [playedAudioParts, setPlayedAudioParts] = useState<Part[]>([]);
   const [audioStatus, setAudioStatus] = useState<"idle" | "playing" | "ended" | "error">("idle");
   const [audioError, setAudioError] = useState("");
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -182,18 +172,12 @@ export default function CAEListeningPage() {
   const goPrev = () => setIndexInPart((i) => Math.max(0, i - 1));
   const goNext = () => setIndexInPart((i) => Math.min(currentTotalInPart - 1, i + 1));
 
-  const markAudioPartAsStarted = (audioPart: Part) => {
-    setPlayedAudioParts((prev) => {
-      if (prev.includes(audioPart)) return prev;
-
-      const next = [...prev, audioPart];
-      if (typeof window !== "undefined") {
-        window.localStorage.setItem(AUDIO_PLAYED_KEY, JSON.stringify(next));
-      }
-
-      return next;
-    });
-  };
+const markAudioPartAsStarted = (audioPart: Part) => {
+  setPlayedAudioParts((prev) => {
+    if (prev.includes(audioPart)) return prev;
+    return [...prev, audioPart];
+  });
+};
 
   const startCurrentPartAudio = async () => {
     const audio = audioRef.current;
@@ -229,7 +213,6 @@ export default function CAEListeningPage() {
     testStartTimeRef.current = Date.now();
     if (typeof window !== "undefined") {
       window.localStorage.removeItem(LS_KEY);
-      window.localStorage.removeItem(AUDIO_PLAYED_KEY);
     }
   };
 
@@ -542,24 +525,27 @@ export default function CAEListeningPage() {
             </button>
           ))}
 
-          <div className="ml-auto flex items-center gap-2">
-            <button
-              onClick={goPrev}
-              disabled={indexInPart === 0}
-              className="rounded-lg border px-3 py-2 text-sm font-semibold text-gray-900 transition duration-300 ease-in-out hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
-              aria-label="Previous"
-            >
-              ←
-            </button>
-            <button
-              onClick={goNext}
-              disabled={indexInPart === currentTotalInPart - 1}
-              className="rounded-lg bg-[#2094F3] px-4 py-2 text-sm font-semibold text-white transition duration-300 ease-in-out hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
-              aria-label="Next"
-            >
-              →
-            </button>
-          </div>
+{part === 1 ? (
+  <div className="ml-auto flex items-center gap-2">
+    <button
+      onClick={goPrev}
+      disabled={indexInPart === 0}
+      className="rounded-lg border px-3 py-2 text-sm font-semibold text-gray-900 transition duration-300 ease-in-out hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+      aria-label="Previous"
+    >
+      ←
+    </button>
+
+    <button
+      onClick={goNext}
+      disabled={indexInPart === currentTotalInPart - 1}
+      className="rounded-lg bg-[#2094F3] px-4 py-2 text-sm font-semibold text-white transition duration-300 ease-in-out hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
+      aria-label="Next"
+    >
+      →
+    </button>
+  </div>
+) : null}
         </div>
       </div>
     </div>
@@ -754,41 +740,134 @@ const renderMCQ = (mcqs: typeof part1MCQ) => {
   );
 };
 
-  const renderPart2 = () => {
-    const q = part2Gaps[indexInPart];
-    const value = answers.gaps[q.id] ?? "";
+const renderPart3 = () => {
+  return renderCardShell(
+    <>
+      {renderAudioPanel()}
+      {renderTopInstruction()}
 
-    return renderCardShell(
-      <>
-        {renderAudioPanel()}
-        {renderTopInstruction()}
-        <div className="px-6 py-6">
-          <div className="flex items-start gap-3">
-            <div className="flex h-7 w-7 items-center justify-center rounded-md border text-sm font-bold text-gray-900">{q.id}</div>
-            <div className="flex-1">
-              <div className="text-sm font-semibold text-gray-900">{part2Title}</div>
-              <div className="mt-2 text-sm text-gray-700">{q.prompt}</div>
-
-              <div className="mt-5">
-                <input
-                  value={value}
-                  onChange={(e) =>
-                    setAnswers((prev) => ({
-                      ...prev,
-                      gaps: { ...prev.gaps, [q.id]: e.target.value },
-                    }))
-                  }
-                  placeholder="Type your answer"
-                  className="w-full rounded-lg border px-4 py-3 text-sm outline-none transition duration-300 ease-in-out focus:border-[#2094F3]"
-                />
-                <div className="mt-2 text-xs text-gray-500">Tip: write a word or short phrase.</div>
+      <div className="px-6 py-6">
+        {part3MCQ[0]?.extract || part3MCQ[0]?.questionHeader ? (
+          <div className="mb-6">
+            {part3MCQ[0]?.extract ? (
+              <div className="mb-3 text-base font-bold text-gray-900">
+                {part3MCQ[0].extract}
               </div>
-            </div>
+            ) : null}
+
+            {part3MCQ[0]?.questionHeader ? (
+              <div className="text-base font-bold text-gray-900">
+                {part3MCQ[0].questionHeader}
+              </div>
+            ) : null}
+          </div>
+        ) : null}
+
+        <div className="grid gap-4 md:grid-cols-2">
+          {part3MCQ.map((q) => {
+            const chosen = answers.mcq[q.id];
+
+            return (
+              <div key={q.id} className="rounded-xl border bg-white p-4">
+                <div className="flex items-start gap-3">
+                  <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border text-sm font-bold text-gray-900">
+                    {q.id}
+                  </div>
+
+                  <div className="flex-1">
+                    <div className="text-sm font-semibold text-gray-900">
+                      {q.question}
+                    </div>
+
+                    <div className="mt-4 space-y-2">
+                      {q.options.map((option, idx) => (
+                        <label
+                          key={idx}
+                          className="flex cursor-pointer items-start gap-3 rounded-lg border px-4 py-3 transition duration-300 ease-in-out hover:bg-gray-50"
+                        >
+                          <input
+                            type="radio"
+                            name={`q_${q.id}`}
+                            className="mt-1"
+                            checked={chosen === idx}
+                            onChange={() =>
+                              setAnswers((prev) => ({
+                                ...prev,
+                                mcq: { ...prev.mcq, [q.id]: idx },
+                              }))
+                            }
+                          />
+
+                          <span className="text-sm text-gray-800">{option}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </>
+  );
+};
+
+const renderPart2 = () => {
+  return renderCardShell(
+    <>
+      {renderAudioPanel()}
+      {renderTopInstruction()}
+
+      <div className="px-6 py-6">
+        <div className="mb-5 rounded-xl border bg-gray-50 p-4">
+          <div className="text-sm font-semibold text-gray-900">{part2Title}</div>
+          <div className="mt-1 text-xs text-gray-500">
+            Complete all questions while the audio is playing.
           </div>
         </div>
-      </>
-    );
-  };
+
+        <div className="grid gap-4 md:grid-cols-2">
+          {part2Gaps.map((q) => {
+            const value = answers.gaps[q.id] ?? "";
+
+            return (
+              <div key={q.id} className="rounded-xl border bg-white p-4">
+                <div className="flex items-start gap-3">
+                  <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border text-sm font-bold text-gray-900">
+                    {q.id}
+                  </div>
+
+                  <div className="flex-1">
+                    <div className="text-sm text-gray-700">{q.prompt}</div>
+
+                    <div className="mt-4">
+                      <input
+                        value={value}
+                        onChange={(e) =>
+                          setAnswers((prev) => ({
+                            ...prev,
+                            gaps: { ...prev.gaps, [q.id]: e.target.value },
+                          }))
+                        }
+                        placeholder="Type your answer"
+                        className="w-full rounded-lg border px-4 py-3 text-sm outline-none transition duration-300 ease-in-out focus:border-[#2094F3]"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="mt-4 text-xs text-gray-500">
+          Tip: write a word or short phrase.
+        </div>
+      </div>
+    </>
+  );
+};
 
   const renderMatchSelect = (
     questionId: number,
@@ -827,72 +906,118 @@ const renderMCQ = (mcqs: typeof part1MCQ) => {
       </div>
     </div>
   );
+const renderPart4 = () => {
+  return renderCardShell(
+    <>
+      {renderAudioPanel()}
+      {renderTopInstruction()}
 
-  const renderPart4 = () => {
-    const task1 = part4Task1Matches[indexInPart];
-    const task2 = part4Task2Matches[indexInPart];
-    const selectedTask1 = (answers.matches[task1.id] || "").toUpperCase();
-    const selectedTask2 = (answers.matches[task2.id] || "").toUpperCase();
+      <div className="px-6 py-6">
+        <div className="grid gap-6 lg:grid-cols-2">
+          {renderOptionsList(
+            "Task 1: what each speaker usually does before a performance",
+            part4Task1Options
+          )}
 
-    return renderCardShell(
-      <>
-        {renderAudioPanel()}
-        {renderTopInstruction()}
-        <div className="px-6 py-6">
-          <div className="grid gap-6 lg:grid-cols-2">
-            {renderOptionsList("Task 1: what each speaker usually does before a performance", part4Task1Options)}
-            {renderOptionsList("Task 2: what each speaker says went wrong on a recent production", part4Task2Options)}
-          </div>
-
-          <div className="mt-6 rounded-xl border bg-white p-5">
-            <div className="mb-4 flex items-center gap-3">
-              <div className="flex h-7 w-7 items-center justify-center rounded-md border text-sm font-bold text-gray-900">{task1.speakerNumber}</div>
-              <div>
-                <div className="text-sm font-semibold text-gray-900">{task1.speakerLabel}</div>
-                <div className="text-xs text-gray-500">Complete both tasks for this speaker.</div>
-              </div>
-            </div>
-
-            <div className="grid gap-4 md:grid-cols-2">
-              <div>
-                <label className="mb-2 block text-xs font-semibold uppercase tracking-wide text-gray-500">Task 1 — Question {task1.id}</label>
-                {renderMatchSelect(task1.id, selectedTask1, part4Task1Options, usedTask1Letters, (value) =>
-                  setAnswers((prev) => ({
-                    ...prev,
-                    matches: { ...prev.matches, [task1.id]: value || null },
-                  }))
-                )}
-                <div className="mt-2 text-xs text-gray-500">
-                  Selected: <span className="font-semibold text-gray-800">{selectedTask1 || "—"}</span>
-                </div>
-              </div>
-
-              <div>
-                <label className="mb-2 block text-xs font-semibold uppercase tracking-wide text-gray-500">Task 2 — Question {task2.id}</label>
-                {renderMatchSelect(task2.id, selectedTask2, part4Task2Options, usedTask2Letters, (value) =>
-                  setAnswers((prev) => ({
-                    ...prev,
-                    matches: { ...prev.matches, [task2.id]: value || null },
-                  }))
-                )}
-                <div className="mt-2 text-xs text-gray-500">
-                  Selected: <span className="font-semibold text-gray-800">{selectedTask2 || "—"}</span>
-                </div>
-              </div>
-            </div>
-          </div>
+          {renderOptionsList(
+            "Task 2: what each speaker says went wrong on a recent production",
+            part4Task2Options
+          )}
         </div>
-      </>
-    );
-  };
 
-  const renderCurrent = () => {
-    if (finished) return renderFinishScreen();
-    if (part === 1) return renderMCQ(part1MCQ);
-    if (part === 2) return renderPart2();
-    if (part === 3) return renderMCQ(part3MCQ);
-    return renderPart4();
-  };
+        <div className="mt-6 grid gap-4 md:grid-cols-2">
+          {part4Task1Matches.map((task1, index) => {
+            const task2 = part4Task2Matches[index];
+
+            if (!task2) return null;
+
+            const selectedTask1 = (answers.matches[task1.id] || "").toUpperCase();
+            const selectedTask2 = (answers.matches[task2.id] || "").toUpperCase();
+
+            return (
+              <div key={task1.id} className="rounded-xl border bg-white p-4">
+                <div className="mb-4 flex items-center gap-3">
+                  <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border text-sm font-bold text-gray-900">
+                    {task1.speakerNumber}
+                  </div>
+
+                  <div>
+                    <div className="text-sm font-semibold text-gray-900">
+                      {task1.speakerLabel}
+                    </div>
+                    <div className="text-xs text-gray-500">
+                      Complete both tasks for this speaker.
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid gap-4">
+                  <div>
+                    <label className="mb-2 block text-xs font-semibold uppercase tracking-wide text-gray-500">
+                      Task 1 — Question {task1.id}
+                    </label>
+
+                    {renderMatchSelect(
+                      task1.id,
+                      selectedTask1,
+                      part4Task1Options,
+                      usedTask1Letters,
+                      (value) =>
+                        setAnswers((prev) => ({
+                          ...prev,
+                          matches: { ...prev.matches, [task1.id]: value || null },
+                        }))
+                    )}
+
+                    <div className="mt-2 text-xs text-gray-500">
+                      Selected:{" "}
+                      <span className="font-semibold text-gray-800">
+                        {selectedTask1 || "—"}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="mb-2 block text-xs font-semibold uppercase tracking-wide text-gray-500">
+                      Task 2 — Question {task2.id}
+                    </label>
+
+                    {renderMatchSelect(
+                      task2.id,
+                      selectedTask2,
+                      part4Task2Options,
+                      usedTask2Letters,
+                      (value) =>
+                        setAnswers((prev) => ({
+                          ...prev,
+                          matches: { ...prev.matches, [task2.id]: value || null },
+                        }))
+                    )}
+
+                    <div className="mt-2 text-xs text-gray-500">
+                      Selected:{" "}
+                      <span className="font-semibold text-gray-800">
+                        {selectedTask2 || "—"}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </>
+  );
+};
+
+const renderCurrent = () => {
+  if (finished) return renderFinishScreen();
+  if (part === 1) return renderMCQ(part1MCQ);
+  if (part === 2) return renderPart2();
+  if (part === 3) return renderPart3();
+  return renderPart4();
+};
 
   return (
     <div className="min-h-screen bg-gray-50">
