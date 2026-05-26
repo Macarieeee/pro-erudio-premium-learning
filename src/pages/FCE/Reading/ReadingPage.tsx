@@ -613,6 +613,13 @@ So I called my editor to warn him, took the shots, then rolled up the film, labe
   // ---------------------------
   // SCORE
   // ---------------------------
+type Part4ItemWithPartialAnswers = (typeof part4Items)[number] & {
+  partialAnswers?: readonly string[];
+};
+
+const getPart4PartialAnswers = (item: (typeof part4Items)[number]) =>
+  (item as Part4ItemWithPartialAnswers).partialAnswers;
+
 const getPart4Points = (
   typedRaw: string,
   correctAnswers: readonly string[],
@@ -655,7 +662,7 @@ const score = useMemo(() => {
     s += getPart4Points(
       answers.text[item.id] || "",
       item.correct,
-      (item as any).partialAnswers
+      getPart4PartialAnswers(item)
     );
   }
 
@@ -698,7 +705,7 @@ const breakdown = useMemo(() => {
     return acc + getPart4Points(
       answers.text[item.id] || "",
       item.correct,
-      (item as any).partialAnswers
+      getPart4PartialAnswers(item)
     );
   }, 0);
 
@@ -1215,12 +1222,11 @@ const Part4 = () => {
           <div className="text-2xl font-bold text-gray-900">{part6Title}</div>
           <div className="mt-1 text-sm text-gray-500">Trage literele din dreapta în goluri sau apasă ✕ pentru a elimina un răspuns.</div>
 
-          <div className="mt-5 grid gap-4 lg:grid-cols-[1fr_340px]">
+          <div className="mt-5 grid gap-4 lg:h-[70vh] lg:grid-cols-[minmax(0,1fr)_360px]">
             {/* Passage with drop zones */}
             <div
               ref={p6ScrollRef}
-              className="rounded-xl border bg-white p-5 overflow-y-auto"
-              style={{ maxHeight: "70vh" }}
+              className="max-h-[70vh] overflow-y-auto rounded-xl border bg-white p-5 lg:h-full lg:max-h-none"
               onDragOver={(e) => {
                 const el = p6ScrollRef.current;
                 if (!el) return;
@@ -1286,7 +1292,7 @@ const Part4 = () => {
 
             {/* Letter bank */}
             <div
-              className="rounded-xl border bg-gray-50 p-5"
+              className="max-h-[70vh] overflow-y-auto rounded-xl border bg-gray-50 p-5 lg:h-full lg:max-h-none"
               onDragOver={(e) => e.preventDefault()}
               onDrop={(e) => { e.preventDefault(); handleDropOnBank(); }}
             >
@@ -1342,8 +1348,8 @@ const Part4 = () => {
           <div className="text-2xl font-bold text-gray-900">{part7Title}</div>
           <div className="mt-2 text-sm text-gray-600">We asked five people for their opinions.</div>
 
-          <div className="mt-5 grid gap-4 lg:grid-cols-[1fr_420px]">
-            <div className="rounded-xl border bg-white p-5">
+          <div className="mt-5 grid gap-4 lg:h-[70vh] lg:grid-cols-[minmax(0,1fr)_420px]">
+            <div className="max-h-[70vh] overflow-y-auto rounded-xl border bg-white p-5 lg:h-full lg:max-h-none">
               <div className="text-sm font-bold text-gray-900">Which person says that advertising…</div>
               <div className="mt-4 space-y-3">
                 {part7Questions.map((q) => (
@@ -1370,7 +1376,7 @@ const Part4 = () => {
               </div>
             </div>
 
-            <div className="rounded-xl border bg-gray-50 p-5">
+            <div className="max-h-[70vh] overflow-y-auto rounded-xl border bg-gray-50 p-5 lg:h-full lg:max-h-none">
               <div className="text-sm font-bold text-gray-900">People A–E</div>
               <div className="mt-3 space-y-3">
                 {part7People.map((p) => (
@@ -1440,7 +1446,7 @@ const detailedAnswers = useMemo(() => {
 
   for (const item of part4Items) {
     const studentAnswer = answers.text[item.id] || "—";
-    const points = getPart4Points(studentAnswer, item.correct, (item as any).partialAnswers);
+    const points = getPart4Points(studentAnswer, item.correct, getPart4PartialAnswers(item));
     rows.push({ questionId: item.id, part: "Part 4", studentAnswer, correctAnswer: item.correct.join(" / "), isCorrect: points === 2, points, maxPoints: 2 });
   }
 

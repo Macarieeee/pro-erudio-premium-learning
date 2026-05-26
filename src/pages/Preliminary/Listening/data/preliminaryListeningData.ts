@@ -23,6 +23,12 @@ export type Gap = {
   correctAnswers: string[];
 };
 
+export const part3Instruction =
+  "You will hear a man giving a talk about a sports event to raise money for charity.";
+
+export const part4Instruction =
+  "You will hear a man on the radio reviewing last weekend’s television programmes.";
+
 export const part1MCQ: MCQ[] = [
   {
     id: 1,
@@ -198,7 +204,7 @@ export const part4MCQ: MCQ[] = [
   {
     id: 20,
     part: 4,
-    questionHeader: "You will hear a man on the radio reviewing last weekend’s television programmes.",
+    questionHeader: "",
     question: "What does the reviewer say about Street Dancing?",
     options: [
       { label: "A", text: "It started late." },
@@ -210,7 +216,7 @@ export const part4MCQ: MCQ[] = [
   {
     id: 21,
     part: 4,
-    questionHeader: "You will hear a man on the radio reviewing last weekend’s television programmes.",
+    questionHeader: "",
     question: "What did the reviewer particularly like about Plants of Australia?",
     options: [
       { label: "A", text: "It was beautiful to look at." },
@@ -222,7 +228,7 @@ export const part4MCQ: MCQ[] = [
   {
     id: 22,
     part: 4,
-    questionHeader: "You will hear a man on the radio reviewing last weekend’s television programmes.",
+    questionHeader: "",
     question: "The reviewer says the series Jojo’s party",
     options: [
       { label: "A", text: "ended at the weekend." },
@@ -234,7 +240,7 @@ export const part4MCQ: MCQ[] = [
   {
     id: 23,
     part: 4,
-    questionHeader: "You will hear a man on the radio reviewing last weekend’s television programmes.",
+    questionHeader: "",
     question: "Who knows? was different from usual because it",
     options: [
       { label: "A", text: "was mostly about sports." },
@@ -246,7 +252,7 @@ export const part4MCQ: MCQ[] = [
   {
     id: 24,
     part: 4,
-    questionHeader: "You will hear a man on the radio reviewing last weekend’s television programmes.",
+    questionHeader: "",
     question: "The reviewer thinks that Sunday’s Police Officer Briggs was",
     options: [
       { label: "A", text: "surprisingly good." },
@@ -258,7 +264,7 @@ export const part4MCQ: MCQ[] = [
   {
     id: 25,
     part: 4,
-    questionHeader: "You will hear a man on the radio reviewing last weekend’s television programmes.",
+    questionHeader: "",
     question: "Vanessa Cosgrave wasn’t in It’s Comedy Time! on Sunday because",
     options: [
       { label: "A", text: "she was away on holiday." },

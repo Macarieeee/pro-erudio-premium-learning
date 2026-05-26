@@ -743,22 +743,30 @@ export default function CAEReadingPage() {
       {TopInstruction()}
       <div className="px-6 py-6">
         <div className="text-2xl font-bold text-gray-900">{caeReadingData.part6.title}</div>
-        <div className="mt-5 grid gap-4 md:grid-cols-2">
-          {caeReadingData.part6.extracts.map((extract) => (
-            <div key={extract.letter} className="rounded-xl border bg-white p-5">
-              <div className="text-lg font-bold text-primary">{extract.letter}</div>
-              <p className="mt-2 text-sm leading-7 text-gray-900">{extract.body}</p>
+
+        <div className="mt-5 grid gap-4 lg:h-[70vh] lg:grid-cols-[minmax(0,1fr)_380px]">
+          <div className="max-h-[70vh] overflow-y-auto rounded-xl border bg-white p-5 lg:h-full lg:max-h-none">
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-1">
+              {caeReadingData.part6.extracts.map((extract) => (
+                <div key={extract.letter} className="rounded-xl border bg-white p-5">
+                  <div className="text-lg font-bold text-primary">{extract.letter}</div>
+                  <p className="mt-2 text-sm leading-7 text-gray-900">{extract.body}</p>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-        <div className="mt-6 space-y-4">
-          <div className="text-sm font-semibold text-gray-700">Which writer:</div>
-          {caeReadingData.part6.questions.map((question) => (
-            <div key={question.id} className="rounded-xl border bg-gray-50 p-4">
-              <div className="mb-3 text-sm text-gray-900"><span className="font-bold">{question.id}.</span> {question.text}</div>
-              <LetterButtons<WriterOption> id={question.id} options={["A", "B", "C", "D"]} />
+          </div>
+
+          <div className="max-h-[70vh] overflow-y-auto rounded-xl border bg-gray-50 p-5 lg:h-full lg:max-h-none">
+            <div className="text-sm font-semibold text-gray-700">Which writer:</div>
+            <div className="mt-4 space-y-4">
+              {caeReadingData.part6.questions.map((question) => (
+                <div key={question.id} className="rounded-xl border bg-white p-4">
+                  <div className="mb-3 text-sm text-gray-900"><span className="font-bold">{question.id}.</span> {question.text}</div>
+                  <LetterButtons<WriterOption> id={question.id} options={["A", "B", "C", "D"]} />
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
       </div>
     </CardShell>
@@ -786,17 +794,22 @@ export default function CAEReadingPage() {
       <div className="px-6 py-6">
         <div className="text-2xl font-bold text-gray-900">{caeReadingData.part7.title}</div>
         <div className="mt-1 text-sm text-gray-600">{caeReadingData.part7.subtitle}</div>
-        <div className="mt-5 grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
-          <div className="rounded-xl border bg-white p-5">
+
+        <div className="mt-5 grid gap-6 lg:h-[70vh] lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)]">
+          <div className="max-h-[70vh] overflow-y-auto rounded-xl border bg-white p-5 lg:h-full lg:max-h-none">
             <div className="whitespace-pre-wrap text-base leading-7 text-gray-900">{renderPassageWithParagraphGaps()}</div>
           </div>
-          <div className="space-y-3">
-            {Object.entries(caeReadingData.part7.options).map(([letter, text]) => (
-              <div key={letter} className="rounded-xl border bg-gray-50 p-4">
-                <div className="text-sm font-bold text-primary">{letter}</div>
-                <p className="mt-2 text-sm leading-6 text-gray-900">{text}</p>
-              </div>
-            ))}
+
+          <div className="max-h-[70vh] overflow-y-auto rounded-xl border bg-gray-50 p-5 lg:h-full lg:max-h-none">
+            <div className="text-sm font-bold text-gray-900">Paragraphs A–G</div>
+            <div className="mt-3 space-y-3">
+              {Object.entries(caeReadingData.part7.options).map(([letter, text]) => (
+                <div key={letter} className="rounded-xl border bg-white p-4">
+                  <div className="text-sm font-bold text-primary">{letter}</div>
+                  <p className="mt-2 text-sm leading-6 text-gray-900">{text}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

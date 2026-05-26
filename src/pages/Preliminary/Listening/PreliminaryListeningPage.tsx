@@ -7,6 +7,8 @@ import {
   part1MCQ,
   part2MCQ,
   part3Gaps,
+  part3Instruction,
+  part4Instruction,
   part4MCQ,
   TOTAL_QUESTIONS,
   type MCQ,
@@ -497,11 +499,22 @@ const resetAll = () => {
   const renderTopInstruction = () => (
     <div className="border-b px-6 py-5">
       <div className="text-sm font-semibold text-gray-900">{partMeta[part].range}</div>
-      <div className="mt-1 text-sm text-gray-600">
-        {part === 3
-          ? "For each question, write the correct answer in the gap. Write one or two words or a number or a date or a time."
-          : "For each question, choose the correct answer."}
-      </div>
+
+      {part === 3 ? (
+        <div className="mt-2 space-y-2 text-sm text-gray-600">
+          <p>{part3Instruction}</p>
+          <p>
+            For each question, write the correct answer in the gap. Write one or two words or a number or a date or a time.
+          </p>
+        </div>
+      ) : part === 4 ? (
+        <div className="mt-2 space-y-2 text-sm text-gray-600">
+          <p>{part4Instruction}</p>
+          <p>For each question, choose the correct answer.</p>
+        </div>
+      ) : (
+        <div className="mt-1 text-sm text-gray-600">For each question, choose the correct answer.</div>
+      )}
     </div>
   );
 
@@ -516,8 +529,12 @@ const resetAll = () => {
           <div className="flex items-start gap-3">
             <div className="flex h-7 w-7 items-center justify-center rounded-md border text-sm font-bold text-gray-900">{q.id}</div>
             <div className="flex-1">
-              <div className="text-sm font-semibold text-gray-900">{q.questionHeader}</div>
-              {q.question ? <div className="mt-2 text-sm text-gray-700">{q.question}</div> : null}
+              {q.questionHeader ? (
+                <div className="text-sm font-semibold text-gray-900">{q.questionHeader}</div>
+              ) : null}
+              {q.question ? (
+                <div className={q.questionHeader ? "mt-2 text-sm text-gray-700" : "text-sm text-gray-700"}>{q.question}</div>
+              ) : null}
             </div>
           </div>
 
@@ -577,12 +594,14 @@ const resetAll = () => {
                     </div>
 
                     <div className="flex-1">
-                      <div className="text-sm font-semibold text-gray-900">
-                        {q.questionHeader}
-                      </div>
+                      {q.questionHeader ? (
+                        <div className="text-sm font-semibold text-gray-900">
+                          {q.questionHeader}
+                        </div>
+                      ) : null}
 
                       {q.question ? (
-                        <div className="mt-2 text-sm text-gray-700">{q.question}</div>
+                        <div className={q.questionHeader ? "mt-2 text-sm text-gray-700" : "text-sm text-gray-700"}>{q.question}</div>
                       ) : null}
 
                       <div className="mt-4 space-y-2">
