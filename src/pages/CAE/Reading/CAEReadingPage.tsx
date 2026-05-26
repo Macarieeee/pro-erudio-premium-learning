@@ -926,10 +926,10 @@ const renderCurrentPart = () => {
 
   return (
     <div className="min-h-screen bg-gray-50" onClick={() => openGap && setOpenGap(null)}>
-      <Header />
-      {showTimeWarning && !finished && <TimeWarningModal />}
-      {finished ? <FinishScreen /> : renderCurrentPart()}
-      <PartNav />
+      {Header()}
+      {showTimeWarning && !finished ? TimeWarningModal() : null}
+      {finished ? FinishScreen() : renderCurrentPart()}
+      {PartNav()}
     </div>
   );
 }

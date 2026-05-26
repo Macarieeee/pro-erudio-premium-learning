@@ -450,7 +450,7 @@ export default function PreliminaryReadingPage() {
 
   const TopInstruction = () => (
     <>
-      <ExamInfo />
+      {ExamInfo()}
       <div className="border-b px-6 py-5">
         <div className="text-sm font-semibold text-gray-900">{meta[part].range}</div>
         <div className="mt-1 text-sm text-gray-600">{meta[part].instruction}</div>
@@ -937,7 +937,7 @@ export default function PreliminaryReadingPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900">
-      <Header />
+      {Header()}
       {showTimeWarning && !finished && (
         <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/40 px-4">
           <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl">
@@ -955,8 +955,8 @@ export default function PreliminaryReadingPage() {
           </div>
         </div>
       )}
-      {finished ? <FinishScreen /> : renderCurrentPart()}
-      {!finished && <PartNav />}
+      {finished ? FinishScreen() : renderCurrentPart()}
+      {!finished ? PartNav() : null}
     </div>
   );
 }

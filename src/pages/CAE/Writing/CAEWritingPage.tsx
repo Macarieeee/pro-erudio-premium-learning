@@ -754,7 +754,7 @@ useEffect(() => {
   return (
     <div className="min-h-screen bg-gray-50">
       {renderHeader()}
-      {showTimeWarning && !finished && <TimeWarningModal />}
+      {showTimeWarning && !finished ? TimeWarningModal() : null}
 
       {finished ? (
   Finish()
