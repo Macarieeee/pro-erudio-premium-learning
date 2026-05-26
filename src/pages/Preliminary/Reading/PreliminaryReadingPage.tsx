@@ -37,6 +37,14 @@ type AnswersState = {
 const LS_KEY = "proerudio_preliminary_reading_v1";
 const STUDENT_INFO_KEY = "proerudio_preliminary_student_info";
 const NEXT_WRITING_PATH = "/preliminary/writing";
+
+const EXAM_METADATA = {
+  examTitle: "B1 Preliminary (PET)",
+  examLevel: "Level B1",
+  paper: "Reading",
+  examName: "B1 Preliminary (PET) — Reading",
+  templateKey: "preliminary-reading",
+};
 const TIMER_DURATION_SECONDS = 45 * 60; // 45min
 const TIMER_WARNING_SECONDS = 10 * 60; // warning at 10min left
 
@@ -360,7 +368,8 @@ export default function PreliminaryReadingPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          exam: "Preliminary Reading",
+          ...EXAM_METADATA,
+          exam: EXAM_METADATA.examName,
           studentName: studentName.trim(),
           studentEmail: studentEmail.trim(),
           totalScore: score,

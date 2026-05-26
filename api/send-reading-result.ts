@@ -2,335 +2,195 @@ import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-type ScoreBreakdown = {
-  p1: number;
-  p2: number;
-  p3: number;
-  p4: number;
-  p5: number;
-  p6: number;
-  p7: number;
+const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || process.env.FROM_EMAIL;
+const TEACHER_EMAIL = process.env.TEACHER_EMAIL || process.env.RESULTS_TEACHER_EMAIL || process.env.TEACHER_RESULTS_EMAIL;
+
+const corsHeaders = {
+  "Access-Control-Allow-Origin": process.env.ALLOWED_ORIGIN || "*",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type",
 };
 
-type DetailedAnswer = {
-  questionId: number;
-  part: string;
-  studentAnswer: string;
-  correctAnswer: string;
-  isCorrect: boolean;
-  points: number;
-  maxPoints: number;
-};
-
-type TimeSpent = {
-  timeSpentSeconds: number;
-  timeSpentFormatted: string;
-};
-
-type ReadingResultPayload = {
-  studentName: string;
-  studentEmail: string;
-  totalScore: number;
-  maxScore: number;
-  percentage: number;
-  resultMessage: string;
-  breakdown: ScoreBreakdown;
-  detailedAnswers?: DetailedAnswer[];
-  timeSpent?: TimeSpent;
-  timeSpentSeconds?: number;
-  timeSpentFormatted?: string;
-};
-
-const allowedOrigins = [
-  "http://localhost:5173",
-  "http://localhost:8080",
-  "https://tabere.proerudio.ro",
-  "https://macarieeee.github.io",
-  "https://macarieeee.github.io/pro-erudio-premium-learning",
-  process.env.FRONTEND_URL,
-].filter(Boolean) as string[];
-
-function setCorsHeaders(req: any, res: any) {
-  const origin = req.headers.origin as string | undefined;
-
-  if (origin && allowedOrigins.includes(origin)) {
-    res.setHeader("Access-Control-Allow-Origin", origin);
-  }
-
-  res.setHeader("Vary", "Origin");
-  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-}
-
-function escapeHtml(value: unknown) {
-  return String(value ?? "")
+const escapeHtml = (value: unknown) =>
+  String(value ?? "")
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
-}
 
-function isValidEmail(email: string) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
+const formatPercent = (value: unknown) => {
+  const n = Number(value);
+  return Number.isFinite(n) ? `${n}%` : "—";
+};
 
-function formatSeconds(seconds: number) {
-  const hours = Math.floor(seconds / 3600);
-  const minutes = Math.floor((seconds % 3600) / 60);
-  const remainingSeconds = seconds % 60;
+const getExamMeta = (body: any) => {
+  const examTitle = body.examTitle || body.exam || body.examName || "B2 First (FCE)";
+  const examLevel = body.examLevel || "";
+  const paper = body.paper || "Reading & Use of English";
+  const examName = body.examName || `${examTitle} — ${paper}`;
 
-  if (hours > 0) return `${hours}h ${minutes}m ${remainingSeconds}s`;
-  if (minutes > 0) return `${minutes}m ${remainingSeconds}s`;
-  return `${remainingSeconds}s`;
-}
+  return { examTitle, examLevel, paper, examName };
+};
 
-function getTimeSpentFormatted(data: {
-  timeSpent?: TimeSpent;
-  timeSpentSeconds?: number;
-  timeSpentFormatted?: string;
-}) {
-  if (data.timeSpentFormatted) return data.timeSpentFormatted;
-  if (data.timeSpent?.timeSpentFormatted) return data.timeSpent.timeSpentFormatted;
+const renderBreakdown = (breakdown: Record<string, unknown> = {}) => {
+  const entries = Object.entries(breakdown);
+  if (!entries.length) return "<p>No part breakdown was provided.</p>";
 
-  const seconds = data.timeSpentSeconds ?? data.timeSpent?.timeSpentSeconds;
-
-  if (typeof seconds !== "number" || Number.isNaN(seconds)) {
-    return "Not available";
-  }
-
-  return formatSeconds(seconds);
-}
-
-function buildBreakdownRows(breakdown: ScoreBreakdown) {
   return `
-    <tr><td style="padding:10px;border:1px solid #e5e7eb;">Part 1</td><td style="padding:10px;border:1px solid #e5e7eb;"><strong>${breakdown.p1}/8</strong></td></tr>
-    <tr><td style="padding:10px;border:1px solid #e5e7eb;">Part 2</td><td style="padding:10px;border:1px solid #e5e7eb;"><strong>${breakdown.p2}/8</strong></td></tr>
-    <tr><td style="padding:10px;border:1px solid #e5e7eb;">Part 3</td><td style="padding:10px;border:1px solid #e5e7eb;"><strong>${breakdown.p3}/8</strong></td></tr>
-    <tr><td style="padding:10px;border:1px solid #e5e7eb;">Part 4</td><td style="padding:10px;border:1px solid #e5e7eb;"><strong>${breakdown.p4}/12</strong></td></tr>
-    <tr><td style="padding:10px;border:1px solid #e5e7eb;">Part 5</td><td style="padding:10px;border:1px solid #e5e7eb;"><strong>${breakdown.p5}/12</strong></td></tr>
-    <tr><td style="padding:10px;border:1px solid #e5e7eb;">Part 6</td><td style="padding:10px;border:1px solid #e5e7eb;"><strong>${breakdown.p6}/12</strong></td></tr>
-    <tr><td style="padding:10px;border:1px solid #e5e7eb;">Part 7</td><td style="padding:10px;border:1px solid #e5e7eb;"><strong>${breakdown.p7}/10</strong></td></tr>
-  `;
-}
-
-function buildStudentHtml(data: {
-  safeStudentName: string;
-  safeStudentEmail: string;
-  totalScore: number;
-  maxScore: number;
-  percentage: number;
-  safeResultMessage: string;
-  breakdown: ScoreBreakdown;
-}) {
-  return `
-    <div style="font-family: Arial, sans-serif; color: #111827; line-height: 1.6; max-width: 680px; margin: 0 auto;">
-      <div style="padding: 24px; border: 1px solid #e5e7eb; border-radius: 14px; background: #ffffff;">
-        <h2 style="margin: 0 0 16px; color: #111827;">FCE Reading & Use of English Result</h2>
-        <p style="margin: 0 0 6px;"><strong>Student:</strong> ${data.safeStudentName}</p>
-        <p style="margin: 0 0 18px;"><strong>Email:</strong> ${data.safeStudentEmail}</p>
-
-        <div style="padding: 18px; border-radius: 12px; background: #f9fafb; margin: 20px 0;">
-          <p style="margin: 0; font-size: 14px; color: #6b7280;">Final score</p>
-          <p style="margin: 6px 0 0; font-size: 28px; font-weight: 700; color: #111827;">
-            ${data.totalScore} / ${data.maxScore} <span style="font-size: 18px; color: #4b5563;">(${data.percentage}%)</span>
-          </p>
-          <p style="margin: 10px 0 0;"><strong>Result:</strong> ${data.safeResultMessage}</p>
-        </div>
-
-        <h3 style="margin: 24px 0 12px;">Score breakdown</h3>
-        <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
-          <tbody>${buildBreakdownRows(data.breakdown)}</tbody>
-        </table>
-
-        <p style="margin-top: 24px; font-size: 12px; color: #6b7280;">
-          This email was generated automatically from the Pro Erudio FCE Reading test.
-        </p>
-      </div>
-    </div>
-  `;
-}
-
-function buildTeacherHtml(data: {
-  safeStudentName: string;
-  safeStudentEmail: string;
-  safeTimeSpentFormatted: string;
-  totalScore: number;
-  maxScore: number;
-  percentage: number;
-  safeResultMessage: string;
-  breakdown: ScoreBreakdown;
-  detailedAnswers: DetailedAnswer[];
-}) {
-  const answerRows = data.detailedAnswers
-    .map((row) => {
-      const isCorrect = Boolean(row.isCorrect);
-      const status = isCorrect ? "Correct" : row.points > 0 ? "Partial" : "Wrong";
-      const bg = isCorrect ? "#ecfdf5" : row.points > 0 ? "#fffbeb" : "#fef2f2";
-      const color = isCorrect ? "#047857" : row.points > 0 ? "#92400e" : "#b91c1c";
-
-      return `
+    <table width="100%" cellpadding="8" cellspacing="0" style="border-collapse:collapse;margin-top:10px;">
+      <thead>
         <tr>
-          <td style="padding:8px;border:1px solid #e5e7eb;">${escapeHtml(row.part)}</td>
-          <td style="padding:8px;border:1px solid #e5e7eb;text-align:center;">${escapeHtml(row.questionId)}</td>
-          <td style="padding:8px;border:1px solid #e5e7eb;">${escapeHtml(row.studentAnswer || "—")}</td>
-          <td style="padding:8px;border:1px solid #e5e7eb;">${escapeHtml(row.correctAnswer || "—")}</td>
-          <td style="padding:8px;border:1px solid #e5e7eb;text-align:center;"><strong>${escapeHtml(row.points)}/${escapeHtml(row.maxPoints)}</strong></td>
-          <td style="padding:8px;border:1px solid #e5e7eb;background:${bg};color:${color};font-weight:700;text-align:center;">${status}</td>
+          <th align="left" style="border-bottom:1px solid #e5e7eb;">Part</th>
+          <th align="left" style="border-bottom:1px solid #e5e7eb;">Score</th>
         </tr>
-      `;
-    })
-    .join("");
+      </thead>
+      <tbody>
+        ${entries
+          .map(([key, value]) => {
+            const label = key.startsWith("p") ? `Part ${key.slice(1)}` : key;
+            return `
+              <tr>
+                <td style="border-bottom:1px solid #f3f4f6;">${escapeHtml(label)}</td>
+                <td style="border-bottom:1px solid #f3f4f6;"><strong>${escapeHtml(value)}</strong></td>
+              </tr>`;
+          })
+          .join("")}
+      </tbody>
+    </table>`;
+};
+
+const renderDetailedAnswers = (answers: any[] = []) => {
+  if (!Array.isArray(answers) || !answers.length) return "<p>No detailed answers were provided.</p>";
 
   return `
-    <div style="font-family: Arial, sans-serif; color: #111827; line-height: 1.6; max-width: 920px; margin: 0 auto;">
-      <div style="padding: 24px; border: 1px solid #e5e7eb; border-radius: 14px; background: #ffffff;">
-        <h2 style="margin: 0 0 16px; color: #111827;">Detailed FCE Reading Result — Teacher Report</h2>
-        <p style="margin: 0 0 6px;"><strong>Student:</strong> ${data.safeStudentName}</p>
-        <p style="margin: 0 0 6px;"><strong>Student email:</strong> ${data.safeStudentEmail}</p>
-        <p style="margin: 0 0 18px;"><strong>Time spent on Reading:</strong> ${data.safeTimeSpentFormatted}</p>
+    <table width="100%" cellpadding="7" cellspacing="0" style="border-collapse:collapse;margin-top:10px;font-size:13px;">
+      <thead>
+        <tr>
+          <th align="left" style="border-bottom:1px solid #e5e7eb;">Q</th>
+          <th align="left" style="border-bottom:1px solid #e5e7eb;">Part</th>
+          <th align="left" style="border-bottom:1px solid #e5e7eb;">Student answer</th>
+          <th align="left" style="border-bottom:1px solid #e5e7eb;">Correct answer</th>
+          <th align="left" style="border-bottom:1px solid #e5e7eb;">Points</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${answers
+          .map((row) => `
+            <tr>
+              <td style="border-bottom:1px solid #f3f4f6;">${escapeHtml(row.questionId)}</td>
+              <td style="border-bottom:1px solid #f3f4f6;">${escapeHtml(row.part)}</td>
+              <td style="border-bottom:1px solid #f3f4f6;">${escapeHtml(row.studentAnswer)}</td>
+              <td style="border-bottom:1px solid #f3f4f6;">${escapeHtml(row.correctAnswer)}</td>
+              <td style="border-bottom:1px solid #f3f4f6;">${escapeHtml(row.points)}/${escapeHtml(row.maxPoints)}</td>
+            </tr>`)
+          .join("")}
+      </tbody>
+    </table>`;
+};
 
-        <div style="padding: 18px; border-radius: 12px; background: #f9fafb; margin: 20px 0;">
-          <p style="margin: 0; font-size: 14px; color: #6b7280;">Final score</p>
-          <p style="margin: 6px 0 0; font-size: 28px; font-weight: 700; color: #111827;">
-            ${data.totalScore} / ${data.maxScore} <span style="font-size: 18px; color: #4b5563;">(${data.percentage}%)</span>
-          </p>
-          <p style="margin: 10px 0 0;"><strong>Result:</strong> ${data.safeResultMessage}</p>
-        </div>
-
-        <h3 style="margin: 24px 0 12px;">Score breakdown</h3>
-        <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
-          <tbody>${buildBreakdownRows(data.breakdown)}</tbody>
-        </table>
-
-        <h3 style="margin: 28px 0 12px;">Detailed answers</h3>
-        <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
-          <thead>
-            <tr style="background:#f3f4f6;">
-              <th style="padding:8px;border:1px solid #e5e7eb;text-align:left;">Part</th>
-              <th style="padding:8px;border:1px solid #e5e7eb;text-align:center;">Q</th>
-              <th style="padding:8px;border:1px solid #e5e7eb;text-align:left;">Student answer</th>
-              <th style="padding:8px;border:1px solid #e5e7eb;text-align:left;">Correct answer</th>
-              <th style="padding:8px;border:1px solid #e5e7eb;text-align:center;">Points</th>
-              <th style="padding:8px;border:1px solid #e5e7eb;text-align:center;">Status</th>
-            </tr>
-          </thead>
-          <tbody>${answerRows}</tbody>
-        </table>
-
-        <p style="margin-top: 24px; font-size: 12px; color: #6b7280;">
-          This teacher report was generated automatically from the Pro Erudio FCE Reading test.
-        </p>
+const baseLayout = (title: string, content: string) => `
+  <div style="font-family:Arial,sans-serif;line-height:1.55;color:#111827;background:#f9fafb;padding:24px;">
+    <div style="max-width:760px;margin:0 auto;background:#ffffff;border:1px solid #e5e7eb;border-radius:14px;overflow:hidden;">
+      <div style="background:#2094F3;color:#ffffff;padding:22px 26px;">
+        <h1 style="margin:0;font-size:22px;">${escapeHtml(title)}</h1>
       </div>
+      <div style="padding:24px 26px;">${content}</div>
     </div>
-  `;
-}
+  </div>`;
 
 export default async function handler(req: any, res: any) {
-  setCorsHeaders(req, res);
+  Object.entries(corsHeaders).forEach(([key, value]) => res.setHeader(key, value));
 
-  if (req.method === "OPTIONS") {
-    return res.status(204).end();
-  }
-
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed." });
-  }
+  if (req.method === "OPTIONS") return res.status(200).end();
+  if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed." });
 
   try {
-    const {
-      studentName,
-      studentEmail,
-      totalScore,
-      maxScore,
-      percentage,
-      resultMessage,
-      breakdown,
-      detailedAnswers = [],
-      timeSpent,
-      timeSpentSeconds,
-      timeSpentFormatted,
-    } = req.body as ReadingResultPayload;
+    if (!process.env.RESEND_API_KEY) throw new Error("Missing RESEND_API_KEY.");
+    if (!FROM_EMAIL) throw new Error("Missing RESEND_FROM_EMAIL or FROM_EMAIL.");
+    if (!TEACHER_EMAIL) throw new Error("Missing TEACHER_EMAIL / RESULTS_TEACHER_EMAIL.");
 
-    if (!studentName || !studentEmail) {
-      return res.status(400).json({ error: "Student name and email are required." });
-    }
+    const body = req.body || {};
+    const { examTitle, examLevel, paper, examName } = getExamMeta(body);
 
-    if (!isValidEmail(studentEmail)) {
-      return res.status(400).json({ error: "Invalid student email." });
-    }
+    const studentName = String(body.studentName || "").trim();
+    const studentEmail = String(body.studentEmail || "").trim();
 
-    if (!breakdown) {
-      return res.status(400).json({ error: "Missing score breakdown." });
-    }
+    if (!studentName) return res.status(400).json({ error: "Missing student name." });
+    if (!studentEmail) return res.status(400).json({ error: "Missing student email." });
 
-    const schoolEmail = process.env.SCHOOL_RESULTS_EMAIL;
-    const fromEmail = process.env.RESEND_FROM_EMAIL || "Pro Erudio <onboarding@resend.dev>";
+    const totalScore = body.totalScore ?? "—";
+    const maxScore = body.maxScore ?? "—";
+    const percentage = formatPercent(body.percentage);
+    const resultMessage = body.resultMessage || "The result has been recorded.";
+    const timeSpent = body.timeSpentFormatted || body.timeSpent?.timeSpentFormatted || "—";
 
-    if (!process.env.RESEND_API_KEY) {
-      return res.status(500).json({ error: "Missing RESEND_API_KEY." });
-    }
-
-    if (!schoolEmail) {
-      return res.status(500).json({ error: "Missing SCHOOL_RESULTS_EMAIL." });
-    }
-
-    const safeStudentName = escapeHtml(studentName.trim());
-    const safeStudentEmail = escapeHtml(studentEmail.trim());
-    const safeResultMessage = escapeHtml(resultMessage || "");
-    const safeTimeSpentFormatted = escapeHtml(
-      getTimeSpentFormatted({ timeSpent, timeSpentSeconds, timeSpentFormatted })
+    const studentHtml = baseLayout(
+      `${examName} result`,
+      `
+        <p>Hello ${escapeHtml(studentName)},</p>
+        <p>Your <strong>${escapeHtml(examName)}</strong> result has been recorded.</p>
+        <div style="background:#f3f4f6;border-radius:12px;padding:16px;margin:18px 0;">
+          <p style="margin:0;"><strong>Score:</strong> ${escapeHtml(totalScore)} / ${escapeHtml(maxScore)}</p>
+          <p style="margin:6px 0 0;"><strong>Percentage:</strong> ${escapeHtml(percentage)}</p>
+          <p style="margin:6px 0 0;"><strong>Time spent:</strong> ${escapeHtml(timeSpent)}</p>
+        </div>
+        <p>${escapeHtml(resultMessage)}</p>
+        <p>The full report will be reviewed by your teacher.</p>
+      `
     );
 
-    const studentHtml = buildStudentHtml({
-      safeStudentName,
-      safeStudentEmail,
-      totalScore,
-      maxScore,
-      percentage,
-      safeResultMessage,
-      breakdown,
-    });
+    const teacherHtml = baseLayout(
+      `${examName} — teacher report`,
+      `
+        <p><strong>Student:</strong> ${escapeHtml(studentName)}<br/>
+        <strong>Email:</strong> ${escapeHtml(studentEmail)}<br/>
+        <strong>Exam:</strong> ${escapeHtml(examTitle)} ${examLevel ? `(${escapeHtml(examLevel)})` : ""}<br/>
+        <strong>Paper:</strong> ${escapeHtml(paper)}<br/>
+        <strong>Time spent:</strong> ${escapeHtml(timeSpent)}</p>
 
-    const teacherHtml = buildTeacherHtml({
-      safeStudentName,
-      safeStudentEmail,
-      safeTimeSpentFormatted,
-      totalScore,
-      maxScore,
-      percentage,
-      safeResultMessage,
-      breakdown,
-      detailedAnswers,
-    });
+        <div style="background:#f3f4f6;border-radius:12px;padding:16px;margin:18px 0;">
+          <p style="margin:0;"><strong>Final score:</strong> ${escapeHtml(totalScore)} / ${escapeHtml(maxScore)} (${escapeHtml(percentage)})</p>
+          <p style="margin:6px 0 0;"><strong>Result message:</strong> ${escapeHtml(resultMessage)}</p>
+        </div>
 
-    const studentEmailResult = await resend.emails.send({
-      from: fromEmail,
-      to: [studentEmail],
-      subject: `FCE Reading Result - ${safeStudentName}`,
-      html: studentHtml,
-    });
+        <h2 style="font-size:17px;margin-top:24px;">Breakdown</h2>
+        ${renderBreakdown(body.breakdown)}
 
-    if (studentEmailResult.error) {
-      console.error("Resend student email error:", studentEmailResult.error);
-      return res.status(500).json({ error: "Resend could not send the student email." });
-    }
+        <h2 style="font-size:17px;margin-top:24px;">Detailed answers</h2>
+        ${renderDetailedAnswers(body.detailedAnswers)}
+      `
+    );
 
-    const teacherEmailResult = await resend.emails.send({
-      from: fromEmail,
-      to: [schoolEmail],
-      subject: `Teacher Report - FCE Reading - ${safeStudentName}`,
+    const teacherResult = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: TEACHER_EMAIL,
+      subject: `${examName} | ${studentName} | ${totalScore}/${maxScore}`,
       html: teacherHtml,
     });
 
-    if (teacherEmailResult.error) {
-      console.error("Resend teacher email error:", teacherEmailResult.error);
-      return res.status(500).json({ error: "Resend could not send the teacher email." });
+    if ((teacherResult as any).error) {
+      throw new Error((teacherResult as any).error.message || "Teacher email failed.");
     }
 
-    return res.status(200).json({ success: true });
-  } catch (error) {
-    console.error("API error:", error);
-    return res.status(500).json({ error: "Something went wrong while sending the email." });
+    const studentResult = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: studentEmail,
+      subject: `Your ${examName} result`,
+      html: studentHtml,
+    });
+
+    if ((studentResult as any).error) {
+      return res.status(207).json({
+        partial: true,
+        message: "Teacher email was sent, but student email could not be sent.",
+        studentError: (studentResult as any).error.message,
+      });
+    }
+
+    return res.status(200).json({ ok: true });
+  } catch (error: any) {
+    console.error(error);
+    return res.status(500).json({ error: error?.message || "Email could not be sent." });
   }
 }

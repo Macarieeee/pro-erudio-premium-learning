@@ -31,6 +31,14 @@ type DetailedAnswer = {
 const PRELIMINARY_AUDIO_SRC = "/audio/preliminary-listening/PET.mp3";
 const LS_KEY = "proerudio_preliminary_listening_v1";
 const STUDENT_INFO_KEY = "proerudio_preliminary_student_info";
+
+const EXAM_METADATA = {
+  examTitle: "B1 Preliminary (PET)",
+  examLevel: "Level B1",
+  paper: "Listening",
+  examName: "B1 Preliminary (PET) — Listening",
+  templateKey: "preliminary-listening",
+};
 const NEXT_READING_PATH = "/preliminary/reading";
 
 const formatTimeSpent = (totalSeconds: number) => {
@@ -344,7 +352,8 @@ const resetAll = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          examName: "Preliminary Listening",
+          ...EXAM_METADATA,
+          exam: EXAM_METADATA.examName,
           studentName: studentName.trim(),
           studentEmail: studentEmail.trim(),
           totalScore: score,

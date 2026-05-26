@@ -2,308 +2,148 @@ import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-type SubmittedWritingTask = {
-  id: number;
-  part: 1 | 2;
-  title: string;
-  instructionTop: string;
-  mainPrompt: string;
-  notes: string[];
-  extraBoxLines: string[];
-  styleHint: string;
-  minWords: number;
-  maxWords: number;
-  answer: string;
-  wordCount: number;
-};
+const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || process.env.FROM_EMAIL;
+const TEACHER_EMAIL = process.env.TEACHER_EMAIL || process.env.RESULTS_TEACHER_EMAIL || process.env.TEACHER_RESULTS_EMAIL;
 
-type TimeSpent = {
-  timeSpentSeconds: number;
-  timeSpentFormatted: string;
-};
-
-type WritingResultPayload = {
-  studentName: string;
-  studentEmail: string;
-  submittedTasks: SubmittedWritingTask[];
-  timeSpent?: TimeSpent;
-  timeSpentSeconds?: number;
-  timeSpentFormatted?: string;
+const corsHeaders = {
+  "Access-Control-Allow-Origin": process.env.ALLOWED_ORIGIN || "*",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type",
 };
 
 const escapeHtml = (value: unknown) =>
   String(value ?? "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 
-const nl2br = (value: unknown) => escapeHtml(value).replace(/\n/g, "<br />");
+const getExamMeta = (body: any) => {
+  const examTitle = body.examTitle || body.exam || body.examName || "B2 First (FCE)";
+  const examLevel = body.examLevel || "";
+  const paper = body.paper || "Writing";
+  const examName = body.examName || `${examTitle} — ${paper}`;
 
-const splitEmails = (value: string) =>
-  value
-    .split(",")
-    .map((email) => email.trim())
-    .filter(Boolean);
-
-const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-
-const getTimeSpentFormatted = (data: {
-  timeSpent?: TimeSpent;
-  timeSpentSeconds?: number;
-  timeSpentFormatted?: string;
-}) => {
-  if (data.timeSpentFormatted) return data.timeSpentFormatted;
-  if (data.timeSpent?.timeSpentFormatted) return data.timeSpent.timeSpentFormatted;
-
-  const seconds = data.timeSpentSeconds ?? data.timeSpent?.timeSpentSeconds;
-
-  if (typeof seconds !== "number" || Number.isNaN(seconds)) {
-    return "Not available";
-  }
-
-  const hours = Math.floor(seconds / 3600);
-  const minutes = Math.floor((seconds % 3600) / 60);
-  const remainingSeconds = seconds % 60;
-
-  if (hours > 0) return `${hours}h ${minutes}m ${remainingSeconds}s`;
-  if (minutes > 0) return `${minutes}m ${remainingSeconds}s`;
-  return `${remainingSeconds}s`;
+  return { examTitle, examLevel, paper, examName };
 };
 
-const wordStatus = (task: SubmittedWritingTask) => {
-  if (task.wordCount < task.minWords) return "Below limit";
-  if (task.wordCount > task.maxWords) return "Above limit";
-  return "Within limit";
-};
-
-const buildStudentHtml = (data: WritingResultPayload) => `
-  <div style="font-family: Arial, sans-serif; color: #111827; line-height: 1.6; max-width: 720px; margin: 0 auto;">
-    <div style="padding: 24px; border: 1px solid #e5e7eb; border-radius: 14px; background: #ffffff;">
-      <h2 style="margin: 0 0 12px; color: #111827;">Your FCE Writing test was received</h2>
-
-      <p style="margin: 0 0 12px;">Hello ${escapeHtml(data.studentName)},</p>
-
-      <p style="margin: 0 0 12px;">
-        Thank you for completing the FCE Writing test. Your answers have been sent to the teacher and will be checked carefully.
-      </p>
-
-      <p style="margin: 0 0 18px;">
-        You will receive your feedback and result as soon as your writing has been reviewed.
-      </p>
-
-      <div style="padding: 16px; border-radius: 12px; background: #f9fafb; border: 1px solid #e5e7eb;">
-        <p style="margin: 0;"><strong>Submitted tasks:</strong> ${escapeHtml(data.submittedTasks.length)}</p>
-        ${data.submittedTasks
-          .map(
-            (task) => `
-              <p style="margin: 8px 0 0;">
-                <strong>${escapeHtml(task.title)}:</strong> ${escapeHtml(task.wordCount)} words
-                <span style="color: #6b7280;">(${escapeHtml(wordStatus(task))})</span>
-              </p>
-            `
-          )
-          .join("")}
+const baseLayout = (title: string, content: string) => `
+  <div style="font-family:Arial,sans-serif;line-height:1.55;color:#111827;background:#f9fafb;padding:24px;">
+    <div style="max-width:760px;margin:0 auto;background:#ffffff;border:1px solid #e5e7eb;border-radius:14px;overflow:hidden;">
+      <div style="background:#2094F3;color:#ffffff;padding:22px 26px;">
+        <h1 style="margin:0;font-size:22px;">${escapeHtml(title)}</h1>
       </div>
-
-      <p style="font-size: 13px; color: #6b7280; margin-top: 24px;">
-        This email was generated automatically from the Pro Erudio FCE Writing test.
-      </p>
+      <div style="padding:24px 26px;">${content}</div>
     </div>
-  </div>
-`;
+  </div>`;
 
-const buildTeacherHtml = (data: WritingResultPayload) => {
-  const taskBlocks = data.submittedTasks
-    .map(
-      (task) => `
-        <div style="margin-top: 24px; padding: 18px; border: 1px solid #e5e7eb; border-radius: 14px; background: #ffffff;">
-          <h3 style="margin: 0 0 8px;">${escapeHtml(task.title)} — Part ${escapeHtml(task.part)}</h3>
+const renderSubmittedTasks = (tasks: any[] = []) => {
+  if (!Array.isArray(tasks) || !tasks.length) return "<p>No writing tasks were submitted.</p>";
 
-          <table style="width: 100%; border-collapse: collapse; font-size: 14px; margin: 12px 0 18px;">
-            <tbody>
-              <tr>
-                <td style="padding: 10px; border: 1px solid #e5e7eb; width: 180px;"><strong>Style</strong></td>
-                <td style="padding: 10px; border: 1px solid #e5e7eb;">${escapeHtml(task.styleHint || "-")}</td>
-              </tr>
-              <tr>
-                <td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>Word count</strong></td>
-                <td style="padding: 10px; border: 1px solid #e5e7eb;">
-                  ${escapeHtml(task.wordCount)} words / target ${escapeHtml(task.minWords)}–${escapeHtml(task.maxWords)}
-                  <span style="color: ${wordStatus(task) === "Within limit" ? "#047857" : "#b91c1c"}; font-weight: 700;">
-                    (${escapeHtml(wordStatus(task))})
-                  </span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-
-          <div style="margin-bottom: 14px;">
-            <p style="margin: 0 0 6px; font-weight: 700;">Instruction</p>
-            <p style="margin: 0; color: #374151;">${escapeHtml(task.instructionTop)}</p>
-          </div>
-
-          <div style="margin-bottom: 14px;">
-            <p style="margin: 0 0 6px; font-weight: 700;">Prompt</p>
-            <p style="margin: 0; color: #374151;">${escapeHtml(task.mainPrompt)}</p>
-          </div>
-
-          ${
-            task.notes?.length
-              ? `
-                <div style="margin-bottom: 14px;">
-                  <p style="margin: 0 0 6px; font-weight: 700;">Notes</p>
-                  <ul style="margin: 0; padding-left: 20px;">
-                    ${task.notes.map((note) => `<li>${escapeHtml(note)}</li>`).join("")}
-                  </ul>
-                </div>
-              `
-              : ""
-          }
-
-          ${
-            task.extraBoxLines?.length
-              ? `
-                <div style="margin-bottom: 14px;">
-                  <p style="margin: 0 0 6px; font-weight: 700;">Extra task details</p>
-                  <div style="padding: 12px; border: 1px solid #e5e7eb; border-radius: 10px; background: #f9fafb;">
-                    ${task.extraBoxLines.map((line) => (line ? `<div>${escapeHtml(line)}</div>` : `<div style="height: 8px;"></div>`)).join("")}
-                  </div>
-                </div>
-              `
-              : ""
-          }
-
-          <div>
-            <p style="margin: 0 0 8px; font-weight: 700;">Student answer</p>
-            <div style="white-space: normal; padding: 16px; border: 1px solid #d1d5db; border-radius: 12px; background: #f9fafb; color: #111827;">
-              ${nl2br(task.answer)}
-            </div>
-          </div>
-        </div>
-      `
-    )
+  return tasks
+    .map((task) => `
+      <div style="border:1px solid #e5e7eb;border-radius:12px;padding:16px;margin:16px 0;">
+        <h2 style="font-size:18px;margin:0 0 8px;">Part ${escapeHtml(task.part)} — ${escapeHtml(task.title)}</h2>
+        <p style="margin:0 0 8px;color:#4b5563;"><strong>Word count:</strong> ${escapeHtml(task.wordCount)} / recommended ${escapeHtml(task.minWords)}–${escapeHtml(task.maxWords)}</p>
+        ${task.styleHint ? `<p style="margin:0 0 8px;color:#4b5563;"><strong>Style hint:</strong> ${escapeHtml(task.styleHint)}</p>` : ""}
+        ${task.instructionTop ? `<p style="margin:0 0 8px;"><strong>Instruction:</strong> ${escapeHtml(task.instructionTop)}</p>` : ""}
+        ${task.mainPrompt ? `<p style="margin:0 0 8px;"><strong>Prompt:</strong> ${escapeHtml(task.mainPrompt)}</p>` : ""}
+        ${
+          Array.isArray(task.notes) && task.notes.length
+            ? `<p style="margin:0 0 8px;"><strong>Notes:</strong> ${task.notes.map(escapeHtml).join(" / ")}</p>`
+            : ""
+        }
+        ${
+          Array.isArray(task.extraBoxLines) && task.extraBoxLines.length
+            ? `<p style="margin:0 0 8px;"><strong>Extra input:</strong> ${task.extraBoxLines.map(escapeHtml).join(" / ")}</p>`
+            : ""
+        }
+        <div style="margin-top:12px;padding:14px;border-radius:10px;background:#f9fafb;white-space:pre-wrap;">${escapeHtml(task.answer)}</div>
+      </div>
+    `)
     .join("");
-
-  return `
-    <div style="font-family: Arial, sans-serif; color: #111827; line-height: 1.6; max-width: 1000px; margin: 0 auto;">
-      <h2 style="margin-bottom: 8px;">Teacher Report — FCE Writing</h2>
-      <p style="margin-top: 0; color: #4b5563;">Full writing submission for manual review and grading.</p>
-
-      <div style="padding: 16px; border: 1px solid #e5e7eb; border-radius: 14px; background: #f9fafb; margin: 20px 0;">
-        <p style="margin: 0;"><strong>Student:</strong> ${escapeHtml(data.studentName)}</p>
-        <p style="margin: 4px 0 0;"><strong>Email:</strong> ${escapeHtml(data.studentEmail)}</p>
-        <p style="margin: 4px 0 0;"><strong>Time spent on Writing:</strong> ${escapeHtml(getTimeSpentFormatted(data))}</p>
-        <p style="margin: 4px 0 0;"><strong>Submitted tasks:</strong> ${escapeHtml(data.submittedTasks.length)}</p>
-      </div>
-
-      ${taskBlocks}
-
-      <p style="font-size: 13px; color: #6b7280; margin-top: 24px;">
-        This email was generated automatically from the Pro Erudio FCE Writing test.
-      </p>
-    </div>
-  `;
 };
 
 export default async function handler(req: any, res: any) {
-  const allowedOrigins = [
-    "http://localhost:5173",
-    "http://localhost:8080",
-    "https://tabere.proerudio.ro",
-    "https://macarieeee.github.io",
-    "https://macarieeee.github.io/pro-erudio-premium-learning",
-    process.env.FRONTEND_URL,
-  ].filter(Boolean) as string[];
+  Object.entries(corsHeaders).forEach(([key, value]) => res.setHeader(key, value));
 
-  const origin = req.headers.origin;
-
-  if (origin && allowedOrigins.includes(origin)) {
-    res.setHeader("Access-Control-Allow-Origin", origin);
-  }
-
-  res.setHeader("Vary", "Origin");
-  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-
-  if (req.method === "OPTIONS") {
-    return res.status(200).end();
-  }
-
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed." });
-  }
+  if (req.method === "OPTIONS") return res.status(200).end();
+  if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed." });
 
   try {
-    if (!process.env.RESEND_API_KEY) {
-      return res.status(500).json({ error: "Missing RESEND_API_KEY environment variable." });
-    }
+    if (!process.env.RESEND_API_KEY) throw new Error("Missing RESEND_API_KEY.");
+    if (!FROM_EMAIL) throw new Error("Missing RESEND_FROM_EMAIL or FROM_EMAIL.");
+    if (!TEACHER_EMAIL) throw new Error("Missing TEACHER_EMAIL / RESULTS_TEACHER_EMAIL.");
 
-    const fromEmail = process.env.RESEND_FROM_EMAIL;
-    const schoolEmail = process.env.SCHOOL_RESULTS_EMAIL;
+    const body = req.body || {};
+    const { examTitle, examLevel, paper, examName } = getExamMeta(body);
 
-    if (!fromEmail) {
-      return res.status(500).json({ error: "Missing RESEND_FROM_EMAIL environment variable." });
-    }
+    const studentName = String(body.studentName || "").trim();
+    const studentEmail = String(body.studentEmail || "").trim();
+    const submittedTasks = Array.isArray(body.submittedTasks) ? body.submittedTasks : [];
+    const timeSpent = body.timeSpentFormatted || body.timeSpent?.timeSpentFormatted || "—";
 
-    if (!schoolEmail) {
-      return res.status(500).json({ error: "Missing SCHOOL_RESULTS_EMAIL environment variable." });
-    }
+    if (!studentName) return res.status(400).json({ error: "Missing student name." });
+    if (!studentEmail) return res.status(400).json({ error: "Missing student email." });
+    if (!submittedTasks.length) return res.status(400).json({ error: "No submitted writing tasks found." });
 
-    const payload = req.body as WritingResultPayload;
+    const studentHtml = baseLayout(
+      `${examName} submitted`,
+      `
+        <p>Hello ${escapeHtml(studentName)},</p>
+        <p>Your <strong>${escapeHtml(examName)}</strong> answers were submitted successfully.</p>
+        <div style="background:#f3f4f6;border-radius:12px;padding:16px;margin:18px 0;">
+          <p style="margin:0;"><strong>Time spent:</strong> ${escapeHtml(timeSpent)}</p>
+          <p style="margin:6px 0 0;"><strong>Submitted tasks:</strong> ${escapeHtml(submittedTasks.length)}</p>
+        </div>
+        <p>Your teacher will review the writing answers and provide feedback.</p>
+      `
+    );
 
-    if (!payload.studentName || !payload.studentEmail) {
-      return res.status(400).json({ error: "Student name and student email are required." });
-    }
+    const teacherHtml = baseLayout(
+      `${examName} — teacher report`,
+      `
+        <p><strong>Student:</strong> ${escapeHtml(studentName)}<br/>
+        <strong>Email:</strong> ${escapeHtml(studentEmail)}<br/>
+        <strong>Exam:</strong> ${escapeHtml(examTitle)} ${examLevel ? `(${escapeHtml(examLevel)})` : ""}<br/>
+        <strong>Paper:</strong> ${escapeHtml(paper)}<br/>
+        <strong>Time spent:</strong> ${escapeHtml(timeSpent)}</p>
 
-    if (!isValidEmail(payload.studentEmail)) {
-      return res.status(400).json({ error: "Invalid student email." });
-    }
+        <h2 style="font-size:17px;margin-top:24px;">Submitted writing answers</h2>
+        ${renderSubmittedTasks(submittedTasks)}
+      `
+    );
 
-    if (!Array.isArray(payload.submittedTasks) || payload.submittedTasks.length === 0) {
-      return res.status(400).json({ error: "Submitted writing tasks are required." });
-    }
-
-    const teacherHtml = buildTeacherHtml(payload);
-    const studentHtml = buildStudentHtml(payload);
-
-    const teacherEmailResult = await resend.emails.send({
-      from: fromEmail,
-      to: splitEmails(schoolEmail),
-      subject: `Teacher Report - FCE Writing - ${payload.studentName}`,
+    const teacherResult = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: TEACHER_EMAIL,
+      subject: `${examName} | ${studentName} | Writing submission`,
       html: teacherHtml,
     });
 
-    if (teacherEmailResult.error) {
-      console.error("Resend teacher email error:", teacherEmailResult.error);
-      return res.status(500).json({
-        error: "Resend could not send the teacher email.",
-        details: teacherEmailResult.error,
-      });
+    if ((teacherResult as any).error) {
+      throw new Error((teacherResult as any).error.message || "Teacher email failed.");
     }
 
-    const studentEmailResult = await resend.emails.send({
-      from: fromEmail,
-      to: [payload.studentEmail],
-      subject: "Your FCE Writing test was received",
+    const studentResult = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: studentEmail,
+      subject: `Your ${examName} submission`,
       html: studentHtml,
     });
 
-    if (studentEmailResult.error) {
-      console.error("Resend student email error:", studentEmailResult.error);
-
+    if ((studentResult as any).error) {
       return res.status(207).json({
-        success: true,
         partial: true,
-        message: "Teacher email was sent, but student confirmation email could not be sent.",
-        details: studentEmailResult.error,
+        message: "The teacher received the writing test, but the student confirmation email could not be sent.",
+        studentError: (studentResult as any).error.message,
       });
     }
 
-    return res.status(200).json({ success: true, partial: false });
-  } catch (error) {
-    console.error("Writing email error:", error);
-    return res.status(500).json({ error: "Something went wrong while sending the writing test." });
+    return res.status(200).json({ ok: true });
+  } catch (error: any) {
+    console.error(error);
+    return res.status(500).json({ error: error?.message || "Writing email could not be sent." });
   }
 }

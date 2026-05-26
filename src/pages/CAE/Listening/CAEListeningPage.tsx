@@ -38,6 +38,14 @@ type DetailedAnswer = {
 
 const LS_KEY = "proerudio_cae_listening_v1";
 const STUDENT_INFO_KEY = "proerudio_cae_student_info";
+
+const EXAM_METADATA = {
+  examTitle: "C1 Advanced (CAE)",
+  examLevel: "Level C1",
+  paper: "Listening",
+  examName: "C1 Advanced (CAE) — Listening",
+  templateKey: "cae-listening",
+};
 const NEXT_READING_PATH = "/cae/reading";
 const normalize = (s: string) =>
   s
@@ -390,7 +398,8 @@ const markAudioPartAsStarted = (audioPart: Part) => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          exam: "CAE Listening",
+          ...EXAM_METADATA,
+          exam: EXAM_METADATA.examName,
           studentName: studentName.trim(),
           studentEmail: studentEmail.trim(),
           totalScore: score,

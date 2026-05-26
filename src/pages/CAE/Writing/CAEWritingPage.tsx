@@ -6,7 +6,15 @@ import logo from "@/assets/logo.svg"; // ajustează path-ul
 type Part = 1 | 2;
 
 const LS_KEY = "proerudio_cae_writing_v1";
-const STUDENT_INFO_KEY = "proerudio_fce_student_info";
+const STUDENT_INFO_KEY = "proerudio_cae_student_info";
+
+const EXAM_METADATA = {
+  examTitle: "C1 Advanced (CAE)",
+  examLevel: "Level C1",
+  paper: "Writing",
+  examName: "C1 Advanced (CAE) — Writing",
+  templateKey: "cae-writing",
+};
 
 const WRITING_RESULTS_API_URL = import.meta.env.VITE_CAE_WRITING_RESULTS_API_URL || import.meta.env.VITE_WRITING_RESULTS_API_URL;
 
@@ -585,6 +593,8 @@ useEffect(() => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          ...EXAM_METADATA,
+          exam: EXAM_METADATA.examName,
           studentName: studentName.trim(),
           studentEmail: studentEmail.trim(),
           submittedTasks,

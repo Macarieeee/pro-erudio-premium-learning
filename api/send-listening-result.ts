@@ -2,273 +2,195 @@ import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-type Breakdown = {
-  p1: number;
-  p2: number;
-  p3: number;
-  p4: number;
-};
+const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || process.env.FROM_EMAIL;
+const TEACHER_EMAIL = process.env.TEACHER_EMAIL || process.env.RESULTS_TEACHER_EMAIL || process.env.TEACHER_RESULTS_EMAIL;
 
-type DetailedAnswer = {
-  part: string;
-  questionId: number;
-  questionText: string;
-  studentAnswer: string;
-  correctAnswer: string;
-  isCorrect: boolean;
-  points: number;
-  maxPoints: number;
-};
-
-type TimeSpent = {
-  timeSpentSeconds: number;
-  timeSpentFormatted: string;
-};
-
-type ListeningResultPayload = {
-  studentName: string;
-  studentEmail: string;
-  totalScore: number;
-  maxScore: number;
-  percentage: number;
-  resultMessage: string;
-  breakdown: Breakdown;
-  detailedAnswers: DetailedAnswer[];
-  timeSpent?: TimeSpent;
-  timeSpentSeconds?: number;
-  timeSpentFormatted?: string;
+const corsHeaders = {
+  "Access-Control-Allow-Origin": process.env.ALLOWED_ORIGIN || "*",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type",
 };
 
 const escapeHtml = (value: unknown) =>
   String(value ?? "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 
-const splitEmails = (value: string) =>
-  value
-    .split(",")
-    .map((email) => email.trim())
-    .filter(Boolean);
-
-const getTimeSpentFormatted = (data: {
-  timeSpent?: TimeSpent;
-  timeSpentSeconds?: number;
-  timeSpentFormatted?: string;
-}) => {
-  if (data.timeSpentFormatted) return data.timeSpentFormatted;
-  if (data.timeSpent?.timeSpentFormatted) return data.timeSpent.timeSpentFormatted;
-
-  const seconds = data.timeSpentSeconds ?? data.timeSpent?.timeSpentSeconds;
-
-  if (typeof seconds !== "number" || Number.isNaN(seconds)) {
-    return "Not available";
-  }
-
-  const hours = Math.floor(seconds / 3600);
-  const minutes = Math.floor((seconds % 3600) / 60);
-  const remainingSeconds = seconds % 60;
-
-  if (hours > 0) return `${hours}h ${minutes}m ${remainingSeconds}s`;
-  if (minutes > 0) return `${minutes}m ${remainingSeconds}s`;
-  return `${remainingSeconds}s`;
+const formatPercent = (value: unknown) => {
+  const n = Number(value);
+  return Number.isFinite(n) ? `${n}%` : "—";
 };
 
-const scoreCard = (label: string, value: string) => `
-  <td style="padding: 12px; border: 1px solid #e5e7eb; border-radius: 10px; background: #f9fafb;">
-    <div style="font-size: 12px; color: #6b7280; font-weight: 700;">${escapeHtml(label)}</div>
-    <div style="font-size: 22px; color: #111827; font-weight: 800; margin-top: 4px;">${escapeHtml(value)}</div>
-  </td>
-`;
+const getExamMeta = (body: any) => {
+  const examTitle = body.examTitle || body.exam || body.examName || "B2 First (FCE)";
+  const examLevel = body.examLevel || "";
+  const paper = body.paper || "Listening";
+  const examName = body.examName || `${examTitle} — ${paper}`;
 
-const buildStudentHtml = (data: ListeningResultPayload) => `
-  <div style="font-family: Arial, sans-serif; color: #111827; line-height: 1.6; max-width: 720px; margin: 0 auto;">
-    <h2 style="margin-bottom: 8px;">FCE Listening Result</h2>
-    <p style="margin-top: 0; color: #4b5563;">Hello ${escapeHtml(data.studentName)}, here is your Listening test result.</p>
+  return { examTitle, examLevel, paper, examName };
+};
 
-    <div style="padding: 18px; border: 1px solid #e5e7eb; border-radius: 14px; background: #f9fafb; margin: 20px 0;">
-      <div style="font-size: 13px; color: #6b7280; font-weight: 700;">Final score</div>
-      <div style="font-size: 32px; font-weight: 800; color: #111827; margin-top: 4px;">
-        ${escapeHtml(data.totalScore)} / ${escapeHtml(data.maxScore)} (${escapeHtml(data.percentage)}%)
-      </div>
-      <p style="margin-bottom: 0; color: #4b5563;">${escapeHtml(data.resultMessage)}</p>
-    </div>
-
-    <table style="width: 100%; border-spacing: 8px; margin: 0 -8px;">
-      <tr>
-        ${scoreCard("Part 1", `${data.breakdown.p1}/8`)}
-        ${scoreCard("Part 2", `${data.breakdown.p2}/10`)}
-      </tr>
-      <tr>
-        ${scoreCard("Part 3", `${data.breakdown.p3}/5`)}
-        ${scoreCard("Part 4", `${data.breakdown.p4}/7`)}
-      </tr>
-    </table>
-
-    <p style="font-size: 13px; color: #6b7280; margin-top: 24px;">
-      This email was generated automatically from the Pro Erudio FCE Listening test.
-    </p>
-  </div>
-`;
-
-const buildTeacherHtml = (data: ListeningResultPayload) => {
-  const rows = data.detailedAnswers
-    .map(
-      (item) => `
-        <tr>
-          <td style="border: 1px solid #e5e7eb; padding: 8px; vertical-align: top;">${escapeHtml(item.part)}</td>
-          <td style="border: 1px solid #e5e7eb; padding: 8px; vertical-align: top;">${escapeHtml(item.questionId)}</td>
-          <td style="border: 1px solid #e5e7eb; padding: 8px; vertical-align: top;">${escapeHtml(item.questionText)}</td>
-          <td style="border: 1px solid #e5e7eb; padding: 8px; vertical-align: top;">${escapeHtml(item.studentAnswer)}</td>
-          <td style="border: 1px solid #e5e7eb; padding: 8px; vertical-align: top;">${escapeHtml(item.correctAnswer)}</td>
-          <td style="border: 1px solid #e5e7eb; padding: 8px; vertical-align: top; font-weight: 700; color: ${item.isCorrect ? "#047857" : "#b91c1c"};">
-            ${item.isCorrect ? "Correct" : "Wrong"}
-          </td>
-          <td style="border: 1px solid #e5e7eb; padding: 8px; vertical-align: top;">${escapeHtml(item.points)} / ${escapeHtml(item.maxPoints)}</td>
-        </tr>
-      `
-    )
-    .join("");
+const renderBreakdown = (breakdown: Record<string, unknown> = {}) => {
+  const entries = Object.entries(breakdown);
+  if (!entries.length) return "<p>No part breakdown was provided.</p>";
 
   return `
-    <div style="font-family: Arial, sans-serif; color: #111827; line-height: 1.6; max-width: 1100px; margin: 0 auto;">
-      <h2 style="margin-bottom: 8px;">Teacher Report — FCE Listening</h2>
-      <p style="margin-top: 0; color: #4b5563;">Full Listening report with student details, score breakdown and answer review.</p>
-
-      <div style="padding: 16px; border: 1px solid #e5e7eb; border-radius: 14px; background: #f9fafb; margin: 20px 0;">
-        <p style="margin: 0;"><strong>Student:</strong> ${escapeHtml(data.studentName)}</p>
-        <p style="margin: 4px 0 0;"><strong>Email:</strong> ${escapeHtml(data.studentEmail)}</p>
-        <p style="margin: 4px 0 0;"><strong>Time spent on Listening:</strong> ${escapeHtml(getTimeSpentFormatted(data))}</p>
-        <p style="margin: 12px 0 0; font-size: 20px;"><strong>Final score:</strong> ${escapeHtml(data.totalScore)} / ${escapeHtml(data.maxScore)} (${escapeHtml(data.percentage)}%)</p>
-      </div>
-
-      <table style="width: 100%; border-spacing: 8px; margin: 0 -8px 20px;">
+    <table width="100%" cellpadding="8" cellspacing="0" style="border-collapse:collapse;margin-top:10px;">
+      <thead>
         <tr>
-          ${scoreCard("Part 1", `${data.breakdown.p1}/8`)}
-          ${scoreCard("Part 2", `${data.breakdown.p2}/10`)}
-          ${scoreCard("Part 3", `${data.breakdown.p3}/5`)}
-          ${scoreCard("Part 4", `${data.breakdown.p4}/7`)}
+          <th align="left" style="border-bottom:1px solid #e5e7eb;">Part</th>
+          <th align="left" style="border-bottom:1px solid #e5e7eb;">Score</th>
         </tr>
-      </table>
-
-      <h3 style="margin-top: 28px;">Answer review</h3>
-      <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
-        <thead>
-          <tr style="background: #f3f4f6;">
-            <th style="border: 1px solid #e5e7eb; padding: 8px; text-align: left;">Part</th>
-            <th style="border: 1px solid #e5e7eb; padding: 8px; text-align: left;">Q</th>
-            <th style="border: 1px solid #e5e7eb; padding: 8px; text-align: left;">Question</th>
-            <th style="border: 1px solid #e5e7eb; padding: 8px; text-align: left;">Student answer</th>
-            <th style="border: 1px solid #e5e7eb; padding: 8px; text-align: left;">Correct answer</th>
-            <th style="border: 1px solid #e5e7eb; padding: 8px; text-align: left;">Status</th>
-            <th style="border: 1px solid #e5e7eb; padding: 8px; text-align: left;">Points</th>
-          </tr>
-        </thead>
-        <tbody>${rows}</tbody>
-      </table>
-
-      <p style="font-size: 13px; color: #6b7280; margin-top: 24px;">
-        This email was generated automatically from the Pro Erudio FCE Listening test.
-      </p>
-    </div>
-  `;
+      </thead>
+      <tbody>
+        ${entries
+          .map(([key, value]) => {
+            const label = key.startsWith("p") ? `Part ${key.slice(1)}` : key;
+            return `
+              <tr>
+                <td style="border-bottom:1px solid #f3f4f6;">${escapeHtml(label)}</td>
+                <td style="border-bottom:1px solid #f3f4f6;"><strong>${escapeHtml(value)}</strong></td>
+              </tr>`;
+          })
+          .join("")}
+      </tbody>
+    </table>`;
 };
 
+const renderDetailedAnswers = (answers: any[] = []) => {
+  if (!Array.isArray(answers) || !answers.length) return "<p>No detailed answers were provided.</p>";
+
+  return `
+    <table width="100%" cellpadding="7" cellspacing="0" style="border-collapse:collapse;margin-top:10px;font-size:13px;">
+      <thead>
+        <tr>
+          <th align="left" style="border-bottom:1px solid #e5e7eb;">Q</th>
+          <th align="left" style="border-bottom:1px solid #e5e7eb;">Part</th>
+          <th align="left" style="border-bottom:1px solid #e5e7eb;">Student answer</th>
+          <th align="left" style="border-bottom:1px solid #e5e7eb;">Correct answer</th>
+          <th align="left" style="border-bottom:1px solid #e5e7eb;">Points</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${answers
+          .map((row) => `
+            <tr>
+              <td style="border-bottom:1px solid #f3f4f6;">${escapeHtml(row.questionId)}</td>
+              <td style="border-bottom:1px solid #f3f4f6;">${escapeHtml(row.part)}</td>
+              <td style="border-bottom:1px solid #f3f4f6;">${escapeHtml(row.studentAnswer)}</td>
+              <td style="border-bottom:1px solid #f3f4f6;">${escapeHtml(row.correctAnswer)}</td>
+              <td style="border-bottom:1px solid #f3f4f6;">${escapeHtml(row.points)}/${escapeHtml(row.maxPoints)}</td>
+            </tr>`)
+          .join("")}
+      </tbody>
+    </table>`;
+};
+
+const baseLayout = (title: string, content: string) => `
+  <div style="font-family:Arial,sans-serif;line-height:1.55;color:#111827;background:#f9fafb;padding:24px;">
+    <div style="max-width:760px;margin:0 auto;background:#ffffff;border:1px solid #e5e7eb;border-radius:14px;overflow:hidden;">
+      <div style="background:#2094F3;color:#ffffff;padding:22px 26px;">
+        <h1 style="margin:0;font-size:22px;">${escapeHtml(title)}</h1>
+      </div>
+      <div style="padding:24px 26px;">${content}</div>
+    </div>
+  </div>`;
+
 export default async function handler(req: any, res: any) {
-  const allowedOrigins = [
-    "http://localhost:5173",
-    "http://localhost:8080",
-    "https://tabere.proerudio.ro",
-    "https://macarieeee.github.io",
-    "https://macarieeee.github.io/pro-erudio-premium-learning",
-    process.env.FRONTEND_URL,
-  ].filter(Boolean) as string[];
+  Object.entries(corsHeaders).forEach(([key, value]) => res.setHeader(key, value));
 
-  const origin = req.headers.origin;
-
-  if (origin && allowedOrigins.includes(origin)) {
-    res.setHeader("Access-Control-Allow-Origin", origin);
-  }
-
-  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-
-  if (req.method === "OPTIONS") {
-    return res.status(200).end();
-  }
-
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed." });
-  }
+  if (req.method === "OPTIONS") return res.status(200).end();
+  if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed." });
 
   try {
-    const payload = req.body as ListeningResultPayload;
+    if (!process.env.RESEND_API_KEY) throw new Error("Missing RESEND_API_KEY.");
+    if (!FROM_EMAIL) throw new Error("Missing RESEND_FROM_EMAIL or FROM_EMAIL.");
+    if (!TEACHER_EMAIL) throw new Error("Missing TEACHER_EMAIL / RESULTS_TEACHER_EMAIL.");
 
-    if (!process.env.RESEND_API_KEY) {
-      return res.status(500).json({ error: "Missing RESEND_API_KEY environment variable." });
-    }
+    const body = req.body || {};
+    const { examTitle, examLevel, paper, examName } = getExamMeta(body);
 
-    const fromEmail = process.env.RESEND_FROM_EMAIL;
-    const schoolEmail = process.env.SCHOOL_RESULTS_EMAIL;
+    const studentName = String(body.studentName || "").trim();
+    const studentEmail = String(body.studentEmail || "").trim();
 
-    if (!fromEmail) {
-      return res.status(500).json({ error: "Missing RESEND_FROM_EMAIL environment variable." });
-    }
+    if (!studentName) return res.status(400).json({ error: "Missing student name." });
+    if (!studentEmail) return res.status(400).json({ error: "Missing student email." });
 
-    if (!schoolEmail) {
-      return res.status(500).json({ error: "Missing SCHOOL_RESULTS_EMAIL environment variable." });
-    }
+    const totalScore = body.totalScore ?? "—";
+    const maxScore = body.maxScore ?? "—";
+    const percentage = formatPercent(body.percentage);
+    const resultMessage = body.resultMessage || "The result has been recorded.";
+    const timeSpent = body.timeSpentFormatted || body.timeSpent?.timeSpentFormatted || "—";
 
-    if (!payload.studentName || !payload.studentEmail) {
-      return res.status(400).json({ error: "Student name and student email are required." });
-    }
+    const studentHtml = baseLayout(
+      `${examName} result`,
+      `
+        <p>Hello ${escapeHtml(studentName)},</p>
+        <p>Your <strong>${escapeHtml(examName)}</strong> result has been recorded.</p>
+        <div style="background:#f3f4f6;border-radius:12px;padding:16px;margin:18px 0;">
+          <p style="margin:0;"><strong>Score:</strong> ${escapeHtml(totalScore)} / ${escapeHtml(maxScore)}</p>
+          <p style="margin:6px 0 0;"><strong>Percentage:</strong> ${escapeHtml(percentage)}</p>
+          <p style="margin:6px 0 0;"><strong>Time spent:</strong> ${escapeHtml(timeSpent)}</p>
+        </div>
+        <p>${escapeHtml(resultMessage)}</p>
+        <p>The full report will be reviewed by your teacher.</p>
+      `
+    );
 
-    if (!Array.isArray(payload.detailedAnswers)) {
-      return res.status(400).json({ error: "Detailed answers are required." });
-    }
+    const teacherHtml = baseLayout(
+      `${examName} — teacher report`,
+      `
+        <p><strong>Student:</strong> ${escapeHtml(studentName)}<br/>
+        <strong>Email:</strong> ${escapeHtml(studentEmail)}<br/>
+        <strong>Exam:</strong> ${escapeHtml(examTitle)} ${examLevel ? `(${escapeHtml(examLevel)})` : ""}<br/>
+        <strong>Paper:</strong> ${escapeHtml(paper)}<br/>
+        <strong>Time spent:</strong> ${escapeHtml(timeSpent)}</p>
 
-    const safeStudentName = escapeHtml(payload.studentName);
-    const studentHtml = buildStudentHtml(payload);
-    const teacherHtml = buildTeacherHtml(payload);
+        <div style="background:#f3f4f6;border-radius:12px;padding:16px;margin:18px 0;">
+          <p style="margin:0;"><strong>Final score:</strong> ${escapeHtml(totalScore)} / ${escapeHtml(maxScore)} (${escapeHtml(percentage)})</p>
+          <p style="margin:6px 0 0;"><strong>Result message:</strong> ${escapeHtml(resultMessage)}</p>
+        </div>
 
-    const teacherEmailResult = await resend.emails.send({
-      from: fromEmail,
-      to: splitEmails(schoolEmail),
-      subject: `Teacher Report - FCE Listening - ${payload.studentName}`,
+        <h2 style="font-size:17px;margin-top:24px;">Breakdown</h2>
+        ${renderBreakdown(body.breakdown)}
+
+        <h2 style="font-size:17px;margin-top:24px;">Detailed answers</h2>
+        ${renderDetailedAnswers(body.detailedAnswers)}
+      `
+    );
+
+    const teacherResult = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: TEACHER_EMAIL,
+      subject: `${examName} | ${studentName} | ${totalScore}/${maxScore}`,
       html: teacherHtml,
     });
 
-    if (teacherEmailResult.error) {
-      console.error("Resend teacher email error:", teacherEmailResult.error);
-      return res.status(500).json({
-        error: "Resend could not send the teacher email.",
-        details: teacherEmailResult.error,
-      });
+    if ((teacherResult as any).error) {
+      throw new Error((teacherResult as any).error.message || "Teacher email failed.");
     }
 
-    const studentEmailResult = await resend.emails.send({
-      from: fromEmail,
-      to: [payload.studentEmail],
-      subject: `FCE Listening Result - ${safeStudentName}`,
+    const studentResult = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: studentEmail,
+      subject: `Your ${examName} result`,
       html: studentHtml,
     });
 
-    if (studentEmailResult.error) {
-      console.error("Resend student email error:", studentEmailResult.error);
-
+    if ((studentResult as any).error) {
       return res.status(207).json({
-        success: true,
         partial: true,
         message: "Teacher email was sent, but student email could not be sent.",
-        details: studentEmailResult.error,
+        studentError: (studentResult as any).error.message,
       });
     }
 
-    return res.status(200).json({ success: true, partial: false });
-  } catch (error) {
-    console.error("Listening email error:", error);
-    return res.status(500).json({ error: "Something went wrong while sending the listening result." });
+    return res.status(200).json({ ok: true });
+  } catch (error: any) {
+    console.error(error);
+    return res.status(500).json({ error: error?.message || "Email could not be sent." });
   }
 }

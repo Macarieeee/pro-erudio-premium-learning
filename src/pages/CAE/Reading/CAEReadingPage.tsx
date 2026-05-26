@@ -15,6 +15,14 @@ const LS_KEY = "proerudio_cae_reading_v1";
 const STUDENT_INFO_KEY = "proerudio_cae_student_info";
 const NEXT_WRITING_PATH = "/cae/writing";
 
+const EXAM_METADATA = {
+  examTitle: "C1 Advanced (CAE)",
+  examLevel: "Level C1",
+  paper: "Reading & Use of English",
+  examName: "C1 Advanced (CAE) — Reading & Use of English",
+  templateKey: "cae-reading",
+};
+
 // Modify this value when you need a different duration for another test.
 // Examples:
 // 60 * 60 = 1h
@@ -409,7 +417,8 @@ export default function CAEReadingPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          exam: caeReadingData.examTitle,
+          ...EXAM_METADATA,
+          exam: EXAM_METADATA.examName,
           studentName: studentName.trim(),
           studentEmail: studentEmail.trim(),
           totalScore: score,

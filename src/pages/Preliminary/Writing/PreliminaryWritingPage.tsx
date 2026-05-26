@@ -8,6 +8,14 @@ type Part = 1 | 2;
 
 const LS_KEY = "proerudio_preliminary_writing_v1";
 const STUDENT_INFO_KEY = "proerudio_preliminary_student_info";
+
+const EXAM_METADATA = {
+  examTitle: "B1 Preliminary (PET)",
+  examLevel: "Level B1",
+  paper: "Writing",
+  examName: "B1 Preliminary (PET) — Writing",
+  templateKey: "preliminary-writing",
+};
 const PRELIMINARY_LANDING_PATH = "/preliminary-mock-test";
 const TIMER_DURATION_SECONDS = 45 * 60; // 45min
 const TIMER_WARNING_SECONDS = 10 * 60; // warning at 10min left
@@ -508,6 +516,8 @@ useEffect(() => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          ...EXAM_METADATA,
+          exam: EXAM_METADATA.examName,
           studentName: studentName.trim(),
           studentEmail: studentEmail.trim(),
           submittedTasks,
