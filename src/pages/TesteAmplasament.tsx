@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import emailjs from "@emailjs/browser";
 import { placementTests, Choice, Test } from "@/data/placementTests";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -63,58 +64,59 @@ export default function TesteAmplasament() {
         setSubmitting(true);
 
         try {
-            const endpoint = import.meta.env.VITE_PLACEMENT_RESULTS_API_URL || "/api/send-placement-result";
-            const response = await fetch(endpoint, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    firstName: student.firstName.trim(),
-                    lastName: student.lastName.trim(),
-                    age: student.age,
-                    email: student.email.trim(),
-                    testTitle: test.title,
-                    testId: test.id,
-                    answersCount: Object.keys(answers).length,
-                    totalCount: test.questions.length,
-                    score: computedScore,
-                    maxScore: test.questions.length,
-                    percentage,
-                    resultMessage,
-                    writing,
-                    answers: test.questions.map((q) => ({
-                        questionId: q.id,
-                        prompt: q.prompt,
-                        studentAnswer: answers[q.id] || "—",
-                        correctAnswer: q.correct || "—",
-                        isCorrect: answers[q.id] === q.correct,
-                    })),
-                }),
-            });
+            const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID as string;
+            const templateId = (import.meta.env.VITE_EMAILJS_RESULTS_TEMPLATE_ID as string) || (import.meta.env.VITE_EMAILJS_TEMPLATE_ID as string);
+            const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY as string;
 
-            const responseText = await response.text();
-            let data: { error?: string; message?: string } | null = null;
-
-            if (responseText) {
-                try {
-                    data = JSON.parse(responseText) as { error?: string; message?: string };
-                } catch {
-                    data = null;
-                }
+            if (!serviceId || !templateId || !publicKey) {
+                throw new Error("Lipsesc variabilele EmailJS din .env (VITE_EMAILJS_...)");
             }
 
-            if (!response.ok) {
-                const message = data?.error || data?.message || responseText || "The placement test email could not be sent.";
-                throw new Error(message);
-            }
+            const answersDetail = test.questions.map((q) => {
+                const studentAnswer = answers[q.id] || "—";
+                return `Question ${q.id}: ${studentAnswer} | Correct answer: ${q.correct || "—"} | ${answers[q.id] === q.correct ? "Correct" : "Incorrect"}`;
+            }).join("\n");
+
+            const firstName = student.firstName.trim();
+            const lastName = student.lastName.trim();
+            const studentEmail = student.email.trim();
+            const studentName = `${firstName} ${lastName}`;
+
+            const baseParams = {
+                student_name: studentName,
+                first_name: firstName,
+                last_name: lastName,
+                student_email: studentEmail,
+                age: student.age,
+                test_title: test.title,
+                test_id: test.id,
+                answers_count: String(Object.keys(answers).length),
+                total_count: String(test.questions.length),
+                score: String(computedScore),
+                max_score: String(test.questions.length),
+                percentage: String(percentage),
+                result_message: resultMessage,
+                writing: writing.trim() || "—",
+                answers_details: answersDetail,
+                test_status: computedScore >= Math.ceil(test.questions.length * 0.6) ? "passed" : "review",
+            };
+
+            await emailjs.send(serviceId, templateId, {
+                ...baseParams,
+                to_email: studentEmail,
+                recipient_role: "student",
+            }, { publicKey });
+
+            await emailjs.send(serviceId, templateId, {
+                ...baseParams,
+                to_email: "office@proerudio.ro",
+                recipient_role: "office",
+            }, { publicKey });
 
             setStep("done");
         } catch (err: unknown) {
             const runtimeMessage = err instanceof Error ? err.message : "The placement test email could not be sent.";
-            const friendlyMessage = runtimeMessage.includes("Unexpected end of JSON input")
-                ? "Serviciul de email nu a răspuns cu un JSON valid. Verifică variabilele de mediu de pe serverul de deploy și apoi încearcă din nou."
-                : runtimeMessage;
-
-            setError(friendlyMessage);
+            setError(runtimeMessage);
         } finally {
             setSubmitting(false);
         }
