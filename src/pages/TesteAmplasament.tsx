@@ -8,7 +8,7 @@ type StudentInfo = {
     firstName: string;
     lastName: string;
     age: number | "";
-    email?: string;
+    email: string;
 };
 
 export default function TesteAmplasament() {
@@ -21,11 +21,15 @@ export default function TesteAmplasament() {
     // răspunsuri elev (NU barem)
     const [answers, setAnswers] = useState<Record<number, Choice>>({});
     const [writing, setWriting] = useState("");
+    const [submitting, setSubmitting] = useState(false);
+    const [error, setError] = useState<string>("");
 
+    const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(student.email.trim());
     const canStart =
         student.firstName.trim().length > 1 &&
         student.lastName.trim().length > 1 &&
-        typeof student.age === "number"
+        typeof student.age === "number" &&
+        validEmail
 
 
     const answeredCount = Object.keys(answers).length;
@@ -35,15 +39,85 @@ export default function TesteAmplasament() {
         if (!canStart) return;
         setAnswers({});
         setWriting("");
+        setError("");
         setStep("test");
     }
 
-    function submitTest() {
-        // AICI (mai târziu) vei:
-        // 1) trimite răspunsurile + student pe server
-        // 2) serverul calculează scorul cu baremul (safe)
-        // 3) serverul trimite email cu rezultatul
-        setStep("done");
+    async function submitTest() {
+        setError("");
+
+        if (!validEmail) {
+            setError("Te rugăm să introduci un email valid pentru a primi confirmarea testului.");
+            return;
+        }
+
+        const computedScore = test.questions.reduce((acc, q) => {
+            return acc + (answers[q.id] === q.correct ? 1 : 0);
+        }, 0);
+
+        const percentage = Math.round((computedScore / test.questions.length) * 100);
+        const resultMessage = computedScore >= Math.ceil(test.questions.length * 0.6)
+            ? "Felicitări! Nivelul tău a fost evaluat și va fi analizat de echipa noastră."
+            : "Testul a fost înregistrat. Echipa noastră va analiza răspunsurile și te va contacta cu recomandările potrivite.";
+
+        setSubmitting(true);
+
+        try {
+            const endpoint = import.meta.env.VITE_PLACEMENT_RESULTS_API_URL || "/api/send-placement-result";
+            const response = await fetch(endpoint, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    firstName: student.firstName.trim(),
+                    lastName: student.lastName.trim(),
+                    age: student.age,
+                    email: student.email.trim(),
+                    testTitle: test.title,
+                    testId: test.id,
+                    answersCount: Object.keys(answers).length,
+                    totalCount: test.questions.length,
+                    score: computedScore,
+                    maxScore: test.questions.length,
+                    percentage,
+                    resultMessage,
+                    writing,
+                    answers: test.questions.map((q) => ({
+                        questionId: q.id,
+                        prompt: q.prompt,
+                        studentAnswer: answers[q.id] || "—",
+                        correctAnswer: q.correct || "—",
+                        isCorrect: answers[q.id] === q.correct,
+                    })),
+                }),
+            });
+
+            const responseText = await response.text();
+            let data: { error?: string; message?: string } | null = null;
+
+            if (responseText) {
+                try {
+                    data = JSON.parse(responseText) as { error?: string; message?: string };
+                } catch {
+                    data = null;
+                }
+            }
+
+            if (!response.ok) {
+                const message = data?.error || data?.message || responseText || "The placement test email could not be sent.";
+                throw new Error(message);
+            }
+
+            setStep("done");
+        } catch (err: unknown) {
+            const runtimeMessage = err instanceof Error ? err.message : "The placement test email could not be sent.";
+            const friendlyMessage = runtimeMessage.includes("Unexpected end of JSON input")
+                ? "Serviciul de email nu a răspuns cu un JSON valid. Verifică variabilele de mediu de pe serverul de deploy și apoi încearcă din nou."
+                : runtimeMessage;
+
+            setError(friendlyMessage);
+        } finally {
+            setSubmitting(false);
+        }
     }
 
     return (
@@ -85,11 +159,14 @@ export default function TesteAmplasament() {
                                 }
                             />
 
-                            {/* ✅ EMAIL OPȚIONAL */}
+                            {/* ✅ EMAIL OBLIGATORIU */}
                             <div className="flex flex-col">
                                 <input
+                                    type="email"
+                                    required
+                                    autoComplete="email"
                                     className="h-11 rounded-xl border border-border bg-background px-4 text-foreground"
-                                    placeholder="Email (opțional)"
+                                    placeholder="Email *"
                                     value={student.email}
                                     onChange={(e) => setStudent(s => ({ ...s, email: e.target.value }))}
                                 />
@@ -199,13 +276,20 @@ export default function TesteAmplasament() {
                             </div>
                         )}
 
+                        {error && (
+                            <div className="mt-6 rounded-xl border border-destructive/40 bg-destructive/10 p-4 text-sm text-destructive">
+                                {error}
+                            </div>
+                        )}
+
                         <div className="mt-8 flex justify-end">
                             <button
                                 type="button"
                                 onClick={submitTest}
-                                className="h-11 px-6 rounded-xl font-semibold bg-primary text-primary-foreground hover:opacity-90 transition duration-300 ease-in-out"
+                                disabled={submitting}
+                                className="h-11 px-6 rounded-xl font-semibold bg-primary text-primary-foreground hover:opacity-90 transition duration-300 ease-in-out disabled:cursor-not-allowed disabled:opacity-70"
                             >
-                                Trimite testul
+                                {submitting ? "Se trimite..." : "Trimite testul"}
                             </button>
                         </div>
                     </div>
