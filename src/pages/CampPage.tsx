@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import CampSections from "@/components/CampSection"; // ✅ asigură-te că fișierul se numește CampSections.tsx
 import RegistrationForm from "@/components/RegistrationForm";
 import { SectionGallery } from "@/components/SectionGallery";
+import CampMenu from "@/components/CampMenu";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -431,6 +432,9 @@ if (!camp) {
           <CampSections sections={camp.sections.filter((section) => section.type === "textImage" && section.placement === "afterLocation")} />
         </div>
       )}
+      {v.showMenu && camp.menuImage?.src && camp.menuImage.placement === "afterAccommodation" && (
+        <CampMenu src={camp.menuImage.src} alt={camp.menuImage.alt} />
+      )}
 
       {v.showPriceDetails && (
         <section className="pb-6">
@@ -657,22 +661,9 @@ if (!camp) {
         </section>
       ) : null}
 
-      {v.showMenu && camp.menuImage?.src ? (
-        <section className="py-6 bg-secondary/30">
-          <div className="container mx-auto px-4 lg:px-8">
-            <div className="flex items-center gap-3 mb-12 justify-center">
-              <Book className="h-8 w-8 text-primary" />
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground">Meniu orientativ</h2>
-            </div>
-
-            <div className="max-w-4xl mx-auto">
-              <div className="rounded-2xl overflow-hidden shadow-lg">
-                <img src={camp.menuImage.src} alt={camp.menuImage.alt} className="w-full object-contain" />
-              </div>
-            </div>
-          </div>
-        </section>
-      ) : null}
+      {v.showMenu && camp.menuImage?.src && camp.menuImage.placement !== "afterAccommodation" && (
+        <CampMenu src={camp.menuImage.src} alt={camp.menuImage.alt} />
+      )}
 
       {/* Alte tabere */}
       {v.showOtherCamps && camp.otherCamps?.length ? (

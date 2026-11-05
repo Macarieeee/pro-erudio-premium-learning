@@ -276,7 +276,7 @@ export type CampConfig = {
     };
     programImage: { src: string; alt: string };
 
-    menuImage?: { src: string; alt: string };
+    menuImage?: { src: string; alt: string; placement?: "afterAccommodation" };
 
     // DOAR astea două pot fi default
     registrationInfo: typeof DEFAULT_REGISTRATION;

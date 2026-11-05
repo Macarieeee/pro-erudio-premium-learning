@@ -92,7 +92,7 @@ export const marchantsHill2027 = (registrationInfo: CampConfig["registrationInfo
   discounts: [],
   otherCamps: [],
   programImage: { src: "", alt: "" },
-  menuImage: { src: menu, alt: "Meniu orientativ PGL" },
+  menuImage: { src: menu, alt: "Meniu orientativ PGL", placement: "afterAccommodation" },
   registrationInfo,
   requiredDocuments: [],
   form: { selectValue: "Marchants Hill 2027", selectLabel: "Tabără în Marea Britanie – Marchants Hill Activity Centre 2027" },
