@@ -1,4 +1,5 @@
 import type { CampSection } from "@/data/campsData";
+import { SectionGallery } from "./SectionGallery";
 import { MessageCircle, BookOpen, Zap, Users, CheckCircle, Compass, Landmark, Music, Mountain, Moon, Sparkles } from "lucide-react";
 
 type Props = {
@@ -51,6 +52,13 @@ export default function CampSections({ sections }: Props) {
                 // și folosește: const bg = s.variant === "muted" ? "bg-secondary/30" : "";
                 // momentan îl las default fără bg, ca să nu strice alte tabere.
                 const bg = "";
+if (s.type === "gallery") {
+  return (
+    <div key={idx} className="pb-10">
+      <SectionGallery images={s.images} />
+    </div>
+  );
+}
 if (s.type === "activityCards") {
   return (
     <section key={idx} className="py-8 md:py-12">
@@ -181,12 +189,22 @@ if (s.type === "gridBullets") {
                                                 ))}
                                             </div>
                                         </div>
-                                        <img
-                                            src={s.src}
-                                            alt={s.alt}
-                                            loading="lazy"
-                                            className="w-full aspect-[4/3] object-cover rounded-2xl border border-border shadow-lg"
-                                        />
+                                        <div className={s.extraImage ? "grid grid-cols-2 gap-4" : ""}>
+                                            <img
+                                                src={s.src}
+                                                alt={s.alt}
+                                                loading="lazy"
+                                                className={`w-full object-cover rounded-2xl border border-border shadow-lg ${s.extraImage ? "aspect-[3/4]" : "aspect-[4/3]"}`}
+                                            />
+                                            {s.extraImage && (
+                                                <img
+                                                    src={s.extraImage.src}
+                                                    alt={s.extraImage.alt}
+                                                    loading="lazy"
+                                                    className="w-full aspect-[3/4] object-cover rounded-2xl border border-border shadow-lg"
+                                                />
+                                            )}
+                                        </div>
                                     </div>
                                 )}
                                 {s.type === "richText" && (

@@ -197,8 +197,9 @@ export type CampFacility = {
 
 
 export type CampSection =
+    | { type: "gallery"; images: { src: string; alt: string }[] }
     | { type: "activityCards"; groups: { title: string; theme: "adventure" | "evening"; items: string[] }[] }
-    | { type: "textImage"; title: string; paragraphs: string[]; src: string; alt: string }
+    | { type: "textImage"; title: string; paragraphs: string[]; src: string; alt: string; extraImage?: { src: string; alt: string }; placement?: "afterLocation" }
     | { type: "benefitCard"; title: string; items: string[]; theme?: "excursions" }
     | { type: "richText"; title: string; paragraphs: string[] }
     | { type: "bullets"; title?: string; subtitle?: string; items: string[] }
@@ -227,6 +228,7 @@ export type CampConfig = {
         image: string;
         imageAlt: string;
         objectPosition?: string; // ex: "center", "bottom", "50% 80%"
+        expanded?: boolean;
     };
 
     about: {
@@ -249,6 +251,7 @@ export type CampConfig = {
     locationDescription: {
         title: string;
         description: string;
+        details?: { title?: string; paragraphs: string[] };
         image: string;
         imageAlt: string;
     };

@@ -196,9 +196,9 @@ if (!camp) {
       <Navigation />
 
       {/* HERO + QUICK INFO (100vh fold) */}
-      <section className="pt-16 h-[calc(100vh-4rem)] flex flex-col">
+      <section className={camp.hero.expanded ? "pt-20 h-[100svh] flex flex-col" : "pt-16 h-[calc(100vh-4rem)] flex flex-col"}>
         {/* HERO */}
-        <div className="relative flex-1 overflow-hidden">
+        <div className={camp.hero.expanded ? "relative flex-1 min-h-0 overflow-hidden" : "relative flex-1 overflow-hidden"}>
           <img
             src={camp.hero.image}
             alt={camp.hero.imageAlt}
@@ -210,7 +210,7 @@ if (!camp) {
           <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-background via-background/40 to-transparent" />
 
           {/* Text */}
-          <div className="absolute bottom-[-20px] left-0 right-0 p-6 lg:p-8">
+          <div className={camp.hero.expanded ? "absolute bottom-0 left-0 right-0 py-4" : "absolute bottom-[-20px] left-0 right-0 p-6 lg:p-8"}>
             <div className="container mx-auto px-4 lg:px-8">
               <span className="inline-block bg-accent text-accent-foreground px-4 py-1 rounded-full text-sm font-semibold">
                 {camp.hero.badge}
@@ -236,7 +236,7 @@ if (!camp) {
         </div>
 
         {/* QUICK INFO */}
-        <div className="bg-secondary/30 py-4 md:py-6">
+        <div className="shrink-0 bg-secondary/30 py-4 md:py-6">
           <div className="container mx-auto px-4 lg:px-8">
             <div className="grid grid-cols-2 md:grid-cols-5 gap-y-4 md:gap-y-0">
               {/* Locație */}
@@ -376,6 +376,18 @@ if (!camp) {
                 <p className="text-muted-foreground mb-8 leading-relaxed whitespace-pre-line">
                   {camp.locationDescription.description}
                 </p>
+                {camp.locationDescription.details && (
+                  <div>
+                    {camp.locationDescription.details.title && (
+                      <h4 className="text-xl font-bold text-foreground mb-4">{camp.locationDescription.details.title}</h4>
+                    )}
+                    <div className="space-y-5">
+                      {camp.locationDescription.details.paragraphs.map((paragraph, index) => (
+                        <p key={index} className="text-muted-foreground leading-relaxed">{paragraph}</p>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
 
               {camp.locationDescription?.image ? (
@@ -414,6 +426,12 @@ if (!camp) {
       ) : null}
 
       {/* Ce include tariful / Ce nu include */}
+      {camp.sections?.some((section) => section.type === "textImage" && section.placement === "afterLocation") && (
+        <div className="container mx-auto px-4 lg:px-8">
+          <CampSections sections={camp.sections.filter((section) => section.type === "textImage" && section.placement === "afterLocation")} />
+        </div>
+      )}
+
       {v.showPriceDetails && (
         <section className="pb-6">
           <div className="container mx-auto px-6 lg:px-6">
@@ -493,7 +511,7 @@ if (!camp) {
       {camp.sections?.length ? (
         <section>
           <div className="container mx-auto px-4 lg:px-8">
-            {camp.sections.map((section, index) => (
+            {camp.sections.filter((section) => !(section.type === "textImage" && section.placement === "afterLocation")).map((section, index) => (
               <div key={index} className={section.type === "textImage" ? "w-full" : "max-w-6xl mx-auto"}>
                 <CampSections sections={[section]} />
               </div>
