@@ -345,7 +345,7 @@ if (!camp) {
                       <span className="text-foreground">{highlight}</span>
                     </div>
                   ))}
-                  <h3 className="text-2xl font-bold text-foreground mb-6 pt-6">Ce nu include tabăra</h3>
+                  {camp.notIncludedInPrice.length > 0 && <h3 className="text-2xl font-bold text-foreground mb-6 pt-6">Ce nu include tabăra</h3>}
                   <div className="space-y-4">
                     {camp.notIncludedInPrice.map((item, index) => (
                       <div key={index} className="flex items-center gap-3">
@@ -493,9 +493,11 @@ if (!camp) {
       {camp.sections?.length ? (
         <section>
           <div className="container mx-auto px-4 lg:px-8">
-            <div className="max-w-6xl mx-auto">
-              <CampSections sections={camp.sections} />
-            </div>
+            {camp.sections.map((section, index) => (
+              <div key={index} className={section.type === "textImage" ? "w-full" : "max-w-6xl mx-auto"}>
+                <CampSections sections={[section]} />
+              </div>
+            ))}
           </div>
           <SectionGallery images={camp.galleries?.other} />
         </section>
@@ -715,7 +717,7 @@ if (!camp) {
 
             <Card className="bg-card border-0 shadow-2xl">
               <CardContent className="p-8">
-                <RegistrationForm variant="light" />
+                <RegistrationForm key={camp.slug} variant="light" defaultCamp={camp.year === 2027 ? camp.form.selectValue : undefined} />
               </CardContent>
             </Card>
           </div>

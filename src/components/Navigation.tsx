@@ -5,6 +5,10 @@ import { Link } from "react-router-dom";
 import logo from "@/assets/logo.svg";
 
 const campsByYear = [
+  { year: 2027, camps: [
+    { label: "Marchants Hill Activity Centre", to: "/tabara-marea-britanie-marchants-hill-2027" },
+    { label: "Tabăra de engleză și aventură – Poiana Mărului", to: "/tabara-poiana-marului-2027" },
+  ] },
   {
     year: 2026,
     camps: [
@@ -54,17 +58,17 @@ const Navigation = () => {
 
   // pentru mobile accordion simple
   const [mobileOpen, setMobileOpen] = useState<{
-    tabere2026: boolean;
+    tabere2027: boolean;
     arhiva: boolean;
     jurnale: boolean;
   }>({
-    tabere2026: false,
+    tabere2027: false,
     arhiva: false,
     jurnale: false,
   });
 
-  const camps2026 = useMemo(() => campsByYear.find((x) => x.year === 2026)?.camps ?? [], []);
-  const archiveByYear = useMemo(() => campsByYear.filter((x) => x.year !== 2026), []);
+  const camps2027 = useMemo(() => campsByYear.find((x) => x.year === 2027)?.camps ?? [], []);
+  const archiveByYear = useMemo(() => campsByYear.filter((x) => x.year !== 2027), []);
   const journalYears = useMemo(() => campsByYear.map((x) => x.year), []);
 
   return (
@@ -84,16 +88,16 @@ const Navigation = () => {
               Despre Tabere
             </Link>
 
-            {/* Tabere 2026 dropdown */}
+            {/* Tabere 2027 dropdown */}
             <div className="relative group">
               <button className="flex items-center gap-1 text-secondary-foreground/90 hover:text-secondary-foreground font-large transition-colors font-medium">
-                Tabere 2026
+                Tabere 2027
                 <ChevronDown className="h-4 w-4 transition-transform group-hover:rotate-180" />
               </button>
 
               <div className="absolute top-full left-[-50px] pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                 <div className="bg-background border border-border rounded-lg shadow-lg py-2 min-w-[360px]">
-                  {camps2026.map((camp) => (
+                  {camps2027.map((camp) => (
                     <Link
                       key={camp.to}
                       to={camp.to}
@@ -194,19 +198,19 @@ const Navigation = () => {
               Despre Tabere
             </Link>
 
-            {/* Tabere 2026 */}
+            {/* Tabere 2027 */}
             <div className="py-2">
               <button
                 className="w-full flex items-center justify-between text-secondary-foreground font-medium py-2"
-                onClick={() => setMobileOpen((s) => ({ ...s, tabere2026: !s.tabere2026 }))}
+                onClick={() => setMobileOpen((s) => ({ ...s, tabere2027: !s.tabere2027 }))}
               >
-                <span>Tabere 2026</span>
-                <ChevronDown className={`h-4 w-4 transition-transform ${mobileOpen.tabere2026 ? "rotate-180" : ""}`} />
+                <span>Tabere 2027</span>
+                <ChevronDown className={`h-4 w-4 transition-transform ${mobileOpen.tabere2027 ? "rotate-180" : ""}`} />
               </button>
 
-              {mobileOpen.tabere2026 && (
+              {mobileOpen.tabere2027 && (
                 <div className="pl-4 space-y-2 pt-2">
-                  {camps2026.map((camp) => (
+                  {camps2027.map((camp) => (
                     <Link
                       key={camp.to}
                       to={camp.to}

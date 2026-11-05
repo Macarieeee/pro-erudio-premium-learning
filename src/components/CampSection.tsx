@@ -1,4 +1,5 @@
 import type { CampSection } from "@/data/campsData";
+import { MessageCircle, BookOpen, Zap, Users, CheckCircle, Compass, Landmark, Music, Mountain, Moon, Sparkles } from "lucide-react";
 
 type Props = {
     sections?: CampSection[];
@@ -50,6 +51,74 @@ export default function CampSections({ sections }: Props) {
                 // și folosește: const bg = s.variant === "muted" ? "bg-secondary/30" : "";
                 // momentan îl las default fără bg, ca să nu strice alte tabere.
                 const bg = "";
+if (s.type === "activityCards") {
+  return (
+    <section key={idx} className="py-8 md:py-12">
+      <div className="grid gap-6 lg:grid-cols-2 items-start">
+        {s.groups.map((group) => {
+          const adventure = group.theme === "adventure";
+          const Icon = adventure ? Mountain : Moon;
+          return (
+            <div key={group.title} className={`overflow-hidden rounded-3xl border shadow-sm ${adventure ? "border-emerald-200 bg-emerald-50/60" : "border-indigo-200 bg-indigo-50/60"}`}>
+              <div className={`p-6 sm:p-8 border-b ${adventure ? "border-emerald-200/70" : "border-indigo-200/70"}`}>
+                <div className="flex items-center gap-4 mb-4">
+                  <span className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl text-white ${adventure ? "bg-emerald-700" : "bg-indigo-700"}`}>
+                    <Icon className="h-6 w-6" aria-hidden="true" />
+                  </span>
+                  <h2 className="text-2xl sm:text-3xl font-bold text-foreground">{group.title}</h2>
+                </div>
+                <p className={`text-sm leading-relaxed ${adventure ? "text-emerald-900" : "text-indigo-900"}`}>
+                  {adventure ? "Mișcare, explorare și provocări în echipă." : "Jocuri, muzică și momente de prietenie la finalul zilei."}
+                </p>
+              </div>
+              <ul className="grid list-none grid-cols-1 sm:grid-cols-2 gap-3 p-6 sm:p-8">
+                {group.items.map((item) => (
+                  <li key={item} className={`flex items-center gap-3 rounded-xl border bg-white p-3 text-sm font-medium ${adventure ? "border-emerald-100 text-emerald-950" : "border-indigo-100 text-indigo-950"}`}>
+                    <Sparkles className={`h-4 w-4 shrink-0 ${adventure ? "text-emerald-600" : "text-indigo-600"}`} aria-hidden="true" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+if (s.type === "benefitCard") {
+  const icons = s.theme === "excursions" ? [Landmark, Music] : [MessageCircle, BookOpen, Zap, Users];
+  const TitleIcon = s.theme === "excursions" ? Compass : MessageCircle;
+  return (
+    <section key={idx} className="py-8 md:py-12">
+      <div className="max-w-5xl mx-auto overflow-hidden rounded-3xl border border-primary/15 bg-gradient-to-br from-primary/5 via-background to-accent/10 shadow-sm">
+        <div className="p-6 sm:p-8 md:p-10">
+          <div className="flex items-center gap-4 mb-8">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-sm">
+              <TitleIcon className="h-6 w-6" aria-hidden="true" />
+            </div>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground text-left">
+              {s.title}
+            </h2>
+          </div>
+          <ul className="grid list-none gap-4 md:grid-cols-2">
+            {s.items.map((item, i) => {
+              const Icon = icons[i] ?? CheckCircle;
+              return (
+                <li key={i} className="flex items-start gap-4 rounded-2xl border border-primary/10 bg-background/80 p-5 text-left">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                    <Icon className="h-5 w-5" aria-hidden="true" />
+                  </span>
+                  <p className="pt-1 text-base font-medium leading-relaxed text-foreground/90">{item}</p>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </div>
+    </section>
+  );
+}
 if (s.type === "gridBullets") {
   const cols = s.columns ?? 2;
 
@@ -95,9 +164,31 @@ if (s.type === "gridBullets") {
 }
                 return (
                     <section key={idx} className={`py-6 ${bg}`}>
-                        <div className="container mx-auto px-4 lg:px-8">
-                            <div className="max-w-5xl mx-auto">
+                        <div className={s.type === "textImage" ? "w-full" : "container mx-auto px-4 lg:px-8"}>
+                            <div className={s.type === "textImage" ? "w-full" : "max-w-5xl mx-auto"}>
                                 {/* Rich Text */}
+                                {s.type === "textImage" && (
+                                    <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                                        <div>
+                                            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
+                                                {s.title}
+                                            </h2>
+                                            <div className="space-y-6">
+                                                {s.paragraphs.map((paragraph, i) => (
+                                                    <p key={i} className="text-muted-foreground leading-relaxed">
+                                                        {paragraph}
+                                                    </p>
+                                                ))}
+                                            </div>
+                                        </div>
+                                        <img
+                                            src={s.src}
+                                            alt={s.alt}
+                                            loading="lazy"
+                                            className="w-full aspect-[4/3] object-cover rounded-2xl border border-border shadow-lg"
+                                        />
+                                    </div>
+                                )}
                                 {s.type === "richText" && (
                                     <>
                                         <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
@@ -187,7 +278,7 @@ if (s.type === "gridBullets") {
                                         <img
                                             src={s.src}
                                             alt={s.alt}
-                                            className="w-full rounded-xl border border-border"
+                                            className={`w-full rounded-xl border border-border ${s.compact ? "max-w-md mx-auto" : ""}`}
                                         />
                                     </>
                                 )}

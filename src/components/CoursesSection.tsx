@@ -1,56 +1,37 @@
-import { Plane, Mountain, Sun, Snowflake, Backpack } from "lucide-react";
+import { Plane, Mountain } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
 const CoursesSection = () => {
-  const camps = [
-    {
-      icon: Plane,
-      title: "Tabără de limbă engleză si aventură în Marea Britanie",
-      subtitle: "Grosvenor Activity Centre",
-      description: "Cursuri de limba engleză, activități de aventură in aer liber (rafting, escalada, scrimă, canotaj, tir cu arcul, etc.), vizite culturale și concursuri în echipe multinaționale.",
-      color: "bg-primary",
-      link: "/tabara-marea-britanie-grosvenor-hall-2026",
-    },
-    {
-      icon: Backpack,
-      title: "Școală internațională de vară în Irlanda de Nord",
-      subtitle: "Dublin City University",
-      description: "Cursuri de limba engleză la renumita universitate din Dublin. Cazare în campus universitar, excursii la obiective turistice locale, activități sportive și seri tematice în grupuri internaționale.",
-      color: "bg-emerald-500",
-      link: "/scoala-de-vara-dublin-2026",
-    },
-    {
-      icon: Sun,
-      title: "Tabără de limba engleză în România",
-      subtitle: "Moinești, Județul Bacău",
-      description: "Cursuri de limba engleză dimineața, provocări pe echipe la atelierele de după-amiază și seară, mese cu bufet suedez, cazare în complex turistic nou și excursii la obiective turistice din zonă.",
-      color: "bg-amber-500",
-      link: "/tabara-moinesti-2026",
-    },
-    {
-      icon: Mountain,
-      title: "Tabără de limba engleză în România",
-      subtitle: "Poiana Mărului, Județul Brașov",
-      description: "Tabără în natură, cursuri de limba engleză, drumeții, provocări în echipe și seri tematice. Perfect pentru copiii care iubesc aventura.",
-      color: "bg-sky-500",
-      link: "/tabara-poiana-marului-2026",
-    },
-  ];
+  const camps = [{
+    icon: Plane,
+    title: "Marchants Hill Activity Centre 2027",
+    subtitle: "24–31 iulie 2027 | 11–16 ani | 790 GBP",
+    description: "Cursuri de limba engleză, aventură în natură și excursii culturale în sudul Angliei. 8 zile / 7 nopți la centrul PGL din Surrey.",
+    color: "bg-primary",
+    link: "/tabara-marea-britanie-marchants-hill-2027",
+  }, {
+    icon: Mountain,
+    title: "English Explorers – Poiana Mărului 2027",
+    subtitle: "18–23 iulie 2027 | 7–14 ani | 2.380 Lei",
+    description: "6 zile de engleză, aventură și prietenii noi la Poiana Mărului Ranch. Ateliere interactive, provocări pe echipe și excursii culturale, cu transport și pensiune completă incluse. Preț promoțional.",
+    color: "bg-emerald-500",
+    link: "/tabara-poiana-marului-2027",
+  }];
 
   return (
     <section id="tabere" className="py-10 bg-secondary">
       <div className="container mx-auto px-4 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            Tipuri de Tabere
+            Tabere 2027
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Alege tabăra potrivită pentru copilul tău. Fiecare program combină învățarea limbii engleze cu activități culturale, sportive, artistice și de divertisment.
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
           {camps.map((camp, index) => (
             <div 
               key={index}

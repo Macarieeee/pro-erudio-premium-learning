@@ -14,7 +14,7 @@ interface RegistrationFormProps {
   defaultCamp?: string;
 }
 
-const RegistrationForm = ({ variant = "light", defaultCamp = "Școala de vara Dublin 2026" }: RegistrationFormProps) => {
+const RegistrationForm = ({ variant = "light", defaultCamp = "Marchants Hill 2027" }: RegistrationFormProps) => {
   const { toast } = useToast();
 
   const [formData, setFormData] = useState({
@@ -115,10 +115,8 @@ const RegistrationForm = ({ variant = "light", defaultCamp = "Școala de vara Du
             <SelectValue placeholder="Selectează tabăra" />
           </SelectTrigger>
           <SelectContent className="bg-card border-border">
-            <SelectItem value="Școala de vara Dublin 2026">Școala internațională de vară de limbă engleză la Dublin 2026</SelectItem>
-            <SelectItem value="Tabara Marea Britanie Grosvenor Hall 2026">Tabara in Marea Britanie Grosvenor Hall Activity Centre 2026</SelectItem>
-            <SelectItem value="Tabara Moinești 2026">Tabără de limba engleză și aventură în România – Moinești 2026</SelectItem>
-            <SelectItem value="Tabara Poiana Mărului 2026">Tabără de limba engleză și aventură în România – Poiana Mărului 2026</SelectItem>
+            <SelectItem value="Marchants Hill 2027">Marchants Hill Activity Centre 2027</SelectItem>
+            <SelectItem value="Poiana Mărului 2027">Tabăra de engleză și aventură – Poiana Mărului 2027</SelectItem>
           </SelectContent>
         </Select>
       </div>

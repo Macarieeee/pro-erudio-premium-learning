@@ -1,3 +1,5 @@
+import { marchantsHill2027 } from "./marchantsHill2027";
+import { poianaMarului2027 } from "./poianaMarului2027";
 // src/data/campsData.ts
 import type { LucideIcon } from "lucide-react";
 import {
@@ -195,6 +197,9 @@ export type CampFacility = {
 
 
 export type CampSection =
+    | { type: "activityCards"; groups: { title: string; theme: "adventure" | "evening"; items: string[] }[] }
+    | { type: "textImage"; title: string; paragraphs: string[]; src: string; alt: string }
+    | { type: "benefitCard"; title: string; items: string[]; theme?: "excursions" }
     | { type: "richText"; title: string; paragraphs: string[] }
     | { type: "bullets"; title?: string; subtitle?: string; items: string[] }
     | { type: "twoCols"; title: string; left: string[]; right: string[] }
@@ -208,7 +213,7 @@ export type CampSection =
             items: string[];
         }[];
     }
-    | { type: "image"; title?: string; src: string; alt: string };
+    | { type: "image"; title?: string; src: string; alt: string; compact?: boolean };
 
 type GalleryImage = { src: string; alt?: string };
 export type CampConfig = {
@@ -434,6 +439,8 @@ function makeFacilities(kind: "uk" | "dublin" | "romania-mountain" | "romania-ci
 ======================= */
 
 export const campsData: CampConfig[] = [
+    marchantsHill2027(DEFAULT_REGISTRATION),
+    poianaMarului2027(DEFAULT_REGISTRATION),
     // ================= 2026 =================
     {
         slug: "scoala-de-vara-dublin-2026",
@@ -617,7 +624,7 @@ export const campsData: CampConfig[] = [
         locationDescription: {
             title: "Grosvenor Hall Activity Centre",
             description:
-                "Centrul de aventură în care vom merge anul acesta, Grosvenor Hall din Kent, este situat pe coasta de sud-vest a Angliei, aproape de orașul Dover și la două ore distanță de Londra. Unul dintre cele mai mari centre PGL, are o capacitate de cazare de peste 1000 de locuri și se întinde pe 50 de hectare de teren. Grosvenor Hall este un fost conac care cuprinde, pe langă pădure și zone întinse de gazon, un lac spectaculos. Din primul moment când intri in centrul de activități simți că te cuprinde un fior de adrenalină, iar pe măsură ce descoperi tot ceea ce oferă, îți dai seama că aici se găsește ceva de făcut pentru toate gusturile. Centrul de activități Grosvenor Hall cuprinde peste 20 de zone de aventură: terenuri de sport potrivite tuturor condițiilor meteo, săli de activități la interior (inclusiv sală de jocuri), teren de scrimă, ateliere de construcție plute, zonă de cățărări, zonă de trekking, tir cu arcul, tiroliană, grajduri, lacuri, păduri etc, astfel încât o săptămâna pare scurtă pentru câte vom avea de făcut.",
+                "Centrul de aventură în care vom merge anul acesta, Grosvenor Hall din Kent, este situat pe coasta de sud-vest a Angliei, aproape de orașul Dover și la două ore distanță de Londra.\n\nUnul dintre cele mai mari centre PGL, are o capacitate de cazare de peste 1000 de locuri și se întinde pe 50 de hectare de teren. Grosvenor Hall este un fost conac care cuprinde, pe langă pădure și zone întinse de gazon, un lac spectaculos.\n\nDin primul moment când intri in centrul de activități simți că te cuprinde un fior de adrenalină, iar pe măsură ce descoperi tot ceea ce oferă, îți dai seama că aici se găsește ceva de făcut pentru toate gusturile.\n\nCentrul de activități Grosvenor Hall cuprinde peste 20 de zone de aventură: terenuri de sport potrivite tuturor condițiilor meteo, săli de activități la interior (inclusiv sală de jocuri), teren de scrimă, ateliere de construcție plute, zonă de cățărări, zonă de trekking, tir cu arcul, tiroliană, grajduri, lacuri, păduri etc, astfel încât o săptămâna pare scurtă pentru câte vom avea de făcut.",
             image: heroGrosvenor,
             imageAlt: "Grosvenor Hall",
         },
@@ -640,7 +647,7 @@ export const campsData: CampConfig[] = [
             "Asigurare storno/ de călătorie",
         ],
         activitiesDescription:
-            "Activitățile din tabără sunt numeroase și foarte variate, fiind concepute atât pentru participare individuală, cât și pentru lucrul în echipă, toate fiind disponibile în cadrul centrului, chiar dacă nu se poate anticipa exact care dintre ele vor fi desfășurate în săptămâna în care grupul va fi prezent. Printre activitățile de zi se numără: Abseiling, Aeroball, Archery, Buggy Building, Canoeing, Challenge Course, Climbing, Crate Challenge, Fencing, Giant Swing, Jacob’s Ladder, Orienteering, Problem Solving, Raft Building, Sensory Trail, Survivor, Trapeze, Vertical Challenge și Zip Wire. Seara, programul continuă cu activități interactive și recreative precum Ambush, Campfire, Capture the Flag, Disco, Passport to the World, PGL Sports Night, Photo Challenge, Robot Wars, Quiz Show, Snap Shot, Splash și Wacky Races. Pe lângă aceste experiențe, participanții vor descoperi istoria și cultura zonei prin două excursii, una de o zi întreagă și una de jumătate de zi, cu posibile destinații două dintre următoarele orașe: Dover (cu vizitarea castelului), Portsmouth (cu vizitarea castelului), Cambridge (unde se face punting pe râu), Canterbury (cu vizitarea catedralei), Brighton (cu intrare la Brighton Sea Life Centre) și Leeds (cu vizitarea castelului).",
+            "Activitățile din tabără sunt numeroase și foarte variate, fiind concepute atât pentru participare individuală, cât și pentru lucrul în echipă, toate fiind disponibile în cadrul centrului, chiar dacă nu se poate anticipa exact care dintre ele vor fi desfășurate în săptămâna în care grupul va fi prezent.\n\nPrintre activitățile de zi se numără: Abseiling, Aeroball, Archery, Buggy Building, Canoeing, Challenge Course, Climbing, Crate Challenge, Fencing, Giant Swing, Jacob’s Ladder, Orienteering, Problem Solving, Raft Building, Sensory Trail, Survivor, Trapeze, Vertical Challenge și Zip Wire.\n\nSeara, programul continuă cu activități interactive și recreative precum Ambush, Campfire, Capture the Flag, Disco, Passport to the World, PGL Sports Night, Photo Challenge, Robot Wars, Quiz Show, Snap Shot, Splash și Wacky Races.\n\nPe lângă aceste experiențe, participanții vor descoperi istoria și cultura zonei prin două excursii, una de o zi întreagă și una de jumătate de zi, cu posibile destinații două dintre următoarele orașe: Dover (cu vizitarea castelului), Portsmouth (cu vizitarea castelului), Cambridge (unde se face punting pe râu), Canterbury (cu vizitarea catedralei), Brighton (cu intrare la Brighton Sea Life Centre) și Leeds (cu vizitarea castelului).",
         activityImages: IMGSET_DEFAULT,
         discounts: [
             { type: "Continuitate", value: "5%", condition: "Doar pentru copiii care au participat la programul de tabără din vara 2025" },

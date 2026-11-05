@@ -62,14 +62,21 @@ for (const c of campsSeo) {
   const slug = String(c.slug).replace(/^\/+/, "");
   const url = `${SITE_URL}/${slug}`;
 
-  const pageHtml = injectHead(baseHtml, {
+  const folder = path.join(distDir, slug);
+  const renderedPath = path.join(folder, "index.html");
+  const flatRenderedPath = path.join(distDir, `${slug}.html`);
+  const renderedHtml = fs.existsSync(renderedPath)
+    ? fs.readFileSync(renderedPath, "utf8")
+    : fs.existsSync(flatRenderedPath)
+      ? fs.readFileSync(flatRenderedPath, "utf8")
+      : baseHtml;
+  const pageHtml = injectHead(renderedHtml, {
     title: c.title,
     description: c.description,
     image: c.image,
     url,
   });
 
-  const folder = path.join(distDir, slug);
   fs.mkdirSync(folder, { recursive: true });
   fs.writeFileSync(path.join(folder, "index.html"), pageHtml, "utf8");
 }
