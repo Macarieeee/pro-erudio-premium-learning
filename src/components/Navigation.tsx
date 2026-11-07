@@ -72,27 +72,27 @@ const Navigation = () => {
   const journalYears = useMemo(() => campsByYear.map((x) => x.year), []);
 
   return (
-    <nav className="fixed top-0 w-full bg-secondary/95 backdrop-blur-sm z-50 pb-2 pt-2">
+    <nav className="fixed top-0 w-full bg-secondary/95 backdrop-blur-sm z-50 py-3">
       <div className="container mx-auto px-4 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <Link to="/" className="flex items-center gap-2">
-            <img src={logo} alt="Pro Erudio Logo" className="h-16 w-auto" />
+        <div className="flex items-center justify-between h-20 gap-4">
+          <Link to="/" className="flex shrink-0 items-center gap-2">
+            <img src={logo} alt="Pro Erudio Logo" className="h-20 w-auto max-w-[calc(100vw-6rem)] object-contain" />
           </Link>
 
           {/* DESKTOP */}
-          <div className="hidden lg:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center gap-3 xl:gap-6">
             <Link
               to="/"
-              className="text-secondary-foreground/90 hover:text-secondary-foreground transition-colors font-medium font-large"
+              className="text-secondary-foreground/90 hover:text-secondary-foreground transition-colors font-semibold text-lg xl:text-xl py-3 px-2 whitespace-nowrap"
             >
               Despre Tabere
             </Link>
 
             {/* Tabere 2027 dropdown */}
             <div className="relative group">
-              <button className="flex items-center gap-1 text-secondary-foreground/90 hover:text-secondary-foreground font-large transition-colors font-medium">
+              <button className="flex items-center gap-2 text-secondary-foreground/90 hover:text-secondary-foreground text-lg xl:text-xl transition-colors font-semibold py-3 px-2 whitespace-nowrap">
                 Tabere 2027
-                <ChevronDown className="h-4 w-4 transition-transform group-hover:rotate-180" />
+                <ChevronDown className="h-5 w-5 transition-transform group-hover:rotate-180" />
               </button>
 
               <div className="absolute top-full left-[-50px] pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
@@ -112,9 +112,9 @@ const Navigation = () => {
 
             {/* Arhiva tabere dropdown (ani + lista) */}
             <div className="relative group">
-              <button className="flex items-center gap-1 text-secondary-foreground/90 hover:text-secondary-foreground font-large transition-colors font-medium">
+              <button className="flex items-center gap-2 text-secondary-foreground/90 hover:text-secondary-foreground text-lg xl:text-xl transition-colors font-semibold py-3 px-2 whitespace-nowrap">
                 Arhivă tabere
-                <ChevronDown className="h-4 w-4 transition-transform group-hover:rotate-180" />
+                <ChevronDown className="h-5 w-5 transition-transform group-hover:rotate-180" />
               </button>
 
               <div className="absolute top-full left-[-500px] pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
@@ -145,9 +145,9 @@ const Navigation = () => {
 
             {/* Jurnale tabara dropdown */}
             <div className="relative group">
-              <button className="flex items-center gap-1 text-secondary-foreground/90 hover:text-secondary-foreground font-large transition-colors font-medium">
+              <button className="flex items-center gap-2 text-secondary-foreground/90 hover:text-secondary-foreground text-lg xl:text-xl transition-colors font-semibold py-3 px-2 whitespace-nowrap">
                 <Link to="/jurnale">Jurnale Tabără</Link>
-                <ChevronDown className="h-4 w-4 transition-transform group-hover:rotate-180" />
+                <ChevronDown className="h-5 w-5 transition-transform group-hover:rotate-180" />
               </button>
 
               <div className="absolute top-full left-[-100px] pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
@@ -174,11 +174,11 @@ const Navigation = () => {
 
           {/* MOBILE burger */}
           <button
-            className="lg:hidden text-black"
+            className="lg:hidden text-black shrink-0 inline-flex h-12 w-12 items-center justify-center"
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
           >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
+            {isOpen ? <X size={30} /> : <Menu size={30} />}
           </button>
         </div>
       </div>
@@ -187,8 +187,8 @@ const Navigation = () => {
       {isOpen && (
         <div className="lg:hidden bg-secondary/95 border-t border-secondary-foreground/20">
           <div
-            className="container mx-auto px-4 py-4 space-y-4 overflow-y-auto overscroll-contain"
-            style={{ maxHeight: "calc(100vh - 80px)" }} // 80px ≈ înălțimea navbarului tău
+            className="container mx-auto px-4 py-4 text-lg space-y-4 overflow-y-auto overscroll-contain"
+            style={{ maxHeight: "calc(100dvh - 104px)" }}
           >
             <Link
               to="/"

@@ -162,7 +162,7 @@ const AboutPage = () => {
       <Navigation />
 
       {/* Hero Section */}
-      <section className="relative pt-16">
+      <section className="relative pt-[104px]">
         <div className="h-[50vh] relative overflow-hidden">
           <img
             src={aboutClassroomImage}

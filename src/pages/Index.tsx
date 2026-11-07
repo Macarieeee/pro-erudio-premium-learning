@@ -55,10 +55,10 @@ const Index = () => {
         <AboutSection />
         <CoursesSection />
         {/* <SummerCamps /> */}
-        <Articol />
         <WhyChooseUs />
         {/* <Testimonials /> */}
         <EnglishTestSection />
+        <Articol />
         <CTASection />
       </main>
       <Footer />

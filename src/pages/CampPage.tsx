@@ -200,7 +200,7 @@ if (!camp) {
       <Navigation />
 
       {/* HERO + QUICK INFO (100vh fold) */}
-      <section className={camp.hero.expanded ? "pt-20 h-[100svh] flex flex-col" : "pt-16 h-[calc(100vh-4rem)] flex flex-col"}>
+      <section className={camp.hero.expanded ? "pt-[104px] h-[100svh] flex flex-col" : "pt-[104px] h-[calc(100vh-4rem)] flex flex-col"}>
         {/* HERO */}
         <div className={camp.hero.expanded ? "relative flex-1 min-h-0 overflow-hidden" : "relative flex-1 overflow-hidden"}>
           <img
