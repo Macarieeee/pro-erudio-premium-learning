@@ -1,5 +1,6 @@
 import { marchantsHill2027 } from "./marchantsHill2027";
 import { poianaMarului2027 } from "./poianaMarului2027";
+import { TerraceIcon } from "@/components/icons/TerraceIcon";
 // src/data/campsData.ts
 import type { LucideIcon } from "lucide-react";
 import {
@@ -27,7 +28,6 @@ import {
     TentTree,
     Gamepad2,
     Trees,
-    PawPrint,
     ParkingCircle,
     Sofa,
 } from "lucide-react";
@@ -197,12 +197,13 @@ export type CampFacility = {
 
 
 export type CampSection =
-    | { type: "gallery"; images: { src: string; alt: string }[] }
+    | { type: "journalLink"; title: string; text: string; to: string }
+    | { type: "gallery"; images: { src: string; alt: string }[]; compact?: boolean }
     | { type: "activityCards"; groups: { title: string; theme: "adventure" | "evening"; items: string[] }[] }
     | { type: "textImage"; title: string; paragraphs: string[]; src: string; alt: string; extraImage?: { src: string; alt: string }; placement?: "afterLocation" }
     | { type: "benefitCard"; title: string; items: string[]; theme?: "excursions" }
     | { type: "richText"; title: string; paragraphs: string[] }
-    | { type: "bullets"; title?: string; subtitle?: string; items: string[] }
+    | { type: "bullets"; title?: string; subtitle?: string; items: string[]; image?: { src: string; alt: string } }
     | { type: "twoCols"; title: string; left: string[]; right: string[] }
     | { type: "note"; title?: string; text: string }
     | {
@@ -214,7 +215,7 @@ export type CampSection =
             items: string[];
         }[];
     }
-    | { type: "image"; title?: string; src: string; alt: string; compact?: boolean };
+    | { type: "image"; title?: string; src: string; alt: string; compact?: boolean; showcase?: boolean; extraImage?: { src: string; alt: string } };
 
 type GalleryImage = { src: string; alt?: string };
 export type CampConfig = {
@@ -239,6 +240,7 @@ export type CampConfig = {
     };
 
     quickInfo: {
+        priceLabel?: string;
         location: string;
         duration: string;
         ageGroup: string;
@@ -254,15 +256,22 @@ export type CampConfig = {
         details?: { title?: string; paragraphs: string[] };
         image: string;
         imageAlt: string;
+        imageScale?: number;
+        imageHeight?: number;
+        objectPosition?: string;
     };
 
     locationFacilities: CampFacility[];
 
     includedInPrice: string[];
     notIncludedInPrice: string[];
+    priceDetailsImages?: { src: string; alt: string }[];
 
     activitiesDescription: string;
+    activitiesTitle?: string;
     activityImages: string[];
+    activityImagesLayout?: "tall-left";
+    compactOtherGallery?: boolean;
 
     discounts: { type: string; value: string; condition: string }[];
 
@@ -385,7 +394,7 @@ function makeFacilities(kind: "uk" | "dublin" | "romania-mountain" | "romania-ci
             { icon: TentTree, label: "Terasă cu capacitate de 60 de locuri" },
             { icon: Gamepad2, label: "Loc de joacă pentru copii la exterior" },
             { icon: Trees, label: "Curte interioară cu peisaj mirific" },
-            { icon: PawPrint, label: "Mică fermă de animale" },
+            { icon: TerraceIcon, label: "2 terase spațioase" },
             { icon: ParkingCircle, label: "Parcare proprie" },
         ];
     }

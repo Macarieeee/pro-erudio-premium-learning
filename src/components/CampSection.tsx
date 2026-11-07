@@ -1,4 +1,5 @@
 import type { CampSection } from "@/data/campsData";
+import { Link } from "react-router-dom";
 import { SectionGallery } from "./SectionGallery";
 import { MessageCircle, BookOpen, Zap, Users, CheckCircle, Compass, Landmark, Music, Mountain, Moon, Sparkles } from "lucide-react";
 
@@ -52,10 +53,24 @@ export default function CampSections({ sections }: Props) {
                 // și folosește: const bg = s.variant === "muted" ? "bg-secondary/30" : "";
                 // momentan îl las default fără bg, ca să nu strice alte tabere.
                 const bg = "";
+if (s.type === "journalLink") {
+  return (
+    <section key={idx} className="my-8 md:my-12 overflow-hidden rounded-3xl border border-primary/15 bg-gradient-to-br from-primary/10 via-background to-accent/15 p-6 md:p-10 shadow-sm">
+      <div className="flex flex-col sm:flex-row items-start gap-6">
+        <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-sm"><BookOpen className="h-8 w-8" aria-hidden="true" /></div>
+        <div>
+          <h2 className="text-2xl md:text-3xl font-bold text-foreground">{s.title}</h2>
+          <p className="mt-3 text-muted-foreground leading-relaxed">{s.text}</p>
+          <Link to={s.to} className="mt-6 inline-flex items-center gap-3 rounded-xl bg-primary px-6 py-3 font-semibold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary">Răsfoiește jurnalul din 2025 <span aria-hidden="true">→</span></Link>
+        </div>
+      </div>
+    </section>
+  );
+}
 if (s.type === "gallery") {
   return (
     <div key={idx} className="pb-10">
-      <SectionGallery images={s.images} />
+      <SectionGallery images={s.images} compact={s.compact} />
     </div>
   );
 }
@@ -117,7 +132,7 @@ if (s.type === "benefitCard") {
                   <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
                     <Icon className="h-5 w-5" aria-hidden="true" />
                   </span>
-                  <p className="pt-1 text-base font-medium leading-relaxed text-foreground/90">{item}</p>
+                  <p className="pt-1 text-base font-medium leading-relaxed text-foreground/90">{renderItalicText(item)}</p>
                 </li>
               );
             })}
@@ -226,7 +241,7 @@ if (s.type === "gridBullets") {
 
                                 {/* Bullets */}
                                 {s.type === "bullets" && (
-                                    <>
+                                    <div>
                                         {s.title ? (
                                             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
                                                 {s.title}
@@ -239,6 +254,7 @@ if (s.type === "gridBullets") {
                                             </p>
                                         ) : null}
 
+                                      <div className={s.image ? "grid lg:grid-cols-2 gap-8 items-stretch" : undefined}>
                                         <ul className="space-y-3">
                                             {s.items.map((it, i) => (
                                                 <li key={i} className="text-muted-foreground leading-relaxed">
@@ -246,7 +262,13 @@ if (s.type === "gridBullets") {
                                                 </li>
                                             ))}
                                         </ul>
-                                    </>
+                                        {s.image && (
+                                          <div className="relative h-72 lg:h-auto min-h-0 overflow-hidden rounded-2xl shadow-lg">
+                                            <img src={s.image.src} alt={s.image.alt} loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
+                                          </div>
+                                        )}
+                                      </div>
+                                    </div>
                                 )}
 
 
@@ -289,15 +311,18 @@ if (s.type === "gridBullets") {
                                 {s.type === "image" && (
                                     <>
                                         {s.title && (
-                                            <h3 className="text-xl font-bold text-foreground mb-4">
+                                            <h3 className={s.showcase ? "text-3xl md:text-4xl font-bold text-foreground mb-8 text-center" : "text-xl font-bold text-foreground mb-4"}>
                                                 {s.title}
                                             </h3>
                                         )}
+                                        <div className={s.extraImage ? `grid md:grid-cols-2 gap-6 items-start ${s.showcase ? "max-w-3xl mx-auto" : ""}` : undefined}>
                                         <img
                                             src={s.src}
                                             alt={s.alt}
-                                            className={`w-full rounded-xl border border-border ${s.compact ? "max-w-md mx-auto" : ""}`}
+                                            className={s.showcase ? "w-auto max-w-full max-h-[65vh] mx-auto rounded-xl border border-border" : `w-full rounded-xl border border-border ${s.compact ? "max-w-md mx-auto" : ""}`}
                                         />
+                                        {s.extraImage && <img src={s.extraImage.src} alt={s.extraImage.alt} loading="lazy" className={s.showcase ? "w-auto max-w-full max-h-[65vh] mx-auto rounded-xl border border-border" : `w-full rounded-xl border border-border ${s.compact ? "max-w-md mx-auto" : ""}`} />}
+                                        </div>
                                     </>
                                 )}
                                 

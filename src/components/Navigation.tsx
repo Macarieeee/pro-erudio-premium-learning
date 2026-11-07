@@ -6,7 +6,7 @@ import logo from "@/assets/logo.svg";
 
 const campsByYear = [
   { year: 2027, camps: [
-    { label: "Marchants Hill Activity Centre", to: "/tabara-marea-britanie-marchants-hill-2027" },
+    { label: "Tabara in Marea Britanie - Marchants Hill", to: "/tabara-marea-britanie-marchants-hill-2027" },
     { label: "Tabăra de engleză și aventură – Poiana Mărului", to: "/tabara-poiana-marului-2027" },
   ] },
   {

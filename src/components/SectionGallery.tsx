@@ -6,11 +6,13 @@ type GalleryImage = {
 type SectionGalleryProps = {
   images?: (GalleryImage | string)[];
   className?: string;
+  compact?: boolean;
 };
 
 export function SectionGallery({
   images,
   className = "",
+  compact = false,
 }: SectionGalleryProps) {
   if (!images?.length) return null;
 
@@ -32,7 +34,7 @@ export function SectionGallery({
       : "grid-cols-2";
 
   const wrapperClass =
-    count === 1 ? "max-w-3xl mx-auto" : "max-w-6xl mx-auto";
+    compact ? "max-w-2xl mx-auto" : count === 1 ? "max-w-3xl mx-auto" : "max-w-6xl mx-auto";
 
   return (
     <div className={`mt-10 ${className}`}>

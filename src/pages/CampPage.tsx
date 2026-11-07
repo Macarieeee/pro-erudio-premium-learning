@@ -290,7 +290,7 @@ if (!camp) {
                   <ReceiptPoundSterling className="h-6 w-6 text-primary" />
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground">Preț</p>
+                  <p className="text-sm text-muted-foreground">{camp.quickInfo.priceLabel ?? "Preț"}</p>
                   <p className="font-semibold text-foreground">{camp.quickInfo.price}</p>
                 </div>
               </div>
@@ -338,7 +338,7 @@ if (!camp) {
               </div>
 
               <div>
-                <h3 className="text-2xl font-bold text-foreground mb-6">Ce include tabăra</h3>
+                <h3 className="text-2xl font-bold text-foreground mb-6">Ce include programul de tabără</h3>
                 <div className="space-y-4">
                   {camp.highlights.map((highlight, index) => (
                     <div key={index} className="flex items-center gap-3">
@@ -397,6 +397,7 @@ if (!camp) {
                     src={camp.locationDescription.image}
                     alt={camp.locationDescription.imageAlt}
                     className="w-full h-[400px] object-cover"
+                    style={{ height: camp.locationDescription.imageHeight, objectPosition: camp.locationDescription.objectPosition, transform: camp.locationDescription.imageScale ? `scale(${camp.locationDescription.imageScale})` : undefined, transformOrigin: "center bottom" }}
                   />
                 </div>
               ) : null}
@@ -439,15 +440,15 @@ if (!camp) {
       {v.showPriceDetails && (
         <section className="pb-6">
           <div className="container mx-auto px-6 lg:px-6">
-            <div className="grid lg:grid-cols-2 gap-12">
+            <div className={camp.priceDetailsImages?.length ? "grid lg:grid-cols-2 gap-x-12 gap-y-6" : "grid lg:grid-cols-2 gap-12"}>
               {/* INCLUDE */}
               {camp.includedInPrice?.length > 0 && (
-                <div>
-                  <div className="flex items-center gap-3 mb-6">
+                <div className={camp.priceDetailsImages?.length ? "contents" : undefined}>
+                  <div className={camp.priceDetailsImages?.length ? "flex items-center gap-3 lg:col-start-1 lg:row-start-1" : "flex items-center gap-3 mb-6"}>
                     <CheckCircle className="h-7 w-7 text-accent" />
                     <h2 className="text-2xl md:text-3xl font-bold text-foreground">Ce include tariful</h2>
                   </div>
-                  <div className="space-y-3">
+                  <div className={camp.priceDetailsImages?.length ? "space-y-3 lg:col-start-1 lg:row-start-2" : "space-y-3"}>
                     {camp.includedInPrice.map((item, index) => (
                       <div key={index} className="flex items-start gap-3 p-3 bg-accent/10 rounded-lg">
                         <CheckCircle className="h-5 w-5 text-accent flex-shrink-0 mt-0.5" />
@@ -459,7 +460,15 @@ if (!camp) {
               )}
 
               {/* NU INCLUDE */}
-              {camp.notIncludedInPrice?.length > 0 && (
+              {camp.priceDetailsImages?.length ? (
+                <div className="grid grid-rows-2 gap-6 w-full max-w-lg mx-auto lg:col-start-2 lg:row-start-2 min-h-0">
+                  {camp.priceDetailsImages.map((image) => (
+                    <div key={image.src} className="relative h-64 lg:h-auto min-h-0 overflow-hidden rounded-2xl shadow-lg">
+                      <img src={image.src} alt={image.alt} loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
+                    </div>
+                  ))}
+                </div>
+              ) : camp.notIncludedInPrice?.length > 0 && (
                 <div>
                   <div className="flex items-center gap-3 mb-6">
                     <XCircle className="h-7 w-7 text-destructive" />
@@ -488,21 +497,21 @@ if (!camp) {
           <div className="container mx-auto px-4 lg:px-8">
             <div className="flex items-center gap-3 mb-12 justify-center">
               <Compass className="h-8 w-8 text-primary" />
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground">Program de excursii și activități</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground">{camp.activitiesTitle ?? "Program orientativ de excursii și activități"}</h2>
             </div>
 
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className={`grid lg:grid-cols-2 gap-12 ${camp.activityImagesLayout === "tall-left" ? "items-stretch" : "items-center"}`}>
               <div>
                 {camp.activitiesDescription ? (
-                  <p className="text-muted-foreground leading-relaxed whitespace-pre-line">{camp.activitiesDescription}</p>
+                  <p className="text-muted-foreground leading-relaxed whitespace-pre-line">{renderItalicText(camp.activitiesDescription)}</p>
                 ) : null}
               </div>
 
               {camp.activityImages?.length ? (
-                <div className="grid grid-cols-2 gap-4 rounded-2xl overflow-hidden shadow-lg">
+                <div className={camp.activityImagesLayout === "tall-left" ? "grid grid-cols-2 grid-rows-2 gap-4 h-[420px] lg:h-auto min-h-0" : "grid grid-cols-2 gap-4 rounded-2xl overflow-hidden shadow-lg"}>
                   {camp.activityImages.map((src, index) => (
-                    <div key={index} className="relative w-full aspect-[4/3] overflow-hidden">
-                      <img src={src} alt={`Activitate ${index + 1}`} className="w-full h-full object-cover" />
+                    <div key={index} className={camp.activityImagesLayout === "tall-left" ? `relative min-h-0 overflow-hidden rounded-2xl shadow-lg ${index === 0 ? "row-span-2 col-start-2 row-start-1" : "col-start-1"}` : "relative w-full aspect-[4/3] overflow-hidden"}>
+                      <img src={src} alt={`Activitate ${index + 1}`} className={camp.activityImagesLayout === "tall-left" ? "absolute inset-0 w-full h-full object-cover" : "w-full h-full object-cover"} />
                     </div>
                   ))}
                 </div>
@@ -521,7 +530,7 @@ if (!camp) {
               </div>
             ))}
           </div>
-          <SectionGallery images={camp.galleries?.other} />
+          <SectionGallery images={camp.galleries?.other} compact={camp.compactOtherGallery} />
         </section>
       ) : null}
 

@@ -6,8 +6,8 @@ const CoursesSection = () => {
   const camps = [{
     icon: Plane,
     title: "Marchants Hill Activity Centre 2027",
-    subtitle: "24–31 iulie 2027 | 11–16 ani | 790 GBP",
-    description: "Cursuri de limba engleză, aventură în natură și excursii culturale în sudul Angliei. 8 zile / 7 nopți la centrul PGL din Surrey.",
+    subtitle: "23–31 iulie 2027 | 11–16 ani | 790 GBP",
+    description: "Cursuri de limba engleză, aventură în natură și excursii culturale în sudul Angliei. 9 zile / 8 nopți la centrul PGL din Surrey.",
     color: "bg-primary",
     link: "/tabara-marea-britanie-marchants-hill-2027",
   }, {
