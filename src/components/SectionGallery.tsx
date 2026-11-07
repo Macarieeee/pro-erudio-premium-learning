@@ -1,3 +1,4 @@
+import { ZoomableImage } from "@/components/ZoomableImage";
 type GalleryImage = {
   src: string;
   alt?: string;
@@ -30,11 +31,11 @@ export function SectionGallery({
       : count === 2
       ? "grid-cols-2"
       : count === 3
-      ? "grid-cols-3"
+      ? (compact ? "grid-cols-2 md:grid-cols-3" : "grid-cols-3")
       : "grid-cols-2";
 
   const wrapperClass =
-    compact ? "max-w-2xl mx-auto" : count === 1 ? "max-w-3xl mx-auto" : "max-w-6xl mx-auto";
+    compact && count !== 3 ? "max-w-2xl mx-auto" : count === 1 ? "max-w-3xl mx-auto" : "max-w-6xl mx-auto";
 
   return (
     <div className={`mt-10 ${className}`}>
@@ -43,9 +44,9 @@ export function SectionGallery({
           {safeImages.map((img, idx) => (
             <div
               key={idx}
-              className="relative w-full overflow-hidden rounded-2xl shadow-lg aspect-[4/3]"
+              className={`relative w-full overflow-hidden rounded-2xl shadow-lg aspect-[4/3] ${compact && count === 3 && idx === 2 ? "col-span-2 md:col-span-1" : ""}`}
             >
-              <img
+              <ZoomableImage
                 src={img.src}
                 alt={img.alt ?? `Galerie ${idx + 1}`}
                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"

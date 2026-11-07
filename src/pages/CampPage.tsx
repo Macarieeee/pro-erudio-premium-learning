@@ -1,3 +1,4 @@
+import { ImageZoomProvider, ZoomableImage } from "@/components/ZoomableImage";
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useMemo, useState } from "react";
 import { useParams, Navigate, Link, useLocation } from "react-router-dom";
@@ -7,6 +8,7 @@ import CampSections from "@/components/CampSection"; // ✅ asigură-te că fiș
 import RegistrationForm from "@/components/RegistrationForm";
 import { SectionGallery } from "@/components/SectionGallery";
 import CampMenu from "@/components/CampMenu";
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -171,6 +173,7 @@ if (!camp) {
   };
 
   return (
+    <ImageZoomProvider enabled={camp.slug === "tabara-marea-britanie-marchants-hill-2027"}>
     <div className="min-h-screen bg-background">
 <Head>
   <title>{seo.title}</title>
@@ -371,9 +374,10 @@ if (!camp) {
               <h2 className="text-3xl md:text-4xl font-bold text-foreground">Descrierea locației</h2>
             </div>
 
-            <div className="grid lg:grid-cols-2 gap-12 items-start">
-              <div>
-                <h3 className="text-2xl font-bold text-foreground mb-4">{camp.locationDescription.title}</h3>
+            <div className={camp.locationDescription.alignImageWithParagraph ? "grid lg:grid-cols-2 gap-x-12 gap-y-4 items-start" : "grid lg:grid-cols-2 gap-12 items-start"}>
+              <div className={camp.locationDescription.alignImageWithParagraph ? "contents" : undefined}>
+                <h3 className={camp.locationDescription.alignImageWithParagraph ? "text-2xl font-bold text-foreground lg:col-start-1 lg:row-start-1" : "text-2xl font-bold text-foreground mb-4"}>{camp.locationDescription.title}</h3>
+                <div className={camp.locationDescription.alignImageWithParagraph ? "lg:col-start-1 lg:row-start-2" : undefined}>
                 <p className="text-muted-foreground mb-8 leading-relaxed whitespace-pre-line">
                   {camp.locationDescription.description}
                 </p>
@@ -389,11 +393,12 @@ if (!camp) {
                     </div>
                   </div>
                 )}
+                </div>
               </div>
 
               {camp.locationDescription?.image ? (
-                <div className="rounded-2xl overflow-hidden shadow-lg">
-                  <img
+                <div className={`rounded-2xl overflow-hidden shadow-lg ${camp.locationDescription.alignImageWithParagraph ? "lg:col-start-2 lg:row-start-2" : ""}`}>
+                  <ZoomableImage
                     src={camp.locationDescription.image}
                     alt={camp.locationDescription.imageAlt}
                     className="w-full h-[400px] object-cover"
@@ -434,7 +439,7 @@ if (!camp) {
         </div>
       )}
       {v.showMenu && camp.menuImage?.src && camp.menuImage.placement === "afterAccommodation" && (
-        <CampMenu src={camp.menuImage.src} alt={camp.menuImage.alt} />
+        <CampMenu src={camp.menuImage.src} alt={camp.menuImage.alt} compact={camp.menuImage.compact} extraImage={camp.menuImage.extraImage} />
       )}
 
       {v.showPriceDetails && (
@@ -511,7 +516,7 @@ if (!camp) {
                 <div className={camp.activityImagesLayout === "tall-left" ? "grid grid-cols-2 grid-rows-2 gap-4 h-[420px] lg:h-auto min-h-0" : "grid grid-cols-2 gap-4 rounded-2xl overflow-hidden shadow-lg"}>
                   {camp.activityImages.map((src, index) => (
                     <div key={index} className={camp.activityImagesLayout === "tall-left" ? `relative min-h-0 overflow-hidden rounded-2xl shadow-lg ${index === 0 ? "row-span-2 col-start-2 row-start-1" : "col-start-1"}` : "relative w-full aspect-[4/3] overflow-hidden"}>
-                      <img src={src} alt={`Activitate ${index + 1}`} className={camp.activityImagesLayout === "tall-left" ? "absolute inset-0 w-full h-full object-cover" : "w-full h-full object-cover"} />
+                      <ZoomableImage src={src} alt={`Activitate ${index + 1}`} className={camp.activityImagesLayout === "tall-left" ? "absolute inset-0 w-full h-full object-cover" : "w-full h-full object-cover"} />
                     </div>
                   ))}
                 </div>
@@ -643,11 +648,24 @@ if (!camp) {
               </h2>
             </div>
 
-            <div className="max-w-4xl mx-auto">
+            {camp.luggageImage.expandable ? (
+              <Dialog>
+                <DialogTrigger asChild>
+                  <button type="button" className="block w-full max-w-lg mx-auto overflow-hidden rounded-2xl shadow-lg cursor-zoom-in focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4" aria-label="Mărește imaginea cu bagajul recomandat">
+                    <img src={camp.luggageImage.src} alt={camp.luggageImage.alt} loading="lazy" className="w-full object-contain" />
+                    <span className="block bg-background py-3 text-sm font-medium text-primary">Click pentru mărire</span>
+                  </button>
+                </DialogTrigger>
+                <DialogContent aria-describedby={undefined} className="h-[100dvh] w-screen max-w-none rounded-none sm:rounded-none border-0 bg-black/95 p-4 pt-14 text-white gap-0 [&>button]:rounded-full [&>button]:bg-white [&>button]:p-2 [&>button]:text-black [&>button]:opacity-100">
+                  <DialogTitle className="sr-only">Bagaj recomandat – imagine mărită</DialogTitle>
+                  <img src={camp.luggageImage.src} alt={camp.luggageImage.alt} className="w-full h-full min-h-0 object-contain" />
+                </DialogContent>
+              </Dialog>
+            ) : <div className="max-w-4xl mx-auto">
               <div className="rounded-2xl overflow-hidden shadow-lg">
                 <img src={camp.luggageImage.src} alt={camp.luggageImage.alt} className="w-full object-contain" />
               </div>
-            </div>
+            </div>}
           </div>
         </section>
       ) : null}
@@ -663,7 +681,7 @@ if (!camp) {
 
             <div className="max-w-4xl mx-auto">
               <div className="rounded-2xl overflow-hidden shadow-lg">
-                <img src={camp.programImage.src} alt={camp.programImage.alt} className="w-full object-contain" />
+                <ZoomableImage src={camp.programImage.src} alt={camp.programImage.alt} className="w-full object-contain" />
               </div>
             </div>
           </div>
@@ -671,7 +689,7 @@ if (!camp) {
       ) : null}
 
       {v.showMenu && camp.menuImage?.src && camp.menuImage.placement !== "afterAccommodation" && (
-        <CampMenu src={camp.menuImage.src} alt={camp.menuImage.alt} />
+        <CampMenu src={camp.menuImage.src} alt={camp.menuImage.alt} compact={camp.menuImage.compact} extraImage={camp.menuImage.extraImage} />
       )}
 
       {/* Alte tabere */}
@@ -744,6 +762,7 @@ if (!camp) {
 
       <Footer />
     </div>
+    </ImageZoomProvider>
   );
 };
 

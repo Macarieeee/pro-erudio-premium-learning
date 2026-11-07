@@ -257,6 +257,7 @@ export type CampConfig = {
         image: string;
         imageAlt: string;
         imageScale?: number;
+        alignImageWithParagraph?: boolean;
         imageHeight?: number;
         objectPosition?: string;
     };
@@ -279,13 +280,14 @@ export type CampConfig = {
 
 
     luggageImage?: {
+        expandable?: boolean;
         src: string;
         alt: string;
         title?: string; // <-- nou
     };
     programImage: { src: string; alt: string };
 
-    menuImage?: { src: string; alt: string; placement?: "afterAccommodation" };
+    menuImage?: { src: string; alt: string; compact?: boolean; placement?: "afterAccommodation"; extraImage?: { src: string; alt: string } };
 
     // DOAR astea două pot fi default
     registrationInfo: typeof DEFAULT_REGISTRATION;

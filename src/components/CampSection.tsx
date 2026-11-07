@@ -1,3 +1,4 @@
+import { ZoomableImage } from "@/components/ZoomableImage";
 import type { CampSection } from "@/data/campsData";
 import { Link } from "react-router-dom";
 import { SectionGallery } from "./SectionGallery";
@@ -205,14 +206,14 @@ if (s.type === "gridBullets") {
                                             </div>
                                         </div>
                                         <div className={s.extraImage ? "grid grid-cols-2 gap-4" : ""}>
-                                            <img
+                                            <ZoomableImage
                                                 src={s.src}
                                                 alt={s.alt}
                                                 loading="lazy"
                                                 className={`w-full object-cover rounded-2xl border border-border shadow-lg ${s.extraImage ? "aspect-[3/4]" : "aspect-[4/3]"}`}
                                             />
                                             {s.extraImage && (
-                                                <img
+                                                <ZoomableImage
                                                     src={s.extraImage.src}
                                                     alt={s.extraImage.alt}
                                                     loading="lazy"
@@ -264,7 +265,7 @@ if (s.type === "gridBullets") {
                                         </ul>
                                         {s.image && (
                                           <div className="relative h-72 lg:h-auto min-h-0 overflow-hidden rounded-2xl shadow-lg">
-                                            <img src={s.image.src} alt={s.image.alt} loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
+                                            <ZoomableImage src={s.image.src} alt={s.image.alt} loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
                                           </div>
                                         )}
                                       </div>
@@ -316,12 +317,12 @@ if (s.type === "gridBullets") {
                                             </h3>
                                         )}
                                         <div className={s.extraImage ? `grid md:grid-cols-2 gap-6 items-start ${s.showcase ? "max-w-3xl mx-auto" : ""}` : undefined}>
-                                        <img
+                                        <ZoomableImage
                                             src={s.src}
                                             alt={s.alt}
                                             className={s.showcase ? "w-auto max-w-full max-h-[65vh] mx-auto rounded-xl border border-border" : `w-full rounded-xl border border-border ${s.compact ? "max-w-md mx-auto" : ""}`}
                                         />
-                                        {s.extraImage && <img src={s.extraImage.src} alt={s.extraImage.alt} loading="lazy" className={s.showcase ? "w-auto max-w-full max-h-[65vh] mx-auto rounded-xl border border-border" : `w-full rounded-xl border border-border ${s.compact ? "max-w-md mx-auto" : ""}`} />}
+                                        {s.extraImage && <ZoomableImage src={s.extraImage.src} alt={s.extraImage.alt} loading="lazy" className={s.showcase ? "w-auto max-w-full max-h-[65vh] mx-auto rounded-xl border border-border" : `w-full rounded-xl border border-border ${s.compact ? "max-w-md mx-auto" : ""}`} />}
                                         </div>
                                     </>
                                 )}

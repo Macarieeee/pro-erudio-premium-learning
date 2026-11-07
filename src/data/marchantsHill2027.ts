@@ -1,5 +1,8 @@
 import type { CampConfig } from "./campsData";
-import lake from "@/assets/marchants-hill/tabara-ProErudio-marchants-hill-2027-lac-activitati-nautice.webp";
+import obstacleCourse from "@/assets/marchants-hill/01958C7BA6E1B41A1570CCFE06378C28.jpeg";
+import catering from "@/assets/marchants-hill/Catering-image-August-1024x640.png.webp";
+import kitTabaraImage from "@/assets/Kit Tabara Pro Erudio.jpg";
+import programImage from "@/assets/Program.jpg";
 import centre from "@/assets/tabara-ProErudio-marchants-hill-2027-cladire-centru.webp";
 import bethany from "@/assets/tabara-ProErudio-marchants-hill-2027-cazare-bethany-house.jpg";
 import aerial from "@/assets/marchants-hill/Windmill-Hill-Flip-Card-768x768.jpg.webp";
@@ -48,6 +51,7 @@ export const marchantsHill2027 = (registrationInfo: CampConfig["registrationInfo
     "Suport complet și însoțitori",
   ],
   locationDescription: {
+    alignImageWithParagraph: true,
     title: "Centrul de activități Marchants Hill",
     description: "Marchants Hill Activity Centre este unul dintre cele mai mari centre de aventură și activități în aer liber administrate de PGL Travel în Anglia și dispune de 730 de locuri de cazare. Acest centru este destinat în special copiilor, adolescenților și grupurilor școlare, inclusiv elevilor britanici și internaționali care participă la tabere educaționale.",
     details: {
@@ -77,6 +81,7 @@ export const marchantsHill2027 = (registrationInfo: CampConfig["registrationInfo
     { type: "gallery", compact: true, images: [
       { src: giantSwing, alt: "Participanți la activitatea Giant Swing la Marchants Hill" },
       { src: teamClimbing, alt: "Cățărări în echipă la Marchants Hill" },
+      { src: raftActivity, alt: "Copii pe o plută în timpul unei activități de aventură" },
     ] },
     { type: "gridBullets", title: "Excursii incluse în prețul taberei", columns: 2, cards: [
       { subtitle: "Excursie de o zi – destinații posibile", items: ["Londra: Big Ben, Buckingham Palace, London Eye și muzeele orașului, în funcție de itinerariul ales.", "Oxford: oraș universitar renumit, cu arhitectură istorică și colegii celebre."] },
@@ -86,17 +91,20 @@ export const marchantsHill2027 = (registrationInfo: CampConfig["registrationInfo
   ],
   compactOtherGallery: true,
   galleries: { other: [
-    { src: raftActivity, alt: "Copii pe o plută în timpul unei activități de aventură" },
-    { src: lake, alt: "Lacul pentru activități nautice de la Marchants Hill" },
+    { src: obstacleCourse, alt: "Copii parcurgând un traseu cu obstacole în pădure" },
     { src: sensoryTrail, alt: "Copii parcurgând un traseu senzorial în pădure" },
     { src: forestAdventure, alt: "Copii și instructor la o activitate de aventură în pădure" },
   ] },
-  discounts: [],
+  discounts: [
+    { type: "Continuitate", value: "5%", condition: "Doar pentru copiii care au participat la programul de tabără din vara 2025" },
+    { type: "Frați/Surori", value: "5%", condition: "Pentru doi copii ai aceleiași familii" },
+  ],
   otherCamps: [],
-  programImage: { src: "", alt: "" },
-  menuImage: { src: menu, alt: "Meniu orientativ PGL", placement: "afterAccommodation" },
+  luggageImage: { src: kitTabaraImage, alt: "Bagaj recomandat", expandable: true },
+  programImage: { src: programImage, alt: "Program orientativ" },
+  menuImage: { src: menu, compact: true, alt: "Meniu orientativ PGL", placement: "afterAccommodation", extraImage: { src: catering, alt: "Servirea mesei în cantina PGL" } },
   registrationInfo,
   requiredDocuments: [],
   form: { selectValue: "Marchants Hill 2027", selectLabel: "Tabără în Marea Britanie – Marchants Hill Activity Centre 2027" },
-  visibility: { showProgramImage: false, showLuggageImage: false, showOtherCamps: false, showRequiredDocs: false, showDiscounts: false, showPriceDetails: false },
+  visibility: { showProgramImage: true, showLuggageImage: true, showOtherCamps: false, showRequiredDocs: false, showDiscounts: true, showPriceDetails: false },
 });
