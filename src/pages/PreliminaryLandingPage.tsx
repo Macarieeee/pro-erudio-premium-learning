@@ -9,8 +9,8 @@ import {
   PenLine,
   UserCheck,
 } from "lucide-react";
-import logo from "@/assets/logo.svg";
-import preliminaryMockImage from "@/assets/Preliminary-Mock-Test-ProErudio.jpg";
+import logo from "@/assets/branding/logo.svg";
+import preliminaryMockImage from "@/assets/teste-engleza/Preliminary-Mock-Test-ProErudio.jpg";
 const PRELIMINARY_LISTENING_PATH = "/preliminary/listening";
 const PRELIMINARY_READING_PATH = "/preliminary/reading";
 const PRELIMINARY_WRITING_PATH = "/preliminary/writing";

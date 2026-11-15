@@ -21,8 +21,8 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import aboutClassroomImage from "@/assets/about-classroom.jpg";
-import summerCampImage from "@/assets/summer-camp.jpg";
+import aboutClassroomImage from "@/assets/prezentare/about-classroom.jpg";
+import summerCampImage from "@/assets/tabere-general/summer-camp.jpg";
 import { Head } from "vite-react-ssg";
 
 const AboutPage = () => {

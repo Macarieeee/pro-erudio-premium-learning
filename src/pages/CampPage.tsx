@@ -1,3 +1,4 @@
+import { CampHeading, CampHeadingIcons } from "@/components/CampHeading";
 import { ImageZoomProvider, ZoomableImage } from "@/components/ZoomableImage";
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useMemo, useState } from "react";
@@ -173,7 +174,8 @@ if (!camp) {
   };
 
   return (
-    <ImageZoomProvider enabled={camp.slug === "tabara-marea-britanie-marchants-hill-2027"}>
+    <CampHeadingIcons.Provider value={camp.year === 2027}>
+    <ImageZoomProvider enabled={camp.slug === "tabara-marea-britanie-marchants-hill-2027" || camp.slug === "tabara-de-limba-engleza-maldaresti-2027"}>
     <div className="min-h-screen bg-background">
 <Head>
   <title>{seo.title}</title>
@@ -308,7 +310,7 @@ if (!camp) {
           <div className="container mx-auto px-4 lg:px-8">
             <div className="grid lg:grid-cols-2 gap-12">
               <div>
-                <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">{camp.about.title}</h2>
+                <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6"><CampHeading>{camp.about.title}</CampHeading></h2>
 
                 {camp.about.paragraphs.map((p, idx) => (
                   <p
@@ -324,7 +326,7 @@ if (!camp) {
                 {/* 🔹 EXTRA title + paragraph (doar dacă există) */}
                 {camp.about.extraTitle && camp.about.extraParagraphs && (
                   <div className="mt-10">
-                    <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">{camp.about.extraTitle}</h2>
+                    <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6"><CampHeading>{camp.about.extraTitle}</CampHeading></h2>
 
                     {camp.about.extraParagraphs.map((p, idx) => (
                       <p
@@ -341,7 +343,7 @@ if (!camp) {
               </div>
 
               <div>
-                <h3 className="text-2xl font-bold text-foreground mb-6">Ce include programul de tabără</h3>
+                <h3 className="text-2xl font-bold text-foreground mb-6"><CampHeading>Ce include programul de tabără</CampHeading></h3>
                 <div className="space-y-4">
                   {camp.highlights.map((highlight, index) => (
                     <div key={index} className="flex items-center gap-3">
@@ -349,7 +351,7 @@ if (!camp) {
                       <span className="text-foreground">{highlight}</span>
                     </div>
                   ))}
-                  {camp.notIncludedInPrice.length > 0 && <h3 className="text-2xl font-bold text-foreground mb-6 pt-6">Ce nu include tabăra</h3>}
+                  {camp.notIncludedInPrice.length > 0 && <h3 className="text-2xl font-bold text-foreground mb-6 pt-6"><CampHeading>Ce nu include tabăra</CampHeading></h3>}
                   <div className="space-y-4">
                     {camp.notIncludedInPrice.map((item, index) => (
                       <div key={index} className="flex items-center gap-3">
@@ -376,7 +378,7 @@ if (!camp) {
 
             <div className={camp.locationDescription.alignImageWithParagraph ? "grid lg:grid-cols-2 gap-x-12 gap-y-4 items-start" : "grid lg:grid-cols-2 gap-12 items-start"}>
               <div className={camp.locationDescription.alignImageWithParagraph ? "contents" : undefined}>
-                <h3 className={camp.locationDescription.alignImageWithParagraph ? "text-2xl font-bold text-foreground lg:col-start-1 lg:row-start-1" : "text-2xl font-bold text-foreground mb-4"}>{camp.locationDescription.title}</h3>
+                <h3 className={camp.locationDescription.alignImageWithParagraph ? "text-2xl font-bold text-foreground lg:col-start-1 lg:row-start-1" : "text-2xl font-bold text-foreground mb-4"}><CampHeading>{camp.locationDescription.title}</CampHeading></h3>
                 <div className={camp.locationDescription.alignImageWithParagraph ? "lg:col-start-1 lg:row-start-2" : undefined}>
                 <p className="text-muted-foreground mb-8 leading-relaxed whitespace-pre-line">
                   {camp.locationDescription.description}
@@ -430,6 +432,12 @@ if (!camp) {
             ) : null}
           </div>
         </section>
+      ) : null}
+
+      {v.showFacilities && camp.galleries?.facilities?.length ? (
+        <div className="container mx-auto px-4 lg:px-8">
+          <SectionGallery images={camp.galleries.facilities} thumbnails className="pb-12 md:pb-16" />
+        </div>
       ) : null}
 
       {/* Ce include tariful / Ce nu include */}
@@ -550,7 +558,7 @@ if (!camp) {
           <div className="max-w-3xl mx-auto">
             <div className="grid md:grid-cols-2 gap-8">
               <div>
-                <h3 className="text-xl font-bold text-foreground mb-4">Pași pentru înscriere</h3>
+                <h3 className="text-xl font-bold text-foreground mb-4"><CampHeading>Pași pentru înscriere</CampHeading></h3>
                 <div className="space-y-4">
                   {camp.registrationInfo.steps.map((step, index) => (
                     <div key={index} className="flex items-start gap-3">
@@ -564,7 +572,7 @@ if (!camp) {
               </div>
 
               <div>
-                <h3 className="text-xl font-bold text-foreground mb-4">Contact informații și înscrieri</h3>
+                <h3 className="text-xl font-bold text-foreground mb-4"><CampHeading>Contact informații și înscrieri</CampHeading></h3>
                 <Card className="bg-primary/5 border-primary/20">
                   <CardContent className="pt-6 space-y-4">
                     <div className="flex items-center gap-3">
@@ -627,7 +635,7 @@ if (!camp) {
                 <Card key={index} className="bg-card border-border text-center hover:shadow-lg transition-shadow">
                   <CardContent className="pt-6">
                     <span className="text-4xl font-bold text-accent">{discount.value}</span>
-                    <h3 className="text-lg font-semibold text-foreground mt-2 mb-2">{discount.type}</h3>
+                    <h3 className="text-lg font-semibold text-foreground mt-2 mb-2"><CampHeading>{discount.type}</CampHeading></h3>
                     <p className="text-sm text-muted-foreground">{discount.condition}</p>
                   </CardContent>
                 </Card>
@@ -703,8 +711,9 @@ if (!camp) {
 
             <div
               className={`grid gap-6 max-w-6xl mx-auto
-                ${camp.otherCamps.length === 3 ? "sm:grid-cols-3" : ""}
-                ${camp.otherCamps.length === 4 ? "sm:grid-cols-2 lg:grid-cols-4" : ""}
+                ${camp.otherCamps.length >= 2 ? "sm:grid-cols-2" : ""}
+                ${camp.otherCamps.length === 3 ? "lg:grid-cols-3" : ""}
+                ${camp.otherCamps.length >= 4 ? "lg:grid-cols-4" : ""}
               `}
             >
               {camp.otherCamps.map((c, idx) => (
@@ -723,9 +732,7 @@ if (!camp) {
                         {c.type}
                       </span>
 
-                      <h3 className="text-sm font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
-                        {c.name}
-                      </h3>
+                      <h3 className="text-sm font-bold text-foreground mb-2 group-hover:text-primary transition-colors"><CampHeading>{c.name}</CampHeading></h3>
 
                       <p className="text-sm text-muted-foreground flex items-center justify-center gap-1">
                         <MapPin className="h-4 w-4" />
@@ -745,7 +752,7 @@ if (!camp) {
         <div className="container mx-auto px-4 lg:px-8">
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-10">
-              <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4">Formular de înscriere</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4"><CampHeading>Formular de înscriere</CampHeading></h2>
               <p className="text-primary-foreground/80">
                 Completează formularul pentru a rezerva un loc la {camp.campName} {camp.year}
               </p>
@@ -763,6 +770,7 @@ if (!camp) {
       <Footer />
     </div>
     </ImageZoomProvider>
+    </CampHeadingIcons.Provider>
   );
 };
 

@@ -1,3 +1,4 @@
+import { CampHeading } from "@/components/CampHeading";
 import { ZoomableImage } from "@/components/ZoomableImage";
 import type { CampSection } from "@/data/campsData";
 import { Link } from "react-router-dom";
@@ -147,11 +148,9 @@ if (s.type === "gridBullets") {
   const cols = s.columns ?? 2;
 
   return (
-    <section key={idx}>
+    <section key={idx} className={s.spaceAbove ? "pt-12 md:pt-16" : undefined}>
       {s.title ? (
-        <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-10 text-center">
-          {s.title}
-        </h2>
+        <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-10 text-center"><CampHeading>{s.title}</CampHeading></h2>
       ) : null}
 
       <div
@@ -169,9 +168,12 @@ if (s.type === "gridBullets") {
             key={i}
             className="rounded-2xl border border-border bg-card shadow-sm p-6"
           >
-            <h3 className="text-lg font-bold text-foreground mb-4">
-              {card.subtitle}
-            </h3>
+            <h3 className="text-lg font-bold text-foreground mb-4"><CampHeading>{card.subtitle}</CampHeading></h3>
+            {card.description && (
+              <p className="text-muted-foreground leading-relaxed mb-4">
+                {card.description}
+              </p>
+            )}
 
             <ul className="space-y-3">
               {card.items.map((it, j) => (
@@ -182,6 +184,22 @@ if (s.type === "gridBullets") {
             </ul>
           </div>
         ))}
+        {s.trailingImages?.length ? (
+          <div className="relative min-h-0">
+            <div className="grid grid-rows-2 gap-6 md:absolute md:inset-0">
+              {s.trailingImages.map((photo) => (
+                <div key={photo.src} className="relative aspect-[4/3] md:aspect-auto min-h-0 overflow-hidden rounded-2xl shadow-lg">
+                  <ZoomableImage
+                    src={photo.src}
+                    alt={photo.alt}
+                    loading="lazy"
+                    className="absolute inset-0 h-full w-full object-cover"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : null}
       </div>
     </section>
   );
@@ -194,9 +212,7 @@ if (s.type === "gridBullets") {
                                 {s.type === "textImage" && (
                                     <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
                                         <div>
-                                            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-                                                {s.title}
-                                            </h2>
+                                            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6"><CampHeading>{s.title}</CampHeading></h2>
                                             <div className="space-y-6">
                                                 {s.paragraphs.map((paragraph, i) => (
                                                     <p key={i} className="text-muted-foreground leading-relaxed">
@@ -225,9 +241,7 @@ if (s.type === "gridBullets") {
                                 )}
                                 {s.type === "richText" && (
                                     <>
-                                        <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-                                            {s.title}
-                                        </h2>
+                                        <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6"><CampHeading>{s.title}</CampHeading></h2>
                                         {s.paragraphs.map((p, i) => (
                                             <p
                                                 key={i}
@@ -244,9 +258,7 @@ if (s.type === "gridBullets") {
                                 {s.type === "bullets" && (
                                     <div>
                                         {s.title ? (
-                                            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-                                                {s.title}
-                                            </h2>
+                                            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6"><CampHeading>{s.title}</CampHeading></h2>
                                         ) : null}
 
                                         {s.subtitle ? (
@@ -276,9 +288,7 @@ if (s.type === "gridBullets") {
                                 {/* Two Cols */}
                                 {s.type === "twoCols" && (
                                     <>
-                                        <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-                                            {s.title}
-                                        </h2>
+                                        <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6"><CampHeading>{s.title}</CampHeading></h2>
                                         <div className="grid md:grid-cols-2 gap-10">
                                             <ul className="space-y-3">
                                                 {s.left.map((it, i) => (
@@ -302,7 +312,7 @@ if (s.type === "gridBullets") {
                                 {s.type === "note" && (
                                     <div className="rounded-xl border border-border bg-accent/10 p-6">
                                         {s.title && (
-                                            <h3 className="font-semibold text-foreground mb-2">{s.title}</h3>
+                                            <h3 className="font-semibold text-foreground mb-2"><CampHeading>{s.title}</CampHeading></h3>
                                         )}
                                         <p className="text-muted-foreground leading-relaxed">{s.text}</p>
                                     </div>
@@ -312,9 +322,7 @@ if (s.type === "gridBullets") {
                                 {s.type === "image" && (
                                     <>
                                         {s.title && (
-                                            <h3 className={s.showcase ? "text-3xl md:text-4xl font-bold text-foreground mb-8 text-center" : "text-xl font-bold text-foreground mb-4"}>
-                                                {s.title}
-                                            </h3>
+                                            <h3 className={s.showcase ? "text-3xl md:text-4xl font-bold text-foreground mb-8 text-center" : "text-xl font-bold text-foreground mb-4"}><CampHeading>{s.title}</CampHeading></h3>
                                         )}
                                         <div className={s.extraImage ? `grid md:grid-cols-2 gap-6 items-start ${s.showcase ? "max-w-3xl mx-auto" : ""}` : undefined}>
                                         <ZoomableImage

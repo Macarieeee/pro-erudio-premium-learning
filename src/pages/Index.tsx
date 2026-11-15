@@ -10,7 +10,7 @@ import EnglishTestSection from "@/components/EnglishTestSection";
 import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
 import { Head } from "vite-react-ssg";
-import heroImage from "@/assets/herohome.jpeg";
+import heroImage from "@/assets/prezentare/herohome.jpeg";
 
 
 

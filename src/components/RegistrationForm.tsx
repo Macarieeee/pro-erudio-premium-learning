@@ -1,3 +1,4 @@
+import { CampHeading } from "@/components/CampHeading";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -115,6 +116,7 @@ const RegistrationForm = ({ variant = "light", defaultCamp = "Marchants Hill 202
             <SelectValue placeholder="Selectează tabăra" />
           </SelectTrigger>
           <SelectContent className="bg-card border-border">
+            <SelectItem value="Măldărești 2027">Tabăra de engleză și aventură – Măldărești 2027</SelectItem>
             <SelectItem value="Marchants Hill 2027">Marchants Hill Activity Centre 2027</SelectItem>
             <SelectItem value="Poiana Mărului 2027">Tabăra de engleză și aventură – Poiana Mărului 2027</SelectItem>
           </SelectContent>
@@ -123,9 +125,7 @@ const RegistrationForm = ({ variant = "light", defaultCamp = "Marchants Hill 202
 
       {/* Child Info */}
       <div className="space-y-4">
-        <h3 className={`text-lg font-semibold ${labelClass} border-b ${variant === "dark" ? "border-primary-foreground/20" : "border-border"} pb-2`}>
-          Date despre cursant
-        </h3>
+        <h3 className={`text-lg font-semibold ${labelClass} border-b ${variant === "dark" ? "border-primary-foreground/20" : "border-border"} pb-2`}><CampHeading>Date despre cursant</CampHeading></h3>
         <div className="grid sm:grid-cols-2 gap-4">
           <div className="space-y-2">
             <Label htmlFor="childName" className={labelClass}>Numele și prenumele *</Label>
@@ -184,9 +184,7 @@ const RegistrationForm = ({ variant = "light", defaultCamp = "Marchants Hill 202
 
       {/* Parent Info */}
       <div className="space-y-4">
-        <h3 className={`text-lg font-semibold ${labelClass} border-b ${variant === "dark" ? "border-primary-foreground/20" : "border-border"} pb-2`}>
-          Date despre părinte/tutore
-        </h3>
+        <h3 className={`text-lg font-semibold ${labelClass} border-b ${variant === "dark" ? "border-primary-foreground/20" : "border-border"} pb-2`}><CampHeading>Date despre părinte/tutore</CampHeading></h3>
         <div className="space-y-2">
           <Label htmlFor="parentName" className={labelClass}>Numele și prenumele *</Label>
           <Input

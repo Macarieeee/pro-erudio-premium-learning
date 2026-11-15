@@ -8,12 +8,14 @@ type SectionGalleryProps = {
   images?: (GalleryImage | string)[];
   className?: string;
   compact?: boolean;
+  thumbnails?: boolean;
 };
 
 export function SectionGallery({
   images,
   className = "",
   compact = false,
+  thumbnails = false,
 }: SectionGalleryProps) {
   if (!images?.length) return null;
 
@@ -26,7 +28,7 @@ export function SectionGallery({
   const count = safeImages.length;
 
   const gridCols =
-    count === 1
+    thumbnails ? "grid-cols-2 sm:grid-cols-4" : count === 1
       ? "grid-cols-1"
       : count === 2
       ? "grid-cols-2"
@@ -35,7 +37,7 @@ export function SectionGallery({
       : "grid-cols-2";
 
   const wrapperClass =
-    compact && count !== 3 ? "max-w-2xl mx-auto" : count === 1 ? "max-w-3xl mx-auto" : "max-w-6xl mx-auto";
+    thumbnails ? "max-w-3xl mx-auto" : compact && count !== 3 ? "max-w-2xl mx-auto" : count === 1 ? "max-w-3xl mx-auto" : "max-w-6xl mx-auto";
 
   return (
     <div className={`mt-10 ${className}`}>

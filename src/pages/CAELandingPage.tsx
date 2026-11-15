@@ -9,8 +9,8 @@ import {
   PenLine,
   UserCheck,
 } from "lucide-react";
-import logo from "@/assets/logo.svg";
-import caeMockImage from "@/assets/CAE-Mock-Test-ProErudio.webp";
+import logo from "@/assets/branding/logo.svg";
+import caeMockImage from "@/assets/teste-engleza/CAE-Mock-Test-ProErudio.webp";
 const CAE_LISTENING_PATH = "/cae/listening";
 const CAE_READING_PATH = "/cae/reading";
 const CAE_WRITING_PATH = "/cae/writing";

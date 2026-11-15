@@ -1,13 +1,13 @@
 import type { CampConfig } from "./campsData";
 import obstacleCourse from "@/assets/marchants-hill/01958C7BA6E1B41A1570CCFE06378C28.jpeg";
 import catering from "@/assets/marchants-hill/Catering-image-August-1024x640.png.webp";
-import kitTabaraImage from "@/assets/Kit Tabara Pro Erudio.jpg";
-import programImage from "@/assets/Program.jpg";
-import centre from "@/assets/tabara-ProErudio-marchants-hill-2027-cladire-centru.webp";
-import bethany from "@/assets/tabara-ProErudio-marchants-hill-2027-cazare-bethany-house.jpg";
+import kitTabaraImage from "@/assets/tabere-general/Kit Tabara Pro Erudio.jpg";
+import programImage from "@/assets/tabere-general/Program.jpg";
+import centre from "@/assets/marchants-hill/tabara-ProErudio-marchants-hill-2027-cladire-centru.webp";
+import bethany from "@/assets/marchants-hill/tabara-ProErudio-marchants-hill-2027-cazare-bethany-house.jpg";
 import aerial from "@/assets/marchants-hill/Windmill-Hill-Flip-Card-768x768.jpg.webp";
-import climbing from "@/assets/tabara-ProErudio-marchants-hill-2027-escalada.jpg";
-import menu from "@/assets/tabara-ProErudio-marchants-hill-2027-meniu-orientativ.jpg";
+import climbing from "@/assets/marchants-hill/tabara-ProErudio-marchants-hill-2027-escalada.jpg";
+import menu from "@/assets/marchants-hill/tabara-ProErudio-marchants-hill-2027-meniu-orientativ.jpg";
 import giantSwing from "@/assets/marchants-hill/tabara-ProErudio-marchants-hill-2027-leagan-la-inaltime.webp";
 import teamClimbing from "@/assets/marchants-hill/tabara-ProErudio-marchants-hill-2027-catarare-in-echipa.webp";
 import forestAdventure from "@/assets/marchants-hill/51e19907-5f1f-405a-b528-adee82d38754.jpg";
@@ -43,12 +43,12 @@ export const marchantsHill2027 = (registrationInfo: CampConfig["registrationInfo
     ],
   },
   highlights: [
-    "Cursuri de engleză cu profesori vorbitori nativi (dacă se aplică)",
+    "Cursuri de engleză cu profesori vorbitori nativi",
     "Aventură: activități outdoor & indoor",
     "Jocuri și competiții în echipă",
     "Seri tematice și activități de socializare",
-    "Excursii la obiective locale",
-    "Suport complet și însoțitori",
+    "Excursii la obiective turistice locale",
+    "Un însoțitor de grup la 10 participanți",
   ],
   locationDescription: {
     alignImageWithParagraph: true,
@@ -66,7 +66,7 @@ export const marchantsHill2027 = (registrationInfo: CampConfig["registrationInfo
   locationFacilities: [],
   includedInPrice: ["O excursie de o zi și o excursie de o jumătate de zi în sudul Angliei"],
   notIncludedInPrice: [
-    "Transport avion (250–350 euro, în funcție de oferta companiei de zbor la momentul rezervării locului)",
+    "Transport avion (aproximativ 350 euro, în funcție de oferta companiei de zbor la momentul rezervării locului)",
     "Transfer de la/la aeroport în campus (se calculează în funcție de numărul copiilor înscriși la tabără și se achită cu o lună înaintea plecării)",
     "Asigurare storno/de călătorie",
   ],

@@ -9,8 +9,8 @@ import {
   PenLine,
   UserCheck,
 } from "lucide-react";
-import logo from "@/assets/logo.svg";
-import fceMockImage from "@/assets/FCE-Mock-Test-ProErudio.jpg";
+import logo from "@/assets/branding/logo.svg";
+import fceMockImage from "@/assets/teste-engleza/FCE-Mock-Test-ProErudio.jpg";
 const FCE_LISTENING_PATH = "/fce/listening";
 const FCE_READING_PATH = "/fce/reading";
 const FCE_WRITING_PATH = "/fce/writing";

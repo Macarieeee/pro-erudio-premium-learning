@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import imagine8motive from "@/assets/poiana_shelters.jpg";
+import imagine8motive from "@/assets/poiana-marului/poiana_shelters.jpg";
 import { Button } from "@/components/ui/button";
 
 export default function ReasonsCampSection() {

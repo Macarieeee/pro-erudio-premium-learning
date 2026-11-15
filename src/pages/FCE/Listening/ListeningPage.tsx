@@ -3,7 +3,7 @@
 // because they remount on every keystroke and inputs lose focus.
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import logo from "@/assets/logo.svg";
+import logo from "@/assets/branding/logo.svg";
 import {
   part1MCQ,
   part2Gaps,

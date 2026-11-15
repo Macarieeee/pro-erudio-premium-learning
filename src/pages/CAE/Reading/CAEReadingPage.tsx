@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import logo from "@/assets/logo.svg";
+import logo from "@/assets/branding/logo.svg";
 import { caeReadingData, type MCQOption, type ParagraphOption, type SectionOption, type WriterOption } from "./data/caeReadingData";
 
 type Part = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;

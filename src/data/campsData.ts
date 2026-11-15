@@ -1,5 +1,6 @@
 import { marchantsHill2027 } from "./marchantsHill2027";
 import { poianaMarului2027 } from "./poianaMarului2027";
+import { maldaresti2027 } from "./maldaresti2027";
 import { TerraceIcon } from "@/components/icons/TerraceIcon";
 // src/data/campsData.ts
 import type { LucideIcon } from "lucide-react";
@@ -34,76 +35,76 @@ import {
 
 // NOTE: folosesc assets existente (din CampPage-ul tău actual) ca să nu ai erori la build.
 // Ideal: înlocuiești cu imagini specifice fiecărei tabere.
-import heroGrosvenor from "@/assets/Grosvenor Hall.jpg";
-import activity1 from "@/assets/Grosvenor Hall - Activity.gif";
-import activity2 from "@/assets/Grosvenor Hall - Activity2.jpg";
-import activity3 from "@/assets/Grosvenor Hall - Activity3.webp";
-import activity4 from "@/assets/Grosvenor Hall - Activity4.png";
-import kitTabaraImage from "@/assets/Kit Tabara Pro Erudio.jpg";
-import menuImage from "@/assets/meniuUK.jpg";
-import programUK from "@/assets/programUK.jpg";
-import programImage from "@/assets/Program.jpg";
-import heroDublinUniversity from "@/assets/Dublin City University.webp";
-import aboutDublin from "@/assets/Dublin About.jpg";
-import activityDublin1 from "@/assets/Activity1-Dublin.jpg";
-import activityDublin2 from "@/assets/Activity2-Dublin.jpg";
-import activityDublin3 from "@/assets/Activity3-Dublin.jpg";
-import activityDublin4 from "@/assets/Activity4-Dublin.jpg";
-import heroMoinești from "@/assets/Moinesti2026.jpg";
-import heroPoianaMarului from "@/assets/PoianaMarului2026.jpg";
-import programDublinImage from "@/assets/ProgramDublin.png";
-import moinestiAbout from "@/assets/MoinestiAbout.jpg";
-import poianaMaruluiAbout from "@/assets/PoianaMaruluiAbout.jpeg";
-import heroManchester2025 from "@/assets/scoala-de-vara-manchesterB.jpg";
-import aboutManchester2025 from "@/assets/university_of_salford_campus_tour-1080p.00_00_01_09.Still001.jpg";
-import activityManchester1 from "@/assets/university_of_salford_campus_tour-1080p.00_00_39_23.Still004.jpg";
-import activityManchester2 from "@/assets/university_of_salford_campus_tour-1080p.00_02_57_09.Still008.jpg";
-import activityManchester3 from "@/assets/university_of_salford_campus_tour-1080p.00_04_48_24.Still010.jpg";
-import activityManchester4 from "@/assets/university_of_salford_campus_tour-1080p.00_07_02_15.Still012.jpg";
-import heroMoinești2025 from "@/assets/Tabara-moinestib.jpg";
-import heroPoianaMarului2025 from "@/assets/Tabara-poiana-maruluiB.jpg";
-import heroPredeal2024 from "@/assets/predeal-b.jpg";
-import predealAbout from "@/assets/predealAbout.webp";
-import liddingtonHero from "@/assets/Liddington2.jpg";
-import liddingtonAbout from "@/assets/Liddington-harta-scaled.jpg"
-import activityLiggdington1 from "@/assets/activitati-1.jpg";
-import activityLiggdington2 from "@/assets/activitati-2.jpg";
-import activityLiggdington3 from "@/assets/activitati-3.jpg";
-import activityLiggdington4 from "@/assets/Liddington-cazare.jpg";
-import meniuLiddington from "@/assets/meniu.jpg";
-import heroWinchester2024 from "@/assets/winchesterb.jpg";
-import aboutWinchester2024 from "@/assets/winchester-1.jpg";
-import activityWinchester1 from "@/assets/winchester-2.jpg";
-import activityWinchester2 from "@/assets/Queens.jpg";
-import activityWinchester3 from "@/assets/panel-and-post-signs-mob-banner.jpg";
-import activityWinchester4 from "@/assets/24-ip-winchester-centre-profile-1-1.jpg";
-import programWinchesterImage from "@/assets/24-ip-winchester-sample-programme-1.jpg";
-import heroValeaOltului2023 from "@/assets/Tabara-Valea-Oltului-b.jpg";
-import aboutValeaOltului2023 from "@/assets/ValeaOltuluiAbout.jpg";
-import heroOsmington2023 from "@/assets/OsmingtonB.jpg";
-import aboutOsmington2023 from "@/assets/harta-centru.jpg";
-import heroPortsmouth2023 from "@/assets/scoala-de-vara-de-limba-engleza-University-of-Portsmouth-B.jpg";
-import aboutPortsmouth2023 from "@/assets/aisel_slides_02.png";
-import activityPortsmouth1 from "@/assets/Portsmouth3.jpg";
-import activityPortsmouth2 from "@/assets/portsmouth-3.jpg";
-import activityPortsmouth3 from "@/assets/portsmouth-2.jpg";
-import activityPortsmouth4 from "@/assets/portsmouth-1.jpg";
-import moinesti1 from "@/assets/MoinestiExtra1.jpg";
-import moinesti2 from "@/assets/MoinestiExtra2.jpg";
-import moinesti3 from "@/assets/MoinestiExtra3.jpg";
-import moinesti4 from "@/assets/MoienstiExtra4.jpg";
-import moinesti5 from "@/assets/MoinestiExtra5.jpg";
-import moinesti6 from "@/assets/MoinestiExtra6.jpg";
-import moinesti7 from "@/assets/Moinesti7.jpg";
-import moinesti8 from "@/assets/Moinesti8.jpg";
-import poianaMarului1 from "@/assets/PoianaExtra1.jpg";
-import poianaMarului2 from "@/assets/PoianaExtra2.jpg";
-import poianaMarului3 from "@/assets/PoianaExtra3.jpg";
-import poianaMarului4 from "@/assets/PoianaExtra4.jpg";
-import poianaMarului5 from "@/assets/PoianaExtra5.jpg";
-import poianaMarului6 from "@/assets/PoianaExtra6.jpg";
-import poianaMarului7 from "@/assets/Poiana7.jpg";
-import poianaMarului8 from "@/assets/Poiana8.jpg";
+import heroGrosvenor from "@/assets/grosvenor-hall/Grosvenor Hall.jpg";
+import activity1 from "@/assets/grosvenor-hall/Grosvenor Hall - Activity.gif";
+import activity2 from "@/assets/grosvenor-hall/Grosvenor Hall - Activity2.jpg";
+import activity3 from "@/assets/grosvenor-hall/Grosvenor Hall - Activity3.webp";
+import activity4 from "@/assets/grosvenor-hall/Grosvenor Hall - Activity4.png";
+import kitTabaraImage from "@/assets/tabere-general/Kit Tabara Pro Erudio.jpg";
+import menuImage from "@/assets/grosvenor-hall/meniuUK.jpg";
+import programUK from "@/assets/grosvenor-hall/programUK.jpg";
+import programImage from "@/assets/tabere-general/Program.jpg";
+import heroDublinUniversity from "@/assets/dublin/Dublin City University.webp";
+import aboutDublin from "@/assets/dublin/Dublin About.jpg";
+import activityDublin1 from "@/assets/dublin/Activity1-Dublin.jpg";
+import activityDublin2 from "@/assets/dublin/Activity2-Dublin.jpg";
+import activityDublin3 from "@/assets/dublin/Activity3-Dublin.jpg";
+import activityDublin4 from "@/assets/dublin/Activity4-Dublin.jpg";
+import heroMoinești from "@/assets/moinesti/Moinesti2026.jpg";
+import heroPoianaMarului from "@/assets/poiana-marului/PoianaMarului2026.jpg";
+import programDublinImage from "@/assets/dublin/ProgramDublin.png";
+import moinestiAbout from "@/assets/moinesti/MoinestiAbout.jpg";
+import poianaMaruluiAbout from "@/assets/poiana-marului/PoianaMaruluiAbout.jpeg";
+import heroManchester2025 from "@/assets/manchester/scoala-de-vara-manchesterB.jpg";
+import aboutManchester2025 from "@/assets/manchester/university_of_salford_campus_tour-1080p.00_00_01_09.Still001.jpg";
+import activityManchester1 from "@/assets/manchester/university_of_salford_campus_tour-1080p.00_00_39_23.Still004.jpg";
+import activityManchester2 from "@/assets/manchester/university_of_salford_campus_tour-1080p.00_02_57_09.Still008.jpg";
+import activityManchester3 from "@/assets/manchester/university_of_salford_campus_tour-1080p.00_04_48_24.Still010.jpg";
+import activityManchester4 from "@/assets/manchester/university_of_salford_campus_tour-1080p.00_07_02_15.Still012.jpg";
+import heroMoinești2025 from "@/assets/moinesti/Tabara-moinestib.jpg";
+import heroPoianaMarului2025 from "@/assets/poiana-marului/Tabara-poiana-maruluiB.jpg";
+import heroPredeal2024 from "@/assets/predeal/predeal-b.jpg";
+import predealAbout from "@/assets/predeal/predealAbout.webp";
+import liddingtonHero from "@/assets/liddington/Liddington2.jpg";
+import liddingtonAbout from "@/assets/liddington/Liddington-harta-scaled.jpg"
+import activityLiggdington1 from "@/assets/liddington/activitati-1.jpg";
+import activityLiggdington2 from "@/assets/liddington/activitati-2.jpg";
+import activityLiggdington3 from "@/assets/liddington/activitati-3.jpg";
+import activityLiggdington4 from "@/assets/liddington/Liddington-cazare.jpg";
+import meniuLiddington from "@/assets/liddington/meniu.jpg";
+import heroWinchester2024 from "@/assets/winchester/winchesterb.jpg";
+import aboutWinchester2024 from "@/assets/winchester/winchester-1.jpg";
+import activityWinchester1 from "@/assets/winchester/winchester-2.jpg";
+import activityWinchester2 from "@/assets/winchester/Queens.jpg";
+import activityWinchester3 from "@/assets/winchester/panel-and-post-signs-mob-banner.jpg";
+import activityWinchester4 from "@/assets/winchester/24-ip-winchester-centre-profile-1-1.jpg";
+import programWinchesterImage from "@/assets/winchester/24-ip-winchester-sample-programme-1.jpg";
+import heroValeaOltului2023 from "@/assets/valea-oltului/Tabara-Valea-Oltului-b.jpg";
+import aboutValeaOltului2023 from "@/assets/valea-oltului/ValeaOltuluiAbout.jpg";
+import heroOsmington2023 from "@/assets/osmington/OsmingtonB.jpg";
+import aboutOsmington2023 from "@/assets/osmington/harta-centru.jpg";
+import heroPortsmouth2023 from "@/assets/portsmouth/scoala-de-vara-de-limba-engleza-University-of-Portsmouth-B.jpg";
+import aboutPortsmouth2023 from "@/assets/portsmouth/aisel_slides_02.png";
+import activityPortsmouth1 from "@/assets/portsmouth/Portsmouth3.jpg";
+import activityPortsmouth2 from "@/assets/portsmouth/portsmouth-3.jpg";
+import activityPortsmouth3 from "@/assets/portsmouth/portsmouth-2.jpg";
+import activityPortsmouth4 from "@/assets/portsmouth/portsmouth-1.jpg";
+import moinesti1 from "@/assets/moinesti/MoinestiExtra1.jpg";
+import moinesti2 from "@/assets/moinesti/MoinestiExtra2.jpg";
+import moinesti3 from "@/assets/moinesti/MoinestiExtra3.jpg";
+import moinesti4 from "@/assets/moinesti/MoienstiExtra4.jpg";
+import moinesti5 from "@/assets/moinesti/MoinestiExtra5.jpg";
+import moinesti6 from "@/assets/moinesti/MoinestiExtra6.jpg";
+import moinesti7 from "@/assets/moinesti/Moinesti7.jpg";
+import moinesti8 from "@/assets/moinesti/Moinesti8.jpg";
+import poianaMarului1 from "@/assets/poiana-marului/PoianaExtra1.jpg";
+import poianaMarului2 from "@/assets/poiana-marului/PoianaExtra2.jpg";
+import poianaMarului3 from "@/assets/poiana-marului/PoianaExtra3.jpg";
+import poianaMarului4 from "@/assets/poiana-marului/PoianaExtra4.jpg";
+import poianaMarului5 from "@/assets/poiana-marului/PoianaExtra5.jpg";
+import poianaMarului6 from "@/assets/poiana-marului/PoianaExtra6.jpg";
+import poianaMarului7 from "@/assets/poiana-marului/Poiana7.jpg";
+import poianaMarului8 from "@/assets/poiana-marului/Poiana8.jpg";
 import campsSeo from "./campsSeo.json";
 /* =======================
    DOAR DEFAULT-URI COMUNE
@@ -210,8 +211,11 @@ export type CampSection =
         type: "gridBullets";
         title: string;
         columns?: 1 | 2 | 3;
+        spaceAbove?: boolean;
+        trailingImages?: { src: string; alt: string }[];
         cards: {
             subtitle: string;
+            description?: string;
             items: string[];
         }[];
     }
@@ -455,6 +459,7 @@ function makeFacilities(kind: "uk" | "dublin" | "romania-mountain" | "romania-ci
 export const campsData: CampConfig[] = [
     marchantsHill2027(DEFAULT_REGISTRATION),
     poianaMarului2027(DEFAULT_REGISTRATION),
+    maldaresti2027,
     // ================= 2026 =================
     {
         slug: "scoala-de-vara-dublin-2026",
@@ -2938,6 +2943,25 @@ export const campsData: CampConfig[] = [
 /* =======================
    LOOKUP
 ======================= */
+// All camp pages promote the same season, including archived camp pages.
+const PROMOTED_CAMP_YEAR = 2027;
+const toRelatedCamp = (camp: CampConfig): CampConfig["otherCamps"][number] => ({
+    name: `${camp.campName} ${camp.year}`,
+    location: camp.quickInfo.location,
+    type: "Engleză și aventură",
+    image: camp.hero.image,
+    to: `/${camp.slug}`,
+});
+
+const promotedCamps = campsData.filter((camp) => camp.year === PROMOTED_CAMP_YEAR);
+
+for (const camp of campsData) {
+    camp.otherCamps = promotedCamps
+        .filter((other) => other.slug !== camp.slug)
+        .map(toRelatedCamp);
+    camp.visibility = { ...camp.visibility, showOtherCamps: true };
+}
+
 export function getCampBySlug(slug: string | undefined) {
     if (!slug) return null;
     return campsData.find((c) => c.slug === slug) ?? null;

@@ -1,5 +1,5 @@
-import PlacementTest1 from "@/assets/Placement-Test1.webp";
-import PlacementTest2 from "@/assets/Placement-Test2.jpg";
+import PlacementTest1 from "@/assets/teste-engleza/Placement-Test1.webp";
+import PlacementTest2 from "@/assets/teste-engleza/Placement-Test2.jpg";
 
 export type Choice = "a" | "b" | "c";
 

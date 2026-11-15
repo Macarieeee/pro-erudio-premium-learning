@@ -2,7 +2,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { getTasksForPart, tasks, WritingTask } from "./data/preliminaryWritingData";
-import logo from "@/assets/logo.svg"; // ajustează path-ul
+import logo from "@/assets/branding/logo.svg"; // ajustează path-ul
 
 type Part = 1 | 2;
 

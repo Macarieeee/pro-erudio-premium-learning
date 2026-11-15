@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import logo from "@/assets/logo.svg"; // <-- ajustează path-ul dacă e altul
+import logo from "@/assets/branding/logo.svg"; // <-- ajustează path-ul dacă e altul
 
 type Part = 1 | 2 | 3 | 4 | 5 | 6 | 7;
 

@@ -3,6 +3,7 @@ import { useParams, useLocation } from "react-router-dom";
 import { Head } from "vite-react-ssg";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import ExpandableJournalPhoto from "@/components/ExpandableJournalPhoto";
 import { Card, CardContent } from "@/components/ui/card";
 import { ExternalLink, Building, MapPin, Clock, Users } from "lucide-react";
 import { journalList, getJournalBySlug, getJournalSEO } from "@/data/journals";
@@ -65,20 +66,28 @@ const JournalPage = ({ slugOverride }: JournalPageProps) => {
       {/* Hero jurnal */}
 <section className="relative mt-10 min-h-[420px] md:min-h-[520px] flex items-center justify-center overflow-hidden">
   {/* Background image */}
+  {journal.heroImage && (
+  <ExpandableJournalPhoto
+    src={journal.heroImage}
+    alt={journal.heroAlt || journal.title}
+    className="absolute inset-0 w-full h-full"
+  >
   <img
     src={journal.heroImage}
     alt={journal.heroAlt || journal.title}
     className="absolute inset-0 w-full h-full object-cover"
   />
+  </ExpandableJournalPhoto>
+  )}
 
   {/* Dark overlay */}
-  <div className="absolute inset-0 bg-black/45" />
+  <div className="pointer-events-none absolute inset-0 bg-black/45" />
 
   {/* Soft gradient for nicer transition */}
-  <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/35 to-background" />
+  <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/30 via-black/35 to-background" />
 
   {/* Content */}
-  <div className="relative z-10 container mx-auto px-4 lg:px-8">
+  <div className="pointer-events-none relative z-10 container mx-auto px-4 lg:px-8">
     <div className="max-w-4xl mx-auto text-center text-white">
       <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 drop-shadow-lg">
         {journal.title}
@@ -179,10 +188,12 @@ const JournalPage = ({ slugOverride }: JournalPageProps) => {
                   )}
 
                   {entry.images?.length ? (
-                    <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
-                      {entry.images.slice(0, 4).map((img, imgIndex) => (
-                        <div
+                    <div className={`mt-8 grid grid-cols-2 ${entry.images.length === 3 ? "md:grid-cols-3" : "md:grid-cols-4"} gap-4`}>
+                      {entry.images.map((img, imgIndex) => (
+                        <ExpandableJournalPhoto
                           key={imgIndex}
+                          src={img}
+                          alt={`Galerie ${entry.day} - ${imgIndex + 1}`}
                           className="relative aspect-square overflow-hidden rounded-xl border border-border shadow-sm"
                         >
                           <img
@@ -190,7 +201,7 @@ const JournalPage = ({ slugOverride }: JournalPageProps) => {
                             alt={`Galerie ${entry.day} - ${imgIndex + 1}`}
                             className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                           />
-                        </div>
+                        </ExpandableJournalPhoto>
                       ))}
                     </div>
                   ) : null}

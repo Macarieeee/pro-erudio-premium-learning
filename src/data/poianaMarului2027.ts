@@ -7,19 +7,19 @@ import hero from "@/assets/poiana-marului/20260716_193314.jpg";
 import playground from "@/assets/poiana-marului/20260715_094705.jpg";
 import cookingWorkshop from "@/assets/poiana-marului/20260715_152714.jpg";
 import teamGames from "@/assets/poiana-marului/20260715_180540.jpg";
-import location from "@/assets/PoianaMaruluiAbout.jpeg";
+import location from "@/assets/poiana-marului/PoianaMaruluiAbout.jpeg";
 import groupActivities from "@/assets/poiana-marului/tabara-ProErudio-poiana-marului-activitati-de-grup.webp";
 import campfire from "@/assets/poiana-marului/tabara-ProErudio-poiana-marului-foc-de-tabara.webp";
 import memories from "@/assets/poiana-marului/tabara-ProErudio-poiana-marului-amintiri-2026.webp";
-import marchantsHill from "@/assets/tabara-ProErudio-marchants-hill-2027-cazare-cabane.webp";
+import marchantsHill from "@/assets/marchants-hill/tabara-ProErudio-marchants-hill-2027-cazare-cabane.webp";
 
 export const poianaMarului2027 = (registrationInfo: CampConfig["registrationInfo"]): CampConfig => ({
-  slug: "tabara-poiana-marului-2027",
+  slug: "tabara-de-limba-engleza-poaiana-marului-2027",
   year: 2027,
   campName: "Tabăra de engleză și aventură – Poiana Mărului",
   activitiesTitle: "Program zilnic de activități",
   hero: { badge: "English Explorers Camps 2027", title: "Tabăra de engleză și aventură – Poiana Mărului", image: hero, imageAlt: "Participanți la tabăra ProErudio Poiana Mărului sărbătorind împreună", objectPosition: "50% 65%" },
-  quickInfo: { location: "Poiana Mărului, județul Brașov", duration: "6 zile / 5 nopți", ageGroup: "7–14 ani", dates: "18–23 iulie 2027", priceLabel: "Preț promoțional", price: "2.380 lei" },
+  quickInfo: { location: "Poiana Mărului, județul Brașov", duration: "6 zile / 5 nopți", ageGroup: "7–14 ani", dates: "18–23 iulie 2027", priceLabel: "Preț promoțional", price: "2.480 lei" },
   about: {
     title: "English Explorers Camps",
     paragraphs: [

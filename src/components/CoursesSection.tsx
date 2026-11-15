@@ -1,8 +1,9 @@
 import { Plane, Mountain } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import marchantsHillImage from "@/assets/tabara-ProErudio-marchants-hill-2027-cazare-bethany-house.jpg";
+import marchantsHillImage from "@/assets/marchants-hill/tabara-ProErudio-marchants-hill-2027-cazare-bethany-house.jpg";
 import poianaMaruluiImage from "@/assets/poiana-marului/20260716_193314.jpg";
+import maldarestiImage from "@/assets/maldaresti-2027/hotel victoria.jpg";
 
 const CoursesSection = () => {
   const camps = [{
@@ -18,13 +19,23 @@ const CoursesSection = () => {
   }, {
     icon: Mountain,
     title: "English Explorers – Poiana Mărului 2027",
-    subtitle: "18–23 iulie 2027 | 7–14 ani | 2.380 Lei",
+    subtitle: "18–23 iulie 2027 | 7–14 ani | 2.480 Lei",
     description: "6 zile de engleză, aventură și prietenii noi la Poiana Mărului Ranch. Ateliere interactive, provocări pe echipe și excursii culturale, cu transport și pensiune completă incluse. Preț promoțional.",
     color: "bg-emerald-500",
     image: poianaMaruluiImage,
     imageAlt: "Participanții taberei Pro Erudio de la Poiana Mărului",
     imagePosition: "50% 65%",
-    link: "/tabara-poiana-marului-2027",
+    link: "/tabara-de-limba-engleza-poaiana-marului-2027",
+  }, {
+    icon: Mountain,
+    title: "English Explorers – Măldărești 2027",
+    subtitle: "4–9 iulie 2027 | 7–14 ani | 2.480 Lei",
+    description: "6 zile de engleză și provocări pe echipe la Hotel Victoria. Excursii la culele din Măldărești, Mănăstirea Hurezi și Potlogi, cu transport și pensiune completă incluse.",
+    color: "bg-primary",
+    image: maldarestiImage,
+    imageAlt: "Hotel Victoria din Măldărești",
+    imagePosition: "center",
+    link: "/tabara-de-limba-engleza-maldaresti-2027",
   }];
 
   return (
@@ -39,7 +50,7 @@ const CoursesSection = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {camps.map((camp, index) => (
             <div 
               key={index}

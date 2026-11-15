@@ -3,7 +3,7 @@
 // Focus-safe structure: render helpers are called as functions, not nested React components.
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import logo from "@/assets/logo.svg";
+import logo from "@/assets/branding/logo.svg";
 import {
   audioTracks,
   part1MCQ,

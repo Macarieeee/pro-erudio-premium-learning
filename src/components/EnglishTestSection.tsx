@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import englishTestImage from "@/assets/online test.avif";
+import englishTestImage from "@/assets/teste-engleza/online test.avif";
 import { Link } from "react-router-dom";
 
 const EnglishTestSection = () => {

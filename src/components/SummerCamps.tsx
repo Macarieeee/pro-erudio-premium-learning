@@ -1,4 +1,4 @@
-import summerImage from "@/assets/summer-camp.jpg";
+import summerImage from "@/assets/tabere-general/summer-camp.jpg";
 import { Button } from "@/components/ui/button";
 import { TreePine, Languages, Users, Compass, Check, Calendar } from "lucide-react";
 import { Link } from "react-router-dom";

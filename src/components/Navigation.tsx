@@ -2,12 +2,13 @@ import { useMemo, useState } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import logo from "@/assets/logo.svg";
+import logo from "@/assets/branding/logo.svg";
 
 const campsByYear = [
   { year: 2027, camps: [
+    { label: "Tabăra de engleză și aventură – Măldărești", to: "/tabara-de-limba-engleza-maldaresti-2027" },
     { label: "Tabara in Marea Britanie - Marchants Hill", to: "/tabara-marea-britanie-marchants-hill-2027" },
-    { label: "Tabăra de engleză și aventură – Poiana Mărului", to: "/tabara-poiana-marului-2027" },
+    { label: "Tabăra de engleză și aventură – Poiana Mărului", to: "/tabara-de-limba-engleza-poaiana-marului-2027" },
   ] },
   {
     year: 2026,
@@ -47,6 +48,7 @@ const campsByYear = [
 ];
 
 const journalItems = [
+  { label: "Jurnal Grosvenor UK 2026", slug: "grosvenor-2026" },
   { label: "Jurnal Manchester 2025", slug: "manchester-2025" },
   { label: "Jurnal Moinești 2025", slug: "moinesti-2025" },
   { label: "Jurnal Poiana Mărului 2025", slug: "poiana-marului-2025" },
