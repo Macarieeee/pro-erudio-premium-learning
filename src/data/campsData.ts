@@ -1,3 +1,4 @@
+import { malta2027 } from "./malta2027";
 import { marchantsHill2027 } from "./marchantsHill2027";
 import { poianaMarului2027 } from "./poianaMarului2027";
 import { maldaresti2027 } from "./maldaresti2027";
@@ -457,6 +458,7 @@ function makeFacilities(kind: "uk" | "dublin" | "romania-mountain" | "romania-ci
 ======================= */
 
 export const campsData: CampConfig[] = [
+    malta2027(DEFAULT_REGISTRATION),
     marchantsHill2027(DEFAULT_REGISTRATION),
     poianaMarului2027(DEFAULT_REGISTRATION),
     maldaresti2027,

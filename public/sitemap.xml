@@ -150,4 +150,8 @@
     <image:image><image:loc>https://tabere.proerudio.ro/og/herohome.jpeg</image:loc></image:image>
   </url>
 
+  <url>
+    <loc>https://tabere.proerudio.ro/scoala-de-vara-malta-2027</loc>
+    <image:image><image:loc>https://tabere.proerudio.ro/og/tabara-malta-2027.jpg</image:loc></image:image>
+  </url>
 </urlset>

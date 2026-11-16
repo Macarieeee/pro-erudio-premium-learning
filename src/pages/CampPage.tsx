@@ -175,7 +175,7 @@ if (!camp) {
 
   return (
     <CampHeadingIcons.Provider value={camp.year === 2027}>
-    <ImageZoomProvider enabled={camp.slug === "tabara-marea-britanie-marchants-hill-2027" || camp.slug === "tabara-de-limba-engleza-maldaresti-2027"}>
+    <ImageZoomProvider enabled={camp.slug === "scoala-de-vara-malta-2027" || camp.slug === "tabara-marea-britanie-marchants-hill-2027" || camp.slug === "tabara-de-limba-engleza-maldaresti-2027"}>
     <div className="min-h-screen bg-background">
 <Head>
   <title>{seo.title}</title>

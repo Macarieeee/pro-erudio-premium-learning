@@ -116,6 +116,7 @@ const RegistrationForm = ({ variant = "light", defaultCamp = "Marchants Hill 202
             <SelectValue placeholder="Selectează tabăra" />
           </SelectTrigger>
           <SelectContent className="bg-card border-border">
+            <SelectItem value="Malta 2027">Școală de vară de limba engleză – Malta 2027</SelectItem>
             <SelectItem value="Măldărești 2027">Tabăra de engleză și aventură – Măldărești 2027</SelectItem>
             <SelectItem value="Marchants Hill 2027">Marchants Hill Activity Centre 2027</SelectItem>
             <SelectItem value="Poiana Mărului 2027">Tabăra de engleză și aventură – Poiana Mărului 2027</SelectItem>

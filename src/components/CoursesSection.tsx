@@ -5,8 +5,20 @@ import marchantsHillImage from "@/assets/marchants-hill/tabara-ProErudio-marchan
 import poianaMaruluiImage from "@/assets/poiana-marului/20260716_193314.jpg";
 import maldarestiImage from "@/assets/maldaresti-2027/hotel victoria.jpg";
 
+import maltaImage from "@/assets/malta-2027/malta-1148454_1280.jpg";
+
 const CoursesSection = () => {
   const camps = [{
+    icon: Plane,
+    title: "Școală de vară – Malta 2027",
+    subtitle: "1–8 august 2027 | 12–18 ani | 1.080 euro",
+    description: "Engleză în grupe internaționale la St Andrew’s School, cazare la Campus Hub și excursii în Malta. 8 zile / 7 nopți, cu pensiune completă și transfer de la și către aeroport.",
+    color: "bg-primary",
+    image: maltaImage,
+    imageAlt: "Valletta și coasta Maltei",
+    imagePosition: "center",
+    link: "/scoala-de-vara-malta-2027",
+  }, {
     icon: Plane,
     title: "Marchants Hill Activity Centre 2027",
     subtitle: "23–31 iulie 2027 | 11–16 ani | 790 GBP",

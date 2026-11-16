@@ -6,6 +6,7 @@ import logo from "@/assets/branding/logo.svg";
 
 const campsByYear = [
   { year: 2027, camps: [
+    { label: "Școală de vară de limba engleză – Malta", to: "/scoala-de-vara-malta-2027" },
     { label: "Tabăra de engleză și aventură – Măldărești", to: "/tabara-de-limba-engleza-maldaresti-2027" },
     { label: "Tabara in Marea Britanie - Marchants Hill", to: "/tabara-marea-britanie-marchants-hill-2027" },
     { label: "Tabăra de engleză și aventură – Poiana Mărului", to: "/tabara-de-limba-engleza-poaiana-marului-2027" },
